@@ -1,36 +1,4 @@
-import React, { useState, useRef } from "react";
-// import { useScript } from '../hooks/useScript';
-// import { postGoogleLogin } from 'api/auth';
-
-
-// // 구글 소셜 로그인
-// function onSocialLogin() {
-//   const googleSignInButton = useRef(null);
-
-//   const onGoogleSignIn = async (e) => {
-//     const res = await postGoogleLogin(e.credential);
-//     //콜백 함수
-//   };
-
-//   useScript('https://accounts.google.com/gsi/client', () => {
-//     window.google.accounts.id.initialize({
-//       client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-//       callback: onGoogleSignIn,
-//     });
-//     window.google.accounts.id.renderButton(googleSignInButton.current, {
-//       width: '250',
-//       type: 'icon',
-//       shape: 'circle',
-//     });
-//   });
-
-//   return (
-//     <div
-//       id="google-login-api"
-//       ref={googleSignInButton}
-//     />
-//   );
-// }
+import React, { useState, useEffect, useRef } from "react";
 
 
 function Login() {
@@ -62,10 +30,26 @@ function Login() {
     }
   };
 
-  return (
-    <>
-      <h1>로그인</h1>
+  const handleCallbackResponse = (response) => {
+    console.log("Encoded JWT ID token: " + response.credential)
+  } 
 
+  useEffect(() => {
+    window.google.accounts.id.initialize({
+      client_id: process.env.REACT_APP_GOOGLE_ID,
+      callback: handleCallbackResponse
+    })
+    window.google.accounts.id.renderButton(
+      document.getElementById('socialLogin'),
+      {theme: "outline", size: "large"}
+    )
+  }, []);
+
+
+  return (
+    <>     
+      <h1>로그인</h1>
+      
       <div>
         <h3>E-MAIL</h3>
         <input
@@ -94,7 +78,7 @@ function Login() {
 
       <div>
         <h3>SOCIAL LOGIN</h3>
-        <button onClick={() => {}}>구글로 로그인 하기</button>
+        <div id="socialLogin"></div>
       </div>
     </>
   );
