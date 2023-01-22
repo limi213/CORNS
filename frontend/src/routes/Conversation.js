@@ -1,9 +1,9 @@
-import Nav from "../components/Nav";
+import Navbar from "../components/Navbar";
 
 function Conversation() {
   return (
     <>
-      <Nav />
+      <Navbar />
       <h1>Conversation</h1>
     </>
   );

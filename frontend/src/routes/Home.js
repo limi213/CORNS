@@ -1,9 +1,9 @@
-import Nav from "../components/Nav";
+import Navbar from "../components/Navbar";
 
 function Home() {
   return (
     <>
-      <Nav />
+      <Navbar />
       <h1>CORNS의 첫페이지 입니다!!</h1>
     </>
   );

@@ -1,9 +1,9 @@
-import Nav from "../components/Nav";
+import Navbar from "../components/Navbar";
 
 function Mypage() {
   return (
     <>
-      <Nav />
+      <Navbar />
       <h1>Mypage</h1>
     </>
   );

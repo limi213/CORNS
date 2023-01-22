@@ -2,12 +2,12 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 
-const Nav = () => {
+const Navbar = () => { 
   return (
     <nav>
       <div>
         <NavLink to="/">
-          로고
+          corns
         </NavLink>
       </div>
       <div>
@@ -21,13 +21,13 @@ const Nav = () => {
         </NavLink>
       </div>
       <div>
-        <NavLink to="/community">
-          커뮤니티
+        <NavLink to="/growthRecord">
+          성장기록
         </NavLink>
       </div>
       <div>
-        <NavLink to="/growthRecord">
-          성장기록
+        <NavLink to="/community">
+          커뮤니티
         </NavLink>
       </div>
       
@@ -56,11 +56,11 @@ const Nav = () => {
               마이페이지
             </NavLink>
           </div>
-          <div>
+          {/* <div>
             <NavLink to="/friend-list">
               친구신청목록
             </NavLink>
-          </div>
+          </div> */}
         </div>
       </div>
     
@@ -68,4 +68,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default Navbar;
