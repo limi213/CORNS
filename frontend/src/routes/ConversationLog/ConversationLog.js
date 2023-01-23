@@ -16,7 +16,7 @@ function ConversationLog({}) {
       <Navbar />
       <hr />
 
-      <Sidebar Title="쫑알로그" Items={SidebarItems}/>
+      <Sidebar Items={SidebarItems}/>
       
       <hr />
       <Switch>
