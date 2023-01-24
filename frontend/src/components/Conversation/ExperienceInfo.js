@@ -18,7 +18,7 @@ function ExperienceInfo({}) {
       <h5>경험치</h5>
       <Box sx={{ display: "flex" }}>
         <ExpInfo level={currentLevel} exp={currentExp} />
-        <ProgressBar color={"#FFC804"} percent={70} />
+        <ProgressBar percent={70} />
         <ExpInfo level={currentLevel + 1} exp={nextExp} />
       </Box>
     </>

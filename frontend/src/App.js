@@ -1,6 +1,6 @@
 import React, { Route, Switch } from "react-router-dom";
 import Home from "./routes/Home";
-import Conversation from "./routes/Conversation/Conversation";
+import Conversation from "./routes/Conversation";
 import ConversationLog from "./routes/ConversationLog/ConversationLog";
 import Community from "./routes/Community";
 import GrowthRecord from "./routes/GrowthRecord";

@@ -31,7 +31,15 @@ function RoomCard({ title }) {
         </Typography>
       </CardContent>
 
-      <Button variant="contained" sx={{ width: "100%", height: 50 }}>
+      <Button
+        variant="contained"
+        sx={{
+          width: "100%",
+          height: 50,
+          backgroundColor: "#67C73A",
+          color: "#111",
+        }}
+      >
         쫑알룸 입장하기
       </Button>
     </Card>
