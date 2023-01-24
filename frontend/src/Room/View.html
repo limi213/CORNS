@@ -1,0 +1,77 @@
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <link rel="icon" type="image/png" sizes="96x96" href="/public/favicon-96x96.png">
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="theme-color" content="#000000" />
+      <meta
+        name="description"
+        content="Web site created using create-react-app"
+      />
+      <link rel="apple-touch-icon" href="/public/logo192.png" />
+      <link rel="manifest" href="/public/manifest.json" />
+      <title>CORNS</title>
+      <!-- Bootstrap -->
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="/openVidu/openvidu-style.css" type="text/css" media="screen">
+      <script src="/openVidu/openvidu-browser-2.25.0.js"></script>
+      <link rel="stylesheet" href="contents/css/roomStyle.css">
+      <script src="/openVidu/openvidu.js"></script>
+    </head>
+    <body>
+      <div id="roomViewBackground">
+        <!-- 탑바 -->
+        <div id="roomViewTopBar"></div>
+        <!-- 채팅창 -->
+        <div id="roomViewCatting">chatting</div>
+        <div id="roomViewUserList">
+          <!-- 유저1 -->
+          <div id="roomViewUser1" class="roomViewUser"></div>
+          <!-- 유저2 -->
+          <div id="roomViewUser2" class="roomViewUser"></div>
+          <!-- 유저3 -->
+          <div id="roomViewUser3" class="roomViewUser"></div>
+          <!-- 유저4 -->
+          <div id="roomViewUser4" class="roomViewUser"></div>
+        </div>
+        <!-- <div id="video-container" class="col-md-6"></div> -->
+        <div id="video-container" class="col-md-6">
+          <!-- <video autoplay="" id="local-video-undefined"></video>
+          <div class="data-node" id="data-Participant38">
+            <p>Participant38</p>
+          </div> -->
+        </div>
+      </div>
+      <input type="hidden" id="sessionId" />
+      <input type="hidden" id="userName" />
+    </body>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        // 시작부분
+        // 파라미터에서 세션값, 자기 연결값 가져오기
+        let urlParams = new URL(location.href).searchParams;
+
+        let session = urlParams.get('session');
+        let connection = urlParams.get('connection');
+
+        if(!session ){
+          // alert("잘못된 접근입니다.");
+          // 하고 여기서 다시 방 리스트로 보낸다.
+        }
+        else{
+          // 이슈 없이 커넥션이랑 세션 다 들어옴!
+          $("#sessionId").val(session);
+          $("#userName").val("앨리스"); // 유저이름은 쿠키에서 가져올려나
+
+          joinSession();
+          
+        }
+
+
+      });
+    </script>
+</html>

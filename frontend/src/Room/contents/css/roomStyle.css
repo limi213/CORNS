@@ -1,0 +1,61 @@
+/* 나중에 공통 css로 뺄 예정 */
+#roomViewBackground {
+    position: absolute;
+    background-image: url('../img/background.png');
+    width: calc(100vw - 32px - 32px);
+    height: calc(100vh - 32px - 32px);
+    margin: 32px;
+    z-index: -1;
+}
+
+#roomViewTopBar {
+    position: absolute;
+    margin-left: 32px;
+    margin-top: 32px;
+    height: 64px;
+    width: 1000px;
+    border: 1px solid black;
+    background-color: white;
+}
+
+#video-container {
+    position: absolute;
+}
+
+.roomViewUser {
+    position: absolute;
+    width: 480px;
+    height: 250px;
+    border: 1px solid black;
+    background-color: white;
+}
+
+#roomViewUser1 {
+    margin-left: 32px;
+    margin-top: 118px;
+}
+
+#roomViewUser2 {
+    margin-left: 32px;
+    margin-top: 388px;
+}
+
+#roomViewUser3 {
+    margin-left: 532px;
+    margin-top: 118px;
+}
+
+#roomViewUser4 {
+    margin-left: 532px;
+    margin-top: 388px;
+}
+
+#roomViewCatting {
+    position: absolute;
+    margin-top: 32px;
+    margin-left: 1052px;
+    border: 1px solid black;
+    background-color: white;
+    width: 400px;
+    height: 606px;
+}
