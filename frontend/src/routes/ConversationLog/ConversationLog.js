@@ -22,7 +22,7 @@ function ConversationLog({}) {
       <Switch>
         <Route exact path="/conversationLog" component={Log} />
         <Route exact path="/conversationLog/bookmarks" component={LogBookmark} />
-        <Route exact path="/conversationLog/logdetail/:log_id" component={LogDetail} />
+        <Route exact path="/conversationLog/logdetail/:room_no" component={LogDetail} />
       </Switch>
 
     </>
