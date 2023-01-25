@@ -4,6 +4,7 @@ import Sidebar from "../../components/Sidebar";
 import Log from "./Log";
 import LogBookmark from "./LogBookmark";
 import LogDetail from "./LogDetail";
+import Grid from "@mui/material/Grid";
 
 function ConversationLog({}) {
   const SidebarItems = [
@@ -14,17 +15,20 @@ function ConversationLog({}) {
   return (
     <>
       <Navbar />
-      <hr />
 
-      <Sidebar Items={SidebarItems}/>
+      <Grid container spacing = {1}>
+        <Grid item xs = {2}>
+          <Sidebar Items={SidebarItems}/>
+        </Grid>
+        <Grid item xs = {10}>
+          <Switch>
+            <Route exact path="/conversationLog" component={Log} />
+            <Route exact path="/conversationLog/bookmarks" component={LogBookmark} />
+            <Route exact path="/conversationLog/logdetail/:room_no" component={LogDetail} />
+          </Switch>
+        </Grid>
+      </Grid>
       
-      <hr />
-      <Switch>
-        <Route exact path="/conversationLog" component={Log} />
-        <Route exact path="/conversationLog/bookmarks" component={LogBookmark} />
-        <Route exact path="/conversationLog/logdetail/:room_no" component={LogDetail} />
-      </Switch>
-
     </>
   );
 }
