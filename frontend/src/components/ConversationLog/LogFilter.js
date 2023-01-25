@@ -1,63 +1,69 @@
-import React from 'react';
-
+import React from "react";
+import SubjectBtn from "../Conversation/SubjectBtn";
+import TextField from "@mui/material/TextField";
+import Checkbox from "@mui/material/Checkbox";
+import Box from "@mui/material/Box";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Button from "@mui/material/Button";
 
 function LogFilter() {
-    return (
-        <>           
-            <div>
-                <span>주제</span>
-                <span>
-                    <button>일상</button>
-                    <button>비즈니스</button>
-                    <button>오픽</button>
-                    <button>토스</button>
-                    <button>자유</button>
-                </span>
-            </div>
-            
-            <div>
-                <span>시간</span>
-                <label htmlFor="min-time">최소시간(분)</label>
-                <input type="text" id="min-time" placeholder="5"/>
-                <label htmlFor="max-time">최대시간(분)</label>
-                <input type="text" id="max-time" placeholder="30"/>
-            </div>
-            
-            <div>
-                <span>날짜</span>
-                <input type="date" /> ~ <input type="date" />
-            </div>
-            
-            <div>
-                <span>자기평가</span>
-                <span>
-                    <input type="checkbox" id="score1"/>
-                    <label htmlFor="score1">1</label>
-                    <input type="checkbox" id="score2"/>
-                    <label htmlFor="score2">2</label>
-                    <input type="checkbox" id="score3"/>
-                    <label htmlFor="score3">3</label>
-                    <input type="checkbox" id="score4"/>
-                    <label htmlFor="score4">4</label>
-                    <input type="checkbox" id="score5"/>
-                    <label htmlFor="score5">5</label>
-                </span>
-            </div>
-            
-            <div>
-                <span>따봉뱃지</span>
-                <span>
-                    <input type="checkbox" id="thums-yes"/>
-                    <label htmlFor="thums-yes">있음</label>
-                    <input type="checkbox" id="thums-no"/>
-                    <label htmlFor="thums-no">없음</label>
-                </span>
-            </div>
+  const datas = [
+    { id: 1, subject: "일상" },
+    { id: 2, subject: "비즈니스" },
+    { id: 3, subject: "소개팅" },
+    { id: 4, subject: "오픽" },
+    { id: 5, subject: "토스" },
+    { id: 6, subject: "자유" },
+  ];
 
-            <button>전체해제</button>
-        </>
-    )
+  const subjectBtn = datas.map((item) => (
+    <SubjectBtn active={false} subject={item.subject} key={item.id} />
+  ));
+
+  return (
+    <Box sx={{ border: "3px solid #111", background: "#FFC804" }}>
+      <Box>
+        주제
+        {subjectBtn}
+      </Box>
+
+      <Box component="form">
+        시간
+        <TextField
+          id="outlined-basic"
+          label="최소시간(분)"
+          variant="outlined"
+        />
+        <TextField
+          id="outlined-basic"
+          label="최대시간(분)"
+          variant="outlined"
+        />
+      </Box>
+
+      <Box component="form">
+        <h4>날짜</h4>
+        <input type="date" /> ~ <input type="date" />
+      </Box>
+
+      <Box sx={{ flexDirection: "row" }}>
+        <h4>자기평가</h4>
+        <FormControlLabel control={<Checkbox />} label="1" />
+        <FormControlLabel control={<Checkbox />} label="2" />
+        <FormControlLabel control={<Checkbox />} label="3" />
+        <FormControlLabel control={<Checkbox />} label="4" />
+        <FormControlLabel control={<Checkbox />} label="5" />
+      </Box>
+
+      <Box>
+        <h4>따봉뱃지</h4>
+        <FormControlLabel control={<Checkbox />} label="있음" />
+        <FormControlLabel control={<Checkbox />} label="없음" />
+      </Box>
+
+      <Button variant="contained">전체해제</Button>
+    </Box>
+  );
 }
-
 
 export default LogFilter;

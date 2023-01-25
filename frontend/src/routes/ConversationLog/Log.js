@@ -3,6 +3,12 @@ import LogFilter from "../../components/ConversationLog/LogFilter";
 import LogHeader from "../../components/ConversationLog/LogHeader";
 import LogList from "../../components/ConversationLog/LogList";
 
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+
+
 function Log() {
   // fetch
   // dummy data
@@ -33,11 +39,19 @@ function Log() {
 
   return (
     <>
-      <h5>쫑알로그</h5>
+      <h2>쫑알로그</h2>
       <LogFilter />
-      <hr />
-      <LogHeader />
-      <LogList logs={logs} />
+      
+      <TableContainer>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <LogHeader />
+          </TableHead>
+          <TableBody>
+            <LogList logs={logs}/>
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 }
