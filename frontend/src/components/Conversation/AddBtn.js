@@ -14,7 +14,8 @@ function AddBtn() {
             position: "fixed",
             bottom: "40px",
             right: "105px",
-            borderRadius: "32px",
+            borderRadius: "40px",
+            border: "3px solid #111",
             boxShadow: "4px 4px 4px rgb(0,0,0,.5)",
             cursor: "pointer",
           }}

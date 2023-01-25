@@ -10,6 +10,7 @@ import Mypage from "./routes/Mypage";
 // import FriendList from "./pages/FriendList";
 
 function App() {
+
   return (
     <div className="App">
       <Switch>

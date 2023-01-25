@@ -29,7 +29,6 @@ function RoomList() {
 
   return (
     <>
-      <h2>쫑알룸리스트</h2>
       <Box>
         <Grid container spacing={1}>
           {roomList}
