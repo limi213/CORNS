@@ -1,9 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function DailyBar() {
-  return (
-    <div>DailyBar</div>
-  )
+  return <div>DailyBar</div>;
 }
 
 export default DailyBar;
