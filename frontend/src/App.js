@@ -2,7 +2,7 @@ import React, { Route, Switch } from "react-router-dom";
 import Home from "./routes/Home";
 import Conversation from "./routes/Conversation";
 import ConversationLog from "./routes/ConversationLog/ConversationLog";
-import Community from "./routes/Community";
+import Community from "./routes/Community/Community";
 import GrowthRecord from "./routes/GrowthRecord/GrowthRecord";
 import Login from "./routes/LogIn";
 import Signin from "./routes/SignIn";

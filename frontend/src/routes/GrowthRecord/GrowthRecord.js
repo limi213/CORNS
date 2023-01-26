@@ -3,14 +3,14 @@ import Navbar from "../../components/GlobalComponents/Navbar";
 import Sidebar from "../../components/GlobalComponents/Sidebar";
 import MyProfile from './MyProfile'
 import ExperienceDetail from './ExperienceDetail';
-import Indicators from './indicators';
+import Indicators from './Indicators';
 import Grid from "@mui/material/Grid";
 
 function GrowthRecord() {
   const SidebarItems = [
     { name: "내정보", route: "/growthRecord" },
     { name: "경험치", route: "/growthRecord/experienceDetail" },
-    { name: "지표보기", route: "/growthRecord/indicators" },
+    { name: "지표보기", route: "/growthRecord/indicators/weeklyLiner" },
   ];
 
   return (
@@ -25,7 +25,7 @@ function GrowthRecord() {
           <Switch>
             <Route exact path="/growthRecord" component={MyProfile} />
             <Route exact path="/growthRecord/experienceDetail" component={ExperienceDetail} />
-            <Route exact path="/growthRecord/indicators" component={Indicators} />
+            <Route path="/growthRecord/indicators" component={Indicators} />
           </Switch>
         </Grid>
       </Grid>

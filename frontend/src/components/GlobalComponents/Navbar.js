@@ -63,7 +63,7 @@ const Navbar = () => {
           <NavLink to="/growthRecord">성장기록</NavLink>
         </li>
         <li>
-          <NavLink to="/community">커뮤니티</NavLink>
+          <NavLink to="/community/ranking/sincerity">커뮤니티</NavLink>
         </li>
 
         {user ? (
