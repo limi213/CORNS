@@ -4,6 +4,7 @@ import ParticipantList from "../../components/ConversationLog/ParticipantList";
 import SelfEvaluationForm from "../../components/GlobalComponents/SelfEvaluationForm";
 
 import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
 
 
 function LogDetail({ match }) {
@@ -45,7 +46,9 @@ function LogDetail({ match }) {
   return (
     <>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <LogItem log={log} />
+        <TableBody>
+          <LogItem log={log} />
+        </TableBody>
       </Table>
       <hr/>
       
