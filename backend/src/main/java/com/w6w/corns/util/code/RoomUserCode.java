@@ -2,7 +2,7 @@ package com.w6w.corns.util.code;
 
 public enum RoomUserCode {
 
-    ROOM_USER_WAITING(600), ROOM_USER_CONVERSATION(601), ROOM_USER_EXIT(602);
+    ROOM_USER_WAITING(6000), ROOM_USER_CONVERSATION(6001), ROOM_USER_EXIT(6002);
 
     private final int code;
 

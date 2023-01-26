@@ -2,7 +2,7 @@ package com.w6w.corns.util.code;
 
 public enum UserCode {
 
-    USER_DEFAULT(800), USER_UNREGISTER(801), USER_SUSPEND(802);
+    USER_DEFAULT(8000), USER_UNREGISTER(8001), USER_SUSPEND(8002);
 
     private final int code;
 

@@ -2,7 +2,7 @@ package com.w6w.corns.util.code;
 
 public enum RankCode {
 
-    RANK_EXP(200), RANK_SPEAKING(201), RANK_THUMB(202), RANK_FRIEND(203);
+    RANK_EXP(2000), RANK_SPEAKING(2001), RANK_THUMB(2002), RANK_FRIEND(2003);
 
     private final int code;
 

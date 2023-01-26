@@ -2,7 +2,7 @@ package com.w6w.corns.util.code;
 
 public enum RoomCode {
 
-    ROOM_WAITING(100), ROOM_START(101), ROOM_END(102);
+    ROOM_WAITING(1000), ROOM_START(1001), ROOM_END(1002);
 
     private final int code;
 

@@ -2,7 +2,7 @@ package com.w6w.corns.util.code;
 
 public enum FriendCode {
 
-    FRIEND_SEND_A2B(500), FRIEND_SEND_B2A(501), FRIEND_ACCEPT(502);
+    FRIEND_SEND_A2B(5000), FRIEND_SEND_B2A(5001), FRIEND_ACCEPT(5002);
 
     private final int code;
 
