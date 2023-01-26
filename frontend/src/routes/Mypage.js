@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar";
+import Navbar from "../components/GlobalComponents/Navbar";
 
 function Mypage() {
   return (

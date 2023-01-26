@@ -1,6 +1,6 @@
 import React from "react";
 
-import Navbar from "../components/Navbar";
+import Navbar from "../components/GlobalComponents/Navbar";
 import LogInUserArea from "../components/Conversation/LogInUserArea";
 import AnonymousUserArea from "../components/Conversation/AnonymousUserArea";
 import ConversationRoomFilter from "../components/Conversation/ConversationRoomFilter";

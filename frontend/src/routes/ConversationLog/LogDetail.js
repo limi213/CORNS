@@ -1,7 +1,7 @@
 import React from "react";
 import LogItem from "../../components/ConversationLog/LogItem";
 import ParticipantList from "../../components/ConversationLog/ParticipantList";
-import SelfEvaluationForm from "../../components/SelfEvaluationForm";
+import SelfEvaluationForm from "../../components/GlobalComponents/SelfEvaluationForm";
 
 import Table from "@mui/material/Table";
 

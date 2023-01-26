@@ -1,6 +1,6 @@
 import {Route, Switch} from 'react-router-dom'
-import Navbar from "../../components/Navbar";
-import Sidebar from "../../components/Sidebar";
+import Navbar from "../../components/GlobalComponents/Navbar";
+import Sidebar from "../../components/GlobalComponents/Sidebar";
 import MyProfile from './MyProfile'
 import ExperienceDetail from './ExperienceDetail';
 import Indicators from './indicators';

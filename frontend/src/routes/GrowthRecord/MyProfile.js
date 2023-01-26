@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import UserProfile from "../../components/UserProfile";
+import UserProfile from "../../components/GlobalComponents/UserProfile";
 
 function MyProfile() {
   // 데이터 fetch (from_id == to_id)

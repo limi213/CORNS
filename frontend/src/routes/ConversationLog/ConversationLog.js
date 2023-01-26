@@ -1,6 +1,6 @@
 import React, { Route, Switch } from "react-router-dom";
-import Navbar from "../../components/Navbar";
-import Sidebar from "../../components/Sidebar";
+import Navbar from "../../components/GlobalComponents/Navbar";
+import Sidebar from "../../components/GlobalComponents/Sidebar";
 import Log from "./Log";
 import LogBookmark from "./LogBookmark";
 import LogDetail from "./LogDetail";
