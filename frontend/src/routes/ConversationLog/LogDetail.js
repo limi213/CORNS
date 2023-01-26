@@ -1,11 +1,10 @@
 import React from "react";
 import LogItem from "../../components/ConversationLog/LogItem";
-import ParticipantList from "../../components/ConversationLog/ParticipantList";
+import ParticipantScriptList from "../../components/GlobalComponents/ParticipantScriptList";
 import SelfEvaluationForm from "../../components/GlobalComponents/SelfEvaluationForm";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-
 
 function LogDetail({ match }) {
   const { room_no } = match.params;
@@ -50,9 +49,9 @@ function LogDetail({ match }) {
           <LogItem log={log} />
         </TableBody>
       </Table>
-      <hr/>
-      
-      <ParticipantList participants={participants} />
+      <hr />
+
+      <ParticipantScriptList participants={participants} />
       <hr />
       <SelfEvaluationForm />
     </>
