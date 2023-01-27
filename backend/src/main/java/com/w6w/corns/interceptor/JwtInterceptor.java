@@ -1,6 +1,6 @@
 package com.w6w.corns.interceptor;
 
-import com.w6w.corns.jwt.JwtService;
+import com.w6w.corns.service.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;

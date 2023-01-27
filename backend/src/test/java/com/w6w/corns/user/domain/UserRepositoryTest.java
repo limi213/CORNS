@@ -1,7 +1,7 @@
 package com.w6w.corns.user.domain;
 
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterAll;
+import com.w6w.corns.domain.user.User;
+import com.w6w.corns.domain.user.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
