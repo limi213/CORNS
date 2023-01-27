@@ -37,7 +37,7 @@ function LogBookmark() {
 
   return (
     <>
-      <h2>쫑알로그</h2>
+      <h2>즐겨찾기</h2>
 
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
