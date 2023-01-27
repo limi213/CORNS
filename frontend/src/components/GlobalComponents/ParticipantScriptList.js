@@ -1,11 +1,26 @@
 import React from "react";
 import ParticipantScriptCard from "./ParticipantScriptCard";
+import Box from "@mui/material/Box";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
 function ParticipantScriptList({ participants }) {
   return (
-    <ul>
+    <ul
+      css={css`
+        list-style: none;
+        display: flex;
+        padding: 0;
+      `}
+    >
       {participants.map((item, index) => {
-        return <ParticipantScriptCard participant={item} key={index} />;
+        return (
+          <li key={index}>
+            <Box sx={{ border: "3px solid #111" }}>
+              <ParticipantScriptCard participant={item}/>
+            </Box>
+          </li>
+        );
       })}
     </ul>
   );

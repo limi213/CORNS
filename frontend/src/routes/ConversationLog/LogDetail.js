@@ -1,10 +1,13 @@
 import React from "react";
 import LogItem from "../../components/ConversationLog/LogItem";
 import ParticipantScriptList from "../../components/GlobalComponents/ParticipantScriptList";
-import SelfEvaluationForm from "../../components/GlobalComponents/SelfEvaluationForm";
+import SelfEvaluation from "../../components/GlobalComponents/SelfEvaluation";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
+import Box from "@mui/material/Box";
+
+import backgroundImage from '../../assets/backgroundImage.png'
 
 function LogDetail({ match }) {
   const { room_no } = match.params;
@@ -25,18 +28,20 @@ function LogDetail({ match }) {
 
   const participants = [
     {
-      imgUrl: "",
+      img_url:
+        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
       nickname: "isk2",
       user_id: 100000,
-      ddabong: 2,
+      thumbs: 2,
       ignition: "3분 20초",
       script: "",
     },
     {
-      imgUrl: "",
+      img_url:
+        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
       nickname: "haun",
       user_id: 100001,
-      ddabong: 1,
+      thumbs: 1,
       ignition: "4분",
       script: "",
     },
@@ -52,8 +57,10 @@ function LogDetail({ match }) {
       <hr />
 
       <ParticipantScriptList participants={participants} />
-      <hr />
-      <SelfEvaluationForm />
+
+      <Box sx={{margin: '64px 0 0 0', backgroundImage: `url(${backgroundImage})`}}>
+        <SelfEvaluation/>
+      </Box>
     </>
   );
 }

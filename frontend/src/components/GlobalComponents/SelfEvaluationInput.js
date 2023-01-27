@@ -11,7 +11,8 @@ function SelfEvaluationInput({}) {
           aria-describedby="my-helper-text"
           multiline
           rows={4}
-          sx={{ width: "100%" }}
+          sx={{ width: "100%", backgroundColor: "white" }}
+
         />
         <Button variant="contained" component="label">
           등록

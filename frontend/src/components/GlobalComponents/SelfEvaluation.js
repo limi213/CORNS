@@ -8,7 +8,7 @@ export default function SelfEvaluation({}) {
   return (
     <>
       <h3>자기평가</h3>
-      <Box>
+      <Box sx={{ backgroundColor: "white" }}>
         <StarRating />
         <SelfEvaluationInput />
       </Box>
