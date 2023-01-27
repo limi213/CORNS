@@ -15,7 +15,6 @@ function ConversationLog({}) {
     { name: "즐겨찾기", route: "/conversationLog/bookmarks" },
     { name: "쫑알단어", route: "/conversationLog/words" },
 
-
   ];
 
   return (
