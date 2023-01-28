@@ -7,11 +7,12 @@ function MyProfile() {
   // dummy data
   const user = {
     basicInfo: {
-      imgUrl: "",
+      img_url:
+        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
       nickname: "isk2",
       id: 1001,
       level: 30,
-      exp: 2,
+      exp: 1980,
       friendCnt: 10,
       totalDay: 13,
       totalDdabong: 4,

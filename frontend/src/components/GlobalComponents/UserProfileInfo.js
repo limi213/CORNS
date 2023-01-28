@@ -1,24 +1,76 @@
-import React from 'react';
+import React from "react";
 
-function UserProfileInfo({basicInfo}) {
-    const {imgUrl, nickname, id, level, exp, friendCnt, totalDay, totalDdabong, totalTalk} = basicInfo
+import { Box, CardMedia, Container, Typography, Grid } from "@mui/material";
 
-    return (
-        <div>
-            <img src={imgUrl} alt={nickname} />
-            <div>{nickname}#{id}</div>
-            <div>
-                <span>Lv.{level}</span>
-                <span>{exp}exp</span>
-                <span>친구수{friendCnt}명</span>
-            </div>
-            <div>
-                <span>누적 출석수 {totalDay}일</span>
-                <span>누적 칭찬수 {totalDdabong}개</span>
-                <span>누적 발화량수 {totalTalk}분</span>
-            </div>
-        </div>
-    )
+function UserProfileInfo({ basicInfo }) {
+  const {
+    img_url,
+    nickname,
+    id,
+    level,
+    exp,
+    friendCnt,
+    totalDay,
+    totalDdabong,
+    totalTalk,
+  } = basicInfo;
+
+  return (
+    <>
+      <Container
+        sx={{
+          display: "flex",
+          p: "64px 48px",
+        }}
+      >
+        <CardMedia
+          component="img"
+          image={img_url}
+          alt={nickname}
+          sx={{
+            width: "250px",
+            borderRadius: "200px",
+            border: "3px solid #111",
+            mr: "135px",
+          }}
+        />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            width: "100%",
+          }}
+        >
+          <Typography variant="h5">
+            {nickname}#{id}
+          </Typography>
+          <Grid container spacing={0}>
+            <Grid item xs={4}>
+              <Typography>Lv.{level}</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography>{exp}exp</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography>친구수{friendCnt}명</Typography>
+            </Grid>
+          </Grid>
+          <Grid container spacing={0}>
+            <Grid item xs={4}>
+              <Typography>누적 출석수 {totalDay}일</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography>누적 칭찬수 {totalDdabong}개</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography>누적 발화량수 {totalTalk}분</Typography>
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
+    </>
+  );
 }
 
 export default UserProfileInfo;
