@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @DynamicInsert
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @ToString
 @Entity
 public class User extends BaseTime {
