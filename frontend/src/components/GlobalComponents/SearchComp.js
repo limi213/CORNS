@@ -24,7 +24,10 @@ function SearchComp() {
 
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
-      <Select value={type} label={type} onChange={handleChange}>
+      <Select
+        value={type}
+        onChange={handleChange}
+      >
         <MenuItem value={"user_id"}>아이디</MenuItem>
         <MenuItem value={"nickname"}>닉네임</MenuItem>
       </Select>
