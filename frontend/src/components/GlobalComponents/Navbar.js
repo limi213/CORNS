@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { NavLink } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -6,7 +6,7 @@ import NavbarDropdown from "./NavbarDropdown";
 
 
 const Navbar = () => {
-  const user = true;
+  const [user, stateUser] = useState(true);
 
   return (
     <nav
@@ -26,15 +26,15 @@ const Navbar = () => {
     >
       <div
         css={css`
-          // width: 95px;
-          // height: 57px;
-
           flex: none;
           order: 0;
           flex-grow: 0;
         `}
       >
         <NavLink to="/">corns</NavLink>
+        
+        {/* 임시 로그인 토글 */}
+        <button onClick={() => stateUser(!user)}>임시 로그인</button>
       </div>
 
       <ul
