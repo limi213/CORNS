@@ -6,7 +6,7 @@ import NavbarDropdown from "./NavbarDropdown";
 
 
 const Navbar = () => {
-  const user = false;
+  const user = true;
 
   return (
     <nav

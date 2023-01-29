@@ -16,7 +16,11 @@ function Community() {
   ];
 
   return (
-    <>
+    <div
+      css={css`
+        margin: 0 105px;
+      `}
+    >
       <Navbar />
 
       <Grid container spacing={1}>
@@ -43,7 +47,7 @@ function Community() {
           </div>
         </Grid>
       </Grid>
-    </>
+    </div>
   );
 }
 
