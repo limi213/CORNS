@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import NavbarDropdown from "./NavbarDropdown";
-import white_logo from "assets/corns_logo.png";
+
 
 
 const Navbar = () => {
-  const [user, stateUser] = useState(true);
+  const user = false;
 
   return (
     <nav
@@ -16,35 +16,27 @@ const Navbar = () => {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        padding: 0 24px;
-        width: calc(100% - 250px);
+        gap: 50%;
+
+        width: 1730px
         height: 60px;
+        top: 0px;
+
         background: #ffc804;
-        position: absolute;
-        top: 0;
-        left: 105px;
       `}
     >
       <div
         css={css`
+          // width: 95px;
+          // height: 57px;
+
           flex: none;
           order: 0;
           flex-grow: 0;
           color: 'black'
         `}
       >
-        <NavLink to="/">
-          <img
-            src={white_logo}
-            alt="corns-logo"
-            css={css`
-              height: 2rem;
-            `}
-          />
-        </NavLink>
-
-        {/* 임시 로그인 토글 */}
-        <button onClick={() => stateUser(!user)}>임시 로그인</button>
+        <NavLink to="/">corns</NavLink>
       </div>
 
       <ul

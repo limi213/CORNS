@@ -9,7 +9,7 @@ function UserProfile({ user }) {
   return (
     <>
       <UserProfileInfo basicInfo={basicInfo} />
-      <Grid container sx={{ p: "0 1.5rem 0 3rem", mb: "200px" }}>
+      <Grid container spacing={1} sx={{ p: "0 48px" }}>
         {rankingList.map((item, index) => {
           return <UserProfileRankingCard ranking={item} key={index} />;
         })}

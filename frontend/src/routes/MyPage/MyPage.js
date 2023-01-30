@@ -18,11 +18,7 @@ function Mypage() {
   ];
 
   return (
-    <div
-      css={css`
-        margin: 0 105px;
-      `}
-    >
+    <>
       <Navbar />
 
       <Grid container spacing={1} sx={{margin: '124px 0 0 0'}}>
@@ -53,7 +49,7 @@ function Mypage() {
           </div>
         </Grid>
       </Grid>
-    </div>
+    </>
   );
 }
 

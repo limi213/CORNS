@@ -1,9 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import UserProfile from "components/GlobalComponents/UserProfile";
-import FriendsBtn from "components/GlobalComponents/FriendsBtn";
-
-import { Box } from "@mui/material";
+import UserProfile from "../../components/GlobalComponents/UserProfile";
 
 function MyProfile() {
   // 데이터 fetch (from_id == to_id)
@@ -20,7 +17,6 @@ function MyProfile() {
       totalDay: 13,
       totalDdabong: 4,
       totalTalk: 123,
-      status: true,
     },
     rankingList: [
       { type: "sungsil", rank: 80, indicate: 1800 },
@@ -31,11 +27,10 @@ function MyProfile() {
   };
 
   return (
-    <Box sx={{ border: "3px solid #111" }}>
-      <h3>내 정보</h3>
+    <>
+      <h5>내 정보</h5>
       <UserProfile user={user} />
-      <FriendsBtn status={user.basicInfo.status} />
-    </Box>
+    </>
   );
 }
 

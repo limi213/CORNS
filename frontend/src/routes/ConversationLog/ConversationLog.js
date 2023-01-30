@@ -4,7 +4,7 @@ import Sidebar from "../../components/GlobalComponents/Sidebar";
 import Log from "./Log";
 import LogBookmark from "./LogBookmark";
 import LogDetail from "./LogDetail";
-import LogWord from "./LogWord";
+import LogWord from './LogWord';
 import Grid from "@mui/material/Grid";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -14,14 +14,11 @@ function ConversationLog({}) {
     { name: "쫑알로그", route: "/conversationLog" },
     { name: "즐겨찾기", route: "/conversationLog/bookmarks" },
     { name: "쫑알단어", route: "/conversationLog/words" },
+
   ];
 
   return (
-    <div
-      css={css`
-        margin: 0 105px;
-      `}
-    >
+    <>
       <Navbar />
 
       <Grid container spacing={1} sx={{margin: '124px 0 0 0'}}>
@@ -48,12 +45,16 @@ function ConversationLog({}) {
                 path="/conversationLog/logdetail/:room_no"
                 component={LogDetail}
               />
-              <Route exact path="/conversationLog/words" component={LogWord} />
+              <Route
+                exact
+                path="/conversationLog/words"
+                component={LogWord}
+              />
             </Switch>
           </div>
         </Grid>
       </Grid>
-    </div>
+    </>
   );
 }
 

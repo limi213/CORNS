@@ -49,7 +49,7 @@ function Community() {
           </div>
         </Grid>
       </Grid>
-    </div>
+    </>
   );
 }
 
