@@ -1,9 +1,7 @@
 import React from "react";
 import RankingTableItem from "./RankingTableItem";
 
-import TableContainer from "@mui/material/TableContainer";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
+import { TableContainer, Table, TableBody, Modal } from "@mui/material";
 
 function RankingtTableList({ items }) {
   return (
