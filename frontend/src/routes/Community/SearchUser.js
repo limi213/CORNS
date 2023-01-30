@@ -51,8 +51,8 @@ function SearchUser() {
       <h2>유저 검색</h2>
       <SearchComp />
 
-      <Box>
-        <UserList items={users} />
+      <Box padding="48px 112px"> 
+        <UserList items={users}/>
       </Box>
     </>
   );

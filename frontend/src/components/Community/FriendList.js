@@ -2,6 +2,8 @@ import React from 'react';
 import SearchComp from '../GlobalComponents/SearchComp';
 import UserList from './UserList';
 
+import Box from "@mui/material/Box";
+
 function FriendList({items}) {
   const users = [
     {
@@ -47,7 +49,10 @@ function FriendList({items}) {
     <>
       <h3>친구목록</h3>
       <SearchComp />
-      <UserList items = {users}/>
+      <Box  padding="48px 112px">
+        <UserList items = {users}/>
+      </Box>
+      
     </>
   )
 }
