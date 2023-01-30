@@ -29,7 +29,7 @@ function Home() {
               backgroundColor: "#FFC804",
             }}
           >
-            튜도리얼 보기
+            튜토리얼 보기
           </Button>
         </Box>
       </Box>

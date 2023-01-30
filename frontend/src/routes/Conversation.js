@@ -15,7 +15,11 @@ function Conversation() {
   const user = true;
 
   return (
-    <>
+    <div
+      css={css`
+        margin: 0 105px;
+      `}
+    >
       <Navbar />
       <div
         css={css`
@@ -29,7 +33,7 @@ function Conversation() {
         <RoomCreateModal />
         <SelfEvaluationModal />
       </div>
-    </>
+    </div>
   );
 }
 
