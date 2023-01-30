@@ -7,7 +7,7 @@ function Friends() {
   return (
     <>
       <h2>친구</h2>
-      <Box>
+      <Box mt="64px" mb="64px">
         <FriendRequest />
       </Box>
       <Box>

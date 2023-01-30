@@ -1,6 +1,6 @@
 import React from "react";
-import SigninCard from "components/LoginSignIn/SigninCard";
-import AgreeCard from "components/LoginSignIn/AgreeCard";
+import SigninCard from "components/LoginSignin/SigninCard";
+import AgreeCard from "components/LoginSignin/AgreeCard";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 

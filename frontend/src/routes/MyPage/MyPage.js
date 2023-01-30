@@ -25,7 +25,7 @@ function Mypage() {
     >
       <Navbar />
 
-      <Grid container spacing={1} sx={{margin: '124px 0 0 0'}}>
+      <Grid container spacing={1} sx={{ margin: "124px 0 0 0" }}>
         <Grid item xs={2}>
           <Sidebar Items={SidebarItems} />
         </Grid>
@@ -34,7 +34,7 @@ function Mypage() {
             css={css`
               box-sizing: border-box;
               border: 3px solid #111111;
-              padding: 0 32px;
+              padding: 0 32px 64px 32px;
             `}
           >
             <Switch>
