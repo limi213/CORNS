@@ -11,7 +11,6 @@ import backgroundImage from "../../assets/backgroundImage.png";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-
 function LogDetail({ match }) {
   const { room_no } = match.params;
 
@@ -59,15 +58,15 @@ function LogDetail({ match }) {
       </Table>
       <hr />
 
-      <ParticipantScriptList participants={participants}/>
+      <ParticipantScriptList participants={participants} />
 
       <Box
         sx={{
           width: "100%",
           backgroundImage: `url(${backgroundImage})`,
+          position: "absolute",
           bottom: "0",
           left: "0",
-          
         }}
       >
         <SelfEvaluation />

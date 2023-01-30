@@ -10,6 +10,9 @@ export default function StarRating() {
     <Box
       sx={{
         "& > legend": { mt: 2 },
+        backgroundColor: "#fff",
+        display: "flex",
+        justifyContent: "center",
       }}
     >
       <Rating
@@ -18,6 +21,7 @@ export default function StarRating() {
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
+        sx={{}}
       />
     </Box>
   );

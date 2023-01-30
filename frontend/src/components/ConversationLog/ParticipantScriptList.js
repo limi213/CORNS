@@ -12,13 +12,19 @@ function ParticipantScriptList({ participants }) {
         display: flex;
         padding: 0;
         width: 100%;
+        margin-bottom: 280px;
       `}
-    > 
+    >
       {participants.map((item, index) => {
         return (
-          <li key={index} css={css`width: 25%`}>
-            <Box sx={{ border: "3px solid #111"}}>
-              <ParticipantScriptCard participant={item}/>
+          <li
+            key={index}
+            css={css`
+              width: 25%;
+            `}
+          >
+            <Box sx={{ border: "3px solid #111" }}>
+              <ParticipantScriptCard participant={item} />
             </Box>
           </li>
         );
