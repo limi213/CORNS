@@ -16,6 +16,7 @@ function SubjectBtn({ active, subject }) {
         sx={{
           height: "40px",
           padding: "0 30px",
+          mr: "32px",
           border: "3px solid #111",
           borderRadius: "0",
           color: "#111",
