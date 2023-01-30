@@ -10,7 +10,7 @@ function SelfEvaluationInput({}) {
         sx={{
           border: "3px solid #111",
           position: "relative",
-          width: "90%",
+          width: "100%",
         }}
       >
         <StarRating />

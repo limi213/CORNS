@@ -62,7 +62,8 @@ function LogDetail({ match }) {
 
       <Box
         sx={{
-          width: "100%",
+          width: "95.4%",
+          padding: "32px",
           backgroundImage: `url(${backgroundImage})`,
           position: "absolute",
           bottom: "0",
