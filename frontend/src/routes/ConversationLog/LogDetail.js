@@ -1,13 +1,16 @@
 import React from "react";
 import LogItem from "../../components/ConversationLog/LogItem";
-import ParticipantScriptList from "../../components/GlobalComponents/ParticipantScriptList";
+import ParticipantScriptList from "../../components/ConversationLog/ParticipantScriptList";
 import SelfEvaluation from "../../components/GlobalComponents/SelfEvaluation";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import Box from "@mui/material/Box";
 
-import backgroundImage from '../../assets/backgroundImage.png'
+import backgroundImage from "../../assets/backgroundImage.png";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
 
 function LogDetail({ match }) {
   const { room_no } = match.params;
@@ -17,8 +20,8 @@ function LogDetail({ match }) {
   const log = {
     room_no: 1000,
     bookmark: true,
-    subject: 1,
-    title: "제목1",
+    subject: "오픽",
+    title: "제목1입니다. 어쩌구",
     start_date: "2023-01-18",
     time: 5,
     max_member: 4,
@@ -56,10 +59,18 @@ function LogDetail({ match }) {
       </Table>
       <hr />
 
-      <ParticipantScriptList participants={participants} />
+      <ParticipantScriptList participants={participants}/>
 
-      <Box sx={{margin: '64px 0 0 0', backgroundImage: `url(${backgroundImage})`}}>
-        <SelfEvaluation/>
+      <Box
+        sx={{
+          width: "100%",
+          backgroundImage: `url(${backgroundImage})`,
+          bottom: "0",
+          left: "0",
+          
+        }}
+      >
+        <SelfEvaluation />
       </Box>
     </>
   );
