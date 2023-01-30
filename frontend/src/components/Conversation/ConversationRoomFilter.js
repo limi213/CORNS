@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 
 import Box from "@mui/material/Box";
 import SubjectBtn from "./SubjectBtn";
@@ -17,12 +17,12 @@ function ConversationRoomFilter() {
   ];
 
   const subjectBtn = datas.map((item) => (
-    <SubjectBtn active={false} subject={item.subject} key={item.id} />
+    <SubjectBtn subject={item.subject} key={item.id} />
   ));
 
   return (
     <>
-      <Box sx={{ border: "3px solid #111" }}>
+      <Box sx={{ border: "3px solid #111", backgroundColor: "#FFD704" }}>
         <Box>
           주제
           {subjectBtn}
