@@ -1,13 +1,12 @@
 package com.w6w.corns.domain.subject;
 
 import com.w6w.corns.util.BaseTime;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @DynamicInsert
@@ -18,10 +17,11 @@ import javax.persistence.Id;
 public class Subject extends BaseTime {
 
     @Id
-    private int subject;
-
-    private String value;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int subjectNo;
 
     private String imgUrl;
+
+    private String value;
 
 }
