@@ -2,7 +2,7 @@ package com.w6w.corns.service.subject;
 
 import com.w6w.corns.domain.subject.Subject;
 import com.w6w.corns.domain.subject.SubjectRepository;
-import com.w6w.corns.dto.user.subject.SubjectResponseDto;
+import com.w6w.corns.dto.subject.SubjectResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.w6w.corns.controller;
 
-import com.w6w.corns.dto.user.subject.SubjectResponseDto;
+import com.w6w.corns.dto.subject.SubjectResponseDto;
 import com.w6w.corns.service.subject.SubjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

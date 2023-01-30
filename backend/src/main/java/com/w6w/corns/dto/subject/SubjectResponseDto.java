@@ -1,4 +1,4 @@
-package com.w6w.corns.dto.user.subject;
+package com.w6w.corns.dto.subject;
 
 import com.w6w.corns.domain.subject.Subject;
 import io.swagger.annotations.ApiModel;

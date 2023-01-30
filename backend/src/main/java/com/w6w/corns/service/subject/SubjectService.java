@@ -1,6 +1,6 @@
 package com.w6w.corns.service.subject;
 
-import com.w6w.corns.dto.user.subject.SubjectResponseDto;
+import com.w6w.corns.dto.subject.SubjectResponseDto;
 
 import java.util.List;
 
