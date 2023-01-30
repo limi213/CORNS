@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import UserProfile from "../../components/GlobalComponents/UserProfile";
+import { Box, Typography } from "@mui/material";
 
 function MyProfile() {
   // 데이터 fetch (from_id == to_id)
@@ -27,10 +28,12 @@ function MyProfile() {
   };
 
   return (
-    <>
-      <h5>내 정보</h5>
+    <Box sx={{ border: "3px solid #111", p: "32px 0 200px" }}>
+      <Typography variant="h5" sx={{ ml: "32px" }}>
+        내 정보
+      </Typography>
       <UserProfile user={user} />
-    </>
+    </Box>
   );
 }
 
