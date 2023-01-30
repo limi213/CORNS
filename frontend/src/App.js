@@ -12,14 +12,8 @@ import Mypage from "./routes/MyPage/MyPage";
 import { css } from "@emotion/react";
 
 function App() {
-
   return (
-    <div
-      className="App"
-      css={css`
-        margin: 0 105px;
-      `}
-    >
+    <div className="App">
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/conversation" component={Conversation} />

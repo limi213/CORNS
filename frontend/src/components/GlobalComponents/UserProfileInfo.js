@@ -17,10 +17,11 @@ function UserProfileInfo({ basicInfo }) {
 
   return (
     <>
-      <Container
+      <Box
         sx={{
           display: "flex",
-          p: "64px 48px",
+          boxSizing: "border-box",
+          padding: "4rem 3rem",
         }}
       >
         <CardMedia
@@ -68,7 +69,7 @@ function UserProfileInfo({ basicInfo }) {
             </Grid>
           </Grid>
         </Box>
-      </Container>
+      </Box>
     </>
   );
 }

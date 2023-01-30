@@ -18,7 +18,11 @@ function Mypage() {
   ];
 
   return (
-    <>
+    <div
+      css={css`
+        margin: 0 105px;
+      `}
+    >
       <Navbar />
 
       <Grid container spacing={1}>
@@ -49,7 +53,7 @@ function Mypage() {
           </div>
         </Grid>
       </Grid>
-    </>
+    </div>
   );
 }
 
