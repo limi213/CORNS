@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Box from "@mui/material/Box";
 
 const Tabmenu = ({ Items, Location, ...rest }) => {
@@ -20,7 +20,7 @@ const Tabmenu = ({ Items, Location, ...rest }) => {
                 backgroundColor: { backgroundColor },
               }}
             >
-              <Link to={item.route}>{item.name}</Link>
+              <NavLink to={item.route} style={{ textDecoration: "none", color: "black" }} activeStyle={{fontWeight: 'bold'}}>{item.name}</NavLink>
             </Box>
           );
         })}

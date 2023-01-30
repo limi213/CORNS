@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
@@ -15,9 +15,9 @@ const Sidebar = ({ Items, ...rest }) => {
     >
       {Items.map((item, index) => {
         return (
-          <Link to={item.route} key={index}>
+          <NavLink to={item.route} key={index}  style={{ textDecoration: "none", color: "black" }} activeStyle={{fontWeight: 'bold'}}>
             <div>{item.name}</div>
-          </Link>
+          </NavLink>
         );
       })}
     </div>

@@ -5,6 +5,8 @@ import Friends from "./Friends";
 import Ranking from "./Ranking";
 import SearchUser from "./SearchUser";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
@@ -20,10 +22,10 @@ function Community() {
       css={css`
         margin: 0 105px;
       `}
-    >
+    > 
       <Navbar />
 
-      <Grid container spacing={1}>
+      <Grid container spacing={1} sx={{margin: '124px 0 0 0'}}>
         <Grid item xs={2}>
           <Sidebar Items={SidebarItems} />
         </Grid>
