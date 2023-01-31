@@ -1,6 +1,7 @@
 import React from "react";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
+import UserNameTag from "components/GlobalComponents/UserNameTag";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -22,7 +23,7 @@ function UserItem({ item }) {
         />
       </TableCell>
       <TableCell>
-        {nickname}#{user_id}
+        <UserNameTag nickname={nickname} user_id={user_id} />
       </TableCell>
       <TableCell>Lv.{level}</TableCell>
     </TableRow>

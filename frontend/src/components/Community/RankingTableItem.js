@@ -1,16 +1,13 @@
 import React from "react";
 
-import UserProfileModal from "components/GlobalComponents/UserProfileModal";
-import { TableRow, TableCell, Modal } from "@mui/material";
+import UserNameTag from "components/GlobalComponents/UserNameTag";
+import { TableRow, TableCell } from "@mui/material";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
 function RankingTableItem({ item, ranking }) {
   const { img_url, nickname, user_id, level, value } = item;
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   return (
     <>
@@ -27,20 +24,15 @@ function RankingTableItem({ item, ranking }) {
             `}
           />
         </TableCell>
-        <TableCell onClick={handleOpen} sx={{ cursor: "pointer" }}>
-          {nickname}#{user_id}
+
+        <TableCell>
+          <UserNameTag nickname={nickname} user_id={user_id} />
         </TableCell>
+
         <TableCell>Lv.{level}</TableCell>
         <TableCell>{value}</TableCell>
       </TableRow>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <UserProfileModal />
-      </Modal>
+
     </>
   );
 }
