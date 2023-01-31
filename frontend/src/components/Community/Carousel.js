@@ -2,13 +2,23 @@
 import React from "react";
 import { useSnapCarousel } from "react-snap-carousel";
 
+import {
+  CircleFill,
+  ChevronDoubleLeft,
+  ChevronDoubleRight,
+} from "react-bootstrap-icons";
+
 const styles = {
-  root: {},
+  root: {
+    position: "relative",
+  },
   scroll: {
+    padding: "1rem",
     position: "relative",
     display: "flex",
-    overflow: "auto",
+    overflow: "hidden",
     scrollSnapType: "x mandatory",
+    listStyle: "none",
   },
   item: {
     width: "250px",
@@ -20,13 +30,28 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
   },
-  nextPrevButton: {},
+  nextPrevButton: {
+    background: "none",
+    color: "inherit",
+    border: "none",
+    padding: 0,
+    font: "inherit",
+    cursor: "pointer",
+    outline: "inherit",
+  },
   nextPrevButtonDisabled: { opacity: 0.3 },
   pagination: {
     display: "flex",
   },
   paginationButton: {
-    margin: "10px",
+    marginRight: "10px",
+    background: "none",
+    color: "inherit",
+    border: "none",
+    padding: 0,
+    font: "inherit",
+    cursor: "pointer",
+    outline: "inherit",
   },
   paginationButtonActive: { opacity: 0.3 },
   pageIndicator: {
@@ -51,7 +76,15 @@ export const Carousel = ({ children }) => {
           }}
           onClick={() => prev()}
         >
-          Prev
+          <ChevronDoubleLeft
+            style={{
+              width: "3rem",
+              height: "3rem",
+              position: "absolute",
+              top: "45%",
+              left: "1%",
+            }}
+          />
         </button>
         {pages.map((_, i) => (
           <button
@@ -61,7 +94,12 @@ export const Carousel = ({ children }) => {
             }}
             onClick={() => goTo(i)}
           >
-            {i + 1}
+            <CircleFill
+              style={{
+                width: ".5rem",
+                height: ".5rem",
+              }}
+            />
           </button>
         ))}
         <button
@@ -73,11 +111,16 @@ export const Carousel = ({ children }) => {
           }}
           onClick={() => next()}
         >
-          Next
+          <ChevronDoubleRight
+            style={{
+              width: "3rem",
+              height: "3rem",
+              position: "absolute",
+              top: "45%",
+              right: "1%",
+            }}
+          />
         </button>
-      </div>
-      <div style={styles.pageIndicator}>
-        {activePageIndex + 1} / {pages.length}
       </div>
     </div>
   );
