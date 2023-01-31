@@ -1,7 +1,7 @@
 import React from "react";
 import { ResponsiveLine } from "@nivo/line";
 
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 function WeeklyLiner() {
   const data = [
@@ -278,8 +278,7 @@ function WeeklyLiner() {
   ];
   return (
     <Box sx={{ width: "100%", border: "3px solid #111" }}>
-      <Typography variant="h5">weeklyLiner</Typography>
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "80%", height: "500px", m: "64px auto" }}>
         <ResponsiveLine
           data={data}
           margin={{ top: 50, right: 110, bottom: 50, left: 60 }}

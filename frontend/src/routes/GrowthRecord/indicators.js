@@ -1,11 +1,12 @@
 import React from "react";
-import {Route, Switch} from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
+
+import { Box } from "@mui/material";
 import Tabmenu from "../../components/GlobalComponents/Tabmenu";
 
 import WeeklyLiner from "./WeeklyLiner";
 import SubjectCircle from "./SubjectCircle";
 import DailyBar from "./DailyBar";
-
 
 function Indicators({ location }) {
   const TabMenus = [
@@ -27,15 +28,27 @@ function Indicators({ location }) {
   ];
 
   return (
-    <>
+    <Box sx={{ border: "3px solid #111", p: "32px", boxSizing: "border-box" }}>
       <Tabmenu Items={TabMenus} Location={location.pathname} />
 
       <Switch>
-        <Route exact path="/growthRecord/indicators/weeklyLiner" component={WeeklyLiner} />
-        <Route exact path="/growthRecord/indicators/subjectCircle" component={SubjectCircle} />
-        <Route exact path="/growthRecord/indicators/dailyBar" component={DailyBar} />
+        <Route
+          exact
+          path="/growthRecord/indicators/weeklyLiner"
+          component={WeeklyLiner}
+        />
+        <Route
+          exact
+          path="/growthRecord/indicators/subjectCircle"
+          component={SubjectCircle}
+        />
+        <Route
+          exact
+          path="/growthRecord/indicators/dailyBar"
+          component={DailyBar}
+        />
       </Switch>
-    </>
+    </Box>
   );
 }
 
