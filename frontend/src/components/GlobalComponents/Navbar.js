@@ -22,6 +22,7 @@ const Navbar = () => {
         position: absolute;
         top: 0;
         left: 105px;
+        border: 3px solid #111;
       `}
     >
       <div
