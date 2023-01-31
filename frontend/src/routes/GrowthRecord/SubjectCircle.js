@@ -6,34 +6,40 @@ import { Box } from "@mui/material";
 function SubjectCircle() {
   const data = [
     {
-      id: "scala",
-      label: "scala",
+      id: "일상",
+      label: "일상",
       value: 407,
-      color: "hsl(204, 70%, 50%)",
+      color: "#FFA903",
     },
     {
-      id: "go",
-      label: "go",
+      id: "비즈니스",
+      label: "비즈니스",
       value: 54,
-      color: "hsl(48, 70%, 50%)",
+      color: "#FFE767",
     },
     {
-      id: "php",
-      label: "php",
+      id: "오픽",
+      label: "오픽",
       value: 223,
-      color: "hsl(128, 70%, 50%)",
+      color: "#7DB6FA",
     },
     {
-      id: "erlang",
-      label: "erlang",
+      id: "토스",
+      label: "토스",
       value: 109,
-      color: "hsl(190, 70%, 50%)",
+      color: "#98DA7A",
     },
     {
-      id: "lisp",
-      label: "lisp",
+      id: "소개팅",
+      label: "소개팅",
       value: 63,
-      color: "hsl(227, 70%, 50%)",
+      color: "#F6F6F6",
+    },
+    {
+      id: "자유",
+      label: "자유",
+      value: 263,
+      color: "#DDDDDD",
     },
   ];
   return (
@@ -46,20 +52,15 @@ function SubjectCircle() {
           padAngle={0.7}
           cornerRadius={3}
           activeOuterRadiusOffset={8}
-          borderWidth={1}
-          borderColor={{
-            from: "color",
-            modifiers: [["darker", 0.2]],
-          }}
+          borderWidth={2}
+          borderColor="#111"
           arcLinkLabelsSkipAngle={10}
-          arcLinkLabelsTextColor="#333333"
+          arcLinkLabelsTextColor="#111111"
           arcLinkLabelsThickness={2}
           arcLinkLabelsColor={{ from: "color" }}
           arcLabelsSkipAngle={10}
-          arcLabelsTextColor={{
-            from: "color",
-            modifiers: [["darker", 2]],
-          }}
+          arcLabelsTextColor="#111111"
+          colors={{ scheme: "pastel1" }}
           defs={[
             {
               id: "dots",
@@ -83,9 +84,9 @@ function SubjectCircle() {
           fill={[
             {
               match: {
-                id: "ruby",
+                id: "일상",
               },
-              id: "dots",
+              id: "",
             },
             {
               match: {

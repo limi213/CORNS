@@ -52,6 +52,7 @@ function DailyBar() {
       <Box sx={{ width: "80%", height: "500px", m: "64px auto" }}>
         <ResponsiveMarimekko
           data={data}
+          colors={{ scheme: "pastel1" }}
           id="statement"
           value="participation"
           dimensions={[
@@ -101,12 +102,8 @@ function DailyBar() {
             legendPosition: "middle",
           }}
           margin={{ top: 40, right: 80, bottom: 100, left: 80 }}
-          colors={{ scheme: "spectral" }}
-          borderWidth={1}
-          borderColor={{
-            from: "color",
-            modifiers: [["darker", 0.2]],
-          }}
+          borderWidth={2}
+          borderColor="#111"
           defs={[
             {
               id: "lines",
@@ -123,13 +120,13 @@ function DailyBar() {
               match: {
                 id: "agree strongly",
               },
-              id: "lines",
+              id: "",
             },
             {
               match: {
                 id: "disagree strongly",
               },
-              id: "lines",
+              id: "",
             },
           ]}
           legends={[

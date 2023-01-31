@@ -6,272 +6,104 @@ import { Box } from "@mui/material";
 function WeeklyLiner() {
   const data = [
     {
-      id: "japan",
+      id: "발화량",
       color: "hsl(359, 70%, 50%)",
       data: [
         {
-          x: "plane",
+          x: "6일전",
           y: 204,
         },
         {
-          x: "helicopter",
+          x: "5일전",
           y: 201,
         },
         {
-          x: "boat",
+          x: "4일전",
           y: 121,
         },
         {
-          x: "train",
+          x: "3일전",
           y: 98,
         },
         {
-          x: "subway",
+          x: "그제",
           y: 265,
         },
         {
-          x: "bus",
+          x: "어제",
           y: 21,
         },
         {
-          x: "car",
+          x: "오늘",
           y: 247,
-        },
-        {
-          x: "moto",
-          y: 28,
-        },
-        {
-          x: "bicycle",
-          y: 131,
-        },
-        {
-          x: "horse",
-          y: 295,
-        },
-        {
-          x: "skateboard",
-          y: 14,
-        },
-        {
-          x: "others",
-          y: 276,
         },
       ],
     },
     {
-      id: "france",
+      id: "발음",
       color: "hsl(314, 70%, 50%)",
       data: [
         {
-          x: "plane",
-          y: 110,
+          x: "6일전",
+          y: 204,
         },
         {
-          x: "helicopter",
-          y: 25,
-        },
-        {
-          x: "boat",
-          y: 288,
-        },
-        {
-          x: "train",
-          y: 112,
-        },
-        {
-          x: "subway",
-          y: 61,
-        },
-        {
-          x: "bus",
-          y: 150,
-        },
-        {
-          x: "car",
-          y: 112,
-        },
-        {
-          x: "moto",
-          y: 67,
-        },
-        {
-          x: "bicycle",
-          y: 193,
-        },
-        {
-          x: "horse",
-          y: 137,
-        },
-        {
-          x: "skateboard",
-          y: 61,
-        },
-        {
-          x: "others",
-          y: 242,
-        },
-      ],
-    },
-    {
-      id: "us",
-      color: "hsl(5, 70%, 50%)",
-      data: [
-        {
-          x: "plane",
-          y: 12,
-        },
-        {
-          x: "helicopter",
-          y: 280,
-        },
-        {
-          x: "boat",
-          y: 237,
-        },
-        {
-          x: "train",
-          y: 186,
-        },
-        {
-          x: "subway",
-          y: 23,
-        },
-        {
-          x: "bus",
-          y: 239,
-        },
-        {
-          x: "car",
-          y: 175,
-        },
-        {
-          x: "moto",
-          y: 82,
-        },
-        {
-          x: "bicycle",
-          y: 150,
-        },
-        {
-          x: "horse",
-          y: 258,
-        },
-        {
-          x: "skateboard",
-          y: 31,
-        },
-        {
-          x: "others",
-          y: 230,
-        },
-      ],
-    },
-    {
-      id: "germany",
-      color: "hsl(211, 70%, 50%)",
-      data: [
-        {
-          x: "plane",
-          y: 269,
-        },
-        {
-          x: "helicopter",
-          y: 111,
-        },
-        {
-          x: "boat",
-          y: 30,
-        },
-        {
-          x: "train",
-          y: 134,
-        },
-        {
-          x: "subway",
-          y: 162,
-        },
-        {
-          x: "bus",
-          y: 193,
-        },
-        {
-          x: "car",
-          y: 143,
-        },
-        {
-          x: "moto",
-          y: 85,
-        },
-        {
-          x: "bicycle",
-          y: 130,
-        },
-        {
-          x: "horse",
-          y: 160,
-        },
-        {
-          x: "skateboard",
+          x: "5일전",
           y: 201,
         },
         {
-          x: "others",
-          y: 75,
+          x: "4일전",
+          y: 121,
+        },
+        {
+          x: "3일전",
+          y: 98,
+        },
+        {
+          x: "그제",
+          y: 265,
+        },
+        {
+          x: "어제",
+          y: 21,
+        },
+        {
+          x: "오늘",
+          y: 247,
         },
       ],
     },
     {
-      id: "norway",
-      color: "hsl(15, 70%, 50%)",
+      id: "단어",
+      color: "hsl(5, 70%, 50%)",
       data: [
         {
-          x: "plane",
-          y: 207,
+          x: "6일전",
+          y: 204,
         },
         {
-          x: "helicopter",
-          y: 298,
+          x: "5일전",
+          y: 201,
         },
         {
-          x: "boat",
-          y: 94,
+          x: "4일전",
+          y: 121,
         },
         {
-          x: "train",
-          y: 205,
+          x: "3일전",
+          y: 98,
         },
         {
-          x: "subway",
-          y: 140,
+          x: "그제",
+          y: 265,
         },
         {
-          x: "bus",
-          y: 99,
+          x: "어제",
+          y: 21,
         },
         {
-          x: "car",
-          y: 263,
-        },
-        {
-          x: "moto",
-          y: 167,
-        },
-        {
-          x: "bicycle",
-          y: 162,
-        },
-        {
-          x: "horse",
-          y: 159,
-        },
-        {
-          x: "skateboard",
-          y: 8,
-        },
-        {
-          x: "others",
-          y: 33,
+          x: "오늘",
+          y: 247,
         },
       ],
     },
@@ -281,6 +113,7 @@ function WeeklyLiner() {
       <Box sx={{ width: "80%", height: "500px", m: "64px auto" }}>
         <ResponsiveLine
           data={data}
+          colors={{ scheme: "pastel1" }}
           margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
           xScale={{ type: "point" }}
           yScale={{
@@ -304,7 +137,7 @@ function WeeklyLiner() {
           }}
           axisLeft={{
             orient: "left",
-            tickSize: 5,
+            tickSize: 10,
             tickPadding: 5,
             tickRotation: 0,
             legend: "count",
@@ -328,7 +161,7 @@ function WeeklyLiner() {
               itemDirection: "left-to-right",
               itemWidth: 80,
               itemHeight: 20,
-              itemOpacity: 0.75,
+              itemOpacity: 1,
               symbolSize: 12,
               symbolShape: "circle",
               symbolBorderColor: "rgba(0, 0, 0, .5)",
