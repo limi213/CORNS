@@ -25,7 +25,7 @@ function App() {
         <Route exact path="/signin" component={Signin} />
         <Route path="/mypage" component={Mypage} />
         <Route exact path="/NotFound" component={NotFound} />
-        <Redirect to ="/NotFound" />
+        <Redirect to="/NotFound" />
       </Switch>
     </div>
   );
