@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Navbar from "../../components/GlobalComponents/Navbar";
 import Sidebar from "../../components/GlobalComponents/Sidebar";
 import Friends from "./Friends";
@@ -38,13 +38,15 @@ function Community() {
             `}
           >
             <Switch>
+              <Route path="/community/ranking" component={Ranking} />
               <Route
                 exact
                 path="/community/searchUser"
                 component={SearchUser}
               />
               <Route exact path="/community/friends" component={Friends} />
-              <Route path="/community" component={Ranking} />
+              
+              <Redirect to="/NotFound" />
             </Switch>
           </div>
         </Grid>

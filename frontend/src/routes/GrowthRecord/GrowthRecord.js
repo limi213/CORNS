@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Navbar from "../../components/GlobalComponents/Navbar";
 import Sidebar from "../../components/GlobalComponents/Sidebar";
 import MyProfile from "./MyProfile";
@@ -37,6 +37,7 @@ function GrowthRecord() {
               component={ExperienceDetail}
             />
             <Route path="/growthRecord/indicators" component={Indicators} />
+            <Redirect to ="/NotFound" />
           </Switch>
         </Grid>
       </Grid>

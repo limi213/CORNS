@@ -1,4 +1,4 @@
-import React, { Route, Switch } from "react-router-dom";
+import React, { Route, Switch, Redirect } from "react-router-dom";
 import Navbar from "../../components/GlobalComponents/Navbar";
 import Sidebar from "../../components/GlobalComponents/Sidebar";
 
@@ -49,6 +49,7 @@ function Mypage() {
                 component={ChangePassword}
               />
               <Route exact path="/mypage/withDrawl" component={Withdrawl} />
+              <Redirect to ="/NotFound" />
             </Switch>
           </div>
         </Grid>

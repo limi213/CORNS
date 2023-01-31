@@ -1,6 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
-
+import { Route, Switch, Redirect } from "react-router-dom";
 import { Box } from "@mui/material";
 import Tabmenu from "../../components/GlobalComponents/Tabmenu";
 
@@ -32,21 +31,10 @@ function Indicators({ location }) {
       <Tabmenu Items={TabMenus} Location={location.pathname} />
 
       <Switch>
-        <Route
-          exact
-          path="/growthRecord/indicators/weeklyLiner"
-          component={WeeklyLiner}
-        />
-        <Route
-          exact
-          path="/growthRecord/indicators/subjectCircle"
-          component={SubjectCircle}
-        />
-        <Route
-          exact
-          path="/growthRecord/indicators/dailyBar"
-          component={DailyBar}
-        />
+        <Route exact path="/growthRecord/indicators/weeklyLiner" component={WeeklyLiner} />
+        <Route exact path="/growthRecord/indicators/subjectCircle" component={SubjectCircle} />
+        <Route exact path="/growthRecord/indicators/dailyBar" component={DailyBar} />
+        <Redirect to ="/NotFound" />
       </Switch>
     </Box>
   );
