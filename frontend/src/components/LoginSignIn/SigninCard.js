@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import axios from "axios";
 
+import { Box, Button } from "@mui/material";
 import yellow_logo from "assets/corns_logo_yellow.png";
-
-
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+
+async function checkEmail({ email }) {
+  const response = await axios.get(
+    `http://i8a506.p.ssafy.io:8645/user/email-check/${email}`
+  );
+  return response.data;
+}
 
 function SigninCard() {
   const [email, setEmail] = useState("");
@@ -18,20 +23,17 @@ function SigninCard() {
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
   };
-
   const onChangePassword1 = (e) => {
     setPassword1(e.target.value);
   };
-
   const onChangePassword2 = (e) => {
     setPassword2(e.target.value);
   };
-
   const onChangeNickname = (e) => {
     setNickname(e.target.value);
   };
 
-  // 이메일 유효성 검사 -> 추후 수정
+  // 이메일 유효성 검사
   const validateEmail = (email) => {
     return email
       .toLowerCase()
@@ -40,30 +42,19 @@ function SigninCard() {
       );
   };
 
-  // ***************************************
-  // 이메일 중복 확인 -> fetch
+  // 이메일 중복 확인 axios
   const onCheckEmail = async (e) => {
     e.preventDefault();
-
-    if (!email || !validateEmail(email)) return;
-
+    if (!email) return alert('이메일을 입력해주세요.')
+    if (!validateEmail(email)) return alert('유효하지 않은 이메일입니다.');
     try {
-      // GET 요청
-      const res = await fetch(`/user/idcheck/${email}`, {
-        headers: {
-          Accept: "application/json",
-        },
-      });
-      if (!res.ok) throw new Error("Request fail");
-      // 데이터 제대로 들어온 경우
-      else {
-        console.log(res.json());
-        // 경우에 따라 setState 설정 + 다른 setEmailMsg
-      }
-    } catch (err) {
-      console.log(err);
+      const response = await axios.get(`${process.env.REACT_APP_HOST}${email}`)
+      console.log(response)
+    } catch (e) {
+      console.log(e)
     }
-  };
+  }
+
 
   // 비밀번호 유효성 검사 -> 추후 수정
   const validatePwd = (password) => {
