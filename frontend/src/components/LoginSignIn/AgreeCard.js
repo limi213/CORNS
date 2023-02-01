@@ -2,7 +2,11 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
 
-function AgreeCard() {
+function AgreeCard({checked, setChecked}) {
+  const onChange = () => {
+    setChecked((prev) => !prev)
+  } 
+  
   return (
     <Box
       sx={{
@@ -24,7 +28,7 @@ function AgreeCard() {
         }}
       >
         <h5>회원약관 동의(필수)</h5>
-        <Checkbox color="default" />
+        <Checkbox color="default" checked={checked} onClick={onChange}/>
       </Box>
       <Box sx={{ border: "3px solid #111", padding: "24px"}}>
         모든 국민은 법률이 정하는 바에 의하여 국방의 의무를 진다. 국가안전보장에

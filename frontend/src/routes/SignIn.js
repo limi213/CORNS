@@ -1,12 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
+
 import SigninCard from "components/LoginSignIn/SigninCard";
 import AgreeCard from "components/LoginSignIn/AgreeCard";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import {Box, Grid} from "@mui/material";
 
 import backgroundImage from "../assets/backgroundImage.png";
 
 function Signin() {
+  const [checked, setChecked] = useState(false);
+  
   return (
     <Box
       sx={{
@@ -17,10 +19,10 @@ function Signin() {
     >
       <Grid container spacing={10}>
         <Grid item xs={5}>
-          <AgreeCard />
+          <AgreeCard checked={checked} setChecked={setChecked}/>
         </Grid>
         <Grid item xs={5}>
-          <SigninCard />
+          <SigninCard checked={checked}/>
         </Grid>
       </Grid>
     </Box>
