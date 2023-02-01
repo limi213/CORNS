@@ -1,5 +1,6 @@
 package com.w6w.corns.domain.subject;
 
+import com.w6w.corns.dto.subject.SubjectResponseDto;
 import com.w6w.corns.util.BaseTime;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;

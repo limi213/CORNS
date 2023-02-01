@@ -1,6 +1,7 @@
 package com.w6w.corns.domain.user;
 
 import com.w6w.corns.domain.level.Level;
+import com.w6w.corns.dto.user.UserResponseDto;
 import com.w6w.corns.util.BaseTime;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -78,6 +79,14 @@ public class User extends BaseTime {
 
     public void updateLastLoginTM(){
         this.lastLoginTm=LocalDateTime.now();
+    }
+
+    public UserResponseDto toUserResponseBuilder() {
+        return UserResponseDto.builder()
+                .userId(userId)
+                .imgUrl(imgUrl)
+                .nickname(nickname)
+                .build();
     }
 
 }

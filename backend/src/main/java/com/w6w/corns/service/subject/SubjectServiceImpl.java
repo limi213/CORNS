@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class SubjectServiceImpl implements SubjectService {
 
-    @Autowired
-    SubjectRepository subjectRepository;
+    private final SubjectRepository subjectRepository;
 
     @Override
     public List<SubjectResponseDto> findAll() {
@@ -29,5 +29,15 @@ public class SubjectServiceImpl implements SubjectService {
                         .value(m.getValue())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public SubjectResponseDto findById(int subjectNo) {
+        Subject subject = subjectRepository.findById(subjectNo).get();
+        return SubjectResponseDto.builder()
+                .subjectNo(subject.getSubjectNo())
+                .imgUrl(subject.getImgUrl())
+                .value(subject.getValue())
+                .build();
     }
 }

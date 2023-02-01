@@ -45,7 +45,7 @@ public class SubjectController {
             }
 
         } catch (Exception e) {
-            resultmap.put("message", e);
+            resultmap.put("message", e.getMessage());
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
 
