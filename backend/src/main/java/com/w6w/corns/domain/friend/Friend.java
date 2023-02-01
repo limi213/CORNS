@@ -5,6 +5,7 @@ import com.w6w.corns.util.BaseTime;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -18,12 +19,18 @@ import javax.persistence.IdClass;
 public class Friend extends BaseTime {
 
     @Id
+    @Column(name = "user_id_a")
     private int userIdA;
 
     @Id
+    @Column(name = "user_id_b")
     private int userIdB;
 
     private int friendCd;
+
+    public void setFriendCd(int friendCd) {
+        this.friendCd = friendCd;
+    }
 
     @Builder
     public Friend(int userIdA, int userIdB, int friendCd) {
