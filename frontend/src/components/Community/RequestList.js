@@ -3,7 +3,7 @@ import React from "react";
 import { Carousel, CarouselItem } from "./Carousel";
 import RequestCard from "./RequestCard";
 import { Box } from "@mui/material";
-import { ChevronDoubleRight, ChevronDoubleLeft } from "react-bootstrap-icons";
+
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 function RequestList({ users }) {
