@@ -12,7 +12,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import java.util.HashSet;
 import java.util.Set;
 
-// url = http://localhost:8080/swagger-ui/
+// url = http://localhost:8645/swagger-ui/
 @Configuration
 //@Component
 public class SwaggerConfiguration  {
