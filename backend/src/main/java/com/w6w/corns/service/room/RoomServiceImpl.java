@@ -17,12 +17,15 @@ import com.w6w.corns.service.subject.SubjectService;
 import com.w6w.corns.util.code.RoomCode;
 import com.w6w.corns.util.code.RoomUserCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +38,12 @@ public class RoomServiceImpl implements RoomService {
     private final SubjectService subjectService;
 
     private final UserRepository userRepository;
+
+    //대화 참여자 리스트
+    @Override
+    public List<Integer> getUserList(int roomNo) {
+        return roomUserRepository.findUserByRoomNo(roomNo);
+    }
 
     // 방 생성
     @Override

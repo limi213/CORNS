@@ -102,8 +102,11 @@ public class FriendServiceImpl implements FriendService {
     //친구 목록 가져오기
     @Override
     @Transactional(readOnly = true)
-    public Slice<FriendListInterface> getFriendList(FriendListRequestDto friendListRequestDto, Pageable pageable) {
+    public Slice<FriendListInterface> getFriendList(int userId, FriendListRequestDto friendListRequestDto, Pageable pageable) {
         Slice<FriendListInterface> sliceList = null;
+
+        friendListRequestDto.setUserId(userId);
+        if (friendListRequestDto.getKeyword() == null) friendListRequestDto.setKeyword("");
 
         if (friendListRequestDto.getFilter() == 0) {
             //닉네임 검색

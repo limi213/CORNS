@@ -13,6 +13,8 @@ import java.util.List;
 
 public interface RoomService {
 
+    // 대화 참여자 리스트
+    List<Integer> getUserList(int roomNo);
     // 방 생성
     public int save(CreateRoomRequestDto body);
     // 전체 리스트 - 페이징 필요함

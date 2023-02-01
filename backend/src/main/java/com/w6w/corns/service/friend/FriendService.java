@@ -21,7 +21,7 @@ public interface FriendService {
     //친구 삭제
     void deleteFriend(FriendRequestDto friendRequestDto);
     //친구 목록 가져오기
-    Slice<FriendListInterface> getFriendList(FriendListRequestDto friendListRequestDto, Pageable pageable);
+    Slice<FriendListInterface> getFriendList(int userId, FriendListRequestDto friendListRequestDto, Pageable pageable);
     //친구 신청 목록 가져오기
     List<FriendListResponseDto> getFriendReceiveList(int userId);
     //친구 정보 세팅

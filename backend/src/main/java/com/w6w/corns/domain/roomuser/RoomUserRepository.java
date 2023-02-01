@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface RoomUserRepository extends JpaRepository<RoomUser, Integer> {
+public interface RoomUserRepository extends JpaRepository<RoomUser, Integer>, CustomRoomUserRepository {
 
     // 유저가 쫑알룸에 입장한 상태인지 체크하기 위해 조회
     @Query(value = "SELECT ru FROM RoomUser ru WHERE ru.userId = :userId and ru.roomUserCd <= 6001")

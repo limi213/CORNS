@@ -1,7 +1,9 @@
 package com.w6w.corns.config;
 
+import com.w6w.corns.util.MyPageable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Pageable;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -27,7 +29,8 @@ public class SwaggerConfiguration  {
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build()
-                .apiInfo(apiInfo());
+                .apiInfo(apiInfo())
+                .directModelSubstitute(Pageable.class, MyPageable.class);
 
     }
 

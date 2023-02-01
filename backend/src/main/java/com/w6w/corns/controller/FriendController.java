@@ -130,13 +130,12 @@ public class FriendController {
 
     @ApiOperation("친구 목록")
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getFriendList(@PathVariable int userId, FriendListRequestDto friendListRequestDto, Pageable pageable) {
+    public ResponseEntity<?> getFriendList(FriendListRequestDto friendListRequestDto, Pageable pageable, @PathVariable int userId) {
         Map resultmap = new HashMap<>();
-        HttpStatus status = HttpStatus.ACCEPTED;
+        HttpStatus status;
 
         try {
-            friendListRequestDto.setUserId(userId);
-            Slice<FriendListInterface> friendSliceList = friendService.getFriendList(friendListRequestDto, pageable);
+            Slice<FriendListInterface> friendSliceList = friendService.getFriendList(userId, friendListRequestDto, pageable);
 
             List<FriendListResponseDto> friendList = new ArrayList<>(friendSliceList.getSize());
             for (FriendListInterface friend : friendSliceList.getContent()) {
