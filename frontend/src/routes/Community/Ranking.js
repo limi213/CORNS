@@ -191,7 +191,6 @@ function Ranking({ location, history }) {
   // 이중에 없으면 404
   const [rankingList, setRankingList] = useState([]);
   useEffect(() => {
-    console.log(location.pathname);
     if (location.pathname === "/community/ranking/sincerity") {
       setRankingList(rankingSincerity);
     } else if (location.pathname === "/community/ranking/thumbs") {
