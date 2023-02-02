@@ -11,7 +11,7 @@ function RoomList({ roomLists }) {
     </Grid>
   ));
 
-  console.log(roomLists);
+  // console.log(roomLists);
   return (
     <>
       <Box>
