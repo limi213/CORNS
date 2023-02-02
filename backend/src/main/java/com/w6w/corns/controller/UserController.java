@@ -254,7 +254,7 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "user 정보 수정(테스트중)", notes = "닉네임, 이미지, 비밀번호 수정")
+    @ApiOperation(value = "user 정보 수정", notes = "닉네임, 이미지, 비밀번호 수정")
     @PatchMapping
     public ResponseEntity<?> modifyUserInfo(@RequestBody UserModifyRequestDto user){
 
