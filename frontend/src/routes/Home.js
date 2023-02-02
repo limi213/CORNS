@@ -17,7 +17,7 @@ function Home() {
         sx={{ width: "100%", height: "850px", backgroundImage: `url(${hero})` }}
       >
         <Box sx={{ position: "absolute", top: "45%", right: "15%" }}>
-          <Typography variant="h3">CORNS가 처음이세요?</Typography>
+          <Typography variant="h3">CORNS가 처음이세요?(홍빈테스트중!)</Typography>
           <Typography sx={{ color: "#fff" }}>
             CORNS 사용법 더 알아보러가기
           </Typography>
