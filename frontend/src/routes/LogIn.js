@@ -1,5 +1,5 @@
 import React from "react";
-import LoginCard from "components/LoginSignIn/LoginCard";
+import {LoginCard} from "components/LoginSignin/LoginCard";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 

@@ -1,139 +1,158 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import NavbarDropdown from "./NavbarDropdown";
 import white_logo from "assets/corns_logo.png";
 
-const Navbar = () => {
-  const [user, stateUser] = useState(true);
+function Navbar() {
+  const [user, setUser] = useState(false);
+
+  // user 로그인했는지 확인하기 전에 랜더링돼서, area 밀려버림 -> 일단은 flag로 임시 해결
+  const [flag, setFlag] = useState(false);
+
+  const logOut = () => {
+    localStorage.clear();
+    setUser(false);
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      setUser(true);
+    } else {
+      setUser(false);
+    }
+    setFlag(true);
+  }, [user]);
 
   return (
-    <nav
-      css={css`
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 24px;
-        width: calc(100% - 250px);
-        height: 60px;
-        background: #ffc804;
-        position: absolute;
-        top: 0;
-        left: 105px;
-        border: 3px solid #111;
-      `}
-    >
-      <div
-        css={css`
-          flex: none;
-          order: 0;
-          flex-grow: 0;
-          color: "black";
-        `}
-      >
-        <NavLink to="/">
-          <img
-            src={white_logo}
-            alt="corns-logo"
+    <>
+      {flag && (
+        <nav
+          css={css`
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            width: calc(100% - 250px);
+            height: 60px;
+            background: #ffc804;
+            position: absolute;
+            top: 0;
+            left: 105px;
+            border: 3px solid #111;
+          `}
+        >
+          <div
             css={css`
-              height: 2rem;
+              flex: none;
+              order: 0;
+              flex-grow: 0;
+              color: "black";
             `}
-          />
-        </NavLink>
+          >
+            <NavLink to="/">
+              <img
+                src={white_logo}
+                alt="corns-logo"
+                css={css`
+                  height: 2rem;
+                `}
+              />
+            </NavLink>
+          </div>
 
-        {/* 임시 로그인 토글 */}
-        <button onClick={() => stateUser(!user)}>임시 로그인</button>
-      </div>
-
-      <ul
-        css={css`
-          list-style: none;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-          padding: 0px;
-          width: 40%;
-          height: 26px;
-          color: black;
-        `}
-      >
-        <li>
-          <NavLink
-            to="/conversation"
-            style={{ textDecoration: "none", color: "black" }}
-            activeStyle={{ fontWeight: "bold" }}
+          <ul
+            css={css`
+              list-style: none;
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              align-items: center;
+              padding: 0px;
+              width: 40%;
+              height: 26px;
+              color: black;
+            `}
           >
-            쫑알쫑알
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/conversationLog/loglist"
-            style={{ textDecoration: "none", color: "black" }}
-            activeStyle={{ fontWeight: "bold" }}
-          >
-            쫑알로그
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/growthRecord/myProfile"
-            style={{ textDecoration: "none", color: "black" }}
-            activeStyle={{ fontWeight: "bold" }}
-          >
-            성장기록
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/community/ranking/sincerity"
-            style={{ textDecoration: "none", color: "black" }}
-            activeStyle={{ fontWeight: "bold" }}
-          >
-            커뮤니티
-          </NavLink>
-        </li>
-
-        {user ? (
-          <>
             <li>
               <NavLink
-                to="/login"
+                to="/conversation"
                 style={{ textDecoration: "none", color: "black" }}
+                activeStyle={{ fontWeight: "bold" }}
               >
-                로그인
+                쫑알쫑알
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/signin"
+                to="/conversationLog/loglist"
                 style={{ textDecoration: "none", color: "black" }}
+                activeStyle={{ fontWeight: "bold" }}
               >
-                회원가입
+                쫑알로그
               </NavLink>
             </li>
-          </>
-        ) : (
-          <>
             <li>
               <NavLink
-                to="/"
+                to="/growthRecord/myProfile"
                 style={{ textDecoration: "none", color: "black" }}
+                activeStyle={{ fontWeight: "bold" }}
               >
-                로그아웃
+                성장기록
               </NavLink>
             </li>
             <li>
-              <NavbarDropdown />
+              <NavLink
+                to="/community/ranking/sincerity"
+                style={{ textDecoration: "none", color: "black" }}
+                activeStyle={{ fontWeight: "bold" }}
+              >
+                커뮤니티
+              </NavLink>
             </li>
-          </>
-        )}
-      </ul>
-    </nav>
+
+            {!user ? (
+              <>
+                <li>
+                  <NavLink
+                    to="/login"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    로그인
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/signin"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    회원가입
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <NavLink
+                    to="/"
+                    style={{ textDecoration: "none", color: "black" }}
+                    onClick={logOut}
+                  >
+                    로그아웃
+                  </NavLink>
+                </li>
+                <li>
+                  <NavbarDropdown />
+                </li>
+              </>
+            )}
+          </ul>
+        </nav>
+      )}
+    </>
   );
-};
+}
 
 export default Navbar;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import axios from "axios";
+import {Login} from "./LoginCard";
 
 import SigninEmail from "./SigninEmail";
 import SigninPassword from "./SigninPassword";
@@ -29,7 +30,6 @@ function SigninCard({ checked }) {
     e.preventDefault();
 
     if (!stateEmail || !statePassword1 || !statePassword2 || !stateNickname) {
-      console.log(stateEmail, statePassword1, statePassword2, stateNickname);
       alert("항목을 확인해주세요.");
       return;
     }
@@ -38,7 +38,6 @@ function SigninCard({ checked }) {
       return;
     }
     try {
-      console.log("Sign in!");
       const response = await axios.post(
         `${process.env.REACT_APP_HOST}/user/join`,
         {
@@ -47,7 +46,11 @@ function SigninCard({ checked }) {
           nickname: nickname,
         }
       );
-      console.log(response);
+      if (response.status === 200) {
+        // 로그인 처리 -> 전페이지로 이동
+        Login(email, password1);
+
+      }
     } catch (e) {
       console.log(e);
     }
