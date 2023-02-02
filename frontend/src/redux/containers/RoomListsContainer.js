@@ -16,7 +16,7 @@ function RoomListsContainer() {
 
   if (loading) return <div>로딩중..</div>;
   if (error) return <div>에러발생</div>;
-  if (!data) return <div>이게뭐지</div>;
+  if (!data) return <div>데이터 없다야</div>;
 
   return (
     <div>

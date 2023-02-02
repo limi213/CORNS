@@ -10,12 +10,13 @@ function RoomList({ roomLists }) {
       <RoomCard room={item.room} subject={item.subject} />
     </Grid>
   ));
+
   console.log(roomLists);
   return (
     <>
       <Box>
         <Grid container spacing={1}>
-          {roomList}
+          {roomLists && roomList}
         </Grid>
       </Box>
     </>
