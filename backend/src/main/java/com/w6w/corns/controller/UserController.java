@@ -28,7 +28,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
-@Api("사용자 컨트롤러")
+@Api("사용자 컨트롤러(홍빈테스트중)")
 public class UserController {
 
     private final UserService userService;
