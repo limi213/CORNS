@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-
+import {Link} from 'react-router-dom';
 import Navbar from "../components/GlobalComponents/Navbar";
 import hero from "assets/hero.png";
 import backgroundImage from "assets/backgroundImage.png";
@@ -12,7 +11,7 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 
 function Home() {
   return (
-    <div>
+    <>
       <Navbar />
       <Box
         sx={{ width: "100%", height: "850px", backgroundImage: `url(${hero})` }}
@@ -30,7 +29,7 @@ function Home() {
               backgroundColor: "#FFC804",
             }}
           >
-            튜도리얼 보기
+            튜토리얼 보기
           </Button>
         </Box>
       </Box>
@@ -127,7 +126,7 @@ function Home() {
           </Link>
         </Button>
       </Box>
-    </div>
+    </>
   );
 }
 

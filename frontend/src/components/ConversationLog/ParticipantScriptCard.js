@@ -10,7 +10,7 @@ import { HandThumbsUp } from "react-bootstrap-icons";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-function ParticipantCard({ participant }) {
+function ParticipantScriptCard({ participant, cardWidth }) {
   const { img_url, nickname, user_id, thumbs, ignition, script } = participant;
   return (
     <>
@@ -20,9 +20,9 @@ function ParticipantCard({ participant }) {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          width: "320px",
-          height: "480px",
-          padding: "24px 0 18px",
+          width: "100%",
+          // // height: "480px",
+          pt: "24px",
           boxSizing: "border-box",
           backgroundColor: "#fff",
         }}
@@ -58,6 +58,7 @@ function ParticipantCard({ participant }) {
               backgroundColor: "#fff",
               border: "3px solid #111",
               p: "5px 11px",
+              margin: "0 20px 0 0",
             }}
           >
             <HandThumbsUp
@@ -76,7 +77,7 @@ function ParticipantCard({ participant }) {
             flexDirection: "column",
             width: "265px",
             gap: "8px",
-            margin: "38px 0"
+            margin: "38px 0",
           }}
         >
           <Button
@@ -94,4 +95,4 @@ function ParticipantCard({ participant }) {
   );
 }
 
-export default ParticipantCard;
+export default ParticipantScriptCard;

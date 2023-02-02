@@ -7,6 +7,5 @@ public interface JwtService {
     <T> String createRefreshToken(String key, T data);
     <T> String create(String key, T data, String subject, long expire);
     Map<String, Object> get(String key);
-    int getUserId();
     boolean checkToken(String jwt);
 }

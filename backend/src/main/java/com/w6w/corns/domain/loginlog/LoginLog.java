@@ -1,10 +1,7 @@
 package com.w6w.corns.domain.loginlog;
 
 import com.w6w.corns.util.BaseTime;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Entity;
@@ -14,6 +11,8 @@ import javax.persistence.Id;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
+@Builder
+@AllArgsConstructor
 @Entity
 public class LoginLog extends BaseTime {
 

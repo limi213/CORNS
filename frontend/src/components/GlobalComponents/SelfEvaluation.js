@@ -1,15 +1,19 @@
 import React from "react";
 
-import StarRating from "./StarRating";
 import SelfEvaluationInput from "./SelfEvaluationInput";
-import Box from "@mui/material/Box";
+import { Box, Typography } from "@mui/material";
 
 export default function SelfEvaluation({}) {
   return (
     <>
-      <h3>자기평가</h3>
-      <Box sx={{ backgroundColor: "white" }}>
-        <StarRating />
+      <Typography variant="h5">자기평가</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <SelfEvaluationInput />
       </Box>
     </>

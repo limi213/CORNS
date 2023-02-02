@@ -21,12 +21,18 @@ function Conversation() {
       `}
     >
       <Navbar />
-      {user ? <LogInUserArea /> : <AnonymousUserArea />}
-      <h2>쫑알룸리스트</h2>
-      <ConversationRoomFilter />
-      <RoomList />
-      <RoomCreateModal />
-      <SelfEvaluationModal />
+      <div
+        css={css`
+          margin: 124px 0 0 0;
+        `}
+      >
+        {user ? <LogInUserArea /> : <AnonymousUserArea />}
+        <h2>쫑알룸리스트</h2>
+        <ConversationRoomFilter />
+        <RoomList />
+        <RoomCreateModal />
+        <SelfEvaluationModal />
+      </div>
     </div>
   );
 }

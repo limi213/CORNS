@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+
+import yellow_logo from "assets/corns_logo_yellow.png";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -64,9 +66,15 @@ function LoginCard() {
         backgroundColor: "white",
       }}
     >
-      <Link to="/">
-        <h1>CORNS</h1>
-      </Link>
+      <NavLink to="/">
+        <img
+          src={yellow_logo}
+          alt="corns-logo"
+          css={css`
+            height: 2rem;
+          `}
+        />
+      </NavLink>
 
       <Box sx={{ width: "80%" }}>
         <h5

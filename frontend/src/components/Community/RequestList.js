@@ -1,13 +1,30 @@
 import React from "react";
-import RequestCard from "./RequestCard";
-import Box from "@mui/material/Box";
 
+import { Carousel, CarouselItem } from "./Carousel";
+import RequestCard from "./RequestCard";
+import { Box } from "@mui/material";
+
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 function RequestList({ users }) {
   return (
-    <Box sx={{ display: "flex", flexDirection: "row", padding: "24px", backgroundColor: "#DDDDDD", border: "3px solid #111111"}}>
-      {users.map((item, index) => {
-        return <RequestCard user={item} key={index} />;
-      })}
+    <Box
+      sx={{
+        backgroundColor: "#DDDDDD",
+        border: "3px solid #111111",
+        position: "relative",
+        p: "1.5rem",
+      }}
+    >
+      <Carousel>
+        {users.map((item, index) => {
+          return (
+            <CarouselItem key={index}>
+              <RequestCard user={item} />
+            </CarouselItem>
+          );
+        })}
+      </Carousel>
     </Box>
   );
 }

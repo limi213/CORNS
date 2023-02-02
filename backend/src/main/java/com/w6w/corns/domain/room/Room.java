@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class Room extends BaseTime {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roomNo;
 
     private String title;
@@ -31,5 +32,26 @@ public class Room extends BaseTime {
     private String sessionId;
 
     private String scriptUrl;
+
+    @Builder
+    public Room(String title, int time, int maxMember, int subjectNo, String sessionId) {
+        this.title = title;
+        this.time = time;
+        this.maxMember = maxMember;
+        this.subjectNo = subjectNo;
+        this.sessionId = sessionId;
+    }
+
+    public void setHostUserId(int hostUserId) {
+        this.hostUserId = hostUserId;
+    }
+
+    public void setRoomCd(int roomCd) {
+        this.roomCd = roomCd;
+    }
+
+    public void setScriptUrl(String scriptUrl) {
+        this.scriptUrl = scriptUrl;
+    }
 
 }

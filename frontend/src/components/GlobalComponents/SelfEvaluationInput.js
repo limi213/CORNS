@@ -1,20 +1,36 @@
-import { TextField, Box, Button } from "@mui/material";
+import { Input, Box, Button } from "@mui/material";
 import React from "react";
+import StarRating from "./StarRating";
 
 function SelfEvaluationInput({}) {
   return (
     <>
-      <Box component="form">
-        <TextField
-          variant="outlined"
+      <Box
+        component="form"
+        sx={{
+          border: "3px solid #111",
+          position: "relative",
+          width: "100%",
+        }}
+      >
+        <StarRating />
+        <Input
           id="my-input"
           aria-describedby="my-helper-text"
-          multiline
           rows={4}
-          sx={{ width: "100%", backgroundColor: "white" }}
-
+          multiline={true}
+          sx={{
+            width: "100%",
+            backgroundColor: "white",
+            padding: "1rem 5.5rem 1rem 1rem",
+          }}
         />
-        <Button variant="contained" component="label">
+
+        <Button
+          variant="contained"
+          component="label"
+          sx={{ position: "absolute", bottom: "24px", right: "24px" }}
+        >
           등록
           <input hidden type="submit"></input>
         </Button>

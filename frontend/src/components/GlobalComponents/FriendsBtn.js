@@ -1,32 +1,27 @@
 import React from "react";
-
-import { Button, Typography } from "@mui/material";
+import { useEffect } from "react";
+import { Box, Typography, Button } from "@mui/material";
 
 function FriendsBtn({ status }) {
   let btnContent = "";
   let btnColor = "";
-  if (status === true) {
+  if (status === "5000") {
+    btnContent = "친구신청중";
+    btnColor = "#67C73A";
+  } else if (status === "5001") {
+    btnContent = "친구수락";
+    btnColor = "#3C90F2";
+  } else if (status === "5002") {
     btnContent = "친구끊기";
-    btnColor = "#ddd";
-  } else if (status === false) {
+    btnColor = "#DDDDDD";
+  } else {
     btnContent = "친구신청";
     btnColor = "#FFC804";
   }
   return (
     <>
-      <Button
-        variant="contained"
-        sx={{
-          height: "4rem",
-          px: "3rem",
-          backgroundColor: btnColor,
-          color: "#111",
-          border: "3px solid #111",
-          boxSizing: "border-box",
-        }}
-      >
-        <Typography variant="h5">{btnContent}</Typography>
-        <input hidden type="submit"></input>
+      <Button variant="contained" sx={{ backgroundColor: btnColor }}>
+        {btnContent}
       </Button>
     </>
   );

@@ -1,5 +1,7 @@
 package com.w6w.corns.dto.user;
 
+import com.mysql.cj.log.Log;
+import com.w6w.corns.domain.user.User;
 import lombok.*;
 
 import java.util.List;
@@ -25,12 +27,19 @@ public class LoginResponseDto {
     private int conversationTotal;
     private int ddabongTotal;
 
-    @Builder
-    public LoginResponseDto(int userId, String email, String nickname, String imgUrl, String refreshToken) {
-        this.userId = userId;
-        this.email = email;
-        this.nickname = nickname;
-        this.imgUrl = imgUrl;
-        this.refreshToken = refreshToken;
+    public static LoginResponseDto fromEntity(User user){
+
+        //attendTotal, friendTotal, conv, ddabong, rank 가져오기
+        return LoginResponseDto.builder()
+                .userId(user.getUserId())
+                .email(user.getEmail())
+                .nickname(user.getNickname())
+                .imgUrl(user.getImgUrl())
+                .level(user.getLevel().getLevelNo())
+                .expTotal(user.getExpTotal())
+                .social(user.getSocial())
+                .refreshToken(user.getRefreshToken())
+                .build();
+
     }
 }

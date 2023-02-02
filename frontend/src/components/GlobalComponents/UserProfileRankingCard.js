@@ -1,13 +1,13 @@
 import React from "react";
 
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-
 import sungsil_crown from "assets/sungsil_crown.png";
 import ddabong_crown from "assets/ddabong_crown.png";
 import suda_crown from "assets/suda_crown.png";
 import ingi_crown from "assets/ingi_crown.png";
 import { Box, Grid, Typography } from "@mui/material";
+
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
 function UserProfileRankingCard({ ranking }) {
   const { type, rank, indicate } = ranking;
@@ -15,8 +15,6 @@ function UserProfileRankingCard({ ranking }) {
   let crown = "";
   let unit = "";
   let transKorean = "";
-
-  // 한글이랑 영어랑 font크기가 달라서 박스 사이즈 달라짐..
 
   if (type === "sungsil") {
     crown = sungsil_crown;
@@ -38,13 +36,7 @@ function UserProfileRankingCard({ ranking }) {
 
   return (
     <Grid item xs={3}>
-      <Box
-        sx={{
-          border: "3px solid #111",
-          boxSizing: "border-box",
-          mr: "1.5rem",
-        }}
-      >
+      <Box sx={{ border: "3px solid #111", mr: "1.5rem" }}>
         <Box
           sx={{
             display: "flex",
@@ -54,40 +46,33 @@ function UserProfileRankingCard({ ranking }) {
           }}
         >
           <img src={crown} alt={type} />
-          <Typography sx={{ ml: "1rem" }}>{transKorean}왕</Typography>
+          <Typography>{transKorean}왕</Typography>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          {rank !== null ? (
-            <p
-              css={css`
-                margin: 22px 0;
-              `}
-            >
-              {rank} 위
-            </p>
-          ) : (
-            <p
-              css={css`
-                margin: 22px 0;
-              `}
-            >
-              랭크되지 못했어요
-            </p>
-          )}
+        {rank !== null ? (
           <p
             css={css`
-              margin: 0 0 1rem;
+              text-align: center;
             `}
           >
-            {indicate} {unit}
+            {rank} 위
           </p>
-        </Box>
+        ) : (
+          <p
+            css={css`
+              text-align: center;
+            `}
+          >
+            랭크되지 못했어요
+          </p>
+        )}
+
+        <p
+          css={css`
+            text-align: center;
+          `}
+        >
+          {indicate} {unit}
+        </p>
       </Box>
     </Grid>
   );

@@ -67,10 +67,6 @@ public class JwtServiceImpl implements JwtService{
         return value;
     }
 
-    @Override
-    public int getUserId() {
-        return (int)this.get("user").get("id");
-    }
     //토큰 제대로 생성됐는지 확인
     @Override
     public boolean checkToken(String jwt) {

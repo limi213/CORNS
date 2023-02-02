@@ -1,7 +1,6 @@
 import React from "react";
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import { Box, Button, Input } from "@mui/material";
 
 function ChangePassword() {
   return (
@@ -11,26 +10,57 @@ function ChangePassword() {
       <Box sx={{ fontSize: "20px" }}>
         <Box>
           <h5>현재 비밀번호</h5>
-          <input type="text" />
-        </Box>
-        
-        <Box>
-          <h5>비밀번호 재확인</h5>
-          <input type="text" />
+          <Input
+            type="password"
+            sx={{
+              backgroundColor: "#fff",
+              border: "3px solid #111",
+              pl: "1rem",
+              mr: "1rem",
+              width: "50%",
+              height: "45px",
+            }}
+          />
         </Box>
 
         <Box>
           <h5>새 비밀번호</h5>
-          <input type="text" />
+          <Input
+            type="password"
+            sx={{
+              backgroundColor: "#fff",
+              border: "3px solid #111",
+              pl: "1rem",
+              mr: "1rem",
+              width: "50%",
+              height: "45px",
+            }}
+          />
+        </Box>
+
+        <Box>
+          <h5>비밀번호 재확인</h5>
+          <Input
+            type="password"
+            sx={{
+              backgroundColor: "#fff",
+              border: "3px solid #111",
+              pl: "1rem",
+              mr: "1rem",
+              width: "40%",
+              height: "45px",
+            }}
+          />
           <Button
-              sx={{
-                border: "3px solid #111",
-                color: "#111111",
-                backgroundColor: "#FFC804",
-              }}
-            >
-              수정
-            </Button>
+            sx={{
+              border: "3px solid #111",
+              color: "#111111",
+              backgroundColor: "#FFC804",
+              width: "9%",
+            }}
+          >
+            수정
+          </Button>
         </Box>
       </Box>
     </>

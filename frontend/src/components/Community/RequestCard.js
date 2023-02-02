@@ -1,10 +1,7 @@
 import React from "react";
 
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { Box, Card, CardMedia, Typography, Button } from "@mui/material";
+
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
@@ -18,11 +15,13 @@ function RequestCard({ user }) {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          minWidth: "240px",
           width: "240px",
           height: "260px",
           padding: "16px 30px",
           boxSizing: "border-box",
-          border: "3px solid #111111"
+          border: "3px solid #111111",
+          mr: "1.5rem",
         }}
       >
         <CardMedia

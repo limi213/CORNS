@@ -56,7 +56,7 @@ export default function RankingList({}) {
 
   return (
     <>
-      <Grid container>
+      <Grid container spacing={1}>
         {rankInfos.map((rankInfo) => {
           return <RankingCard rankInfo={rankInfo} key={rankInfo.user_id} />;
         })}

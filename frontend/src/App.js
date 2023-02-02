@@ -1,4 +1,4 @@
-import React, { Route, Switch } from "react-router-dom";
+import React, { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./routes/Home";
 import Conversation from "./routes/Conversation";
 import ConversationLog from "./routes/ConversationLog/ConversationLog";
@@ -7,6 +7,7 @@ import GrowthRecord from "./routes/GrowthRecord/GrowthRecord";
 import Login from "./routes/LogIn";
 import Signin from "./routes/SignIn";
 import Mypage from "./routes/MyPage/MyPage";
+import NotFound from "./routes/NotFound";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -23,6 +24,8 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signin" component={Signin} />
         <Route path="/mypage" component={Mypage} />
+        <Route exact path="/NotFound" component={NotFound} />
+        <Redirect to="/NotFound" />
       </Switch>
     </div>
   );

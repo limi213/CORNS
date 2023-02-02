@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, CardMedia, Container, Typography, Grid } from "@mui/material";
+import { Box, CardMedia, Typography, Grid } from "@mui/material";
 
 function UserProfileInfo({ basicInfo }) {
   const {
@@ -20,8 +20,7 @@ function UserProfileInfo({ basicInfo }) {
       <Box
         sx={{
           display: "flex",
-          boxSizing: "border-box",
-          padding: "4rem 3rem",
+          p: "64px 48px",
         }}
       >
         <CardMedia

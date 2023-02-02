@@ -1,7 +1,6 @@
 import React from "react";
 
-import Box from "@mui/material/Box";
-import Button from '@mui/material/Button'
+import { Box, Button, Input } from "@mui/material";
 
 function ChangeProfile() {
   return (
@@ -11,26 +10,59 @@ function ChangeProfile() {
       <Box sx={{ fontSize: "20px" }}>
         <Box>
           <h5>아이디</h5>
-          <input type="text" />
+          <Input
+            disabled
+            placeholder="회원 아이디"
+            sx={{
+              backgroundColor: "#fff",
+              border: "3px solid #111",
+              pl: "1rem",
+              mr: "1rem",
+              width: "50%",
+              height: "45px",
+            }}
+          />
         </Box>
 
         <Box>
           <h5>닉네임</h5>
-          <input type="text" />
+          <Input
+            placeholder="5"
+            sx={{
+              backgroundColor: "#fff",
+              border: "3px solid #111",
+              pl: "1rem",
+              mr: "1rem",
+              width: "40%",
+              height: "45px",
+            }}
+          />
           <Button
-              sx={{
-                border: "3px solid #111",
-                color: "#111111",
-                backgroundColor: "#FFC804",
-              }}
-            >
-              수정
-            </Button>
+            sx={{
+              border: "3px solid #111",
+              color: "#111111",
+              backgroundColor: "#FFC804",
+              width: "9%",
+            }}
+          >
+            수정
+          </Button>
         </Box>
 
         <Box>
           <h5>이메일</h5>
-          <input type="text" />
+          <Input
+            disabled
+            placeholder="회원 이메일"
+            sx={{
+              backgroundColor: "#fff",
+              border: "3px solid #111",
+              pl: "1rem",
+              mr: "1rem",
+              width: "50%",
+              height: "45px",
+            }}
+          />
         </Box>
 
         <Box>
