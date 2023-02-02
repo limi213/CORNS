@@ -28,7 +28,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
-@Api("사용자 컨트롤러(홍빈테스트중)")
+@Api("사용자 컨트롤러")
 public class UserController {
 
     private final UserService userService;
@@ -254,7 +254,7 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "user 정보 수정", notes = "닉네임, 이미지, 비밀번호 수정")
+    @ApiOperation(value = "user 정보 수정(테스트중)", notes = "닉네임, 이미지, 비밀번호 수정")
     @PatchMapping
     public ResponseEntity<?> modifyUserInfo(@RequestBody UserModifyRequestDto user){
 
