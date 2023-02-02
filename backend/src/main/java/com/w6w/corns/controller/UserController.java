@@ -166,13 +166,12 @@ public class UserController {
             String refreshToken = jwtService.createRefreshToken("id", loginResponseDto.getUserId());
 
             userService.saveRefreshToken(loginResponseDto.getUserId(), refreshToken);
-            userService.updateLastLoginTm(loginResponseDto.getUserId());
             loginResponseDto.setRefreshToken(refreshToken);
 
             //경험치도 줘야함!, 리팩토링 필요 + 이메일 중복 통합 처리 
 
-            //lastLoginTm 갱신
-            userService.updateLastLoginTm(loginResponseDto.getUserId());
+            //lastLoginTm 갱신 -> 오류! 해결 필요
+//            userService.updateLastLoginTm(loginResponseDto.getUserId());
 
             // 로그인로그 insert
             userService.makeLoginLog(loginResponseDto.getUserId());
