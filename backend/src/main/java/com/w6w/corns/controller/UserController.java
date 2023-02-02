@@ -106,7 +106,7 @@ public class UserController {
                 userService.saveRefreshToken(loginUser.getUserId(), refreshToken);
                 loginUser.setRefreshToken(refreshToken);
 
-                //lastLoginTm 갱신
+                //lastLoginTm 갱신 -> 추후 수정
                 userService.updateLastLoginTm(loginUser.getUserId());
 
                 resultMap.put("accessToken", accessToken);
