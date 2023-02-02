@@ -1,7 +1,5 @@
 package com.w6w.corns.dto.room.response;
 
-import com.w6w.corns.dto.user.LoginResponseDto;
-import com.w6w.corns.dto.user.UserRequestDto;
 import com.w6w.corns.dto.user.UserResponseDto;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
