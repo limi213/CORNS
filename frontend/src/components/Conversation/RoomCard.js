@@ -1,32 +1,61 @@
 import React from "react";
 
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+} from "@mui/material";
 
 import { Stopwatch, People } from "react-bootstrap-icons";
 
-function RoomCard({ title }) {
+function RoomCard({ room, subject }) {
+  const {
+    currentMember,
+    hostUserId,
+    maxMember,
+    roomCd,
+    roomNo,
+    sessionId,
+    time,
+    title,
+  } = room;
+  const { imgUrl, subjectNo, value } = subject;
   return (
-    <Card sx={{ maxWidth: 265, maxHeight: 320 }} variant="outlined">
+    <Card
+      sx={{ maxWidth: 265, maxHeight: 320, position: "relative" }}
+      variant="outlined"
+    >
       <CardMedia
         component="img"
-        alt="green iguana"
+        alt="subject Image"
         height="160"
-        image="https://www.ikea.com/images/jaettebo-3-5-eket-6a470b2ae178df6a009a9f98b087b2c1.jpg?f=s"
+        image={imgUrl}
       />
+      <div
+        css={css`
+          position: absolute;
+          top: 45%;
+          left: 0;
+          color: blue;
+        `}
+      >
+        {value}
+      </div>
       <CardContent sx={{ height: 110 - 32 }}>
         <Typography gutterBottom variant="p" component="div">
           {title}을/를 대화해 봅시다!
         </Typography>
         <Typography variant="body2">
           <span>
-            <Stopwatch /> 10분
+            <Stopwatch /> {time}분
           </span>
           <span>
-            <People /> 2 / 4명
+            <People /> {currentMember + 1} / {maxMember}명
           </span>
         </Typography>
       </CardContent>

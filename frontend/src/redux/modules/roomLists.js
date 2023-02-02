@@ -1,5 +1,9 @@
 import * as roomListsAPI from "../api/RoomLists";
-import { createPromiseThunk, reducerUtils } from "lib/asyncUtils";
+import {
+  createPromiseThunk,
+  reducerUtils,
+  handleAsyncActions,
+} from "lib/asyncUtils";
 
 // action
 
@@ -36,25 +40,16 @@ const initialState = {
   roomLists: reducerUtils.initial(),
 };
 
-// reducer
+const getRoomListsReducer = handleAsyncActions(GET_ROOMLISTS, "roomLists");
+
+// reducer 리팩토링 후
 
 export default function roomLists(state = initialState, action) {
   switch (action.type) {
     case GET_ROOMLISTS:
-      return {
-        ...state,
-        roomLists: reducerUtils.loading(),
-      };
     case GET_ROOMLISTS_SUCCESS:
-      return {
-        ...state,
-        roomLists: reducerUtils.success(action.payload),
-      };
     case GET_ROOMLISTS_ERROR:
-      return {
-        ...state,
-        roomLists: reducerUtils.error(action.payload),
-      };
+      return getRoomListsReducer(state, action);
     default:
       return state;
   }

@@ -10,6 +10,7 @@ import SelfEvaluationModal from "../components/Conversation/SelfEvaluationModal"
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import RoomListsContainer from "redux/containers/RoomListsContainer";
 
 function Conversation() {
   const user = true;
@@ -29,7 +30,7 @@ function Conversation() {
         {user ? <LogInUserArea /> : <AnonymousUserArea />}
         <h2>쫑알룸리스트</h2>
         <ConversationRoomFilter />
-        <RoomList />
+        <RoomListsContainer />
         <RoomCreateModal />
         <SelfEvaluationModal />
       </div>
