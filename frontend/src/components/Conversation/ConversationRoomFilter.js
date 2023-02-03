@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 
-import SubjectsContainer from "redux/containers/SubjectsContainer";
+import SubjectsContainer from "store/containers/SubjectsContainer";
 
 import {
   Box,

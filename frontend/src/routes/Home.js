@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/GlobalComponents/Navbar";
 import hero from "assets/hero.png";
 import backgroundImage from "assets/backgroundImage.png";
-import RoomListsContainer from "redux/containers/RoomListsContainer";
+import RoomListsContainer from "store/containers/RoomListsContainer";
 import RankingList from "components/GlobalComponents/RankingList";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";

@@ -3,17 +3,14 @@ import {
   combineReducers,
   configureStore,
 } from "@reduxjs/toolkit";
-import { createLogger } from "redux-logger";
+import { logger } from "redux-logger";
 import thunk from "redux-thunk";
-
-import roomLists from "redux/modules/roomLists";
-import subjects from "redux/modules/subjects";
-
-const logger = createLogger();
+import { roomListReducer } from "store/reducers/roomListReducer";
+import { subjectsReducer } from "store/reducers/subjectsReducer";
 
 const rootReducer = combineReducers({
-  roomLists,
-  subjects,
+  roomListReducer: roomListReducer.reducer,
+  subjectsReducer: subjectsReducer.reducer,
 });
 
 export const store = configureStore(
