@@ -19,7 +19,7 @@ function Home() {
         <Box sx={{ position: "absolute", top: "45%", right: "15%" }}>
           <Typography variant="h3">CORNS가 처음이세요?</Typography>
           <Typography sx={{ color: "#fff" }}>
-            CORNS 사용법 더 알아보러가기(홍빈테스트중!)
+            CORNS 사용법 더 알아보러가기
           </Typography>
           <Button
             variant="contained"
