@@ -14,6 +14,8 @@ function joinSession() {
 	var mySessionId = document.getElementById("sessionId").value;
 	var myUserName = document.getElementById("userName").value;
 
+	// alert(mySessionId)
+
 	// --- 1) Get an OpenVidu object ---
 
 	OV = new OpenVidu();
