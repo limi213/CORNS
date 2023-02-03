@@ -49,7 +49,7 @@ public class SwaggerConfiguration  {
 
     public ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("w6w's corn project")
+                .title("(자동배포가될까요???)w6w's corn project")
                 .description("rest api test")
                 .version(version)
                 .build();
