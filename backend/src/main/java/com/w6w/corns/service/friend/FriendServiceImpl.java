@@ -195,7 +195,6 @@ public class FriendServiceImpl implements FriendService {
                 relation = FRIEND;
             }
         }
-
         return relation;
     }
 

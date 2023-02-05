@@ -38,4 +38,6 @@ public interface FriendRepository extends JpaRepository<Friend, FriendPK> {
             "AND u.user_id = :findId " +
             "AND f.mod_tm < :baseTime", nativeQuery = true)
     Slice<FriendListInterface> findFriendByUserId(int userId, int findId, String baseTime, int friendCd, Pageable pageable);
+
+    long countByUserIdAAndFriendCdOrUserIdBAndFriendCd(int userIdA, int friendCdA, int userIdB, int friendCdb);
 }

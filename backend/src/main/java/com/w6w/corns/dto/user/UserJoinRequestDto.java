@@ -13,18 +13,14 @@ public class UserJoinRequestDto {
 
     private String email;
     private String password;
-    private String salt;
     private String nickname;
-    private int social;
 
     public User toEntity(){
         return User
                 .builder()
                 .email(email)
                 .password(password)
-                .salt(salt)
                 .nickname(nickname)
-                .social(social)
                 .build();
     }
 }

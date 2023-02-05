@@ -1,10 +1,7 @@
 package com.w6w.corns.domain.explog;
 
 import com.w6w.corns.util.BaseTime;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Entity;
@@ -12,6 +9,8 @@ import javax.persistence.Id;
 
 @DynamicInsert
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Entity

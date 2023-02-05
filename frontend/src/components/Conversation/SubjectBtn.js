@@ -7,7 +7,7 @@ function SubjectBtn({ active, subject }) {
   // 버튼을 눌렀을 때 색깔이 바뀌게 하는 toggle 함수
   const btnColorToggle = (e) => {
     setToggle((prev) => !prev);
-    // console.log(e.target.textContent);
+    console.log(e.target.textContent);
   };
   return (
     <>
