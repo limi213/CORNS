@@ -1,7 +1,7 @@
 var OV;
 var session;
 
-var roomListId = "roomViewUser1";
+var roomListId = "roomViewUser";
 
 // 비디오 사이즈
 let videoWidth = parseInt($(window).width() * 0.35); //Math.floor(screen.width * 0.35); // "35vw";
@@ -14,7 +14,6 @@ function joinSession() {
 	var mySessionId = document.getElementById("sessionId").value;
 	var myUserName = document.getElementById("userName").value;
 
-	// alert(mySessionId)
 
 	// --- 1) Get an OpenVidu object ---
 
@@ -35,16 +34,21 @@ function joinSession() {
 			}	
 		}
 	});
+	var count = 2;
 
 	// On every new Stream received...
 	session.on('streamCreated', event => {
 		// Subscribe to the Stream to receive it. HTML video will be appended to element with roomListId id
-		var subscriber = session.subscribe(event.stream, roomListId);
+		var roomno = roomListId + count;
+		
+		var subscriber = session.subscribe(event.stream, "roomViewUser2");
+		count += 1;
 
 		// When the HTML video has been appended to DOM...
 		subscriber.on('videoElementCreated', event => {
-			console.log(event.element);
-			// Add a new <p> element for the user's nickname just below its video
+			// 누군가 새로운 사람이 들어오면 여기에 뜬다.
+			// 2번부터 띄워준다.
+			
 			// appendUserData(event.element, subscriber.stream.connection);
 		});
 		
@@ -80,8 +84,9 @@ function joinSession() {
 				// document.getElementById('join').style.display = 'none';
 				// document.getElementById('session').style.display = 'block';
 
+				// 내가 무조건 1번에 뜨게 한다.
 				// --- 6) Get your own camera stream with the desired properties ---
-				var publisher = OV.initPublisher(roomListId, {
+				var publisher = OV.initPublisher("roomViewUser1", {
 					audioSource: undefined, // The source of audio. If undefined default microphone
 					videoSource: undefined, // The source of video. If undefined default webcam
 					publishAudio: true,  	// Whether you want to start publishing with your audio unmuted or not
@@ -139,11 +144,9 @@ function removeUserData(connection) {
 }
 
 
-var APPLICATION_SERVER_URL = "http://localhost:5000/";
+var OPENVIDU_URL= "https://3.39.6.81/";
 
-var OPENVIDU_URL= "http://localhost:4443/";
-var OPENVIDU_SECRET = "MY_SECRET";
-
+var OPENVIDU_SECRET = btoa("OPENVIDUAPP:a506w6w");
 function getToken(mySessionId) {
 	return createToken(mySessionId);
 	// return createSession(mySessionId).then(sessionId => createToken(sessionId));
@@ -159,7 +162,7 @@ function createSession(sessionId) {
 	// 		url: OPENVIDU_URL + "openvidu/api/sessions",
 	// 		data: JSON.stringify({ customSessionId: sessionId }),
 	// 		headers: { 	"Content-Type": "application/json",
-	// 					 "Authorization" : "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU",
+	// 					 "Authorization" : "Basic " + OPENVIDU_SECRET,
 	// 					 "Access-Control-Allow-Origin" : "*"},
 	// 		success: response => resolve(response), // The sessionId
 	// 		error: (error) => reject(error)
@@ -174,7 +177,7 @@ function createToken(sessionId) {
 			url: OPENVIDU_URL + 'openvidu/api/sessions/' + sessionId + '/connection',
 			data: JSON.stringify({}),
 			headers: { "Content-Type": "application/json",
-						"Authorization" : "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU",
+						"Authorization" : "Basic " + OPENVIDU_SECRET,
 						"Access-Control-Allow-Origin" : "*"},
 			success: (response) => resolve(response), // The token
 			error: (error) => reject(error)
@@ -188,7 +191,7 @@ function getConnection(sessionId){
 		$.ajax({
 			url: OPENVIDU_URL + "openvidu/api/sessions/"+ sessionId + "/connection/",
 			type: "GET",
-			headers: { 	"Authorization" : "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU",
+			headers: { 	"Authorization" : "Basic " + OPENVIDU_SECRET,
 						"Access-Control-Allow-Origin" : "*"},
 			success: (data) => { resolve(data); },
 			error: (data) => { reject(data); }
@@ -202,7 +205,7 @@ function getConnections(sessionId){
 		$.ajax({
 			url: OPENVIDU_URL + "openvidu/api/sessions/"+ sessionId + "/connection/",
 			type: "GET",
-			headers: { 	"Authorization" : "Basic T1BFTlZJRFVBUFA6TVlfU0VDUkVU",
+			headers: { 	"Authorization" : "Basic " + OPENVIDU_SECRET,
 						"Access-Control-Allow-Origin" : "*"},
 			success: (data) => { resolve(data); },
 			error: (data) => { reject(data); }
