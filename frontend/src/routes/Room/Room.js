@@ -10,7 +10,8 @@ function Room(props) {
   const session = obj.get("session");
   const url1 = "http://i8a506.p.ssafy.io:3028/frontend/src/Room/View.html?session=" + session;
   const url2 = "http://localhost:5500/src/Room/View.html?session=" + session;
-    if(window.location.href.includes("http://localhost/")){
+  alert(window.location.href.includes("localhost"))  
+  if(window.location.href.includes("localhost")){
       return (
         <iframe allow='camera *;microphone *'
         src={url2}
