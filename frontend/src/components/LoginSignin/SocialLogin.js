@@ -4,24 +4,14 @@ import { Box, Button } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import google_icon from "assets/google_icon.png";
-import axios from "axios";
 
 function SocialLogin() {
-  
-  const openModal = async (e) => {
+  const googleLogin = (e) => {
     e.preventDefault();
-    try{
-      const response = await axios.get(`${process.env.REACT_APP_HOST}/user/login/auth/google`)
-      // const response = await axios.get('/user/login/auth/google')
-      if (response.status === 200) {
-        console.log(response)
-      }
-    } catch(e) {
-      console.log(e);
-    }
-  }
+    const GOOGLE_LOGIN_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_GOOGLE_REDIRECT_URI}&response_type=code&scope=${process.env.REACT_APP_GOOGLE_SCOPE}`;
+    window.location.href = GOOGLE_LOGIN_URL
+  };
 
-  
   return (
     <Box sx={{ width: "80%" }}>
       <h5
@@ -38,7 +28,7 @@ function SocialLogin() {
           width: "100%",
           height: "40px",
         }}
-        onClick={openModal}
+        onClick={googleLogin}
       >
         <img
           src={google_icon}

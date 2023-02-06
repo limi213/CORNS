@@ -1,29 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import Logout from "auth/Logout";
+import IsLogin from "auth/IsLogin";
+
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import NavbarDropdown from "./NavbarDropdown";
 import white_logo from "assets/corns_logo.png";
 
 function Navbar() {
-  const [user, setUser] = useState(false);
-
+  const [user, setUser] = useState(true);
   // user 로그인했는지 확인하기 전에 랜더링돼서, area 밀려버림 -> 일단은 flag로 임시 해결
   const [flag, setFlag] = useState(false);
 
-  const logOut = () => {
-    localStorage.clear();
-    setUser(false);
-  };
-
   useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
-      setUser(true);
-    } else {
-      setUser(false);
-    }
+    setUser(IsLogin());
     setFlag(true);
   }, [user]);
+
+  const onLogout = () => {
+    Logout();
+    setUser(false);
+  };
 
   return (
     <>
@@ -114,6 +112,7 @@ function Navbar() {
             </li>
 
             {!user ? (
+              // {!isLogin() ? (
               <>
                 <li>
                   <NavLink
@@ -138,7 +137,7 @@ function Navbar() {
                   <NavLink
                     to="/"
                     style={{ textDecoration: "none", color: "black" }}
-                    onClick={logOut}
+                    onClick={onLogout}
                   >
                     로그아웃
                   </NavLink>

@@ -5,6 +5,20 @@ import { Box, Button } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
+
+// 비밀번호 유효성 검사
+const validatePwd = (password) => {
+  return password
+  .toLowerCase()
+  .match(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/);
+}
+
+// 비밀번호1, 비밀번호2 확인
+const checkPwd = (password1, password2) => {
+  return password1 === password2;
+};
+
+
 function SigninPassword({
   password1,
   setPassword1,
@@ -24,23 +38,11 @@ function SigninPassword({
   };
 
 
-  // 비밀번호 state 제대로 안넘겨지는중....
-  // 수정해야함....
   useEffect(() => {
-    // 비밀번호 유효성 검사
-    const validatePwd = (password) => {
-      return password
-        .toLowerCase()
-        .match(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/);
-    };
-
-    // 비밀번호1, 비밀번호2 확인
-    const checkPwd = (password1, password2) => {
-      return password1 === password2;
-    };
     setStatePassword1(Boolean(password1 && validatePwd(password1)))
     setStatePassword2(Boolean(password2 && checkPwd(password1, password2)))
   }, [password1, password2]);
+
 
   return (
     <Box sx={{ width: "90%" }}>
@@ -105,3 +107,4 @@ function SigninPassword({
 }
 
 export default SigninPassword;
+export {validatePwd, checkPwd};

@@ -1,49 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
 import SocialLogin from "./SocialLogin";
+import Login from 'auth/Login';
 
 import { Box, Button } from "@mui/material";
 import yellow_logo from "assets/corns_logo_yellow.png";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-
-// 로그인 axios
-const Login = async (email, password, setErrorMsg = false) => {
-  try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_HOST}/user/login`,
-      {
-        email: email,
-        password: password,
-      },
-      {
-        validateStatus: (status) => status === 200 || status === 401,
-      }
-    );
-    
-    if (response.status === 200) {
-      // 로그인 성공
-      // 로컬 스토리지에 access token 저장
-      // 일단 refresh token도 로컬에 저장 -> redis 설정되면 추후 세션으로 이동 고민
-      localStorage.setItem('accessToken', response.data.accessToken);
-      localStorage.setItem('refreshToken', response.data.refreshToken);
-      
-      // 전 페이지로 back
-      window.history.back();
-
-    } else if (response.status === 401) {
-      setErrorMsg("아이디 또는 비밀번호를 잘못입력했습니다.");
-    }
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-
-
-function LoginCard({history}) {
+function LoginCard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -161,4 +126,4 @@ function LoginCard({history}) {
   );
 }
 
-export {LoginCard, Login};
+export default LoginCard;
