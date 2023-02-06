@@ -8,7 +8,8 @@ function Room(props) {
   const obj = new URLSearchParams(searchParams);
    //name으로 검색된 value 값을 가져오기 위해 get을 사용해준다
   const session = obj.get("session");
-  const url1 = "http://i8a506.p.ssafy.io:3028/frontend/src/Room/View.html?session=" + session;
+  // const url1 = "http://i8a506.p.ssafy.io:3028/frontend/src/Room/View.html?session=" + session;
+  const url1 = "https://i8a506.p.ssafy.io:4435/frontend/src/Room/View.html?session=" + session;
   const url2 = "http://localhost:5500/src/Room/View.html?session=" + session;
   alert(window.location.href.includes("localhost"))  
   if(window.location.href.includes("localhost")){
