@@ -12,6 +12,7 @@ import com.w6w.corns.util.PageableResponseDto;
 import com.w6w.corns.util.code.RoomCode;
 import com.w6w.corns.util.code.RoomUserCode;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@RestController()
+@RestController
+@RequiredArgsConstructor
 @RequestMapping("room")
 public class RoomController {
 
     private final Logger logger = LoggerFactory.getLogger(RoomController.class);
 
-    @Autowired
-    RoomService roomService;
+    private final RoomService roomService;
 
     @ApiOperation(value = "쫑알룸 생성하기", notes = "방 정보와 OpenVidu 관련 정보를 body에 담아서 요청")
     @PostMapping
@@ -68,7 +69,7 @@ public class RoomController {
         logger.debug("baseTime: {}, subject: {}, minTime: {}, maxTime: {}, isAvail: {}, pageable: {}", baseTime, subject, minTime, maxTime, isAvail, pageable);
 
         try {
-            StringTokenizer st = new StringTokenizer(subject, "%");
+            StringTokenizer st = new StringTokenizer(subject, " ");
             ArrayList<Integer> subjects = new ArrayList<>();
             while (st.hasMoreTokens()) subjects.add(Integer.parseInt(st.nextToken()));
             logger.debug("subjects: {}", subjects);

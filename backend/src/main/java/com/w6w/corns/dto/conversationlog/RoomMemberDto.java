@@ -1,4 +1,4 @@
-package com.w6w.corns.dto.evaluation;
+package com.w6w.corns.dto.conversationlog;
 
 import lombok.*;
 
@@ -7,9 +7,11 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @ToString
-public class ThumbResultResponseDto {
+public class RoomMemberDto {
     private int userId;
     private String nickname;
     private String imgUrl;
     private int thumbCnt;
+    private String speaking;
+    private String scriptUrl;
 }

@@ -38,8 +38,6 @@ public class RoomUser extends BaseTime {
 
     private int thumbCnt;
 
-    private LocalDateTime startTm;
-
     @Builder
     public RoomUser(String connectionId, String recordId, String token) {
         this.connectionId = connectionId;
@@ -67,6 +65,9 @@ public class RoomUser extends BaseTime {
 
     public void setThumbCnt(int thumbCnt) { this.thumbCnt = thumbCnt; }
 
-    public void setStartTmNow() { this.startTm = LocalDateTime.now(); }
+    public void setBookmarkYN(boolean doRegister) {
+        if (doRegister) this.bookmarkYN = 'Y';
+        else this.bookmarkYN = 'N';
+    }
 
 }

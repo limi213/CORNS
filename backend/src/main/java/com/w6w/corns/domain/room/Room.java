@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @DynamicInsert
 @Getter
@@ -37,6 +38,8 @@ public class Room extends BaseTime {
 
     private String scriptUrl;
 
+    private LocalDateTime startTm;
+
     @Builder
     public Room(String title, int time, int maxMember, int subjectNo, String sessionId) {
         this.title = title;
@@ -59,5 +62,7 @@ public class Room extends BaseTime {
     public void setScriptUrl(String scriptUrl) {
         this.scriptUrl = scriptUrl;
     }
-
+    public void setStartTmNow() {
+        this.startTm = LocalDateTime.now();
+    }
 }

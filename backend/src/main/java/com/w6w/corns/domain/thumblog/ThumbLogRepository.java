@@ -5,7 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ThumbLogRepository extends JpaRepository<ThumbLog, Integer> {
-    long countByRoomNoAndToUserId(int roomNo, int toUserId);
-
     long countByToUserId(int toUserId);
 }
