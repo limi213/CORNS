@@ -39,18 +39,25 @@ function joinSession() {
 	// On every new Stream received...
 	session.on('streamCreated', event => {
 		// Subscribe to the Stream to receive it. HTML video will be appended to element with roomListId id
-		var roomno = roomListId + count;
-		
-		var subscriber = session.subscribe(event.stream, "roomViewUser2");
-		count += 1;
-
-		// When the HTML video has been appended to DOM...
-		subscriber.on('videoElementCreated', event => {
-			// 누군가 새로운 사람이 들어오면 여기에 뜬다.
-			// 2번부터 띄워준다.
+		if(count < 5){
+			var roomno = roomListId + count;
 			
-			// appendUserData(event.element, subscriber.stream.connection);
-		});
+			var subscriber = session.subscribe(event.stream, roomno);
+			count += 1;
+	
+			// When the HTML video has been appended to DOM...
+			subscriber.on('videoElementCreated', event => {
+				// 누군가 새로운 사람이 들어오면 여기에 뜬다.
+				// 2번부터 띄워준다.
+				
+				// appendUserData(event.element, subscriber.stream.connection);
+			});
+		}
+		else{
+			alert("초과!@!")	//
+
+			// 근데 여기 말고 애초에 들어올때 안되어야 한당 ㅋ.ㅋ
+		}
 		
 	});
 

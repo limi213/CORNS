@@ -11,7 +11,7 @@ function Room(props) {
   // const url1 = "http://i8a506.p.ssafy.io:3028/frontend/src/Room/View.html?session=" + session;
   const url1 = "https://i8a506.p.ssafy.io:4435/frontend/src/Room/View.html?session=" + session;
   const url2 = "http://localhost:5500/src/Room/View.html?session=" + session;
-  alert(window.location.href.includes("localhost"))  
+  //alert(window.location.href.includes("localhost"))  
   if(window.location.href.includes("localhost")){
       return (
         <iframe allow='camera *;microphone *'
