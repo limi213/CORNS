@@ -9,7 +9,7 @@ import Signin from "./routes/SignIn";
 import Mypage from "./routes/MyPage/MyPage";
 import Room from "./routes/Room/Room";
 import NotFound from "./routes/NotFound";
-
+import TopBtn from "components/GlobalComponents/TopBtn";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
@@ -29,6 +29,7 @@ function App() {
         <Route exact path="/NotFound" component={NotFound} />
         <Redirect to="/NotFound" />
       </Switch>
+      <TopBtn />
     </div>
   );
 }
