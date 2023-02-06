@@ -74,12 +74,12 @@
           <div id="roomViewUser4" class="roomViewUser"></div>
         </div>
         <!-- <div id="video-container" class="col-md-6"></div> -->
-        <div id="video-container" class="col-md-6">
+        <!-- <div id="video-container" class="col-md-6"> -->
           <!-- <video autoplay="" id="local-video-undefined"></video>
           <div class="data-node" id="data-Participant38">
             <p>Participant38</p>
           </div> -->
-        </div>
+        <!-- </div> -->
       </div>
       <input type="hidden" id="sessionId" />
       <input type="hidden" id="userName" />
@@ -92,7 +92,7 @@
 
         let session = urlParams.get('session');
         let connection = urlParams.get('connection');
-
+        let username = urlParams.get('username');
         // alert('session = ' + session)
 
         if(!session ){
@@ -102,7 +102,7 @@
         else{
           // 이슈 없이 커넥션이랑 세션 다 들어옴!
           $("#sessionId").val(session);
-          $("#userName").val("앨리스"); // 유저이름은 쿠키에서 가져올려나
+          $("#userName").val(username); // 유저이름은 쿠키에서 가져올려나
 
           joinSession();
           
