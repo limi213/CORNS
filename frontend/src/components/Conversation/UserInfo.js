@@ -8,7 +8,7 @@ import Card from "@mui/material/Card";
 
 function UserInfo({}) {
   return (
-    <Card sx={{ border: "3px solid #111" }}>
+    <Card sx={{ border: "3px solid #111", height: "100%" }}>
       <ExperienceInfo />
       <AttendanceInfo />
     </Card>

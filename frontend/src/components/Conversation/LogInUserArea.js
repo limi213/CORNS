@@ -18,8 +18,8 @@ function LogInUserArea() {
   const { user_id, nickname, level, exp, attend } = user;
 
   return (
-    <Grid container spacing={1} sx={{ marginBottom: "64px" }}>
-      <Grid item xs={5}>
+    <Grid container sx={{ marginBottom: "64px" }}>
+      <Grid item xs={5} sx={{ pr: "1.5rem" }}>
         <UserCard id={user_id} nickname={nickname} level={level} />
       </Grid>
       <Grid item xs={7}>
