@@ -179,7 +179,7 @@ public class RoomController {
             if (response == null) {
                 resultMap.put("message", "대기방 폭파");
                 status = HttpStatus.ACCEPTED;
-            } else if (response.getRoom().getRoom().getRoomCd() == RoomCode.ROOM_END.getCode()) {
+            } else if (response.getRoom().getRoom().isAvail() == false) {
                 resultMap.put("message", "종료된 방");
                 status = HttpStatus.ACCEPTED;
             } else {

@@ -24,7 +24,7 @@ public class RoomResponseDto {
 
     private int hostUserId;
 
-    private int roomCd;
+    private boolean isAvail;
 
     private String sessionId;
 

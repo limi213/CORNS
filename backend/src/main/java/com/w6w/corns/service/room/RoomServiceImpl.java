@@ -83,20 +83,25 @@ public class RoomServiceImpl implements RoomService {
     public PageableResponseDto searchBySlice(String baseTime, ArrayList<Integer> subjects, int minTime, int maxTime, boolean isAvail, Pageable pageable) {
         Slice<Room> slice = roomRepository.searchBySlice(baseTime, subjects, minTime, maxTime, isAvail, pageable);
         List<RoomListResponseDto> roomList = slice.stream()
-                .map(m -> RoomListResponseDto.builder()
-                        // room
-                        .room(RoomResponseDto.builder()
-                                .roomNo(m.getRoomNo())
-                                .title(m.getTitle())
-                                .time(m.getTime())
-                                .currentMember(m.getCurrentMember())
-                                .maxMember(m.getMaxMember())
-                                .roomCd(m.getRoomCd())
-                                .sessionId(m.getSessionId())
-                                .build())
-                        // subject - select by subject no
-                        .subject(subjectService.findById(m.getSubjectNo()))
-                        .build())
+                .map(m -> {
+                    boolean isAvailable = true;
+                    if (m.getCurrentMember() == m.getMaxMember()) isAvailable = false;
+                    if (m.getRoomCd() != RoomCode.ROOM_WAITING.getCode()) isAvailable = false;
+                    return RoomListResponseDto.builder()
+                            // room
+                            .room(RoomResponseDto.builder()
+                                    .roomNo(m.getRoomNo())
+                                    .title(m.getTitle())
+                                    .time(m.getTime())
+                                    .currentMember(m.getCurrentMember())
+                                    .maxMember(m.getMaxMember())
+                                    .isAvail(isAvailable)
+                                    .sessionId(m.getSessionId())
+                                    .build())
+                            // subject - select by subject no
+                            .subject(subjectService.findById(m.getSubjectNo()))
+                            .build();
+                })
                 .collect(Collectors.toList());
         return new PageableResponseDto(slice.hasNext(), roomList);
     }
@@ -109,6 +114,9 @@ public class RoomServiceImpl implements RoomService {
         if (result.isEmpty()) return null;
 
         Room room = result.get();
+        boolean isAvailable = true;
+        if (room.getCurrentMember() == room.getMaxMember()) isAvailable = false;
+        if (room.getRoomCd() != RoomCode.ROOM_WAITING.getCode()) isAvailable = false;
         return RoomListResponseDto.builder()
                 .room(RoomResponseDto.builder()
                         .roomNo(room.getRoomNo())
@@ -116,6 +124,7 @@ public class RoomServiceImpl implements RoomService {
                         .time(room.getTime())
                         .currentMember(room.getCurrentMember())
                         .maxMember(room.getMaxMember())
+                        .isAvail(isAvailable)
                         .hostUserId(room.getHostUserId())
                         .sessionId(room.getSessionId())
                         .build())
@@ -271,7 +280,7 @@ public class RoomServiceImpl implements RoomService {
             return RoomAndRoomUserListResponseDto.builder()
                     .room(RoomListResponseDto.builder()
                             .room(RoomResponseDto.builder()
-                                    .roomCd(RoomCode.ROOM_END.getCode())
+                                    .isAvail(false)
                                     .build())
                             .build())
                     .build();
