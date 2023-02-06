@@ -1,22 +1,19 @@
 package com.w6w.corns.controller;
 
-import com.w6w.corns.dto.friend.FriendListInterface;
 import com.w6w.corns.dto.friend.FriendListRequestDto;
 import com.w6w.corns.dto.friend.FriendListResponseDto;
 import com.w6w.corns.dto.friend.FriendRequestDto;
 import com.w6w.corns.service.friend.FriendService;
+import com.w6w.corns.util.PageableResponseDto;
 import com.w6w.corns.util.code.FriendLogCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,24 +133,13 @@ public class FriendController {
         HttpStatus status;
 
         try {
-            Slice<FriendListInterface> friendSliceList = friendService.getFriendList(userId, friendListRequestDto, pageable);
+            PageableResponseDto pageableResponseDto = friendService.getFriendList(userId, friendListRequestDto, pageable);
 
-            List<FriendListResponseDto> friendList = new ArrayList<>(friendSliceList.getContent().size());
-            for (FriendListInterface friend : friendSliceList.getContent()) {
-                friendList.add(FriendListResponseDto.builder()
-                                .userId(friend.getUserId())
-                                .nickname(friend.getNickname())
-                                .imgUrl(friend.getImgUrl())
-                                .levelNo(friend.getLevelNo())
-                                .build());
-            }
-
-            if (friendList.isEmpty()) {
+            if (pageableResponseDto.getList().isEmpty()) {
                 status = HttpStatus.NO_CONTENT;
             } else {
-                resultmap.put("friendList", friendList);
-                resultmap.put("hasNext", friendSliceList.hasNext());
                 status = HttpStatus.OK;
+                return new ResponseEntity<PageableResponseDto>(pageableResponseDto, status);
             }
 
         } catch (Exception e) {

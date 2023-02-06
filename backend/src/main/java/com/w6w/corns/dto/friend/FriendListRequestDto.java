@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class FriendListRequestDto {
-    private int userId;
     private int filter;
     private String keyword;
     private String baseTime;
