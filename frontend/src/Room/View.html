@@ -83,6 +83,8 @@
       </div>
       <input type="hidden" id="sessionId" />
       <input type="hidden" id="userName" />
+      <input type="hidden" id="jRoomNo" />
+      <input type="hidden" id="userId" />
     </body>
     <script type="text/javascript">
       $(document).ready(function(){
@@ -91,18 +93,21 @@
         let urlParams = new URL(location.href).searchParams;
 
         let session = urlParams.get('session');
-        let connection = urlParams.get('connection');
-        let username = urlParams.get('username');
+        let username = urlParams.get('username'); // sessionstorage의 nickname
+        let userid = urlParams.get('userId');     // sessionstorage의 userId
+        let jroomno = urlParams.get('nroomno');
         // alert('session = ' + session)
 
         if(!session ){
-          // alert("잘못된 접근입니다.");
+          alert("잘못된 접근입니다.");
           // 하고 여기서 다시 방 리스트로 보낸다.
         }
         else{
           // 이슈 없이 커넥션이랑 세션 다 들어옴!
           $("#sessionId").val(session);
-          $("#userName").val(username); // 유저이름은 쿠키에서 가져올려나
+          $("#userName").val(username);
+          $("#jRoomNo").val(jroomno);
+          $("#userId").val(userid);
 
           joinSession();
           

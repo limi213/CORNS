@@ -16,7 +16,7 @@
 #roomViewTopBar {
     position: absolute;
     margin-left: 2vw;
-    margin-top: 4vh;
+    margin-top: 3vh;
     height: 7vh;
     width: 71vw;
     border: 1px solid black;
@@ -40,25 +40,25 @@
 
 .roomViewUser {
     position: absolute;
-    width: 35vw;
-    height: 37.5vh;
+    width: 640; /*35vw;*/
+    height: 360; /*37.5vh;*/
     border: 1px solid black;
     background-color: white;
 }
 
 #roomViewUser1 {
-    margin-left: 2vw;
-    margin-top: 12vh;
+    margin-left: 3vw;
+    margin-top: 11vh;
 }
 
 #roomViewUser2 {
-    margin-left: 2vw;
+    margin-left: 3vw;
     margin-top: calc(12vh + 37.5vh + 1vh);
 }
 
 #roomViewUser3 {
     margin-left: calc(2vw + 35vw + 1vw);
-    margin-top: 12vh;
+    margin-top: 11vh;
 }
 
 #roomViewUser4 {
