@@ -8,6 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GoogleUserDto {
+
     public String email;
+
     public String imgUrl;
 }

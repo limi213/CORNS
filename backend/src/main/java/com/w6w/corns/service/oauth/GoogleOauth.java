@@ -23,7 +23,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 @RequiredArgsConstructor
-public class GoogleOauth implements SocialOauth{
+public class GoogleOauth {
 
     @Value("${OAuth2.google.url}")
     private String GOOGLE_SNS_LOGIN_URL;
@@ -41,30 +41,6 @@ public class GoogleOauth implements SocialOauth{
     private String GOOGLE_DATA_ACCESS_SCOPE;
 
     private final ObjectMapper objectMapper;
-
-    /**
-     * https://accounts.google.com/o/oauth2/v2/auth?scope=profile&response_type=code&client_id=""&redirect_uri=""
-     * @return
-     */
-    @Override
-    public String getOathRedirectURL() {
-
-        Map<String, Object> params = new HashMap<>();
-
-        System.out.println("GOOGLE_SNS_LOGIN_URL = " + GOOGLE_SNS_LOGIN_URL);
-        params.put("scope", GOOGLE_DATA_ACCESS_SCOPE);
-        params.put("response_type", "code");
-        params.put("redirect_uri", GOOGLE_SNS_CALLBACK_URL);
-        params.put("client_id", GOOGLE_SNS_CLIENT_ID);
-
-        String parameterString = params.entrySet().stream()
-                .map(x->x.getKey()+"="+x.getValue())
-                .collect(Collectors.joining("&"));
-
-        String redirectURL = GOOGLE_SNS_LOGIN_URL+"?"+parameterString;
-
-        return redirectURL;
-    }
 
     public ResponseEntity<String> requestAccessToken(String code) {
 

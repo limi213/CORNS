@@ -13,6 +13,4 @@ public interface RoomRepository extends JpaRepository<Room, Integer>, CustomRoom
     @Query(value = "SELECT r FROM Room r WHERE r.roomCd <= :roomCd")
     List<Room> findAllByRoomCd(int roomCd);
 
-
-
 }

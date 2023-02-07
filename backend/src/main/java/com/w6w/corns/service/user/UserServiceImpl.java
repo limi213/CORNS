@@ -1,18 +1,23 @@
 package com.w6w.corns.service.user;
 
-import com.w6w.corns.domain.explog.ExpLog;
-import com.w6w.corns.domain.friend.FriendRepository;
 import com.w6w.corns.domain.loginlog.LoginLogRepository;
-import com.w6w.corns.domain.thumblog.ThumbLogRepository;
 import com.w6w.corns.domain.user.User;
 import com.w6w.corns.domain.user.UserRepository;
-import com.w6w.corns.dto.explog.ExpLogResponseDto;
+import com.w6w.corns.domain.withdraw.Withdraw;
+import com.w6w.corns.domain.withdraw.WithdrawLog;
+import com.w6w.corns.domain.withdraw.WithdrawLogRepository;
+import com.w6w.corns.domain.withdraw.WithdrawRepository;
+import com.w6w.corns.dto.explog.ExpLogRequestDto;
 import com.w6w.corns.dto.loginlog.LoginLogSaveDto;
 import com.w6w.corns.dto.user.*;
+import com.w6w.corns.dto.withdraw.WithdrawRequestDto;
+import com.w6w.corns.service.growth.GrowthService;
+import com.w6w.corns.service.jwt.JwtService;
 import com.w6w.corns.util.PageableResponseDto;
 import com.w6w.corns.util.SHA256Util;
-import com.w6w.corns.util.code.FriendCode;
+import com.w6w.corns.util.code.ExpCode;
 import com.w6w.corns.util.code.UserCode;
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -30,8 +35,10 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final LoginLogRepository loginLogRepository;
-    private final ThumbLogRepository thumbLogRepository;
-    private final FriendRepository friendRepository;
+    private final WithdrawRepository withdrawRepository;
+    private final WithdrawLogRepository withdrawLogRepository;
+    private final GrowthService growthService;
+    private final JwtService jwtService;
 
     @Override
     @Transactional
@@ -51,7 +58,7 @@ public class UserServiceImpl implements UserService{
                             .email(requestUser.getEmail())
                             .nickname(requestUser.getNickname())
                             .password(newPass) //암호화된 비밀번호 저장
-                            .salt(salt) 
+                            .salt(salt)
                             .social(1) //기본 회원가입 사용자로 설정
                             .build()); //회원 저장
             return 1;
@@ -66,7 +73,6 @@ public class UserServiceImpl implements UserService{
         else return 1; //중복
     }
 
-
     @Override
     @Transactional(readOnly = true)
     public UserDetailResponseDto login(UserLoginRequestDto requestUser) throws Exception{
@@ -76,15 +82,13 @@ public class UserServiceImpl implements UserService{
 
         //탈퇴회원 및 이용정지회원은 나중에 처리하기
         //이메일, 비밀번호 일치 확인 && 회원코드 확인
-        if(isSamePassword(requestUser) && user.getUserCd() == UserCode.USER_DEFAULT.getCode()){
-
-            //로그인로그 insert
-            makeLoginLog(user.getUserId());
+        if(isSamePassword(requestUser) && user.getUserCd() == UserCode.USER_DEFAULT.getCode())
 
             return getUser(user.getUserId());
-        }
+
         return null;
     }
+
     @Override
     @Transactional
     public void makeLoginLog(int userId) throws Exception{
@@ -93,23 +97,21 @@ public class UserServiceImpl implements UserService{
         LoginLogSaveDto loginLogSaveDto = LoginLogSaveDto.builder().userId(userId).build();
         loginLogRepository.save(loginLogSaveDto.toEntity());
     }
-    @Override
-    @Transactional(readOnly = true)
-    public void updateLastLoginTm(int userId) throws Exception{
-        
-        //last_login_tm 변경
-        User user = userRepository.findByUserId(userId);
-        user.setLastLoginTm();
-        userRepository.save(user);
-        System.out.println("user = " + user);
-    }
 
     @Override
     @Transactional
-    public void saveRefreshToken(int userId, String refreshToken) throws Exception {
+    public String[] giveToken(int userId) throws Exception {
+
+        //토큰 발급
+        String accessToken = jwtService.createAccessToken("id", userId);
+        String refreshToken = jwtService.createRefreshToken("id", userId);
+
+        //refresh token 저장
         User user = userRepository.findByUserId(userId);
-        user.setRefreshToken(null);
+        user.setRefreshToken(refreshToken);
         userRepository.save(user);
+
+        return new String[]{accessToken, refreshToken};
     }
 
     @Override
@@ -132,15 +134,8 @@ public class UserServiceImpl implements UserService{
     public UserDetailResponseDto getUser(int userId) throws Exception{
         User user = userRepository.findByUserId(userId);
 
-        //발화량, 랭킹 나중에 추가
-        long attendanceTotal = loginLogRepository.findByRegTmAndUserId(userId);
-        long thumbTotal = thumbLogRepository.countByToUserId(userId);
-        long friendTotal = friendRepository.countByUserIdAAndFriendCdOrUserIdBAndFriendCd(userId, FriendCode.FRIEND_ACCEPT.getCode(), userId, FriendCode.FRIEND_ACCEPT.getCode());
-
+        //랭킹 나중에 추가
         UserDetailResponseDto responseDto = UserDetailResponseDto.fromEntity(user);
-        responseDto.setAttendTotal(attendanceTotal);
-        responseDto.setThumbTotal(thumbTotal);
-        responseDto.setFriendTotal(friendTotal);
 
         return responseDto;
     }
@@ -186,11 +181,11 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
         return true;
     }
+
     @Override
     @Transactional
     public void updateUserInfo(UserModifyRequestDto requestUser) throws Exception{
 
-        System.out.println("requestUser = " + requestUser);
         User user = userRepository.findByUserId(requestUser.getUserId());
 
         //설정 안하면 null로 넘어오는지, 아니면 기존 내용이 넘어오는지 아마도 후자?!
@@ -210,12 +205,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PageableResponseDto findAllUserByCondition(Pageable pageable, String baseTime, String filter, String keyword) throws Exception {
 
-        //baseTime -> LocalDate 타입으로
-        LocalDateTime localDateTime = LocalDateTime.parse(baseTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-        Slice<User> slice = userRepository.findByFilterRegTmLessThanEqual(pageable, localDateTime, filter, keyword);
+        Slice<User> slice = userRepository.findByFilterRegTmLessThanEqual(pageable, baseTime, filter, keyword);
 
         List<UserListResponseDto> exps = new ArrayList<>();
         for(User user : slice.getContent())
@@ -230,5 +224,53 @@ public class UserServiceImpl implements UserService{
                 .list(exps)
                 .hasNext(slice.hasNext())
                 .build();
+    }
+
+    @Override
+    @Transactional
+    public void withdrawUser(WithdrawRequestDto requestDto) throws Exception {
+
+        //user code 변경
+        updateUserCd(requestDto.getUserId(), UserCode.USER_UNREGISTER.getCode());
+
+        //refresh token 제거
+        deleteRefreshToken(requestDto.getUserId());
+        //탈퇴사유 테이블 내용 필요
+
+        //탈퇴사유 번호로 찾기
+        Withdraw withdraw = withdrawRepository.findByWithdrawNo(requestDto.getWithdrawNo());
+
+        //탈퇴로그
+        WithdrawLog withdrawLog = WithdrawLog.builder()
+                        .userId(requestDto.getUserId())
+                        .withdraw(withdraw)
+                        .description(requestDto.getDescription())
+                        .build();
+
+        withdrawLogRepository.save(withdrawLog);
+    }
+
+    @Override
+    @Transactional
+    public void checkAttendance(UserDetailResponseDto responseDto) throws Exception {
+
+        User user = userRepository.findByUserId(responseDto.getUserId());
+
+        //해당 날짜에 처음 출석했다면 경험치
+        if (user.getLastLoginTm() == null ||
+                !user.getLastLoginTm().toLocalDate().equals(LocalDate.now())) {
+
+            ExpLogRequestDto expLogRequestDto = ExpLogRequestDto.builder()
+                    .userId(responseDto.getUserId())
+                    .gainExp(3)
+                    .expCd(ExpCode.EXP_ATTEND.getCode())
+                    .build();
+            growthService.giveExp(expLogRequestDto);
+
+            //attendTotal 1증가
+            user.setAttendTotal(user.getAttendTotal() + 1);
+        }
+        user.setLastLoginTm(LocalDateTime.now());
+        userRepository.save(user);
     }
 }

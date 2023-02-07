@@ -1,6 +1,8 @@
-package com.w6w.corns.domain.reportlog;
+package com.w6w.corns.domain.report;
 
 import com.w6w.corns.util.BaseTime;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +26,9 @@ public class ReportLog extends BaseTime {
 
     private int toUserId;
 
-    private int reason;
+    @ManyToOne
+    @JoinColumn(name = "report_no")
+    private Report report;
 
     private String description;
 

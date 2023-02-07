@@ -1,17 +1,14 @@
 package com.w6w.corns.controller;
 
-import com.w6w.corns.dto.explog.ExpLogRequestDto;
 import com.w6w.corns.dto.user.*;
+import com.w6w.corns.dto.withdraw.WithdrawRequestDto;
+import com.w6w.corns.service.friend.FriendService;
 import com.w6w.corns.util.PageableResponseDto;
-import com.w6w.corns.util.code.ExpCode;
-import com.w6w.corns.service.growth.GrowthService;
 import com.w6w.corns.service.jwt.JwtService;
 import com.w6w.corns.service.oauth.OAuthService;
 import com.w6w.corns.service.user.UserService;
 import com.w6w.corns.util.Constant.SocialType;
-import com.w6w.corns.util.code.UserCode;
 import io.swagger.annotations.Api;
-import java.io.IOException;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,7 +32,7 @@ public class UserController {
     private final UserService userService;
     private final JwtService jwtService;
     private final OAuthService oAuthService;
-    private final GrowthService growthService;
+    private final FriendService friendService;
 
     /**
      * 예외 처리
@@ -52,14 +47,15 @@ public class UserController {
 
     /**
      * 기본 회원가입
-     * @param user
+     * @param requestDto
      * @return
      */
     @ApiOperation(value = "이메일 회원가입", notes = "기본 회원가입으로 이메일과 비밀번호, 닉네임을 받아 회원가입 진행")
     @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody UserJoinRequestDto user){
+    public ResponseEntity<?> join(@RequestBody UserJoinRequestDto requestDto){
         try {
-            int result = userService.signUp(user);
+            log.debug("requestDto : {}", requestDto);
+            int result = userService.signUp(requestDto);
 
             if(result < 0) return new ResponseEntity<>(HttpStatus.CONFLICT); //중복 이메일
             else return new ResponseEntity<HttpStatus>(HttpStatus.OK); //회원가입 성공
@@ -69,11 +65,18 @@ public class UserController {
             return exceptionHandling(e);
         }
     }
+
+    /**
+     * 회원가입 진행에 필요한 이메일 중복 확인
+     * @param email
+     * @return
+     */
     @ApiOperation(value = "이메일 중복 확인", notes = "기본 회원가입 진행 중 입력 이메일 중복 확인")
     @GetMapping("/email-check/{email}")
     public ResponseEntity<?> checkDuplicateEmail(@PathVariable String email){
 
         try {
+            log.debug("email : {}", email);
             int result = userService.validateDuplicateUser(email);
 
             if(result == 0) return new ResponseEntity<>(HttpStatus.OK); //중복x
@@ -86,77 +89,44 @@ public class UserController {
 
     /**
      * 기본 로그인
-     * @param requestUser
+     * @param requestDto
      * @return
      */
     @ApiOperation(value = "기본 로그인", notes = "이메일, 비밀번호를 통한 로그인")
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginRequestDto requestUser){
+    public ResponseEntity<?> login(@RequestBody UserLoginRequestDto requestDto){
 
-        Map<String, Object> resultMap = new HashMap<>();
-        HttpStatus status = null;
-        UserDetailResponseDto loginUser = null;
         try {
-            loginUser = userService.login(requestUser);
+            log.debug("requestDto = {}", requestDto);
 
-            if(loginUser == null) status = HttpStatus.UNAUTHORIZED; //로그인 실패
+            Map<String, Object> result = new HashMap<>();
+            UserDetailResponseDto responseDto = userService.login(requestDto);
+
+            if(responseDto == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); //로그인 실패
             else{
-                //로그인 시간 확인 후 경험치 부여
-                if(loginUser.getLastLoginTm() == null
-                        || loginUser.getLastLoginTm().toLocalDate().equals(LocalDate.now())
-                     ) {
+                String[] tokens = userService.giveToken(responseDto.getUserId());
 
-                    ExpLogRequestDto expLogRequestDto = ExpLogRequestDto.builder()
-                            .userId(loginUser.getUserId())
-                            .gainExp(3)
-                            .expCd(ExpCode.EXP_ATTEND.getCode())
-                            .build();
-                    growthService.giveExp(expLogRequestDto);
-                }
-
-                //토큰 부여
-                String accessToken = jwtService.createAccessToken("id", loginUser.getUserId());
-                String refreshToken = jwtService.createRefreshToken("id", loginUser.getUserId());
-
-                userService.saveRefreshToken(loginUser.getUserId(), refreshToken);
-                loginUser.setRefreshToken(refreshToken);
+                String accessToken = tokens[0];
+                String refreshToken = tokens[1];
 
                 //lastLoginTm 갱신
-//                userService.updateLastLoginTm(loginUser.getUserId());
-                loginUser.setLastLoginTm(LocalDateTime.now());
+                userService.checkAttendance(responseDto);
 
-                System.out.println("loginUser = " + loginUser);
+                //로그인로그
+                userService.makeLoginLog(responseDto.getUserId());
 
-                resultMap.put("accessToken", accessToken);
-                resultMap.put("refreshToken", refreshToken);
-                resultMap.put("loginUser", loginUser);
-                status = HttpStatus.OK;
+                responseDto = userService.findByEmail(responseDto.getEmail()); //제일 마지막으로 업데이트된 유저 정보
+                log.debug("responseDto : {}", responseDto);
+
+                result.put("accessToken", accessToken);
+                result.put("refreshToken", refreshToken);
+                result.put("loginUser", responseDto);
+
+                return new ResponseEntity<>(result, HttpStatus.OK);
             }
         } catch (Exception e) {
             log.error("로그인 실패 "+ e);
-            resultMap.put("message", e.getMessage());
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-        return new ResponseEntity<>(resultMap, status);
-    }
-
-
-    /**
-     * 소셜 로그인으로 리다이렉트
-     * @param socialPath 소셜로그인 타입 google, naver, kakao
-     * @return
-     */
-    @ApiOperation(value = "소셜로그인 요청", notes = "socialType에 맞는 인증서버 호출")
-    @GetMapping("/login/auth/{socialType}")
-    public void socialLoginRedirect(@PathVariable(name = "socialType") String socialPath){
-
-        SocialType socialType = SocialType.valueOf(socialPath.toUpperCase()); //GOOGLE
-
-        try {
-            oAuthService.request(socialType);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            return exceptionHandling(e);
         }
     }
 
@@ -174,33 +144,38 @@ public class UserController {
         SocialType socialType = SocialType.valueOf(socialPath.toUpperCase()); //GOOGLE
 
         try {
-            Map<String, Object> resultMap = new HashMap<>();
+            log.debug("code : {}", code);
 
-            UserDetailResponseDto responseDto = oAuthService.oAuthLogin(socialType, code);
+            Map<String, Object> result = new HashMap<>();
 
+            Map<String, Object> map = oAuthService.oAuthLogin(socialType, code);
+            UserDetailResponseDto responseDto = (UserDetailResponseDto) map.get("responseDto");
 
-            //토큰 부여
-            String accessToken = jwtService.createAccessToken("id", responseDto.getUserId());
-            String refreshToken = jwtService.createRefreshToken("id", responseDto.getUserId());
+            //토큰
+            String[] tokens = userService.giveToken(responseDto.getUserId());
 
-            userService.saveRefreshToken(responseDto.getUserId(), refreshToken);
-//            userService.updateLastLoginTm(responseDto.getUserId());
-            responseDto.setRefreshToken(refreshToken);
+            String accessToken = tokens[0];
+            String refreshToken = tokens[1];
+
+            //구글로 로그인한 사용자임을 알리기
             responseDto.setGoogle(true);
 
-            //경험치도 줘야함!, 리팩토링 필요 + 이메일 중복 통합 처리
-
             //lastLoginTm 갱신
-//            userService.updateLastLoginTm(responseDto.getUserId());
+            userService.checkAttendance(responseDto);
 
-            // 로그인로그 insert
+            //로그인로그
             userService.makeLoginLog(responseDto.getUserId());
 
-            resultMap.put("accessToken", accessToken);
-            resultMap.put("refreshToken", refreshToken);
-            resultMap.put("loginUser", responseDto);
+            //제일 마지막으로 업데이트된 유저 정보
+            responseDto = userService.findByEmail(responseDto.getEmail());
+            log.debug("responseDto : {}", responseDto);
 
-            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+            result.put("accessToken", accessToken);
+            result.put("refreshToken", refreshToken);
+            result.put("loginUser", responseDto);
+            if(map.get("message") != null) result.put("isCombine", true);
+
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling(e);
         }
@@ -234,8 +209,10 @@ public class UserController {
     public ResponseEntity<?> reissueToken(@RequestBody int userId, HttpServletRequest request){
 
         String token = request.getHeader("refreshToken");
+        log.debug("token : {}",token);
         try{
             if(jwtService.checkToken(token) && token.equals(userService.getRefreshToken(userId))){
+
                 String accessToken = jwtService.createAccessToken("id", userId);
                 log.debug("토큰 재발급");
 
@@ -253,16 +230,21 @@ public class UserController {
         }
     }
 
+    /**
+     *
+     * @param userId
+     * @return 본인 회원 정보 반환 -> 내정보랑 회원정보보기.?
+     */
     @ApiOperation(value = "회원 정보 반환", notes = "내정보 및 유저상세에 보여줄 정보")
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserInfo(@PathVariable int userId){
 
         try {
-            //friendTotal, attendTotal, conversationTotal, thumbTotal, rank 추가 필요
-            UserDetailResponseDto user = userService.getUser(userId);
+            //rank 추가 필요
+            UserDetailResponseDto responseDto = userService.getUser(userId);
 
             Map<String, UserDetailResponseDto> result = new HashMap<>();
-            result.put("user",user);
+            result.put("user",responseDto);
 
             return new ResponseEntity<>(result, HttpStatus.OK);
 
@@ -274,11 +256,12 @@ public class UserController {
 
     @ApiOperation(value = "user 정보 수정", notes = "닉네임, 이미지 수정")
     @PutMapping
-    public ResponseEntity<?> modifyUserInfo(@RequestBody UserModifyRequestDto user){
+    public ResponseEntity<?> modifyUserInfo(@RequestBody UserModifyRequestDto requestDto){
 
         try {
-            userService.updateUserInfo(user);
+            userService.updateUserInfo(requestDto);
             return new ResponseEntity<>(HttpStatus.OK);
+
         } catch (Exception e) {
             log.error(e.getMessage());
             return exceptionHandling(e);
@@ -286,11 +269,11 @@ public class UserController {
     }
 
     @ApiOperation(value = "비밀번호 확인 및 변경", notes = "userId, 비밀번호, 새로운 비밀번호를 넘겨 인증 후 변경")
-    @PostMapping
+    @PatchMapping
     public ResponseEntity<?> modifyPassword(@RequestBody UserPassModifyRequestDto requestDto){
 
         try{
-            if(!userService.updateUserPassword(requestDto)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            if(!userService.updateUserPassword(requestDto)) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             else return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e) {
@@ -299,13 +282,11 @@ public class UserController {
     }
 
     @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴 요청 시 처리")
-    @PatchMapping("/{userId}")
-    public ResponseEntity<?> withdraw(@PathVariable int userId){
+    @PostMapping
+    public ResponseEntity<?> withdraw(@RequestBody WithdrawRequestDto requestDto){
 
-        //사유도 받아야 함
         try {
-            userService.updateUserCd(userId, UserCode.USER_UNREGISTER.getCode()); //유저코드 변경
-            userService.deleteRefreshToken(userId); //리프레시토큰 제거
+            userService.withdrawUser(requestDto);
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e) {
@@ -314,7 +295,7 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "회원 검색", notes = "조건에 맞는 회원을 검색해서 반환")
+    @ApiOperation(value = "회원 검색", notes = "조건에 맞는 회원을 검색해서 목록 반환")
     @GetMapping
     public ResponseEntity<?> search(Pageable pageable, @RequestParam String baseTime, @RequestParam String filter, @RequestParam String keyword){
 
@@ -323,6 +304,29 @@ public class UserController {
 
             if(responseDto != null && responseDto.getList().size() > 0) return new ResponseEntity<>(responseDto, HttpStatus.OK);
             else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return exceptionHandling(e);
+        }
+    }
+
+    @ApiOperation(value = "알맹 상세 정보", notes = "from이 to의 상세정보를 봤을 때의 정보와 친구 관계를 반환")
+    @GetMapping("/{fromId}/{toId}")
+    public ResponseEntity<?> showDetail(@PathVariable int fromId, @PathVariable int toId) {
+
+        try {
+            log.debug("fromId : {}, toId : {}", fromId, toId);
+
+            //유저정보 불러오기
+            UserDetailResponseDto responseDto = userService.getUser(toId);
+
+            //관계 반환
+            int relation = friendService.getFriendRelation(fromId, toId);
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("user", responseDto);
+            result.put("relation", relation);
+
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling(e);
         }

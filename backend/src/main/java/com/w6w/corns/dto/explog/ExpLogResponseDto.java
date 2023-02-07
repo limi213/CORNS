@@ -12,7 +12,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @ToString
 public class ExpLogResponseDto {

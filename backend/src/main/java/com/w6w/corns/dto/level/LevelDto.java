@@ -6,13 +6,14 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 public class LevelDto {
 
     int levelNo;
+
     int startExp;
+
     int endExp;
 
     public static LevelDto fromEntity(Level level){

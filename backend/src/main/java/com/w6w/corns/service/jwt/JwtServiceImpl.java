@@ -21,16 +21,16 @@ public class JwtServiceImpl implements JwtService{
 
     @Value("${jwt.secret}")
     private String SECRET_KEY;
-    private static final long TOKEN_VALIDATION_SECOND = 1000L * 10;
-    private static final long REFRESH_TOKEN_VALIDATION_SECOND = 1000L * 60 * 24 * 2;
+    private static final long TOKEN_VALIDATION = 1000L * 60 * 60;
+    private static final long REFRESH_TOKEN_VALIDATION = 1000L * 60 * 60 * 24 * 7;
     @Override
     public <T> String createAccessToken(String key, T data) {
-        return create(key, data, "accessToken", TOKEN_VALIDATION_SECOND);
+        return create(key, data, "accessToken", TOKEN_VALIDATION);
     }
 
     @Override
     public <T> String createRefreshToken(String key, T data) {
-        return create(key, data, "refreshToken", REFRESH_TOKEN_VALIDATION_SECOND);
+        return create(key, data, "refreshToken", REFRESH_TOKEN_VALIDATION);
     }
 
     //key 생성

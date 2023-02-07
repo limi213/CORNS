@@ -1,6 +1,7 @@
 package com.w6w.corns.dto.user;
 
 import com.w6w.corns.domain.user.User;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 @Getter
@@ -8,7 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserModifyRequestDto { //나중에 재희언니가 만든 dto 사용할 예정!
+@ApiModel(value="유저 수정 요청 정보")
+public class UserModifyRequestDto {
 
     private int userId;
     private String nickname;

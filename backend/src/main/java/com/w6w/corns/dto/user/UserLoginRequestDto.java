@@ -1,6 +1,7 @@
 package com.w6w.corns.dto.user;
 
 import com.w6w.corns.domain.user.User;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 @Getter
@@ -8,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@ApiModel(value="유저 로그인 요청 정보")
 public class UserLoginRequestDto {
 
     private String email;

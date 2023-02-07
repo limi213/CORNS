@@ -7,14 +7,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LoginLogRepository extends JpaRepository<LoginLog, Integer> {
-
-    @Query(value="select count(distinct date(reg_tm)) from login_log"
-            +" where user_id = :userId and year(reg_tm) = year(now()) and month(reg_tm) = month(now())"
-            , nativeQuery = true)
+    //조회하는 월의 userId에 대한 출석 횟수 계산
+    @Query(value="select count(distinct date(l.regTm)) from LoginLog l"
+            +" where l.userId=:userId and year(l.regTm) = year(now()) and month(l.regTm) = month(now())")
     long findByRegTmAndUserIdPerMonth(int userId);
-
-    @Query(value="select count(distinct date(reg_tm)) from login_log"
-        + " where user_id = :userId", nativeQuery = true)
-    long findByRegTmAndUserId(int userId);
 
 }

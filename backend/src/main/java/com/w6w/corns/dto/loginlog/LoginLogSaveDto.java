@@ -6,10 +6,10 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 public class LoginLogSaveDto {
+
     private int loginLogSq;
     private int userId;
 

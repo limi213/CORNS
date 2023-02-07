@@ -9,10 +9,10 @@ import javax.persistence.Id;
 
 @DynamicInsert
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 @Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@ToString
 @Entity
 public class LoginLog extends BaseTime {
 
