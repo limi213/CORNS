@@ -50,9 +50,10 @@ public class GrowthServiceImpl implements GrowthService {
         //user에서 usercd 탈퇴, 정지를 제외한 나머지 사람들의 총 exp 순위
         int cntAll = userRepository.countByUserCd(UserCode.USER_DEFAULT.getCode());
 
-        int rank = userRepository.rankByExp(userId);
+        int rank =  userRepository.rankByExp(userId);
 
-        return rank / cntAll * 100;
+        double ans = (double)rank / cntAll * 100;
+        return (int)ans;
     }
 
     public Map<String, Object> getUserLevel(int userId) throws Exception{
