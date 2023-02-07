@@ -159,7 +159,7 @@ function removeUserData(connection) {
 }
 
 
-var OPENVIDU_URL= "https://corns.co.kr/";
+var OPENVIDU_URL= "https://corns.co.kr:4430/";
 
 var OPENVIDU_SECRET = btoa("OPENVIDUAPP:a506w6w");
 function getToken(mySessionId) {
