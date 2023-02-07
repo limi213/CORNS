@@ -11,6 +11,7 @@ import RankingList from "components/GlobalComponents/RankingList";
 import { css } from "@emotion/react";
 
 import { Box, Button, Grid, Typography } from "@mui/material";
+import { ChevronDoubleRight } from "react-bootstrap-icons";
 
 function Home() {
   // 소셜 로그인시 리디랙션 된건지 확인
@@ -40,23 +41,87 @@ function Home() {
               backgroundColor: "#FFC804",
             }}
           >
-            튜토리얼 보기
+            <Link
+              to="/tutorial"
+              css={{
+                color: "#111",
+                textDecoration: "none",
+              }}
+            >
+              튜토리얼 보기
+            </Link>
           </Button>
         </Box>
       </Box>
       <Box sx={{ mx: "105px" }}>
-        <Box>
-          <Typography variant="h5">쫑알룸</Typography>
-          <Link to="/conversation" sx={{ cursor: "pointer" }}>
-            더보기
-          </Link>
+        <Box sx={{ mt: "64px" }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <p
+              css={css`
+                margin: 0;
+                font-size: 32px;
+                font-weight: bold;
+              `}
+            >
+              쫑알룸
+            </p>
+            <Link
+              to="/conversation"
+              css={{
+                color: "#111",
+                textDecoration: "none",
+                fontSize: "24px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              더보기
+              <ChevronDoubleRight
+                css={css`
+                  color: #ffc804;
+                  margin-left: 16px;
+                `}
+              />
+            </Link>
+          </Box>
           <RoomListsContainer main={true} />
         </Box>
-        <Box>
-          <Typography variant="h5">랭킹</Typography>
-          <Link to="/community/ranking/sincerity" sx={{ cursor: "pointer" }}>
-            더보기
-          </Link>
+        <Box sx={{ mt: "64px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              mb: "64px",
+            }}
+          >
+            <p
+              css={css`
+                margin: 0;
+                font-size: 32px;
+                font-weight: bold;
+              `}
+            >
+              랭킹
+            </p>
+            <Link
+              to="/conversation"
+              css={{
+                color: "#111",
+                textDecoration: "none",
+                fontSize: "24px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              더보기
+              <ChevronDoubleRight
+                css={css`
+                  color: #ffc804;
+                  margin-left: 16px;
+                `}
+              />
+            </Link>
+          </Box>
           <RankingList />
         </Box>
       </Box>
@@ -69,13 +134,22 @@ function Home() {
           padding: "32px 105px",
           boxSizing: "border-box",
           backgroundImage: `url(${backgroundImage})`,
+          mt: "64px",
         }}
       >
-        <Box>
-          <Typography variant="h4">대화가 어려우신가요?</Typography>
-          <Typography variant="h4">대화가 어려우신가요?</Typography>
-          <Typography variant="h4">대화가 어려우신가요?</Typography>
-          <Typography variant="h4">대화가 어려우신가요?</Typography>
+        <Box sx={{ pr: "64px" }}>
+          <p css={{ fontSize: "32px", fontWeight: "bold" }}>
+            외국어로 대화를 하는 것에 어려움을 느끼고 계신가요?
+          </p>
+          <p css={{ fontSize: "32px", fontWeight: "bold" }}>
+            독해는 잘 되는데 말이 잘 안나오시나요?
+          </p>
+          <p css={{ fontSize: "32px", fontWeight: "bold" }}>
+            그런 당신을 위한 서비스가 있습니다.
+          </p>
+          <p css={{ fontSize: "32px", fontWeight: "bold" }}>
+            외국어 연습에 최적화된 CORNS를 만나보세요!
+          </p>
         </Box>
         <Box
           sx={{
@@ -110,17 +184,21 @@ function Home() {
             <Box
               sx={{ border: "3px solid #111", height: "500px", mr: "24px" }}
             ></Box>{" "}
-            <Typography variant="h5">안녕하세요</Typography>
+            <p css={{ fontSize: "24px", fontWeight: "bold" }}>대화하고</p>
           </Grid>
           <Grid item xs={4}>
             <Box
               sx={{ border: "3px solid #111", height: "500px", mr: "24px" }}
             ></Box>
-            <Typography variant="h5">반갑습니다</Typography>
+            <p css={{ fontSize: "24px", fontWeight: "bold" }}>
+              대화기록을 스크립트로 받아보고
+            </p>
           </Grid>
           <Grid item xs={4}>
             <Box sx={{ border: "3px solid #111", height: "500px" }}></Box>
-            <Typography variant="h5">다시 만나요</Typography>
+            <p css={{ fontSize: "24px", fontWeight: "bold" }}>
+              나에 대한 평가를 기록하며 성장하고
+            </p>
           </Grid>
         </Grid>
         <Button variant="contained">
