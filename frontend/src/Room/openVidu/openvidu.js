@@ -7,6 +7,12 @@ var roomListId = "roomViewUser";
 let videoWidth = parseInt($(window).width() * 0.35); //Math.floor(screen.width * 0.35); // "35vw";
 let videoHeight = parseInt($(window).height() * 0.375); //"37.5vh";
 
+function setVideoSize(){
+	videoWidth = parseInt($(window).width() * 0.35); //Math.floor(screen.width * 0.35); // "35vw";
+	videoHeight = parseInt($(window).height() * 0.375); //"37.5vh";
+	
+}
+
 /* OPENVIDU METHODS */
 
 function joinSession() {
@@ -39,9 +45,9 @@ function joinSession() {
 	// On every new Stream received...
 	session.on('streamCreated', event => {
 		// Subscribe to the Stream to receive it. HTML video will be appended to element with roomListId id
-		// if(count < 5){
+		if(count < 5){
 			var roomno = roomListId + count;
-			var subscriber = session.subscribe(event.stream, "roomViewUser1");
+			var subscriber = session.subscribe(event.stream, roomno);
 			count += 1;
 	
 			// When the HTML video has been appended to DOM...
@@ -51,12 +57,12 @@ function joinSession() {
 				// alert(roomno)
 				appendUserData(event.element, subscriber.stream.connection);
 			});
-		// }
-		// else{
-		// 	alert("초과!@!")	//
+		}
+		else{
+			alert("초과!@!")	//
 
-		// 	// 근데 여기 말고 애초에 들어올때 안되어야 한당 ㅋ.ㅋ
-		// }
+			// 근데 여기 말고 애초에 들어올때 안되어야 한당 ㅋ.ㅋ
+		}
 		
 	});
 
@@ -91,8 +97,9 @@ function joinSession() {
 				// document.getElementById('session').style.display = 'block';
 
 				// 내가 무조건 1번에 뜨게 한다.
+				setVideoSize();
 				// --- 6) Get your own camera stream with the desired properties ---
-				var publisher = OV.initPublisher("roomViewUser2", {
+				var publisher = OV.initPublisher("roomViewUser1", {
 					audioSource: undefined, // The source of audio. If undefined default microphone
 					videoSource: undefined, // The source of video. If undefined default webcam
 					publishAudio: true,  	// Whether you want to start publishing with your audio unmuted or not
