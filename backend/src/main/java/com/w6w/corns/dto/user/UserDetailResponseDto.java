@@ -20,7 +20,7 @@ public class UserDetailResponseDto {
     private String nickname;
     private String imgUrl;
     private long expTotal;
-    private int level;
+    private int levelNo;
     private long friendTotal;
     private int social;
     private boolean isGoogle;
@@ -36,7 +36,7 @@ public class UserDetailResponseDto {
                 .email(user.getEmail())
                 .nickname(user.getNickname())
                 .imgUrl(user.getImgUrl())
-                .level(user.getLevel().getLevelNo())
+                .levelNo(user.getLevel().getLevelNo())
                 .expTotal(user.getExpTotal())
                 .attendTotal(user.getAttendTotal())
                 .speakingTotal(user.getSpeakingTotal())

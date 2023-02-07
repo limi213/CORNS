@@ -217,7 +217,7 @@ public class UserServiceImpl implements UserService{
                             .userId(user.getUserId())
                             .imgUrl(user.getImgUrl())
                             .nickname(user.getNickname())
-                            .level(user.getLevel().getLevelNo())
+                            .levelNo(user.getLevel().getLevelNo())
                             .build());
 
         return PageableResponseDto.builder()

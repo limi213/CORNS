@@ -43,7 +43,7 @@ public class CustomFriendRepositoryImpl implements CustomFriendRepository {
 
         // filter
         if (friendListRequestDto.getKeyword() == null) friendListRequestDto.setKeyword("");
-        if (friendListRequestDto.getFilter() == 0) {
+        if (friendListRequestDto.getFilter().equals("nickname")) {
             // 닉네임 검색
             builder.and(user.nickname.contains(friendListRequestDto.getKeyword()));
         } else {

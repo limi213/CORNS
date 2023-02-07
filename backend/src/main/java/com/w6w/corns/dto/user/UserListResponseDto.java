@@ -17,5 +17,5 @@ public class UserListResponseDto {
 
     private String nickname;
 
-    private int level;
+    private int levelNo;
 }

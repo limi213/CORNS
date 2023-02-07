@@ -8,6 +8,4 @@ import java.util.List;
 @Repository
 public interface FriendRepository extends JpaRepository<Friend, FriendPK>, CustomFriendRepository {
     List<Friend> findByUserIdAAndFriendCd(int userIdA, int friendCd);
-
-    long countByUserIdAAndFriendCdOrUserIdBAndFriendCd(int userIdA, int friendCdA, int userIdB, int friendCdb);
 }

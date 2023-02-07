@@ -57,6 +57,7 @@ public class FriendServiceImpl implements FriendService {
                             .userIdA(friendRequestDto.getToId())
                             .userIdB(friendRequestDto.getFromId())
                             .friendCd(FriendCode.FRIEND_SEND_B2A.getCode())
+                            .message(friendRequestDto.getMessage())
                             .build()
                             .toEntity());
     }
@@ -133,17 +134,17 @@ public class FriendServiceImpl implements FriendService {
     //친구 신청 목록 가져오기
     @Override
     @Transactional(readOnly = true)
-    public List<FriendListResponseDto> getFriendReceiveList(int userId) {
+    public List<FriendRecvListResponseDto> getFriendReceiveList(int userId) {
         List<Friend> friendRecvList = friendRepo.findByUserIdAAndFriendCd(userId, FriendCode.FRIEND_SEND_B2A.getCode());
-        List<FriendListResponseDto> friendRecvDtoList = new ArrayList<>();
+        List<FriendRecvListResponseDto> friendRecvDtoList = new ArrayList<>();
 
         friendRecvList.stream().forEach(friend -> {
             User user = userRepo.findById(friend.getUserIdB()).get();
-            friendRecvDtoList.add(FriendListResponseDto.builder()
+            friendRecvDtoList.add(FriendRecvListResponseDto.builder()
                                             .userId(user.getUserId())
                                             .nickname(user.getNickname())
                                             .imgUrl(user.getImgUrl())
-                                            .levelNo(user.getLevel().getLevelNo())
+                                            .message(friend.getMessage())
                                             .build());
         });
 

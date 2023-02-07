@@ -7,8 +7,9 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @ToString
-public class FriendRequestDto {
-    private int fromId;
-    private int toId;
+public class FriendRecvListResponseDto {
+    private int userId;
+    private String nickname;
+    private String imgUrl;
     private String message;
 }

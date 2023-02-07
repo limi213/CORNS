@@ -2,6 +2,7 @@ package com.w6w.corns.controller;
 
 import com.w6w.corns.dto.friend.FriendListRequestDto;
 import com.w6w.corns.dto.friend.FriendListResponseDto;
+import com.w6w.corns.dto.friend.FriendRecvListResponseDto;
 import com.w6w.corns.dto.friend.FriendRequestDto;
 import com.w6w.corns.service.friend.FriendService;
 import com.w6w.corns.util.PageableResponseDto;
@@ -109,7 +110,7 @@ public class FriendController {
         HttpStatus status;
 
         try {
-            List<FriendListResponseDto> recvList = friendService.getFriendReceiveList(userId);
+            List<FriendRecvListResponseDto> recvList = friendService.getFriendReceiveList(userId);
 
             if (recvList.isEmpty()) {
                 status = HttpStatus.NO_CONTENT;

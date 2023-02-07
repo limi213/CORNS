@@ -28,15 +28,18 @@ public class Friend extends BaseTime {
 
     private int friendCd;
 
+    private String message;
+
     public void setFriendCd(int friendCd) {
         this.friendCd = friendCd;
     }
 
     @Builder
-    public Friend(int userIdA, int userIdB, int friendCd) {
+    public Friend(int userIdA, int userIdB, int friendCd, String message) {
         this.userIdA = userIdA;
         this.userIdB = userIdB;
         this.friendCd = friendCd;
+        this.message = message;
     }
 
 }

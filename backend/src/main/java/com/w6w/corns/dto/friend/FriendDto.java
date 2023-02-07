@@ -12,12 +12,14 @@ public class FriendDto {
     private int userIdA;
     private int userIdB;
     private int friendCd;
+    private String message;
 
     public Friend toEntity() {
         return Friend.builder()
                 .userIdA(userIdA)
                 .userIdB(userIdB)
                 .friendCd(friendCd)
+                .message(message)
                 .build();
     }
 }
