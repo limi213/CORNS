@@ -14,7 +14,7 @@ function ExpInfo({ level, exp }) {
         }}
       ></Box>
       <Typography>Lv.{level}</Typography>
-      <Typography>{exp}</Typography>
+      <Typography>{exp} exp</Typography>
     </Box>
   );
 }

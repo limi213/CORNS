@@ -25,9 +25,37 @@ function RoomCard({ room, subject }) {
     title,
   } = room;
   const { imgUrl, subjectNo, value } = subject;
+
+  let badgeColor = "";
+
+  switch (subjectNo) {
+    case 1:
+      badgeColor = "#FFA903";
+      break;
+    case 2:
+      badgeColor = "#FFE767";
+      break;
+    case 3:
+      badgeColor = "#98DA7A";
+      break;
+    case 4:
+      badgeColor = "#7DB6FA";
+      break;
+    case 5:
+      badgeColor = "#DDDDDD";
+      break;
+    default:
+      badgeColor = "#FFFFFF";
+  }
   return (
     <Card
-      sx={{ maxWidth: 265, maxHeight: 320, position: "relative" }}
+      sx={{
+        maxWidth: 265,
+        maxHeight: 320,
+        position: "relative",
+        border: "3px solid #111",
+        borderRadius: 0,
+      }}
       variant="outlined"
     >
       <CardMedia
@@ -39,16 +67,18 @@ function RoomCard({ room, subject }) {
       <div
         css={css`
           position: absolute;
-          top: 45%;
-          left: 0;
-          color: blue;
+          top: 0.5em;
+          left: 0.5em;
+          background-color: ${badgeColor};
+          padding: 1% 10%;
+          border: 3px solid #111;
         `}
       >
         {value}
       </div>
       <CardContent sx={{ height: 110 - 32 }}>
         <Typography gutterBottom variant="p" component="div">
-          {title}을/를 대화해 봅시다!
+          {title}
         </Typography>
         <Typography variant="body2">
           <span>
@@ -67,6 +97,11 @@ function RoomCard({ room, subject }) {
           height: 50,
           backgroundColor: "#67C73A",
           color: "#111",
+          borderTop: "3px solid #111",
+          borderRadius: 0,
+          "&:hover": {
+            backgroundColor: "#45971E",
+          },
         }}
       >
         쫑알룸 입장하기

@@ -49,6 +49,7 @@ function ExperienceIndicator({}) {
                     width: 48px;
                     height: 48px;
                   `}
+                  alt="성실왕관"
                 />
               </Box>
               <Typography sx={{ width: "60%" }}>

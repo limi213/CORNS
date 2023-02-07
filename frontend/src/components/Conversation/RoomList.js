@@ -26,7 +26,7 @@ function RoomList({ roomLists, maxRoomList }) {
   // console.log(roomLists);
   return (
     <>
-      <Box>
+      <Box sx={{ mt: "64px" }}>
         <Grid container spacing={1}>
           {roomLists && roomList}
         </Grid>

@@ -28,7 +28,7 @@ function Conversation() {
           margin: 124px 0 0 0;
         `}
       >
-        {user ? <LogInUserArea /> : <AnonymousUserArea />}
+        {user ? <LogInUserArea /> : null}
         <h2>쫑알룸리스트</h2>
         <ConversationRoomFilter />
         <RoomListsContainer />
