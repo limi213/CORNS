@@ -50,7 +50,7 @@ function Home() {
           <Link to="/conversation" sx={{ cursor: "pointer" }}>
             더보기
           </Link>
-          <RoomListsContainer />
+          <RoomListsContainer main={true} />
         </Box>
         <Box>
           <Typography variant="h5">랭킹</Typography>
