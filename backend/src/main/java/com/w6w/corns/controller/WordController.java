@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -90,9 +91,9 @@ public class WordController {
         return new ResponseEntity<Map>(resultMap, status);
     }
 
-    @ApiOperation(value = "쫑알 단어 상태 변경", notes = "wordSq, status를 요청으로 보내면 상태 변경")
+    @ApiOperation(value = "쫑알 단어 상태 변경", notes = "wordSq, status를 배열에 담아 요청으로 보내면 상태 변경")
     @PatchMapping
-    private ResponseEntity<?> updateWordStatus(@RequestBody UpdateWordStatusRequestDto request) {
+    private ResponseEntity<?> updateWordStatus(@RequestBody List<UpdateWordStatusRequestDto> request) {
         log.debug("request: {}", request);
         Map resultMap = new HashMap<>();
         HttpStatus status;

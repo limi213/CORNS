@@ -70,14 +70,16 @@ public class WordServiceImpl implements WordService {
     // 쫑알단어 상태 변경
     @Override
     @Transactional
-    public void updateWordStatus(UpdateWordStatusRequestDto request) {
-        Word word = wordRepository.findById(request.getWordSq()).get();
-        if (request.getStatus() == 1) {
-            word.setWordCd(WordCode.WORD_TODO.getCode());
-        } else if (request.getStatus() == 2) {
-            word.setWordCd(WordCode.WORD_DONE.getCode());
-        }
-        wordRepository.save(word);
+    public void updateWordStatus(List<UpdateWordStatusRequestDto> request) {
+        request.forEach(r -> {
+            Word word = wordRepository.findById(r.getWordSq()).get();
+            if (r.getStatus() == 1) {
+                word.setWordCd(WordCode.WORD_TODO.getCode());
+            } else if (r.getStatus() == 2) {
+                word.setWordCd(WordCode.WORD_DONE.getCode());
+            }
+            wordRepository.save(word);
+        });
     }
 
     // 쫑알단어 삭제

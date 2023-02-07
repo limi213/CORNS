@@ -30,6 +30,7 @@ public class WebConfiguration implements WebMvcConfigurer {
 
         //메인페이지에서 api 호출도 풀기
         registry.addInterceptor(jwtInterceptor)
+                .excludePathPatterns("/**") // temp
                 .excludePathPatterns("/swagger/**")
                 .excludePathPatterns("/swagger-ui.html")
                 .excludePathPatterns("/swagger-resources/**")
