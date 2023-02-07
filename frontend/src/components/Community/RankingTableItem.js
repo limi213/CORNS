@@ -26,7 +26,7 @@ function RankingTableItem({ item, ranking }) {
         </TableCell>
 
         <TableCell>
-          <UserNameTag nickname={nickname} user_id={user_id} />
+          <UserNameTag nickname={nickname} userId={user_id} />
         </TableCell>
 
         <TableCell>Lv.{level}</TableCell>

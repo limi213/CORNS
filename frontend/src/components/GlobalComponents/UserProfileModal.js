@@ -1,69 +1,103 @@
-import React from "react";
-import { useState } from "react";
-import UserProfile from "../../components/GlobalComponents/UserProfile";
-import { Box, Typography, Modal } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import UserProfile from "components/GlobalComponents/UserProfile";
+import { Box, Typography } from "@mui/material";
+import { XSquare } from "react-bootstrap-icons";
 import FriendsBtn from "./FriendsBtn";
-import RequestForm from "./RequestForm";
 
-function UserProfileModal() {
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
+// user detail get axios
+const GetUserModalDetail = async (from_id, to_id, setUser, setRelation) => {
+  try {
+    const apiUrl =
+      from_id === to_id.toString()
+        ? `/${from_id}`
+        : `/${from_id}/${to_id}`;
+
+    const response = await axios.get(`${process.env.REACT_APP_HOST}/user/${apiUrl}`);
+    if (response.status === 200) {
+      // console.log(response.data)
+      setUser(response.data.user);
+      setRelation(response.data.relation > -1 ? response.data.relation : -1);
+
+      // ranking 데이터 추가되면 setRanking 추가
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+function UserProfileModal({ openModal, toId, handleCloseModal }) {
   const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "80%",
-    height: "60%",
+    width: "60%",
+    height: "40%",
     bgcolor: "background.paper",
     border: "3px solid #111",
     boxShadow: 24,
     p: "32px 0 200px",
   };
 
-  // 데이터 fetch (from_id == to_id)
-  // dummy data
-  const user = {
-    basicInfo: {
-      img_url:
-        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
-      nickname: "isk2",
-      id: 1001,
-      level: 30,
-      exp: 1980,
-      friendCnt: 10,
-      totalDay: 13,
-      totalDdabong: 4,
-      totalTalk: 123,
-    },
-    rankingList: [
-      { type: "sungsil", rank: 80, indicate: 1800 },
-      { type: "ddabong", rank: null, indicate: 8 },
-      { type: "suda", rank: 67, indicate: 387 },
-      { type: "ingi", rank: null, indicate: 4 },
-    ],
-  };
+  const [user, setUser] = useState({});
+  const [relation, setRelation] = useState(-1);
+  const fromId = sessionStorage.getItem("userId");
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // dummy data
+  const rankingList = [
+    { type: "sungsil", rank: 80, indicate: 1800 },
+    { type: "ddabong", rank: null, indicate: 8 },
+    { type: "suda", rank: 67, indicate: 387 },
+    { type: "ingi", rank: null, indicate: 4 },
+  ];
+
+  useEffect(() => {
+    if (!openModal) {
+      return;
+    }
+    GetUserModalDetail(
+      fromId,
+      toId,
+      setUser,
+      setRelation
+    );
+  }, [fromId, relation, openModal, toId]);
 
   return (
-    <>
-      <Box sx={style}>
-        <Typography variant="h5" sx={{ ml: "32px" }}>
-          {user.basicInfo.nickname} 페이지
-        </Typography>
-        <UserProfile user={user} />
-        <Box sx={{ display: "flex", justifyContent: "center", mt: "4%" }} onClick={handleOpen}>
-          <FriendsBtn status={"1"}/>
-        </Box>
-      </Box>
+    user && (
+      <>
+        <Box sx={style}>
+          <Box sx={{ display: "flex", width: "100%", mr: "10%", mb: "5%" }}>
+            <Typography variant="h5" sx={{ ml: "32px" }}>
+              {user.nickname} 페이지
+            </Typography>
+            <XSquare
+              css={css`
+                margin-left: 75%;
+                font-size: 30px;
+                cursor: pointer;
+              `}
+              onClick={handleCloseModal}
+            />
+          </Box>
 
-      <Modal open={open} onClose={handleClose}>
-        <Box>
-          <RequestForm />
+          <UserProfile user={user} rank={rankingList} />
+
+          {relation > -1 && (
+            <Box
+              sx={{ display: "flex", justifyContent: "center", mt: "4%" }}
+            >
+              <FriendsBtn fromId={fromId} toId={toId} status={relation} setRelation={setRelation}/>
+            </Box>
+          )}
         </Box>
-      </Modal>
-    </>
+
+      </>
+    )
   );
 }
 

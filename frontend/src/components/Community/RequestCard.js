@@ -1,12 +1,34 @@
 import React from "react";
+import UserNameTag from "components/GlobalComponents/UserNameTag";
+import FriendBtnTwo from "components/GlobalComponents/FriendBtnTwo";
 
-import { Box, Card, CardMedia, Typography, Button } from "@mui/material";
+import { Box, Card, CardMedia, Typography } from "@mui/material";
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
+import { Envelope } from "react-bootstrap-icons";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import ProfileImg from "components/GlobalComponents/ProfileImg";
+
+
+const LightTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: theme.palette.common.white,
+    color: 'rgba(0, 0, 0, 0.87)',
+    boxShadow: theme.shadows[1],
+    fontSize: 15,
+    fontFamily: 'Noto Sans KR',
+
+  },
+}));
+
+
 
 function RequestCard({ user }) {
-  const { img_url, nickname, user_id } = user;
+  const { userId, nickname, imgUrl, message } = user;
   return (
     <>
       <Card
@@ -24,52 +46,29 @@ function RequestCard({ user }) {
           mr: "1.5rem",
         }}
       >
-        <CardMedia
-          component="img"
-          sx={{
-            height: "128px",
-            width: "128px",
-            borderRadius: "200px",
-            border: "3px solid #111",
-          }}
-          image={img_url}
-          alt="Live from space album cover"
-        />
+        <Box
+          sx={{ display: "flex", width: "100%", justifyContent: "flex-end" }}
+        >
+          <LightTooltip title={message} placement="top-end">
+            <Envelope
+              css={css`
+                font-size: 20px;
+                cursor: ${message && "pointer"};
+                color: ${message? "black": "white"}
+              `}
+            />
+          </LightTooltip>
+        </Box>
+
+        <ProfileImg imgSrc={imgUrl} nickname={nickname} width={"100px"}/>
+
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Typography component="div" sx={{ fontSize: 18, p: "16px" }}>
-            {nickname}#{user_id}
+            <UserNameTag nickname={nickname} userId={userId} />
           </Typography>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "10px",
-          }}
-        >
-          <Button
-            sx={{
-              border: "3px solid #111",
-              color: "#111111",
-              backgroundColor: "#FFC804",
-              width: "82px",
-              height: "38px",
-            }}
-          >
-            수락
-          </Button>
-          <Button
-            sx={{
-              border: "3px solid #111",
-              color: "#111111",
-              width: "82px",
-              height: "38px",
-            }}
-          >
-            거절
-          </Button>
-        </Box>
+
+        <FriendBtnTwo fromId={sessionStorage.getItem("userId")} toId={userId} />
       </Card>
     </>
   );

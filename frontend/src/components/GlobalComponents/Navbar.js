@@ -23,6 +23,14 @@ function Navbar() {
     setUser(false);
   };
 
+
+  // router / window 바뀔때마다 is new? 체크하고 빨간거 만들고
+  // 새로 들어온거 있으면 무조건 api -> true (빨간거 띄우고)
+  // 친구 page 들어오면 -> 확인했다고 api 보내면 -> false (빨간거 없어짐)
+  
+
+
+
   return (
     <>
       {flag && (

@@ -4,8 +4,6 @@ import { Carousel, CarouselItem } from "./Carousel";
 import RequestCard from "./RequestCard";
 import { Box } from "@mui/material";
 
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
 function RequestList({ users }) {
   return (
     <Box

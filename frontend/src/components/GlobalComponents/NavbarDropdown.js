@@ -7,6 +7,7 @@ import almeng from "assets/almeng.png";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import ProfileImg from "./ProfileImg";
 
 function NavbarDropdown() {
   const [open, setOpen] = React.useState(false);
@@ -15,39 +16,21 @@ function NavbarDropdown() {
     setOpen(!open);
   };
 
-  const image = () => {
-    if (sessionStorage.getItem("imgUrl") !== "null") {
-      // 프로필 img 있는 경우
-      return <img />;
-    } else {
-      // 프로필 img 없는 경우 
-      return (
-        <img
-          src={almeng}
-          alt="profile"
-          css={css`
-            width: 100%;
-            margin-top: 10%;
-          `}
-        />
-      );
-    }
-  };
-
   return (
     <>
       <Box
-        sx={{
-          height: "30px",
-          width: "30px",
-          borderRadius: "200px",
-          border: "2px solid #111",
-          cursor: "pointer",
-          backgroundColor: "white"
-        }}
+        sx={{cursor: "pointer"}}
         onClick={handleClick}
       >
-        {image()}
+        <ProfileImg
+          imgSrc={
+            sessionStorage.getItem("imgUrl") !== "null"
+              ? sessionStorage.getItem("imgUrl")
+              : ""
+          }
+          nickname={sessionStorage.getItem("nickname")}
+          width={"30px"}
+        />
       </Box>
 
       <ul

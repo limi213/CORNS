@@ -1,6 +1,6 @@
 import React from 'react';
-import FriendList from '../../components/Community/FriendList';
-import FriendRequest from '../../components/Community/FriendRequest';
+import FriendList from 'components/Community/FriendList';
+import FriendRequest from 'components/Community/FriendRequest';
 import Box from "@mui/material/Box";
 
 function Friends() {

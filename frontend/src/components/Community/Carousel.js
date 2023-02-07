@@ -93,6 +93,7 @@ export const Carousel = ({ children }) => {
               ...(activePageIndex === i ? styles.paginationButtonActive : {}),
             }}
             onClick={() => goTo(i)}
+            key={i}
           >
             <CircleFill
               style={{

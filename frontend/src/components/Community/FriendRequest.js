@@ -1,74 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import RequestList from "./RequestList";
+import { Box } from "@mui/material";
 
-import { ChevronDoubleRight, ChevronDoubleLeft } from "react-bootstrap-icons";
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+const getFriendRequest = async (setUsers) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_HOST}/friend/receive/${sessionStorage.getItem(
+        "userId"
+      )}`
+    );
+    if (response.status === 200) {
+      // console.log(response);
+      setUsers(response.data.recvList);
+    } else if (response.status === 204) {
+      // console.log(response)
+      setUsers([]);
+    }
+  } catch {}
+};
+
 function FriendRequest() {
-  const users = [
-    {
-      img_url:
-        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
-      nickname: "1번임",
-      user_id: 1000,
-    },
-    {
-      img_url:
-        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
-      nickname: "2번임",
-      user_id: 1000,
-    },
-    {
-      img_url:
-        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
-      nickname: "3번임",
-      user_id: 1000,
-    },
-    {
-      img_url:
-        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
-      nickname: "4번임",
-      user_id: 1000,
-    },
-    {
-      img_url:
-        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
-      nickname: "5번임",
-      user_id: 1000,
-    },
-    {
-      img_url:
-        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
-      nickname: "6번임",
-      user_id: 1000,
-    },
-    {
-      img_url:
-        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
-      nickname: "7번임",
-      user_id: 1000,
-    },
-    {
-      img_url:
-        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
-      nickname: "8번임",
-      user_id: 1000,
-    },
-    {
-      img_url:
-        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
-      nickname: "9번임",
-      user_id: 1000,
-    },
-  ];
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getFriendRequest(setUsers);
+  }, []);
 
   return (
     <>
       <h3>친구신청</h3>
-
-      <RequestList users={users} />
+      {users.length > 0 && <RequestList users={users} />}
+      {users.length === 0 && (
+        <Box
+          sx={{
+            backgroundColor: "#DDDDDD",
+            border: "3px solid #111111",
+            position: "relative",
+            p: "1.5rem",
+          }}
+        >
+          <p>친구신청이 없습니다.</p>
+        </Box>
+      )}
     </>
   );
 }
-
 export default FriendRequest;

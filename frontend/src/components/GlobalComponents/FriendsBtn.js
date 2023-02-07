@@ -1,30 +1,31 @@
 import React from "react";
-import { useEffect } from "react";
-import { Box, Typography, Button } from "@mui/material";
+import FriendBtnZero from "./FriendBtnZero";
+import FriendBtnOne from "./FriendBtnOne";
+import FriendBtnTwo from "./FriendBtnTwo";
+import FriendBtnThree from "./FriendBtnThree";
 
-function FriendsBtn({ status }) {
-  let btnContent = "";
-  let btnColor = "";
-  if (status === "5000") {
-    btnContent = "친구신청중";
-    btnColor = "#67C73A";
-  } else if (status === "5001") {
-    btnContent = "친구수락";
-    btnColor = "#3C90F2";
-  } else if (status === "5002") {
-    btnContent = "친구끊기";
-    btnColor = "#DDDDDD";
-  } else {
-    btnContent = "친구신청";
-    btnColor = "#FFC804";
+
+function FriendsBtn({ fromId, toId, status, setRelation }) {
+  switch (status) {
+    // 아무것도 아닌 상태
+    case 0:
+      return <FriendBtnZero fromId={fromId} toId={toId} setRelation={setRelation} />
+    
+      // 내가 친구신청 건 상태 (친구 x)
+      case 1:
+      return <FriendBtnOne />
+    
+      // 친구 신청 받은 상태 (친구 x)
+      case 2:
+      return <FriendBtnTwo fromId={fromId} toId={toId} setRelation={setRelation} />
+    
+      // 이미 친구인 상태
+      case 3:
+      return <FriendBtnThree fromId={fromId} toId={toId} setRelation={setRelation} />
+    
+      default:
+      return;
   }
-  return (
-    <>
-      <Button variant="contained" sx={{ backgroundColor: btnColor }}>
-        {btnContent}
-      </Button>
-    </>
-  );
 }
 
 export default FriendsBtn;
