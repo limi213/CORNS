@@ -4,6 +4,7 @@ import com.w6w.corns.dto.friend.FriendListInterface;
 import com.w6w.corns.dto.friend.FriendListRequestDto;
 import com.w6w.corns.dto.friend.FriendListResponseDto;
 import com.w6w.corns.dto.friend.FriendRequestDto;
+import com.w6w.corns.util.PageableResponseDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
@@ -21,11 +22,9 @@ public interface FriendService {
     //친구 삭제
     void deleteFriend(FriendRequestDto friendRequestDto);
     //친구 목록 가져오기
-    Slice<FriendListInterface> getFriendList(int userId, FriendListRequestDto friendListRequestDto, Pageable pageable);
+    PageableResponseDto getFriendList(int userId, FriendListRequestDto friendListRequestDto, Pageable pageable);
     //친구 신청 목록 가져오기
     List<FriendListResponseDto> getFriendReceiveList(int userId);
-    //친구 정보 세팅
-    void setUserInfo(List<FriendListResponseDto> friendRecvDtoList, List<Integer> friendList);
     //친구 관계
     int getFriendRelation(int fromId, int toId);
 }

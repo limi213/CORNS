@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @DynamicInsert
 @Getter
@@ -20,6 +21,9 @@ public class RoomUser extends BaseTime {
 
     private int userId;
 
+    @Column(name = "bookmark_yn")
+    private char bookmarkYN;
+
     private int roomUserCd;
 
     private String connectionId;
@@ -29,6 +33,10 @@ public class RoomUser extends BaseTime {
     private String token;
 
     private String scriptUrl;
+
+    private int speakingSec;
+
+    private int thumbCnt;
 
     @Builder
     public RoomUser(String connectionId, String recordId, String token) {
@@ -51,6 +59,15 @@ public class RoomUser extends BaseTime {
 
     public void setScriptUrl(String scriptUrl) {
         this.scriptUrl = scriptUrl;
+    }
+
+    public void setSpeakingSec(int speakingSec) { this.speakingSec = speakingSec; }
+
+    public void setThumbCnt(int thumbCnt) { this.thumbCnt = thumbCnt; }
+
+    public void setBookmarkYN(boolean doRegister) {
+        if (doRegister) this.bookmarkYN = 'Y';
+        else this.bookmarkYN = 'N';
     }
 
 }

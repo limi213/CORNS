@@ -22,8 +22,8 @@ function UserCard({ nickname, level, id }) {
         <CardMedia
           component="img"
           sx={{
-            height: "250px",
-            width: "250px",
+            height: "12vw",
+            width: "12vw",
             borderRadius: "200px",
             border: "15px solid white",
           }}
@@ -37,7 +37,7 @@ function UserCard({ nickname, level, id }) {
               <br />
               {nickname}!
             </Typography>
-            <Typography sx={{ fontSize: 42 }} component="div">
+            <Typography sx={{ fontSize: "42px" }} component="div">
               Lv.{level}
             </Typography>
             <Typography sx={{ fontSize: 16 }} component="div">

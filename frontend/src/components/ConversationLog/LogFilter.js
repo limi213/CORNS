@@ -10,6 +10,8 @@ import {
   Input,
 } from "@mui/material";
 
+import SelfEvaluationFilter from "components/ConversationLog/SelfEvaluationFilter";
+
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
@@ -117,11 +119,7 @@ function LogFilter() {
         >
           자기평가
         </span>
-        <FormControlLabel control={<Checkbox />} label="1" color="default" />
-        <FormControlLabel control={<Checkbox />} label="2" />
-        <FormControlLabel control={<Checkbox />} label="3" />
-        <FormControlLabel control={<Checkbox />} label="4" />
-        <FormControlLabel control={<Checkbox />} label="5" />
+        <SelfEvaluationFilter />
       </Box>
 
       {/* 따봉뱃지 */}

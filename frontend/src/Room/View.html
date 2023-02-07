@@ -17,11 +17,11 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <!-- Bootstrap -->
-      <link rel="stylesheet" href="/openVidu/openvidu-style.css" type="text/css" media="screen">
+      <!-- <link rel="stylesheet" href="openVidu/openvidu-style.css" type="text/css" media="screen"> -->
       <script src="https://kit.fontawesome.com/b09b9ec2e7.js" crossorigin="anonymous"></script>
-      <script src="/openVidu/openvidu-browser-2.25.0.js"></script>
+      <script src="openVidu/openvidu-browser-2.25.0.js"></script>
       <link rel="stylesheet" href="contents/css/roomStyle.css">
-      <script src="/openVidu/openvidu.js"></script>
+      <script src="openVidu/openvidu.js"></script>
     </head>
     <body>
       <div id="roomViewBackground">
@@ -74,12 +74,12 @@
           <div id="roomViewUser4" class="roomViewUser"></div>
         </div>
         <!-- <div id="video-container" class="col-md-6"></div> -->
-        <div id="video-container" class="col-md-6">
+        <!-- <div id="video-container" class="col-md-6"> -->
           <!-- <video autoplay="" id="local-video-undefined"></video>
           <div class="data-node" id="data-Participant38">
             <p>Participant38</p>
           </div> -->
-        </div>
+        <!-- </div> -->
       </div>
       <input type="hidden" id="sessionId" />
       <input type="hidden" id="userName" />
@@ -92,6 +92,8 @@
 
         let session = urlParams.get('session');
         let connection = urlParams.get('connection');
+        let username = urlParams.get('username');
+        // alert('session = ' + session)
 
         if(!session ){
           // alert("잘못된 접근입니다.");
@@ -100,7 +102,7 @@
         else{
           // 이슈 없이 커넥션이랑 세션 다 들어옴!
           $("#sessionId").val(session);
-          $("#userName").val("앨리스"); // 유저이름은 쿠키에서 가져올려나
+          $("#userName").val(username); // 유저이름은 쿠키에서 가져올려나
 
           joinSession();
           

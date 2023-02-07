@@ -1,15 +1,28 @@
 package com.w6w.corns.service.user;
 
+import com.w6w.corns.domain.explog.ExpLog;
+import com.w6w.corns.domain.friend.FriendRepository;
 import com.w6w.corns.domain.loginlog.LoginLogRepository;
+import com.w6w.corns.domain.thumblog.ThumbLogRepository;
 import com.w6w.corns.domain.user.User;
 import com.w6w.corns.domain.user.UserRepository;
+import com.w6w.corns.dto.explog.ExpLogResponseDto;
 import com.w6w.corns.dto.loginlog.LoginLogSaveDto;
 import com.w6w.corns.dto.user.*;
+import com.w6w.corns.util.PageableResponseDto;
 import com.w6w.corns.util.SHA256Util;
+import com.w6w.corns.util.code.FriendCode;
 import com.w6w.corns.util.code.UserCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +30,8 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final LoginLogRepository loginLogRepository;
+    private final ThumbLogRepository thumbLogRepository;
+    private final FriendRepository friendRepository;
 
     @Override
     @Transactional
@@ -31,11 +46,14 @@ public class UserServiceImpl implements UserService{
             String salt = SHA256Util.generateSalt();
             String newPass = SHA256Util.getEncrypt(requestUser.getPassword(), salt);
 
-            requestUser.setSalt(salt); 
-            requestUser.setPassword(newPass);
-            //기본 회원가입 사용자로 설정
-            requestUser.setSocial(1);
-            userRepository.save(requestUser.toEntity()); //회원 저장
+            userRepository.save(
+                    User.userRegister()
+                            .email(requestUser.getEmail())
+                            .nickname(requestUser.getNickname())
+                            .password(newPass) //암호화된 비밀번호 저장
+                            .salt(salt) 
+                            .social(1) //기본 회원가입 사용자로 설정
+                            .build()); //회원 저장
             return 1;
         }
     }
@@ -51,7 +69,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional(readOnly = true)
-    public LoginResponseDto login(UserLoginRequestDto requestUser) throws Exception{
+    public UserDetailResponseDto login(UserLoginRequestDto requestUser) throws Exception{
 
         //해당 이메일을 가진 객체를 db에서 찾음
         User user = userRepository.findByEmail(requestUser.getEmail());
@@ -60,13 +78,10 @@ public class UserServiceImpl implements UserService{
         //이메일, 비밀번호 일치 확인 && 회원코드 확인
         if(isSamePassword(requestUser) && user.getUserCd() == UserCode.USER_DEFAULT.getCode()){
 
-            //추후 경험치 추가 필요
-
             //로그인로그 insert
             makeLoginLog(user.getUserId());
 
-            //따봉, 친구, 출석, 발화량 나중에 추가 필요
-            return LoginResponseDto.fromEntity(user);
+            return getUser(user.getUserId());
         }
         return null;
     }
@@ -83,14 +98,18 @@ public class UserServiceImpl implements UserService{
     public void updateLastLoginTm(int userId) throws Exception{
         
         //last_login_tm 변경
-        User user = userRepository.getReferenceById(userId);
-        user.updateLastLoginTM();
+        User user = userRepository.findByUserId(userId);
+        user.setLastLoginTm();
+        userRepository.save(user);
+        System.out.println("user = " + user);
     }
 
     @Override
     @Transactional
-    public int saveRefreshToken(int userId, String refreshToken) throws Exception {
-        return userRepository.updateRefreshToken(userId, refreshToken);
+    public void saveRefreshToken(int userId, String refreshToken) throws Exception {
+        User user = userRepository.findByUserId(userId);
+        user.setRefreshToken(null);
+        userRepository.save(user);
     }
 
     @Override
@@ -103,21 +122,34 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public void deleteRefreshToken(int userId) throws Exception {
-        userRepository.updateRefreshToken(userId, null);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public LoginResponseDto findByUserId(int userId) throws Exception{
         User user = userRepository.findByUserId(userId);
-        return LoginResponseDto.fromEntity(user);
+        user.setRefreshToken(null);
+        userRepository.save(user);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public LoginResponseDto findByEmail(String email) throws Exception{
+    public UserDetailResponseDto getUser(int userId) throws Exception{
+        User user = userRepository.findByUserId(userId);
+
+        //발화량, 랭킹 나중에 추가
+        long attendanceTotal = loginLogRepository.findByRegTmAndUserId(userId);
+        long thumbTotal = thumbLogRepository.countByToUserId(userId);
+        long friendTotal = friendRepository.countByUserIdAAndFriendCdOrUserIdBAndFriendCd(userId, FriendCode.FRIEND_ACCEPT.getCode(), userId, FriendCode.FRIEND_ACCEPT.getCode());
+
+        UserDetailResponseDto responseDto = UserDetailResponseDto.fromEntity(user);
+        responseDto.setAttendTotal(attendanceTotal);
+        responseDto.setThumbTotal(thumbTotal);
+        responseDto.setFriendTotal(friendTotal);
+
+        return responseDto;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetailResponseDto findByEmail(String email) throws Exception{
         User user = userRepository.findByEmail(email);
-        return LoginResponseDto.fromEntity(user);
+        return UserDetailResponseDto.fromEntity(user);
     }
 
     @Override
@@ -138,32 +170,65 @@ public class UserServiceImpl implements UserService{
         return false;
     }
 
+    public boolean updateUserPassword(UserPassModifyRequestDto requestDto) throws Exception{
+
+        User user = userRepository.findByUserId(requestDto.getUserId());
+
+        //비밀번호 확인
+        if(!isSamePassword(new UserLoginRequestDto(user.getEmail(), requestDto.getPassword()))) return false;
+
+        //비밀번호 변경
+        String salt = SHA256Util.generateSalt();
+        String encryptPass = SHA256Util.getEncrypt(requestDto.getNewPassword(), salt);
+
+        user.setPassword(encryptPass);
+        user.setSalt(salt);
+        userRepository.save(user);
+        return true;
+    }
     @Override
     @Transactional
-    public UserModifyRequestDto updateUserInfo(UserModifyRequestDto requestUser) throws Exception{
+    public void updateUserInfo(UserModifyRequestDto requestUser) throws Exception{
 
         System.out.println("requestUser = " + requestUser);
         User user = userRepository.findByUserId(requestUser.getUserId());
 
-        if(requestUser.getNickname() != null){
-            userRepository.updateNickname(requestUser.getUserId(), requestUser.getNickname());
+        //설정 안하면 null로 넘어오는지, 아니면 기존 내용이 넘어오는지 아마도 후자?!
+        user.setNickname(requestUser.getNickname());
+        user.setImgUrl(requestUser.getImgUrl());
 
-        }else if(requestUser.getImgUrl() != null){
-            userRepository.updateImgUrl(requestUser.getUserId(), requestUser.getImgUrl());
-
-        }else if(requestUser.getPassword() != null){
-
-            String salt = user.getSalt();
-            String newPass = SHA256Util.getEncrypt(requestUser.getPassword(), salt);
-            userRepository.updatePassword(requestUser.getUserId(), newPass);
-        }
-
-        return new UserModifyRequestDto().builder().user(user).build();
+        userRepository.save(user);
     }
 
     @Override
     @Transactional
     public void updateUserCd(int userId, int userCd) throws Exception{
-        userRepository.updateUserCd(userId, userCd);
+
+        User user = userRepository.findByUserId(userId);
+        user.setUserCd(userCd);
+        userRepository.save(user);
+    }
+
+    @Override
+    public PageableResponseDto findAllUserByCondition(Pageable pageable, String baseTime, String filter, String keyword) throws Exception {
+
+        //baseTime -> LocalDate 타입으로
+        LocalDateTime localDateTime = LocalDateTime.parse(baseTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        Slice<User> slice = userRepository.findByFilterRegTmLessThanEqual(pageable, localDateTime, filter, keyword);
+
+        List<UserListResponseDto> exps = new ArrayList<>();
+        for(User user : slice.getContent())
+            exps.add(UserListResponseDto.builder()
+                            .userId(user.getUserId())
+                            .imgUrl(user.getImgUrl())
+                            .nickname(user.getNickname())
+                            .level(user.getLevel().getLevelNo())
+                            .build());
+
+        return PageableResponseDto.builder()
+                .list(exps)
+                .hasNext(slice.hasNext())
+                .build();
     }
 }

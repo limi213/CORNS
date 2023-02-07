@@ -1,15 +1,26 @@
-import {Link} from 'react-router-dom';
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import GoogleLogin from "auth/GoogleLogin";
 import Navbar from "../components/GlobalComponents/Navbar";
 import hero from "assets/hero.png";
 import backgroundImage from "assets/backgroundImage.png";
-import RoomList from "components/Conversation/RoomList";
+import RoomListsContainer from "store/containers/RoomListsContainer";
 import RankingList from "components/GlobalComponents/RankingList";
+
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
 import { Box, Button, Grid, Typography } from "@mui/material";
 
 function Home() {
+  // 소셜 로그인시 리디랙션 된건지 확인
+  useEffect(() => {
+    if (window.location.href.includes("code")) {
+      const code = new URL(window.location.href).searchParams.get("code");
+      GoogleLogin(code);
+    }
+  });
+
   return (
     <>
       <Navbar />
@@ -39,7 +50,7 @@ function Home() {
           <Link to="/conversation" sx={{ cursor: "pointer" }}>
             더보기
           </Link>
-          <RoomList />
+          <RoomListsContainer />
         </Box>
         <Box>
           <Typography variant="h5">랭킹</Typography>
@@ -49,7 +60,6 @@ function Home() {
           <RankingList />
         </Box>
       </Box>
-
       <Box
         sx={{
           display: "flex",
@@ -88,7 +98,6 @@ function Home() {
           />
         </Box>
       </Box>
-
       <Box sx={{ mx: "105px" }}>
         <Typography variant="h2" sx={{ textAlign: "center" }}>
           conversation

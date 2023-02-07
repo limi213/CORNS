@@ -1,14 +1,14 @@
 package com.w6w.corns.controller;
 
-//import com.w6w.corns.auth.OAuthService;
-import com.w6w.corns.dto.oauth.GetSocialOauthRes;
-import com.w6w.corns.dto.oauth.GoogleUserDto;
+import com.w6w.corns.dto.explog.ExpLogRequestDto;
 import com.w6w.corns.dto.user.*;
+import com.w6w.corns.util.PageableResponseDto;
+import com.w6w.corns.util.code.ExpCode;
+import com.w6w.corns.service.growth.GrowthService;
 import com.w6w.corns.service.jwt.JwtService;
 import com.w6w.corns.service.oauth.OAuthService;
 import com.w6w.corns.service.user.UserService;
 import com.w6w.corns.util.Constant.SocialType;
-import com.w6w.corns.util.SHA256Util;
 import com.w6w.corns.util.code.UserCode;
 import io.swagger.annotations.Api;
 import java.io.IOException;
@@ -16,11 +16,14 @@ import java.io.IOException;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +37,7 @@ public class UserController {
     private final UserService userService;
     private final JwtService jwtService;
     private final OAuthService oAuthService;
+    private final GrowthService growthService;
 
     /**
      * 예외 처리
@@ -58,7 +62,7 @@ public class UserController {
             int result = userService.signUp(user);
 
             if(result < 0) return new ResponseEntity<>(HttpStatus.CONFLICT); //중복 이메일
-            else return new ResponseEntity<HttpStatus>(HttpStatus.OK); //회원가입 성공 
+            else return new ResponseEntity<HttpStatus>(HttpStatus.OK); //회원가입 성공
 
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -91,23 +95,37 @@ public class UserController {
 
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
-        LoginResponseDto loginUser = null;
+        UserDetailResponseDto loginUser = null;
         try {
             loginUser = userService.login(requestUser);
 
-            //로그인 실패
-            if(loginUser == null) status = HttpStatus.UNAUTHORIZED;
+            if(loginUser == null) status = HttpStatus.UNAUTHORIZED; //로그인 실패
             else{
+                //로그인 시간 확인 후 경험치 부여
+                if(loginUser.getLastLoginTm() == null
+                        || loginUser.getLastLoginTm().toLocalDate().equals(LocalDate.now())
+                     ) {
+
+                    ExpLogRequestDto expLogRequestDto = ExpLogRequestDto.builder()
+                            .userId(loginUser.getUserId())
+                            .gainExp(3)
+                            .expCd(ExpCode.EXP_ATTEND.getCode())
+                            .build();
+                    growthService.giveExp(expLogRequestDto);
+                }
+
                 //토큰 부여
                 String accessToken = jwtService.createAccessToken("id", loginUser.getUserId());
                 String refreshToken = jwtService.createRefreshToken("id", loginUser.getUserId());
-
 
                 userService.saveRefreshToken(loginUser.getUserId(), refreshToken);
                 loginUser.setRefreshToken(refreshToken);
 
                 //lastLoginTm 갱신
-                userService.updateLastLoginTm(loginUser.getUserId());
+//                userService.updateLastLoginTm(loginUser.getUserId());
+                loginUser.setLastLoginTm(LocalDateTime.now());
+
+                System.out.println("loginUser = " + loginUser);
 
                 resultMap.put("accessToken", accessToken);
                 resultMap.put("refreshToken", refreshToken);
@@ -158,28 +176,29 @@ public class UserController {
         try {
             Map<String, Object> resultMap = new HashMap<>();
 
-            LoginResponseDto loginResponseDto = oAuthService.oAuthLogin(socialType, code);
+            UserDetailResponseDto responseDto = oAuthService.oAuthLogin(socialType, code);
 
 
             //토큰 부여
-            String accessToken = jwtService.createAccessToken("id", loginResponseDto.getUserId());
-            String refreshToken = jwtService.createRefreshToken("id", loginResponseDto.getUserId());
+            String accessToken = jwtService.createAccessToken("id", responseDto.getUserId());
+            String refreshToken = jwtService.createRefreshToken("id", responseDto.getUserId());
 
-            userService.saveRefreshToken(loginResponseDto.getUserId(), refreshToken);
-            userService.updateLastLoginTm(loginResponseDto.getUserId());
-            loginResponseDto.setRefreshToken(refreshToken);
+            userService.saveRefreshToken(responseDto.getUserId(), refreshToken);
+//            userService.updateLastLoginTm(responseDto.getUserId());
+            responseDto.setRefreshToken(refreshToken);
+            responseDto.setGoogle(true);
 
-            //경험치도 줘야함!, 리팩토링 필요 + 이메일 중복 통합 처리 
+            //경험치도 줘야함!, 리팩토링 필요 + 이메일 중복 통합 처리
 
             //lastLoginTm 갱신
-            userService.updateLastLoginTm(loginResponseDto.getUserId());
+//            userService.updateLastLoginTm(responseDto.getUserId());
 
             // 로그인로그 insert
-            userService.makeLoginLog(loginResponseDto.getUserId());
+            userService.makeLoginLog(responseDto.getUserId());
 
             resultMap.put("accessToken", accessToken);
             resultMap.put("refreshToken", refreshToken);
-            resultMap.put("loginUser", loginResponseDto);
+            resultMap.put("loginUser", responseDto);
 
             return new ResponseEntity<>(resultMap, HttpStatus.OK);
         } catch (Exception e) {
@@ -192,7 +211,6 @@ public class UserController {
      * @return
      */
     @ApiOperation(value = "로그아웃", notes = "refresh token 삭제 후 로그아웃")
-    
     @PostMapping("/logout/{userId}")
     public ResponseEntity<?> logout(@PathVariable int userId){
 
@@ -235,15 +253,15 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "user 정보 반환", notes = "내정보 및 유저상세에 보여줄 정보")
+    @ApiOperation(value = "회원 정보 반환", notes = "내정보 및 유저상세에 보여줄 정보")
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserInfo(@PathVariable int userId){
 
         try {
-            //friendTotal, attendTotal, conversationTotal, ddabongTotal, rank 추가 필요
-            LoginResponseDto user = userService.findByUserId(userId);
+            //friendTotal, attendTotal, conversationTotal, thumbTotal, rank 추가 필요
+            UserDetailResponseDto user = userService.getUser(userId);
 
-            Map<String, LoginResponseDto> result = new HashMap<>();
+            Map<String, UserDetailResponseDto> result = new HashMap<>();
             result.put("user",user);
 
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -254,29 +272,28 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "user 정보 수정", notes = "닉네임, 이미지, 비밀번호 수정")
-    @PatchMapping
+    @ApiOperation(value = "user 정보 수정", notes = "닉네임, 이미지 수정")
+    @PutMapping
     public ResponseEntity<?> modifyUserInfo(@RequestBody UserModifyRequestDto user){
 
         try {
-            return new ResponseEntity<>(userService.updateUserInfo(user), HttpStatus.OK);
+            userService.updateUserInfo(user);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
             return exceptionHandling(e);
         }
     }
 
-    @ApiOperation(value = "비밀번호 확인", notes = "회원 탈퇴, 비밀번호 수정 요청 시 비밀번호 확인")
-    @PostMapping("/check")
-    public ResponseEntity<?> checkPassword(@RequestBody UserLoginRequestDto user){
+    @ApiOperation(value = "비밀번호 확인 및 변경", notes = "userId, 비밀번호, 새로운 비밀번호를 넘겨 인증 후 변경")
+    @PostMapping
+    public ResponseEntity<?> modifyPassword(@RequestBody UserPassModifyRequestDto requestDto){
 
-        //소셜 로그인 이용자는 비밀번호 확인 처리 어떻게 할지 고민
-        try {
-            if(userService.isSamePassword(user)) return new ResponseEntity<>(HttpStatus.OK);
-            else return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        try{
+            if(!userService.updateUserPassword(requestDto)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            else return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e) {
-            log.error(e.getMessage());
             return exceptionHandling(e);
         }
     }
@@ -293,6 +310,20 @@ public class UserController {
 
         } catch (Exception e) {
             log.error(e.getMessage());
+            return exceptionHandling(e);
+        }
+    }
+
+    @ApiOperation(value = "회원 검색", notes = "조건에 맞는 회원을 검색해서 반환")
+    @GetMapping
+    public ResponseEntity<?> search(Pageable pageable, @RequestParam String baseTime, @RequestParam String filter, @RequestParam String keyword){
+
+        try {
+            PageableResponseDto responseDto = userService.findAllUserByCondition(pageable, baseTime, filter, keyword);
+
+            if(responseDto != null && responseDto.getList().size() > 0) return new ResponseEntity<>(responseDto, HttpStatus.OK);
+            else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
             return exceptionHandling(e);
         }
     }

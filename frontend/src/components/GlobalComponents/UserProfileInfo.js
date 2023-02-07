@@ -4,15 +4,17 @@ import { Box, CardMedia, Typography, Grid } from "@mui/material";
 
 function UserProfileInfo({ basicInfo }) {
   const {
-    img_url,
+    userId,
+    email,
     nickname,
-    id,
+    imgUrl,
+    expTotal,
     level,
-    exp,
-    friendCnt,
-    totalDay,
-    totalDdabong,
-    totalTalk,
+    friendTotal,
+    social,
+    isGoogle,
+    refreshToken,
+    attendTotal,
   } = basicInfo;
 
   return (
@@ -25,7 +27,7 @@ function UserProfileInfo({ basicInfo }) {
       >
         <CardMedia
           component="img"
-          image={img_url}
+          image={imgUrl == null ? "" : null}
           alt={nickname}
           sx={{
             width: "250px",
@@ -43,28 +45,28 @@ function UserProfileInfo({ basicInfo }) {
           }}
         >
           <Typography variant="h5">
-            {nickname}#{id}
+            {nickname}#{userId}
           </Typography>
           <Grid container spacing={0}>
             <Grid item xs={4}>
               <Typography>Lv.{level}</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography>{exp}exp</Typography>
+              <Typography>{expTotal}exp</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography>친구수{friendCnt}명</Typography>
+              <Typography>친구수{friendTotal}명</Typography>
             </Grid>
           </Grid>
           <Grid container spacing={0}>
             <Grid item xs={4}>
-              <Typography>누적 출석수 {totalDay}일</Typography>
+              <Typography>누적 출석수 {attendTotal}일</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography>누적 칭찬수 {totalDdabong}개</Typography>
+              <Typography>누적 칭찬수 100개</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography>누적 발화량수 {totalTalk}분</Typography>
+              <Typography>누적 발화량수 100분</Typography>
             </Grid>
           </Grid>
         </Box>

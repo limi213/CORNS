@@ -1,10 +1,13 @@
 package com.w6w.corns.domain.room;
 
+import com.w6w.corns.domain.subject.Subject;
 import com.w6w.corns.util.BaseTime;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @DynamicInsert
 @Getter
@@ -23,6 +26,8 @@ public class Room extends BaseTime {
 
     private int maxMember;
 
+    private int currentMember;
+
     private int subjectNo;
 
     private int hostUserId;
@@ -33,6 +38,8 @@ public class Room extends BaseTime {
 
     private String scriptUrl;
 
+    private LocalDateTime startTm;
+
     @Builder
     public Room(String title, int time, int maxMember, int subjectNo, String sessionId) {
         this.title = title;
@@ -41,6 +48,8 @@ public class Room extends BaseTime {
         this.subjectNo = subjectNo;
         this.sessionId = sessionId;
     }
+
+    public void setCurrentMember(int currentMember) { this.currentMember = currentMember; }
 
     public void setHostUserId(int hostUserId) {
         this.hostUserId = hostUserId;
@@ -53,5 +62,7 @@ public class Room extends BaseTime {
     public void setScriptUrl(String scriptUrl) {
         this.scriptUrl = scriptUrl;
     }
-
+    public void setStartTmNow() {
+        this.startTm = LocalDateTime.now();
+    }
 }

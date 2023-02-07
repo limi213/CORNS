@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
-import SigninCard from "components/LoginSignIn/SigninCard";
-import AgreeCard from "components/LoginSignIn/AgreeCard";
+import SigninCard from "components/LoginSignin/SigninCard";
+import AgreeCard from "components/LoginSignin/AgreeCard";
 import {Box, Grid} from "@mui/material";
 
 import backgroundImage from "../assets/backgroundImage.png";

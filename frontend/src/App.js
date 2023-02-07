@@ -7,8 +7,9 @@ import GrowthRecord from "./routes/GrowthRecord/GrowthRecord";
 import Login from "./routes/LogIn";
 import Signin from "./routes/SignIn";
 import Mypage from "./routes/MyPage/MyPage";
+import Room from "./routes/Room/Room";
 import NotFound from "./routes/NotFound";
-
+import TopBtn from "components/GlobalComponents/TopBtn";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
@@ -24,9 +25,11 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signin" component={Signin} />
         <Route path="/mypage" component={Mypage} />
+        <Route path="/room" component={Room} />
         <Route exact path="/NotFound" component={NotFound} />
         <Redirect to="/NotFound" />
       </Switch>
+      <TopBtn />
     </div>
   );
 }

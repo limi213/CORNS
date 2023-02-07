@@ -3,14 +3,12 @@ import UserProfileInfo from "./UserProfileInfo";
 import UserProfileRankingCard from "./UserProfileRankingCard";
 import { Grid } from "@mui/material";
 
-function UserProfile({ user }) {
-  const { basicInfo, rankingList } = user;
-
+function UserProfile({ user, rank }) {
   return (
     <>
-      <UserProfileInfo basicInfo={basicInfo} />
+      <UserProfileInfo basicInfo={user} />
       <Grid container sx={{ p: "0 1.5rem 0 3rem" }}>
-        {rankingList.map((item, index) => {
+        {rank.map((item, index) => {
           return <UserProfileRankingCard ranking={item} key={index} />;
         })}
       </Grid>

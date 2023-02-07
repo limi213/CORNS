@@ -4,70 +4,86 @@ import com.w6w.corns.dto.room.request.CreateRoomRequestDto;
 import com.w6w.corns.dto.room.request.EnterRoomRequestDto;
 import com.w6w.corns.dto.room.request.StartEndRoomRequestDto;
 import com.w6w.corns.dto.room.request.UpdateRoomRequestDto;
+import com.w6w.corns.dto.room.response.RoomAndRoomUserListResponseDto;
 import com.w6w.corns.dto.room.response.RoomListResponseDto;
-import com.w6w.corns.dto.room.response.RoomResponseDto;
 import com.w6w.corns.dto.room.response.RoomUserListResponseDto;
 import com.w6w.corns.service.room.RoomService;
+import com.w6w.corns.util.PageableResponseDto;
+import com.w6w.corns.util.code.RoomCode;
+import com.w6w.corns.util.code.RoomUserCode;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@RestController()
+@Slf4j
+@RequiredArgsConstructor
+@RestController
 @RequestMapping("room")
 public class RoomController {
 
-    private final Logger logger = LoggerFactory.getLogger(RoomController.class);
-
-    @Autowired
-    RoomService roomService;
+    private final RoomService roomService;
 
     @ApiOperation(value = "쫑알룸 생성하기", notes = "방 정보와 OpenVidu 관련 정보를 body에 담아서 요청")
     @PostMapping
     private ResponseEntity<?> save(@RequestBody CreateRoomRequestDto body) {
-        logger.debug("request body: {}", body);
+        log.debug("request body: {}", body);
         Map resultMap = new HashMap<>();
         HttpStatus status;
 
         try {
-            if (roomService.save(body) == 1)
+            RoomAndRoomUserListResponseDto response = roomService.save(body);
+            if (response != null) {
                 status = HttpStatus.OK;
-            else
+                return new ResponseEntity<RoomAndRoomUserListResponseDto>(response, status);
+            }
+            else {
                 status = HttpStatus.CONFLICT;
-        } catch (Exception e) {
-            resultMap.put("message", e.getMessage());
-            status = HttpStatus.INTERNAL_SERVER_ERROR;
-        }
-
-        return new ResponseEntity<Map>(resultMap, status);
-    }
-
-    @ApiOperation(value = "쫑알쫑알 전체 목록 보기(필터링 추가해야 함)", notes = "page, size, baseTime, subject, minTime, maxTime, showAvail 값을 쿼리 스트링으로 전달")
-    @GetMapping
-    private ResponseEntity<?> getAllRooms() {
-
-        Map resultMap = new HashMap<>();
-        HttpStatus status;
-
-        try {
-            List<RoomListResponseDto> rooms = roomService.findAll();
-            logger.debug("rooms: {}", rooms);
-            if (rooms.isEmpty()) {
-                status = HttpStatus.NO_CONTENT;
-            } else {
-                resultMap.put("rooms", rooms);
-                status = HttpStatus.OK;
             }
         } catch (Exception e) {
             resultMap.put("message", e.getMessage());
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
+        return new ResponseEntity<Map>(resultMap, status);
+    }
 
+    @ApiOperation(value = "쫑알쫑알 목록 (페이징)", notes = "page, size, baseTime, subject, minTime, maxTime, showAvail 값을 쿼리 스트링으로 전달")
+    @GetMapping
+    private ResponseEntity<?> getAllRooms(@RequestParam String baseTime,
+                                          @RequestParam String subject,
+                                          @RequestParam int minTime,
+                                          @RequestParam int maxTime,
+                                          @RequestParam(defaultValue = "false") boolean isAvail,
+                                          @PageableDefault Pageable pageable) {
+        Map resultMap = new HashMap<>();
+        HttpStatus status;
+        log.debug("baseTime: {}, subject: {}, minTime: {}, maxTime: {}, isAvail: {}, pageable: {}", baseTime, subject, minTime, maxTime, isAvail, pageable);
+
+        try {
+            StringTokenizer st = new StringTokenizer(subject, " ");
+            ArrayList<Integer> subjects = new ArrayList<>();
+            while (st.hasMoreTokens()) subjects.add(Integer.parseInt(st.nextToken()));
+            log.debug("subjects: {}", subjects);
+
+            PageableResponseDto response = roomService.searchBySlice(baseTime, subjects, minTime, maxTime, isAvail, pageable);
+            if (response.getList().isEmpty()) {
+                status = HttpStatus.NO_CONTENT;
+            } else {
+                status = HttpStatus.OK;
+                return new ResponseEntity<PageableResponseDto>(response, status);
+            }
+        } catch (Exception e) {
+            resultMap.put("message", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
         return new ResponseEntity<Map>(resultMap, status);
     }
 
@@ -78,8 +94,8 @@ public class RoomController {
         HttpStatus status;
 
         try {
-            RoomResponseDto room = roomService.findRoomByRoomNo(roomNo);
-            logger.debug("room: {}", room);
+            RoomListResponseDto room = roomService.findRoomByRoomNo(roomNo);
+            log.debug("room: {}", room);
             if (room == null) {
                 status = HttpStatus.NO_CONTENT;
             } else {
@@ -101,8 +117,8 @@ public class RoomController {
         HttpStatus status;
 
         try {
-            List<RoomUserListResponseDto> roomUsers = roomService.findRoomUserByRoomNo(roomNo);
-            logger.debug("roomUsers: {}", roomUsers);
+            List<RoomUserListResponseDto> roomUsers = roomService.findRoomUserByRoomNoAndRoomUserCode(roomNo, RoomUserCode.ROOM_USER_END.getCode());
+            log.debug("roomUsers: {}", roomUsers);
             if (roomUsers == null) {
                 status = HttpStatus.NO_CONTENT;
             } else {
@@ -120,15 +136,18 @@ public class RoomController {
     @ApiOperation(value = "쫑알룸 입장", notes = "")
     @PostMapping(value = "/user")
     private ResponseEntity<?> enterRoom(@RequestBody EnterRoomRequestDto body) {
-        logger.debug("body: {}", body);
+        log.debug("body: {}", body);
         Map resultMap = new HashMap<>();
         HttpStatus status;
 
         try {
-            if (!roomService.isNotUserInConversation(body.getUserId())) {
-                resultMap.put("message", "이미 대화 중인 방");
+            if (!roomService.isNotUserInConversation(body.getUserId(), RoomUserCode.ROOM_USER_CONVERSATION.getCode())) {
+                resultMap.put("message", "이미 대화중인 유저");
                 status = HttpStatus.CONFLICT;
-            } else {
+            } else if (!roomService.isNotStartRoomInConversation(body.getRoomNo())) {
+                resultMap.put("message", "이미 대화중인 방");
+                status = HttpStatus.CONFLICT;
+            }else {
                 int code = roomService.isAvailableEnterRoom(body.getRoomNo());
                 if (code == 0) {
                     status = HttpStatus.NO_CONTENT;
@@ -136,17 +155,16 @@ public class RoomController {
                     resultMap.put("message", "인원 마감");
                     status = HttpStatus.ACCEPTED;
                 } else { // 입장 가능
-                    List<RoomUserListResponseDto> roomUsers = roomService.enterRoom(body);
-                    logger.debug("roomUsers: {}", roomUsers);
-                    resultMap.put("room", roomUsers);
+                    RoomAndRoomUserListResponseDto response = roomService.enterRoom(body);
+                    log.debug("roomUsers: {}", response);
                     status = HttpStatus.OK;
+                    return new ResponseEntity<RoomAndRoomUserListResponseDto>(response, status);
                 }
             }
         } catch (Exception e) {
             resultMap.put("message", e.getMessage());
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
-
         return new ResponseEntity<Map>(resultMap, status);
     }
 
@@ -157,8 +175,17 @@ public class RoomController {
         HttpStatus status;
 
         try {
-            roomService.exitRoom(body);
-            status = HttpStatus.OK;
+            RoomAndRoomUserListResponseDto response = roomService.exitRoom(body);
+            if (response == null) {
+                resultMap.put("message", "대기방 폭파");
+                status = HttpStatus.ACCEPTED;
+            } else if (response.getRoom().getRoom().isAvail() == false) {
+                resultMap.put("message", "종료된 방");
+                status = HttpStatus.ACCEPTED;
+            } else {
+                status = HttpStatus.OK;
+                return new ResponseEntity<RoomAndRoomUserListResponseDto>(response, status);
+            }
         } catch (Exception e) {
             resultMap.put("message", e.getMessage());
             status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -174,9 +201,10 @@ public class RoomController {
         HttpStatus status;
 
         try {
-            int code = roomService.startConversation(body);
-            if (code == 1) {
+            RoomAndRoomUserListResponseDto response = roomService.startConversation(body);
+            if (response != null) {
                 status = HttpStatus.OK;
+                return new ResponseEntity<RoomAndRoomUserListResponseDto>(response, status);
             } else {
                 resultMap.put("message", "인원 부족");
                 status = HttpStatus.ACCEPTED;

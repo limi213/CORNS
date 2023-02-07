@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 
-import SubjectBtn from "./SubjectBtn";
+import SubjectsContainer from "store/containers/SubjectsContainer";
+
 import {
   Box,
   TextField,
@@ -14,19 +15,6 @@ import {
 import { css } from "@emotion/react";
 
 function ConversationRoomFilter() {
-  const datas = [
-    { id: 1, subject: "일상" },
-    { id: 2, subject: "비즈니스" },
-    { id: 3, subject: "소개팅" },
-    { id: 4, subject: "오픽" },
-    { id: 5, subject: "토스" },
-    { id: 6, subject: "자유" },
-  ];
-
-  const subjectBtn = datas.map((item) => (
-    <SubjectBtn subject={item.subject} key={item.id} />
-  ));
-
   return (
     <>
       <Box
@@ -45,7 +33,7 @@ function ConversationRoomFilter() {
           >
             주제
           </span>
-          {subjectBtn}
+          <SubjectsContainer />
         </Box>
 
         <Box sx={{ mb: "48px" }}>
