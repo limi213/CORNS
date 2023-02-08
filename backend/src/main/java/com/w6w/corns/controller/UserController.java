@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -256,10 +257,12 @@ public class UserController {
 
     @ApiOperation(value = "user 정보 수정", notes = "닉네임, 이미지 수정")
     @PutMapping
-    public ResponseEntity<?> modifyUserInfo(@RequestBody UserModifyRequestDto requestDto){
+    public ResponseEntity<?> modifyUserInfo(@RequestPart UserModifyRequestDto modifyRequestDto,
+                                            @RequestPart MultipartFile multipartFile){
 
         try {
-            userService.updateUserInfo(requestDto);
+            System.out.println("modifyRequestDto = " + modifyRequestDto + ", multipartFile = " + multipartFile);
+            userService.updateUserInfo(modifyRequestDto, multipartFile);
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception e) {

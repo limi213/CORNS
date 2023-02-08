@@ -4,6 +4,7 @@ import com.w6w.corns.dto.user.*;
 import com.w6w.corns.dto.withdraw.WithdrawRequestDto;
 import com.w6w.corns.util.PageableResponseDto;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
@@ -30,7 +31,7 @@ public interface UserService {
     //비밀번호 변경 
     boolean updateUserPassword(UserPassModifyRequestDto requestDto) throws Exception;
     //닉네임, 이미지 수정
-    void updateUserInfo(UserModifyRequestDto requestUser) throws Exception;
+    void updateUserInfo(UserModifyRequestDto modifyRequestDto, MultipartFile multipartFile) throws Exception;
     //회원 상태코드 변경
     void updateUserCd(int userId, int userCd) throws Exception;
     //조건에 따른 객체 리스트 페이지처리

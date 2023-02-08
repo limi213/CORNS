@@ -17,12 +17,15 @@ import com.w6w.corns.util.PageableResponseDto;
 import com.w6w.corns.util.SHA256Util;
 import com.w6w.corns.util.code.ExpCode;
 import com.w6w.corns.util.code.UserCode;
+
+import java.io.File;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -184,13 +187,30 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public void updateUserInfo(UserModifyRequestDto requestUser) throws Exception{
+    public void updateUserInfo(UserModifyRequestDto modifyRequestDto, MultipartFile multipartFile) throws Exception{
 
-        User user = userRepository.findByUserId(requestUser.getUserId());
+        User user = userRepository.findByUserId(modifyRequestDto.getUserId());
 
+        String imgUrl;
+        if(multipartFile == null || multipartFile.isEmpty())
+            imgUrl = null;
+        else{
+            String saveUrl = "/var/www/html/uploads/users/"
+                    +user.getUserId()+"_"+multipartFile.getOriginalFilename();
+            imgUrl = "https://i8a506.p.ssafy.io:8044/uploads/users/"
+                    +user.getUserId()+"_"+multipartFile.getOriginalFilename();
+            System.out.println("imgUrl = " + saveUrl);
+
+            File file = new File(saveUrl);
+
+            System.out.println("file.getAbsolutePath() = " + file.getAbsolutePath());
+
+            multipartFile.transferTo(file);
+        }
         //설정 안하면 null로 넘어오는지, 아니면 기존 내용이 넘어오는지 아마도 후자?!
-        user.setNickname(requestUser.getNickname());
-        user.setImgUrl(requestUser.getImgUrl());
+        if(modifyRequestDto.getNickname() != null)
+            user.setNickname(modifyRequestDto.getNickname());
+        user.setImgUrl(imgUrl);
 
         userRepository.save(user);
     }
