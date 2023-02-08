@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { getFriendListAxios } from "store/reducers/friendListReducer";
 import { Button } from "@mui/material";
 
 // 친구 끊기 axios
@@ -23,6 +25,14 @@ const deleteFriend = async (fromId, toId, setRelation) => {
 // 이미 친구인 상태
 // click하면 친구끊기
 function FriendBtnThree({ fromId, toId, setRelation }) {
+  const dispatch = useDispatch();
+  const deleteHandler = async () => {
+    await deleteFriend(fromId, toId, setRelation);
+    if (window.location.pathname.includes('friends')) {
+      dispatch(getFriendListAxios());
+    }
+  };
+
   return (
     <Button
       sx={{
@@ -30,7 +40,8 @@ function FriendBtnThree({ fromId, toId, setRelation }) {
         color: "#111111",
         backgroundColor: "#FFC804",
       }}
-      onClick={() => deleteFriend(fromId, toId, setRelation)}
+      onClick={deleteHandler}
+
     >
       친구끊기
     </Button>

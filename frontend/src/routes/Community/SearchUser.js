@@ -7,10 +7,10 @@ import Box from "@mui/material/Box";
 
 // user 검색 axios
 // 무한스크롤 구현 해야함
-const GetUser = async (type, text, setUsers) => {
+const GetUser = async (type, text, setUsers, setLoading) => {
   // const startDate = moment().format("YYYY-MM-DDTHH:mm:sszz")
   // console.log(startDate)
-  console.log('axios', type, text)
+  setLoading(true)
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_HOST}/user?` +
@@ -35,6 +35,7 @@ const GetUser = async (type, text, setUsers) => {
   } catch (e) {
     console.log(e);
   }
+  setLoading(false)
 };
 
 function SearchUser() {
@@ -42,10 +43,12 @@ function SearchUser() {
   const [text, setText] = useState("");
   const [search, setSearch] = useState(0);
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     if (text) {
-      GetUser(type, text, setUsers)
+      GetUser(type, text, setUsers, setLoading)
     }
   }, [search]);
 
@@ -57,14 +60,13 @@ function SearchUser() {
         setType={setType}
         text={text}
         setText={setText}
-        search={search}
         setSearch={setSearch}
       />
 
       <Box padding="48px 112px">
-        {search > 0 && users.length > 0 && <UserList userList={users} />}
-        {search > 0 && users.length === 0 && <p>검색 결과가 없습니다.</p>}
-
+        {loading && <p>loading 중...</p>}
+        {!loading && search > 0 && users.length > 0 && <UserList userList={users} />}
+        {!loading && search > 0 && users.length === 0 && <p>검색 결과가 없습니다.</p>}
       </Box>
     </>
   );

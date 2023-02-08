@@ -17,7 +17,11 @@ function FriendsBtn({ fromId, toId, status, setRelation }) {
     
       // 친구 신청 받은 상태 (친구 x)
       case 2:
-      return <FriendBtnTwo fromId={fromId} toId={toId} setRelation={setRelation} />
+        if (!window.location.pathname.includes("friend")) {
+          return <FriendBtnTwo fromId={fromId} toId={toId} setRelation={setRelation} />
+        } else {
+          return <></>
+        }
     
       // 이미 친구인 상태
       case 3:

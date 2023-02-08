@@ -5,19 +5,8 @@ import { Search } from "react-bootstrap-icons";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-function SearchComp({ type, setType, text, setText, search, setSearch }) {
-
-  const [pathName, setPathName] = useState("");
+function SearchComp({ type, setType, text, setText, setSearch }) {
   const [textInfo, setTextInfo] = useState("");
-
-  // 유저 검색 or 친구인지 확인
-  useEffect(() => {
-    if (window.location.pathname.includes("searchUser")) {
-      setPathName("searchUser");
-    } else if (window.location.pathname.includes("friends")) {
-      setPathName("friends");
-    }
-  }, [window.location.pathname]);
 
   // id or nickname 확인
   useEffect(() => {
@@ -38,10 +27,6 @@ function SearchComp({ type, setType, text, setText, search, setSearch }) {
       if (e.target.value.match(/^[a-zA-Z]*$/)) {
         setText(e.target.value);
       }
-    }
-    // 친구 검색일때만 바뀔때마다 검색되도록
-    if (pathName === "friends") {
-      setSearch((prev) => prev + 1);
     }
   };
 

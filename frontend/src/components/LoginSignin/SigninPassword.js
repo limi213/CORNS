@@ -5,19 +5,17 @@ import { Box, Button } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-
 // 비밀번호 유효성 검사
 const validatePwd = (password) => {
   return password
-  .toLowerCase()
-  .match(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/);
-}
+    .toLowerCase()
+    .match(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/);
+};
 
 // 비밀번호1, 비밀번호2 확인
 const checkPwd = (password1, password2) => {
   return password1 === password2;
 };
-
 
 function SigninPassword({
   password1,
@@ -27,9 +25,8 @@ function SigninPassword({
   statePassword1,
   setStatePassword1,
   statePassword2,
-  setStatePassword2
+  setStatePassword2,
 }) {
-
   const onChangePassword1 = (e) => {
     setPassword1(e.target.value);
   };
@@ -37,12 +34,10 @@ function SigninPassword({
     setPassword2(e.target.value);
   };
 
-
   useEffect(() => {
-    setStatePassword1(Boolean(password1 && validatePwd(password1)))
-    setStatePassword2(Boolean(password2 && checkPwd(password1, password2)))
+    setStatePassword1(Boolean(password1 && validatePwd(password1)));
+    setStatePassword2(Boolean(password2 && checkPwd(password1, password2)));
   }, [password1, password2]);
-
 
   return (
     <Box sx={{ width: "90%" }}>
@@ -53,7 +48,11 @@ function SigninPassword({
       >
         비밀번호
       </h5>
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <input
           type="password"
           autoComplete="off"
@@ -70,15 +69,17 @@ function SigninPassword({
       <p
         css={css`
           font-size: 12px;
-          color: ${!password1 || statePassword1
-            ? "#FFFFFF" 
-            : "#FF0000"};
+          color: ${!password1 || statePassword1 ? "#FFFFFF" : "#FF0000"};
         `}
       >
         비밀번호는 영문, 숫자, 특수문자를 포함한 8-20글자여야합니다.
       </p>
 
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <input
           type="password"
           autoComplete="off"
@@ -95,9 +96,7 @@ function SigninPassword({
       <p
         css={css`
           font-size: 12px;
-          color: ${!password2 || statePassword2
-            ? "#FFFFFF" 
-            : "#FF0000"};
+          color: ${!password2 || statePassword2 ? "#FFFFFF" : "#FF0000"};
         `}
       >
         비밀번호가 일치하지 않습니다.
@@ -107,4 +106,4 @@ function SigninPassword({
 }
 
 export default SigninPassword;
-export {validatePwd, checkPwd};
+export { validatePwd, checkPwd };

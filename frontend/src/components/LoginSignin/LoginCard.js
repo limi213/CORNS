@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import SocialLogin from "./SocialLogin";
-import Login from 'auth/Login';
+import Login from "auth/Login";
 
 import { Box, Button } from "@mui/material";
 import yellow_logo from "assets/corns_logo_yellow.png";
@@ -23,8 +23,6 @@ function LoginCard() {
 
   // 로그인
   const onLogin = async (e) => {
-    e.preventDefault();
-
     if (!email) {
       setErrorMsg("이메일을 입력해주세요.");
       return;
@@ -34,7 +32,14 @@ function LoginCard() {
       return;
     }
 
-    Login(email, password, setErrorMsg)
+    Login(email, password, setErrorMsg);
+  };
+
+  // 비밀번호에서 엔터 키 눌렀을 때 login 시켜버리기
+  const enterKey = async (e) => {
+    if (e.key === "Enter") {
+      onLogin();
+    }
   };
 
   return (
@@ -85,12 +90,17 @@ function LoginCard() {
         >
           비밀번호
         </h5>
-        <form>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
           <input
             type="password"
             placeholder="비밀번호를 입력하세요."
             value={password}
             onChange={onChangePassword}
+            onKeyUp={enterKey}
             css={css`
               width: 95%;
               height: 45px;

@@ -4,9 +4,6 @@ import TableCell from "@mui/material/TableCell";
 import ProfileImg from "components/GlobalComponents/ProfileImg";
 import UserNameTag from "components/GlobalComponents/UserNameTag";
 
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-
 function UserItem({ item }) {
   const { userId, imgUrl, nickname, levelNo } = item;
 

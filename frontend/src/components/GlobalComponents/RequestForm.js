@@ -18,8 +18,6 @@ const sendFriend = async (fromId, toId, message, setRelation, handleCloseForm) =
       }
     )
     if (response.status === 200) {
-      console.log('send request!')
-      console.log(response)
       setRelation(1)
       handleCloseForm()
     }

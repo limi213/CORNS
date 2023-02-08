@@ -2,7 +2,7 @@ import React from "react";
 import UserNameTag from "components/GlobalComponents/UserNameTag";
 import FriendBtnTwo from "components/GlobalComponents/FriendBtnTwo";
 
-import { Box, Card, CardMedia, Typography } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import { Envelope } from "react-bootstrap-icons";

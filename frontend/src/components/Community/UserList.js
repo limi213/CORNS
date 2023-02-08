@@ -10,8 +10,8 @@ function UserList({ userList }) {
     <TableContainer>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableBody>
-          {userList.map((item, index) => {
-            return <UserItem item={item} key={index} />;
+          {userList.map((item) => {
+            return <UserItem item={item} key={item.userId} />;
           })}
         </TableBody>
       </Table>
