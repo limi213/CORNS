@@ -116,12 +116,16 @@ public class RedisServiceImpl implements RedisService {
         
         // HTML 파일로 업로드
         for (RoomUser roomUser : roomUserList) {
-            String saveUrl = uploadPath + "/scripts/" + roomInfo.getRoom().getRoomNo() + "_" + roomUser.getUserId() + ".html";
+            String saveDir = uploadPath + "/scripts/";
+            String saveUrl = saveDir + roomInfo.getRoom().getRoomNo() + "_" + roomUser.getUserId() + ".html";
             String scriptUrl = domainPath + "/scripts/" + roomInfo.getRoom().getRoomNo() + "_" + roomUser.getUserId() + ".html";
 
             try {
                 // 파일 객체 생성
+                File fileDir = new File(saveDir);
                 File file = new File(saveUrl);
+
+                if (!fileDir.exists()) fileDir.mkdirs();
                 FileWriter fw = new FileWriter(file);
 
                 BufferedWriter writer = new BufferedWriter(fw);
