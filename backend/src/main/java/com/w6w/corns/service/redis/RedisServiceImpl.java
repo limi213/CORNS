@@ -2,6 +2,8 @@ package com.w6w.corns.service.redis;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.w6w.corns.domain.room.Room;
+import com.w6w.corns.domain.room.RoomRepository;
 import com.w6w.corns.domain.roomuser.RoomUser;
 import com.w6w.corns.domain.roomuser.RoomUserRepository;
 import com.w6w.corns.domain.user.UserRepository;
@@ -30,6 +32,8 @@ public class RedisServiceImpl implements RedisService {
     private final RoomUserRepository roomUserRepo;
 
     private final UserRepository userRepo;
+
+    private final RoomRepository roomRepo;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -115,31 +119,44 @@ public class RedisServiceImpl implements RedisService {
         });
         
         // HTML 파일로 업로드
+        // -- 개인 스크립트
         for (RoomUser roomUser : roomUserList) {
-            String saveDir = uploadPath + "/scripts/";
-            String saveUrl = saveDir + roomInfo.getRoom().getRoomNo() + "_" + roomUser.getUserId() + ".html";
+            uploadScriptFile(roomUser.getRoomNo(), roomUser.getUserId(), scriptText.get(roomUser.getUserId()).toString());
+
             String scriptUrl = domainPath + "/scripts/" + roomInfo.getRoom().getRoomNo() + "_" + roomUser.getUserId() + ".html";
-
-            try {
-                // 파일 객체 생성
-                File fileDir = new File(saveDir);
-                File file = new File(saveUrl);
-
-                if (!fileDir.exists()) fileDir.mkdirs();
-                FileWriter fw = new FileWriter(file);
-
-                BufferedWriter writer = new BufferedWriter(fw);
-                writer.write(scriptText.get(roomUser.getUserId()).toString());
-                writer.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
             roomUser.setScriptUrl(scriptUrl);
         }
-
         roomUserRepo.saveAll(roomUserList);
+
+        // -- 합본 스크립트
+        uploadScriptFile(roomInfo.getRoom().getRoomNo(), 0, scriptText.get(0).toString());
+
+        String scriptUrl = domainPath + "/scripts/" + roomInfo.getRoom().getRoomNo() + "_" + 0 + ".html";
+        Room room = roomRepo.findById(roomInfo.getRoom().getRoomNo()).get();
+        room.setScriptUrl(scriptUrl);
+        roomRepo.save(room);
+    }
+
+    // 스크립트 파일 업로드
+    public void uploadScriptFile(int roomNo, int userId, String scriptText) {
+        String saveDir = uploadPath + "/scripts/";
+        String saveUrl = saveDir + roomNo + "_" + userId + ".html";
+
+        try {
+            // 파일 객체 생성
+            File fileDir = new File(saveDir);
+            File file = new File(saveUrl);
+
+            if (!fileDir.exists()) fileDir.mkdirs();
+            FileWriter fw = new FileWriter(file);
+
+            BufferedWriter writer = new BufferedWriter(fw);
+            writer.write(scriptText);
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
