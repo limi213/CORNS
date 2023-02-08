@@ -1,11 +1,9 @@
 import { React, useEffect } from "react";
-
 import ExperienceInfo from "components/Conversation/ExperienceInfo";
 import sungsil_crown from "assets/sungsil_crown.png";
 import { Box, Grid, Typography } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-
 function ExperienceIndicator({}) {
   return (
     <>
@@ -67,5 +65,4 @@ function ExperienceIndicator({}) {
     </>
   );
 }
-
 export default ExperienceIndicator;
