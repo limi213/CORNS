@@ -27,7 +27,7 @@ export const roomFilterReducer = createSlice({
   name: "roomFilter",
   initialState: {
     page: 0,
-    size: 18,
+    size: 6,
     baseTime: toStringDate(),
     subject: "1 2 3 4 5 6 ",
     minTime: 0,
@@ -35,19 +35,23 @@ export const roomFilterReducer = createSlice({
     isAvail: false,
   },
   reducers: {
-    add: (state, action) => {
+    addSubject: (state, action) => {
       state.subject += action.payload + " ";
     },
-    remove: (state, action) => {
+    removeSubject: (state, action) => {
       const subjectList = state.subject.split(" ");
       const cleaned = subjectList
         .filter((sub) => parseInt(sub) !== action.payload)
         .join(" ");
       return { ...state, subject: cleaned };
     },
+    addPage: (state, action) => {
+      state.page = 0;
+      state.page += parseInt(action.payload);
+    },
   },
 });
 
 export default roomFilterReducer.reducer;
-export const { add, remove } = roomFilterReducer.actions;
+export const { addSubject, removeSubject, addPage } = roomFilterReducer.actions;
 export const { initialState } = roomFilterReducer;

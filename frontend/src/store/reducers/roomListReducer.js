@@ -5,16 +5,23 @@ export const getRoomList = createAsyncThunk("GET_ROOM_LIST", async (filter) => {
   const response = await axios.get(`${process.env.REACT_APP_HOST}/room`, {
     params: filter,
   });
-  return response.data.list;
+  return response.data;
 });
 
 export const roomListReducer = createSlice({
   name: "roomList",
-  initialState: [],
+  initialState: {
+    data: {},
+    loading: true,
+  },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getRoomList.fulfilled, (state, { payload }) => [
-      ...payload,
-    ]);
+    builder
+      .addCase(getRoomList.pending, (state) => void (state.loading = true))
+      .addCase(getRoomList.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.data = payload;
+      })
+      .addCase(getRoomList.rejected, (state) => void (state.loading = true));
   },
 });
