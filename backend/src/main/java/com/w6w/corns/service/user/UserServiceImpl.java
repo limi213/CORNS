@@ -204,30 +204,18 @@ public class UserServiceImpl implements UserService{
         if(multipartFile == null || multipartFile.isEmpty())
             imgUrl = null;
         else{
+
             String saveUrl = uploadPath + user.getUserId()+"_" + multipartFile.getOriginalFilename();
-//            String saveUrl = "/" + user.getUserId()+"_" + multipartFile.getOriginalFilename();
-            System.out.println("saveUrl = " + saveUrl);
-
-            imgUrl = domainPath + user.getUserId() + "_" + multipartFile.getOriginalFilename();
-            System.out.println("imgUrl = " + saveUrl);
-
-            File file = new File(saveUrl);
-
-            System.out.println("file.getAbsolutePath() = " + file.getAbsolutePath());
-
-            multipartFile.transferTo(file);
 
             //똑같은 id의 이미지가 있는지 확인 -> 있으면 삭제 후 새로운 파일 업로드
             File dir = new File(uploadPath);
 
-            System.out.println("dir = " + dir.getName());
             File[] preFiles = dir.listFiles();
-            System.out.println(preFiles.length);
+
             for(File preFile : preFiles){
-                System.out.println("preFile = " + preFile.getName());
                 StringTokenizer st = new StringTokenizer(preFile.getName(),"_");
                 int saveUserId = Integer.parseInt(st.nextToken());
-                System.out.println("saveUserId = " + saveUserId);
+
                 if(saveUserId == user.getUserId()){
                     //삭제
                     log.debug("preFile = " + preFile.getName());
@@ -235,6 +223,12 @@ public class UserServiceImpl implements UserService{
                     break;
                 }
             }
+
+            imgUrl = domainPath + user.getUserId() + "_" + multipartFile.getOriginalFilename();
+
+            File file = new File(saveUrl);
+
+            multipartFile.transferTo(file);
         }
         //설정 안하면 null로 넘어오는지, 아니면 기존 내용이 넘어오는지 아마도 후자?!
         if(modifyRequestDto.getNickname() != null)
