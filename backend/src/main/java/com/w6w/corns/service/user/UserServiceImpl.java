@@ -21,6 +21,7 @@ import com.w6w.corns.util.code.UserCode;
 import java.io.File;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
@@ -203,6 +205,7 @@ public class UserServiceImpl implements UserService{
             imgUrl = null;
         else{
             String saveUrl = uploadPath + user.getUserId()+"_" + multipartFile.getOriginalFilename();
+//            String saveUrl = "/" + user.getUserId()+"_" + multipartFile.getOriginalFilename();
             System.out.println("saveUrl = " + saveUrl);
 
             imgUrl = domainPath + user.getUserId() + "_" + multipartFile.getOriginalFilename();
@@ -227,13 +230,11 @@ public class UserServiceImpl implements UserService{
                 System.out.println("saveUserId = " + saveUserId);
                 if(saveUserId == user.getUserId()){
                     //삭제
-                    System.out.println("preFile = " + preFile.getName());
+                    log.debug("preFile = " + preFile.getName());
                     preFile.delete();
                     break;
                 }
             }
-
-
         }
         //설정 안하면 null로 넘어오는지, 아니면 기존 내용이 넘어오는지 아마도 후자?!
         if(modifyRequestDto.getNickname() != null)
