@@ -43,7 +43,7 @@ public class CustomWordRepositoryImpl implements CustomWordRepository {
 
         List<Word> words = jpaQueryFactory.selectFrom(word)
                 .where(builder)
-                .orderBy(word.regTm.desc())
+                .orderBy(word.modTm.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize() + 1)
                 .fetch();
