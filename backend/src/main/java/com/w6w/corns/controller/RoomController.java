@@ -1,21 +1,17 @@
 package com.w6w.corns.controller;
 
-import com.w6w.corns.dto.room.request.CreateRoomRequestDto;
-import com.w6w.corns.dto.room.request.EnterRoomRequestDto;
-import com.w6w.corns.dto.room.request.StartEndRoomRequestDto;
-import com.w6w.corns.dto.room.request.UpdateRoomRequestDto;
+import com.w6w.corns.dto.redis.SaveScriptRequestDto;
+import com.w6w.corns.dto.room.request.*;
 import com.w6w.corns.dto.room.response.RoomAndRoomUserListResponseDto;
 import com.w6w.corns.dto.room.response.RoomListResponseDto;
 import com.w6w.corns.dto.room.response.RoomUserListResponseDto;
+import com.w6w.corns.service.redis.RedisService;
 import com.w6w.corns.service.room.RoomService;
 import com.w6w.corns.util.PageableResponseDto;
-import com.w6w.corns.util.code.RoomCode;
 import com.w6w.corns.util.code.RoomUserCode;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -31,6 +27,8 @@ import java.util.*;
 public class RoomController {
 
     private final RoomService roomService;
+
+    private final RedisService redisService;
 
     @ApiOperation(value = "쫑알룸 생성하기", notes = "방 정보와 OpenVidu 관련 정보를 body에 담아서 요청")
     @PostMapping
@@ -234,4 +232,20 @@ public class RoomController {
         return new ResponseEntity<Map>(resultMap, status);
     }
 
+    @ApiOperation(value = "스크립트 실시간 저장")
+    @PostMapping(value = "/script")
+    private ResponseEntity<?> saveScript(@RequestBody SaveScriptRequestDto body) {
+        Map resultMap = new HashMap<>();
+        HttpStatus status;
+
+        try {
+            redisService.saveScript(body);
+            status = HttpStatus.OK;
+        } catch (Exception e) {
+            resultMap.put("message", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<Map>(resultMap, status);
+    }
 }
