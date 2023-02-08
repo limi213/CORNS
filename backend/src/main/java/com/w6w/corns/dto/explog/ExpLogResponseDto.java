@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Getter
 @Setter
 @Builder
@@ -16,20 +19,17 @@ import lombok.ToString;
 @ToString
 public class ExpLogResponseDto {
 
-    private int expLogSq;
-
-    private int userId;
-
     private int gainExp;
 
     private int expCd;
 
+    private String regTm;
+
     public static ExpLogResponseDto fromEntity(ExpLog expLog){
         return ExpLogResponseDto.builder()
-                .expLogSq(expLog.getExpLogSq())
-                .userId(expLog.getUserId())
                 .gainExp(expLog.getGainExp())
                 .expCd(expLog.getExpCd())
+                .regTm(expLog.getRegTm().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .build();
     }
 }
