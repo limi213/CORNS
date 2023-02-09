@@ -3,22 +3,26 @@ package com.w6w.corns.config;
 import com.w6w.corns.jwt.JwtInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
 
     private final JwtInterceptor jwtInterceptor;
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins("http://localhost:3000","http://i8a506.p.ssafy.io:3001", "https://corns.co.kr:4438")
                 .allowedHeaders("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
+                .allowCredentials(true)
                 .maxAge(3000);
     }
 
@@ -37,6 +41,7 @@ public class WebConfiguration implements WebMvcConfigurer {
                 .excludePathPatterns("/user/email-check/{email}")
                 .excludePathPatterns("/user/login/**")
                 .excludePathPatterns("/user/auth/{socialType}/callback")
+                .excludePathPatterns("/user/refresh")
                 .excludePathPatterns("/resources/**");
     }
 }

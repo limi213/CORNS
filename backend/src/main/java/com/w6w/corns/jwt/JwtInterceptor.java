@@ -4,7 +4,6 @@ import com.w6w.corns.service.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,8 +26,11 @@ public class JwtInterceptor implements HandlerInterceptor {
 
         // room 목록 반환하는 api만 허용
         if(request.getRequestURI().equals("/room") && request.getMethod().equals("GET")) return true;
+
+        // OPTIONS로 오는 preflight 허용
+        if(request.getMethod().equals("OPTIONS")) return true;
+
         String token = authorizationExtractor.extract(request, "Bearer");
-        log.debug("token : {}"+token);
 
         if(token.isEmpty() || token == null || !jwtService.checkToken(token)) {
             response.setStatus(401);
