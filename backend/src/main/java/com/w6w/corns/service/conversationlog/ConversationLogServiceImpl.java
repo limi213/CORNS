@@ -68,6 +68,7 @@ public class ConversationLogServiceImpl implements ConversationLogService {
                                             .time(room.getTime())
                                             .member(room.getCurrentMember())
                                             .selfScore(selfEvaluation.getScore())
+                                            .selfDesc(selfEvaluation.getDescription())
                                             .thumbCnt(roomUser.getThumbCnt())
                                             .canRead(true)
                                             .build();
