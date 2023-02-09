@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toStringDate } from "./roomFilterReducer";
 
 const initialLogFilterState = {
-  baseTime: toStringDate(),
+  baseTime: toStringDate(new Date()),
   subject: "1 2 3 4 5 ",
   minTime: 0,
   maxTime: 40,
