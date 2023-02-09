@@ -36,7 +36,7 @@ export const getLogBookmarkListAxios = (sort) => {
           process.env.REACT_APP_HOST
         }/corns-log/bookmark/${sessionStorage.getItem("userId")}?` +
           new URLSearchParams({
-            baseTime: toStringDate(),
+            baseTime: toStringDate(new Date()),
             page: 0,
             size: 20,
             sort: `${sort}`,
