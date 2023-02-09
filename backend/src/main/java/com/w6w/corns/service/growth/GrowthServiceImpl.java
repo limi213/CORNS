@@ -16,13 +16,12 @@ import com.w6w.corns.dto.level.LevelDto;
 
 import com.w6w.corns.service.subject.SubjectService;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.format.TextStyle;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import com.w6w.corns.util.PageableResponseDto;
@@ -168,8 +167,10 @@ public class GrowthServiceImpl implements GrowthService {
 
             Long sum = expLogRepository.sumByUserIdAndRegTm(userId, date.getYear(), date.getMonthValue(), date.getDayOfMonth());
 
+            DayOfWeek dayOfWeek = date.getDayOfWeek();
+
             IndicatorResponseDto temp = IndicatorResponseDto.builder()
-                    .x(date.toString())
+                    .x(dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN))
                     .y(sum==null?"0":String.valueOf(sum)).build();
             if(i / 7 > 0) lastWeek.add(temp);
             else thisWeek.add(temp);
