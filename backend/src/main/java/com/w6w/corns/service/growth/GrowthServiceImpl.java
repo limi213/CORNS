@@ -72,7 +72,7 @@ public class GrowthServiceImpl implements GrowthService {
         //baseTime -> LocalDate 타입으로
         LocalDateTime localDateTime = LocalDateTime.parse(baseTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-        Slice<ExpLog> slice = expLogRepository.findByUserIdAndRegTmLessThanEqual(userId, pageable, localDateTime);
+        Slice<ExpLog> slice = expLogRepository.findByUserIdAndRegTmLessThanEqual(userId, localDateTime, pageable);
 
         List<ExpLogResponseDto> users = new ArrayList<>();
         for(ExpLog expLog : slice.getContent())
@@ -110,7 +110,7 @@ public class GrowthServiceImpl implements GrowthService {
         List<IndicatorResponseDto> responseDtos = new ArrayList<>();
 
         //roomuser에 있는 speaking_sec를 일별로 받아오기 -> 나중에 계산테이블 이용
-        for(int i=0; i<7; i++){
+        for(int i=6; i>=0; i--){
             LocalDate date = LocalDate.now().minusDays(i);
             Long sum = roomUserRepository.sumByUserIdAndRegTm(userId, date.getYear(), date.getMonthValue(), date.getDayOfMonth());
             responseDtos.add(IndicatorResponseDto.builder()
@@ -146,9 +146,9 @@ public class GrowthServiceImpl implements GrowthService {
         //주제별 비율 리스트
         for(int i=1; i<=n; i++){
             SubjectRatioResponseDto responseDto = SubjectRatioResponseDto.builder()
-                    .subjectNo(i)
-                    .value(subjectService.findById(i).getValue())
-                    .cnt(count[i])
+                    .id(subjectService.findById(i).getValue())
+                    .label(subjectService.findById(i).getValue())
+                    .value(count[i])
                     .build();
             subjectRatio.add(responseDto);
         }
@@ -163,7 +163,7 @@ public class GrowthServiceImpl implements GrowthService {
         List<IndicatorResponseDto> lastWeek = new ArrayList<>();
         List<IndicatorResponseDto> thisWeek = new ArrayList<>();
 
-        for(int i=0; i<14; i++){
+        for(int i=13; i>=0; i--){
             LocalDate date = LocalDate.now().minusDays(i);
 
             Long sum = expLogRepository.sumByUserIdAndRegTm(userId, date.getYear(), date.getMonthValue(), date.getDayOfMonth());

@@ -9,9 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 public class SubjectRatioResponseDto {
 
-    private int subjectNo;
+    private String id;
 
-    private String value;
+    private String label;
 
-    private int cnt;
+    private int value;
 }

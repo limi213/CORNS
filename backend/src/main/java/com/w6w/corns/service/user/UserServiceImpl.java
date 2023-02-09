@@ -200,10 +200,9 @@ public class UserServiceImpl implements UserService{
 
         User user = userRepository.findByUserId(modifyRequestDto.getUserId());
 
+        //일단 이미지를 내리는 기능은 없어서 null로 넘어오면 기존 이미지로 유지
         String imgUrl;
-        if(multipartFile == null || multipartFile.isEmpty())
-            imgUrl = null;
-        else{
+        if(multipartFile != null && !multipartFile.isEmpty()){
 
             String saveUrl = uploadPath + "/users/" + user.getUserId()+"_" + multipartFile.getOriginalFilename();
 
@@ -229,11 +228,12 @@ public class UserServiceImpl implements UserService{
             File file = new File(saveUrl);
 
             multipartFile.transferTo(file);
+
+            user.setImgUrl(imgUrl);
         }
         //설정 안하면 null로 넘어오는지, 아니면 기존 내용이 넘어오는지 아마도 후자?!
         if(modifyRequestDto.getNickname() != null)
             user.setNickname(modifyRequestDto.getNickname());
-        user.setImgUrl(imgUrl);
 
         userRepository.save(user);
     }
@@ -254,9 +254,9 @@ public class UserServiceImpl implements UserService{
 
         Slice<User> slice = userRepository.findByFilterRegTmLessThanEqual(pageable, baseTime, filter, keyword);
 
-        List<UserListResponseDto> exps = new ArrayList<>();
+        List<UserListResponseDto> users = new ArrayList<>();
         for(User user : slice.getContent())
-            exps.add(UserListResponseDto.builder()
+            users.add(UserListResponseDto.builder()
                             .userId(user.getUserId())
                             .imgUrl(user.getImgUrl())
                             .nickname(user.getNickname())
@@ -264,7 +264,7 @@ public class UserServiceImpl implements UserService{
                             .build());
 
         return PageableResponseDto.builder()
-                .list(exps)
+                .list(users)
                 .hasNext(slice.hasNext())
                 .build();
     }
@@ -299,10 +299,13 @@ public class UserServiceImpl implements UserService{
 
         User user = userRepository.findByUserId(responseDto.getUserId());
 
+        System.out.println("user.getLastLoginTm() = " + user.getLastLoginTm().toLocalDate());
+        System.out.println("LocalDate.now() = " + LocalDate.now());
         //해당 날짜에 처음 출석했다면 경험치
         if (user.getLastLoginTm() == null ||
                 !user.getLastLoginTm().toLocalDate().equals(LocalDate.now())) {
 
+            System.out.println("here!");
             ExpLogRequestDto expLogRequestDto = ExpLogRequestDto.builder()
                     .userId(responseDto.getUserId())
                     .gainExp(3)
