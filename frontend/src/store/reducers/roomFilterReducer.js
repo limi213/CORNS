@@ -25,17 +25,19 @@ export const toStringDate = (dd) => {
 
 const now = new Date();
 
+export const initialState = {
+  page: 0,
+  size: 18,
+  baseTime: toStringDate(now),
+  subject: "1 2 3 4 5 6 ",
+  minTime: 0,
+  maxTime: 30,
+  isAvail: false,
+};
+
 export const roomFilterReducer = createSlice({
   name: "roomFilter",
-  initialState: {
-    page: 0,
-    size: 18,
-    baseTime: toStringDate(now),
-    subject: "1 2 3 4 5 6 ",
-    minTime: 0,
-    maxTime: 30,
-    isAvail: false,
-  },
+  initialState,
   reducers: {
     addSubject: (state, action) => {
       state.subject += action.payload + " ";
@@ -68,4 +70,3 @@ export const {
   modifyMaxTime,
   modifyIsAvail,
 } = roomFilterReducer.actions;
-export const { initialState } = roomFilterReducer;

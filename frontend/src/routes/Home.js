@@ -4,7 +4,7 @@ import GoogleLogin from "auth/GoogleLogin";
 import Navbar from "../components/GlobalComponents/Navbar";
 import hero from "assets/hero.png";
 import backgroundImage from "assets/backgroundImage.png";
-import RoomListsContainer from "store/containers/RoomListsContainer";
+import MainConversation from "components/Home/MainConversation";
 import RankingList from "components/GlobalComponents/RankingList";
 
 /** @jsxImportSource @emotion/react */
@@ -91,7 +91,7 @@ function Home() {
               />
             </Link>
           </Box>
-          <RoomListsContainer main={true} />
+          <MainConversation />
         </Box>
         <Box sx={{ mt: "64px" }}>
           <Box
@@ -111,7 +111,7 @@ function Home() {
               랭킹
             </p>
             <Link
-              to="/conversation"
+              to="/community/ranking/sincerity"
               css={{
                 color: "#111",
                 textDecoration: "none",

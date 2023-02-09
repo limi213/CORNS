@@ -5,7 +5,7 @@ import { getRoomList } from "store/reducers/roomListReducer";
 import { addPage } from "store/reducers/roomFilterReducer";
 import { addPageCount } from "store/reducers/pageReducer";
 
-function RoomListsContainer({ main }) {
+function RoomListsContainer() {
   const dispatch = useDispatch();
   const { data, loading } = useSelector((state) => state.roomListReducer);
   // const { pageCount } = useSelector((state) => state.pageReducer);
@@ -35,10 +35,6 @@ function RoomListsContainer({ main }) {
   //   dispatch(addPage(page.current, "ADD_PAGE"));
   //   addNext();
   // };
-
-  let maxRoomList = false;
-
-  if (main) maxRoomList = true;
 
   useEffect(() => {
     // Fetch data for the first time
@@ -89,9 +85,9 @@ function RoomListsContainer({ main }) {
   return (
     <div onScroll={throttle(handleScroll, 300)}>
       {list && flag ? (
-        <RoomList roomLists={list} maxRoomList={maxRoomList} />
+        <RoomList roomLists={list} />
       ) : (
-        <RoomList roomLists={addList} maxRoomList={maxRoomList} />
+        <RoomList roomLists={addList} />
       )}
     </div>
   );
