@@ -26,5 +26,5 @@ public class Withdraw extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int withdrawNo;
 
-    private int value;
+    private String value;
 }

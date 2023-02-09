@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -93,6 +94,7 @@ public class UserController {
      * @param requestDto
      * @return
      */
+    @Transactional
     @ApiOperation(value = "기본 로그인", notes = "이메일, 비밀번호를 통한 로그인")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginRequestDto requestDto){
@@ -115,8 +117,8 @@ public class UserController {
 
                 //로그인로그
                 userService.makeLoginLog(responseDto.getUserId());
-
                 responseDto = userService.findByEmail(responseDto.getEmail()); //제일 마지막으로 업데이트된 유저 정보
+
                 log.debug("responseDto : {}", responseDto);
 
                 result.put("accessToken", accessToken);

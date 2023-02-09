@@ -299,13 +299,10 @@ public class UserServiceImpl implements UserService{
 
         User user = userRepository.findByUserId(responseDto.getUserId());
 
-        System.out.println("user.getLastLoginTm() = " + user.getLastLoginTm().toLocalDate());
-        System.out.println("LocalDate.now() = " + LocalDate.now());
         //해당 날짜에 처음 출석했다면 경험치
         if (user.getLastLoginTm() == null ||
                 !user.getLastLoginTm().toLocalDate().equals(LocalDate.now())) {
 
-            System.out.println("here!");
             ExpLogRequestDto expLogRequestDto = ExpLogRequestDto.builder()
                     .userId(responseDto.getUserId())
                     .gainExp(3)
