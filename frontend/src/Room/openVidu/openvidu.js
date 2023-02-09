@@ -98,8 +98,9 @@ function joinSession() {
 	// Listen the speechToText events for showing them on page view
 	session.on('speechToTextMessage', (event) => {
 		// 여기에서 스크립트 만드는 api 호출
-	
-		console.log(event.text);
+		if (event.reason === "recognized") {
+			console.log(event.text);
+		}
 	});
 
 
