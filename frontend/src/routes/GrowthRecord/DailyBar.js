@@ -1,163 +1,184 @@
-import React from "react";
-
-import { ResponsiveMarimekko } from "@nivo/marimekko";
-
+import React, { useEffect, useState } from "react";
+import { ResponsiveLine } from "@nivo/line";
+import { useDispatch, useSelector } from "react-redux";
+import { getIndicators } from "store/reducers/indicatorsReducer";
 import { Box } from "@mui/material";
 
-function DailyBar() {
-  const data = [
-    {
-      statement: "it's good",
-      participation: 9,
-      stronglyAgree: 22,
-      agree: 25,
-      disagree: 1,
-      stronglyDisagree: 32,
-    },
-    {
-      statement: "it's sweet",
-      participation: 1,
-      stronglyAgree: 3,
-      agree: 16,
-      disagree: 7,
-      stronglyDisagree: 32,
-    },
-    {
-      statement: "it's spicy",
-      participation: 2,
-      stronglyAgree: 1,
-      agree: 28,
-      disagree: 30,
-      stronglyDisagree: 19,
-    },
-    {
-      statement: "worth eating",
-      participation: 9,
-      stronglyAgree: 9,
-      agree: 5,
-      disagree: 15,
-      stronglyDisagree: 13,
-    },
-    {
-      statement: "worth buying",
-      participation: 22,
-      stronglyAgree: 17,
-      agree: 28,
-      disagree: 29,
-      stronglyDisagree: 14,
-    },
-  ];
-  return (
-    <Box sx={{ width: "100%", border: "3px solid #111" }}>
-      <Box sx={{ width: "80%", height: "500px", m: "64px auto" }}>
-        <ResponsiveMarimekko
-          data={data}
-          colors={{ scheme: "pastel1" }}
-          id="statement"
-          value="participation"
-          dimensions={[
-            {
-              id: "disagree strongly",
-              value: "stronglyDisagree",
-            },
-            {
-              id: "disagree",
-              value: "disagree",
-            },
-            {
-              id: "agree",
-              value: "agree",
-            },
-            {
-              id: "agree strongly",
-              value: "stronglyAgree",
-            },
-          ]}
-          innerPadding={9}
-          axisTop={null}
-          axisRight={{
-            orient: "right",
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: "",
-            legendOffset: 0,
-          }}
-          axisBottom={{
-            orient: "bottom",
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: "participation",
-            legendOffset: 36,
-            legendPosition: "middle",
-          }}
-          axisLeft={{
-            orient: "left",
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: "opinions",
-            legendOffset: -40,
-            legendPosition: "middle",
-          }}
-          margin={{ top: 40, right: 80, bottom: 100, left: 80 }}
-          borderWidth={2}
-          borderColor="#111"
-          defs={[
-            {
-              id: "lines",
-              type: "patternLines",
-              background: "rgba(0, 0, 0, 0)",
-              color: "inherit",
-              rotation: -45,
-              lineWidth: 4,
-              spacing: 8,
-            },
-          ]}
-          fill={[
-            {
-              match: {
-                id: "agree strongly",
-              },
-              id: "",
-            },
-            {
-              match: {
-                id: "disagree strongly",
-              },
-              id: "",
-            },
-          ]}
-          legends={[
-            {
-              anchor: "bottom",
-              direction: "row",
-              justify: false,
-              translateX: 0,
-              translateY: 80,
-              itemsSpacing: 0,
-              itemWidth: 140,
-              itemHeight: 18,
-              itemTextColor: "#999",
-              itemDirection: "right-to-left",
-              itemOpacity: 1,
-              symbolSize: 18,
-              symbolShape: "square",
-              effects: [
-                {
-                  on: "hover",
-                  style: {
-                    itemTextColor: "#000",
+function WeeklyLiner() {
+  const dispatch = useDispatch();
+  const { data, loading } = useSelector((state) => state.indicatorsReducer);
+  const [graphData, setGraphData] = useState([]);
+
+  useEffect(() => {
+    dispatch(getIndicators(3));
+  }, [dispatch]);
+
+  useEffect(() => {
+    setGraphData(data);
+  }, [data]);
+
+  if (!loading) {
+    // console.log(graphData);
+    // if (graphData !== undefined) {
+    //   setChangeData(
+    //     graphData.map((day, idx) => {
+    //       const dd = 6;
+    //       return (day.x = (dd - idx).toString() + "일 전");
+    //     })
+    //   );
+    // }
+    // console.log(changeData);
+
+    // const thisWeek = [
+    //   {
+    //     x: "금",
+    //     y: "0",
+    //   },
+    //   {
+    //     x: "토",
+    //     y: "15",
+    //   },
+    //   {
+    //     x: "일",
+    //     y: "0",
+    //   },
+    //   {
+    //     x: "월",
+    //     y: "5",
+    //   },
+    //   {
+    //     x: "화",
+    //     y: "3",
+    //   },
+    //   {
+    //     x: "수",
+    //     y: "3",
+    //   },
+    //   {
+    //     x: "목",
+    //     y: "3",
+    //   },
+    // ];
+    // const lastWeek = [
+    //   {
+    //     x: "금",
+    //     y: "18",
+    //   },
+    //   {
+    //     x: "토",
+    //     y: "5",
+    //   },
+    //   {
+    //     x: "일",
+    //     y: "0",
+    //   },
+    //   {
+    //     x: "월",
+    //     y: "20",
+    //   },
+    //   {
+    //     x: "화",
+    //     y: "3",
+    //   },
+    //   {
+    //     x: "수",
+    //     y: "10",
+    //   },
+    //   {
+    //     x: "목",
+    //     y: "3",
+    //   },
+    // ];
+
+    const dailyData = [
+      {
+        id: "이번주",
+        color: "hsl(359, 70%, 50%)",
+        data: data.thisWeek,
+      },
+      {
+        id: "저번주",
+        color: "hsl(359, 70%, 50%)",
+        data: data.lastWeek,
+      },
+    ];
+
+    console.log(dailyData);
+    return (
+      <Box sx={{ width: "100%", border: "3px solid #111" }}>
+        <Box sx={{ width: "80%", height: "500px", m: "64px auto" }}>
+          <ResponsiveLine
+            data={dailyData}
+            colors={{ scheme: "pastel1" }}
+            margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+            xScale={{ type: "point" }}
+            yScale={{
+              type: "linear",
+              min: "auto",
+              max: "auto",
+              stacked: true,
+              reverse: false,
+            }}
+            yFormat=" >-.2f"
+            axisTop={null}
+            axisRight={null}
+            axisBottom={{
+              orient: "bottom",
+              tickSize: 5,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: "날짜",
+              legendOffset: 36,
+              legendPosition: "middle",
+            }}
+            axisLeft={{
+              orient: "left",
+              tickSize: 10,
+              tickPadding: 5,
+              tickRotation: 0,
+              legend: "경험치",
+              legendOffset: -50,
+              legendPosition: "middle",
+            }}
+            pointSize={10}
+            pointColor={{ theme: "background" }}
+            pointBorderWidth={2}
+            pointBorderColor={{ from: "serieColor" }}
+            pointLabelYOffset={-12}
+            useMesh={true}
+            legends={[
+              {
+                anchor: "bottom-right",
+                direction: "column",
+                justify: false,
+                translateX: 100,
+                translateY: 0,
+                itemsSpacing: 0,
+                itemDirection: "left-to-right",
+                itemWidth: 80,
+                itemHeight: 20,
+                itemOpacity: 1,
+                symbolSize: 12,
+                symbolShape: "circle",
+                symbolBorderColor: "rgba(0, 0, 0, .5)",
+                effects: [
+                  {
+                    on: "hover",
+                    style: {
+                      itemBackground: "rgba(0, 0, 0, .03)",
+                      itemOpacity: 1,
+                    },
                   },
-                },
-              ],
-            },
-          ]}
-        />
+                ],
+              },
+            ]}
+          />
+        </Box>
       </Box>
-    </Box>
-  );
+    );
+  } else {
+    return <p>로딩중</p>;
+  }
 }
 
-export default DailyBar;
+export default WeeklyLiner;

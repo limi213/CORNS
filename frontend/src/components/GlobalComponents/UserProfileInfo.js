@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Box, CardMedia, Typography, Grid } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
+import ProfileImg from "./ProfileImg";
 
 function UserProfileInfo({ basicInfo }) {
   const {
@@ -9,12 +10,13 @@ function UserProfileInfo({ basicInfo }) {
     nickname,
     imgUrl,
     expTotal,
-    level,
+    levelNo,
     friendTotal,
     social,
-    isGoogle,
-    refreshToken,
     attendTotal,
+    speakingTotal,
+    thumbTotal,
+    google,
   } = basicInfo;
 
   return (
@@ -25,17 +27,10 @@ function UserProfileInfo({ basicInfo }) {
           p: "64px 48px",
         }}
       >
-        <CardMedia
-          component="img"
-          image={imgUrl == null ? "" : null}
-          alt={nickname}
-          sx={{
-            width: "250px",
-            borderRadius: "200px",
-            border: "3px solid #111",
-            mr: "135px",
-          }}
-        />
+        <Box sx={{ mr: "135px" }}>
+          <ProfileImg imgSrc={imgUrl} nickname={nickname} width={"110%"} />
+        </Box>
+
         <Box
           sx={{
             display: "flex",
@@ -49,7 +44,7 @@ function UserProfileInfo({ basicInfo }) {
           </Typography>
           <Grid container spacing={0}>
             <Grid item xs={4}>
-              <Typography>Lv.{level}</Typography>
+              <Typography>Lv.{levelNo}</Typography>
             </Grid>
             <Grid item xs={4}>
               <Typography>{expTotal}exp</Typography>
@@ -63,10 +58,10 @@ function UserProfileInfo({ basicInfo }) {
               <Typography>누적 출석수 {attendTotal}일</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography>누적 칭찬수 100개</Typography>
+              <Typography>누적 칭찬수 {thumbTotal}개</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography>누적 발화량수 100분</Typography>
+              <Typography>누적 발화량 {speakingTotal}분</Typography>
             </Grid>
           </Grid>
         </Box>

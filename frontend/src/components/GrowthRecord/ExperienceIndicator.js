@@ -1,10 +1,21 @@
 import { React, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ExperienceInfo from "components/Conversation/ExperienceInfo";
+import { getExpTop } from "store/reducers/expTopReducer";
 import sungsil_crown from "assets/sungsil_crown.png";
 import { Box, Grid, Typography } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+
 function ExperienceIndicator({}) {
+  const dispatch = useDispatch();
+  const { data, loading } = useSelector((state) => state.expTopReducer);
+  const nickName = sessionStorage.getItem("nickname");
+
+  useEffect(() => {
+    dispatch(getExpTop());
+  }, [dispatch]);
+
   return (
     <>
       <Grid container>
@@ -51,7 +62,7 @@ function ExperienceIndicator({}) {
                 />
               </Box>
               <Typography sx={{ width: "60%" }}>
-                Almeang님의 경험치는 상위 20%입니다.
+                {nickName}님의 경험치는 상위 {data.percentile}% 입니다.
               </Typography>
             </Box>
           </Box>
