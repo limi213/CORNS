@@ -1,79 +1,92 @@
-import React from "react";
-import LogItem from "../../components/ConversationLog/LogItem";
-import ParticipantScriptList from "../../components/ConversationLog/ParticipantScriptList";
-import SelfEvaluation from "../../components/GlobalComponents/SelfEvaluation";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import LogItem from "components/ConversationLog/LogItem";
+import ParticipantScriptList from "components/ConversationLog/ParticipantScriptList";
+import SelfEvaluation from "components/GlobalComponents/SelfEvaluation";
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import Box from "@mui/material/Box";
-
-import backgroundImage from "../../assets/backgroundImage.png";
+import { Table, TableBody, Box } from "@mui/material";
+import backgroundImage from "assets/backgroundImage.png";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
+// 로그 상세정보 get axios
+const getLogDetail = async (
+  roomNo,
+  userId,
+  setLog,
+  setParticipants,
+  setLoading
+) => {
+  setLoading(true);
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_HOST}/corns-log/${roomNo}/${userId}`
+    );
+    if (response.data.room.canRead) {
+      setLog(response.data.room);
+      setParticipants(response.data.memberList);
+    } else {
+      setLog({});
+    }
+  } catch (e) {
+    console.log(e);
+    // axios error (내가 대화한 방 아닌 경우)
+    if (e.response.status === 500) {
+      setLog({});
+    }
+    setLoading(false);
+  }
+};
+
 function LogDetail({ match }) {
-  const { room_no } = match.params;
+  const { roomNo } = match.params;
+  const [log, setLog] = useState({});
+  const [participants, setParticipants] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  // fetch 방 상세 정보 불러오기
-  // dummy data
-  const log = {
-    room_no: 1000,
-    bookmark: true,
-    subject: "오픽",
-    title: "제목1입니다. 어쩌구",
-    start_date: "2023-01-18",
-    time: 5,
-    max_member: 4,
-    self_score: 5,
-    ddabong: 3,
-  };
+  useEffect(() => {
+    getLogDetail(
+      roomNo,
+      sessionStorage.getItem("userId"),
+      setLog,
+      setParticipants,
+      setLoading
+    );
+  }, [roomNo]);
 
-  const participants = [
-    {
-      img_url:
-        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
-      nickname: "isk2",
-      user_id: 100000,
-      thumbs: 2,
-      ignition: "3분 20초",
-      script: "",
-    },
-    {
-      img_url:
-        "https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg",
-      nickname: "haun",
-      user_id: 100001,
-      thumbs: 1,
-      ignition: "4분",
-      script: "",
-    },
-  ];
+  if (log["canRead"]) {
+    return (
+      <>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableBody>
+            <LogItem log={log} />
+          </TableBody>
+        </Table>
+        <hr />
 
-  return (
-    <>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableBody>
-          <LogItem log={log} />
-        </TableBody>
-      </Table>
-      <hr />
+        <ParticipantScriptList participants={participants} />
 
-      <ParticipantScriptList participants={participants} />
-
-      <Box
-        sx={{
-          width: "95.4%",
-          padding: "32px",
-          backgroundImage: `url(${backgroundImage})`,
-          position: "absolute",
-          bottom: "0",
-          left: "0",
-        }}
-      >
-        <SelfEvaluation />
-      </Box>
-    </>
-  );
+        <Box
+          sx={{
+            width: "95.4%",
+            padding: "32px",
+            backgroundImage: `url(${backgroundImage})`,
+            position: "absolute",
+            bottom: "0",
+            left: "0",
+          }}
+        >
+          <SelfEvaluation
+            roomNo={log.roomNo}
+            selfScore={log.selfScore}
+            selfDesc={log.selfDesc}
+          />
+        </Box>
+      </>
+    );
+  } else {
+    return <p>확인할 수 없는 방입니다.</p>;
+  }
 }
 
 export default LogDetail;

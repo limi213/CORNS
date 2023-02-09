@@ -4,7 +4,6 @@ import Navbar from "components/GlobalComponents/Navbar";
 import IsLogin from 'auth/IsLogin';
 
 import LogInUserArea from "components/Conversation/LogInUserArea";
-import AnonymousUserArea from "components/Conversation/AnonymousUserArea";
 import ConversationRoomFilter from "components/Conversation/ConversationRoomFilter";
 import RoomCreateModal from "components/Conversation/RoomCreateForm";
 import SelfEvaluationModal from "components/Conversation/SelfEvaluationModal";

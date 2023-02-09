@@ -13,12 +13,13 @@ function ParticipantScriptList({ participants }) {
         padding: 0;
         width: 100%;
         margin-bottom: 280px;
+        gap: 10px;
       `}
     >
-      {participants.map((item, index) => {
+      {participants.map((item) => {
         return (
           <li
-            key={index}
+            key={item.userId}
             css={css`
               width: 25%;
             `}

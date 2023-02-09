@@ -1,17 +1,15 @@
 import React from "react";
 
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { Box, Card, CardMedia, Typography, Button } from "@mui/material";
 import { HandThumbsUp } from "react-bootstrap-icons";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import ProfileImg from "components/GlobalComponents/ProfileImg";
+import UserNameTag from "components/GlobalComponents/UserNameTag";
 
-function ParticipantScriptCard({ participant, cardWidth }) {
-  const { img_url, nickname, user_id, thumbs, ignition, script } = participant;
+function ParticipantScriptCard({ participant }) {
+  const { userId, nickname, imgUrl, thumbCnt, speaking, scriptUrl } =
+    participant;
   return (
     <>
       <Card
@@ -21,28 +19,16 @@ function ParticipantScriptCard({ participant, cardWidth }) {
           flexDirection: "column",
           alignItems: "center",
           width: "100%",
-          // // height: "480px",
           pt: "24px",
           boxSizing: "border-box",
           backgroundColor: "#fff",
+          gap: "18px",
         }}
       >
-        <CardMedia
-          component="img"
-          sx={{
-            height: "197px",
-            width: "197px",
-            borderRadius: "200px",
-            border: "3px solid #111",
-          }}
-          image={img_url}
-          alt="Live from space album cover"
-        />
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Typography component="div" sx={{ fontSize: 18, p: "16px" }}>
-            {nickname}#{user_id}
-          </Typography>
-        </Box>
+        <ProfileImg imgSrc={imgUrl} nickname={nickname} width={"197px"} />
+
+        <UserNameTag nickname={nickname} userId={userId} />
+
         <Box
           sx={{
             display: "flex",
@@ -56,7 +42,7 @@ function ParticipantScriptCard({ participant, cardWidth }) {
               justifyContent: "center",
               alignItems: "center",
               backgroundColor: "#fff",
-              border: "3px solid #111",
+              border: "2px solid #111",
               p: "5px 11px",
               margin: "0 20px 0 0",
             }}
@@ -67,26 +53,35 @@ function ParticipantScriptCard({ participant, cardWidth }) {
                 margin-right: 8px;
               `}
             />
-            <span>{thumbs}</span>
+            <span>{thumbCnt}</span>
           </Box>
-          <span>발화량: {ignition}(%)</span>
+          <span>발화량: {speaking}</span>
         </Box>
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
-            width: "265px",
+            width: "50%",
             gap: "8px",
-            margin: "38px 0",
+            margin: "0 0 30px 0",
           }}
         >
           <Button
-            variant="contained"
-            sx={{ backgroundColor: "#FFC804", color: "#111111" }}
+            sx={{
+              backgroundColor: "#FFC804",
+              color: "#111111",
+              border: "2px solid #111",
+            }}
           >
             스크립트 보기
           </Button>
-          <Button variant="contained" sx={{ backgroundColor: "#024A9E" }}>
+          <Button
+            sx={{
+              backgroundColor: "#024A9E",
+              color: "#111111",
+              border: "2px solid #111",
+            }}
+          >
             스크립트 다운
           </Button>
         </Box>

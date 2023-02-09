@@ -12,6 +12,9 @@ import { userInfoReducer } from "store/reducers/userInfoReducer";
 import { friendListReducer } from "store/reducers/friendListReducer";
 import { expProgressBarReducer } from "store/reducers/expProgressBarReducer";
 import { attendProgressBarReducer } from "store/reducers/attendProgressBarReducer";
+import { logBookmarkListReducer } from "store/reducers/logBookmarkListReducer";
+import { logFilterReducer } from "store/reducers/logFilterReducer";
+import { logListReducer } from "store/reducers/logListReducer";
 import { expLogReducer } from "store/reducers/expLogReducer";
 import { expTopReducer } from "store/reducers/expTopReducer";
 import { indicatorsReducer } from "store/reducers/indicatorsReducer";
@@ -25,6 +28,9 @@ const rootReducer = combineReducers({
   friendListReducer: friendListReducer.reducer,
   expProgressBarReducer: expProgressBarReducer.reducer,
   attendProgressBarReducer: attendProgressBarReducer.reducer,
+  logBookmarkListReducer: logBookmarkListReducer.reducer,
+  logFilterReducer: logFilterReducer.reducer,
+  logListReducer: logListReducer.reducer,
   expLogReducer: expLogReducer.reducer,
   expTopReducer: expTopReducer.reducer,
   indicatorsReducer: indicatorsReducer.reducer,

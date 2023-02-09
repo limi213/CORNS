@@ -46,9 +46,10 @@ function SigninCard({ checked }) {
         }
       );
       if (response.status === 200) {
-        // 로그인 처리 -> 홈페이지로 이동
-        Login(email, password1);
-
+      
+        // 홈페이지 이동
+        window.location.href = "/";
+        alert('회원가입이 완료되었습니다.')
       }
     } catch (e) {
       console.log(e);

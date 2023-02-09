@@ -1,10 +1,15 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import Rating from "@mui/material/Rating";
-import Typography from "@mui/material/Typography";
+import React, { useState, useEffect } from "react";
+import { Box, Rating, Typography } from "@mui/material";
 
-export default function StarRating() {
-  const [value, setValue] = React.useState(2);
+export default function StarRating({ registered, score, setScore }) {
+
+  const changeHandler = (e) => {
+    // 0점 등록되면 안됨
+    console.log(e.target.value)
+    if (e.target.value > 0) {
+      setScore(parseInt(e.target.value));
+    }
+  };
 
   return (
     <Box
@@ -15,14 +20,12 @@ export default function StarRating() {
         justifyContent: "center",
       }}
     >
-      <Rating
-        name="simple-controlled"
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        sx={{}}
-      />
+
+      {registered ? (
+        <Rating readOnly value={score} />
+      ) : (
+        <Rating value={score} onChange={changeHandler} />
+      )}
     </Box>
   );
 }

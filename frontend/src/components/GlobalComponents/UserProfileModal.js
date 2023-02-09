@@ -36,7 +36,7 @@ function UserProfileModal({ openModal, toId, handleCloseModal }) {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "60%",
-    height: "40%",
+    height: "45%",
     bgcolor: "background.paper",
     border: "3px solid #111",
     boxShadow: 24,
@@ -71,8 +71,8 @@ function UserProfileModal({ openModal, toId, handleCloseModal }) {
     user && (
       <>
         <Box sx={style}>
-          <Box sx={{ display: "flex", width: "100%", mr: "10%", mb: "5%" }}>
-            <Typography variant="h5" sx={{ ml: "32px" }}>
+          <Box sx={{ display: "flex", width: "100%", mr: "10%" }}>
+            <Typography variant="h5" sx={{ ml: "32px"}}>
               {user.nickname} 페이지
             </Typography>
             <XSquare

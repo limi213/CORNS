@@ -1,8 +1,8 @@
 import React from "react";
+import SubjectsContainer from "store/containers/SubjectsContainer";
+import SelfEvaluationFilter from "components/ConversationLog/SelfEvaluationFilter";
 
-import SubjectBtn from "../Conversation/SubjectBtn";
 import {
-  TextField,
   Checkbox,
   Box,
   FormControlLabel,
@@ -10,24 +10,11 @@ import {
   Input,
 } from "@mui/material";
 
-import SelfEvaluationFilter from "components/ConversationLog/SelfEvaluationFilter";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
 function LogFilter() {
-  const datas = [
-    { id: 1, subject: "일상" },
-    { id: 2, subject: "비즈니스" },
-    { id: 3, subject: "소개팅" },
-    { id: 4, subject: "오픽" },
-    { id: 5, subject: "토스" },
-    { id: 6, subject: "자유" },
-  ];
-
-  const subjectBtn = datas.map((item) => (
-    <SubjectBtn active={false} subject={item.subject} key={item.id} />
-  ));
 
   return (
     <Box
@@ -38,8 +25,9 @@ function LogFilter() {
         p: "32px",
       }}
     >
+      
       {/* 주제 */}
-      <Box sx={{ mb: "48px" }}>
+      <Box sx={{ mb: "48px", display: "flex"}}>
         <span
           css={css`
             margin-right: 64px;
@@ -47,7 +35,7 @@ function LogFilter() {
         >
           주제
         </span>
-        {subjectBtn}
+        <SubjectsContainer />
       </Box>
 
       {/* 시간 */}
@@ -67,7 +55,6 @@ function LogFilter() {
           최소시간(분)
         </span>
         <Input
-          id="outlined-basic"
           placeholder="5"
           sx={{
             backgroundColor: "#fff",
@@ -86,7 +73,6 @@ function LogFilter() {
           최대시간(분)
         </span>
         <Input
-          id="outlined-basic"
           placeholder="30"
           sx={{
             backgroundColor: "#fff",
@@ -107,14 +93,39 @@ function LogFilter() {
         >
           날짜
         </span>
-        <input type="date" /> ~ <input type="date" />
+        <input
+          type="date"
+          css={css`
+            height: 23px;
+            padding: 10px;
+            font-size: 14px;
+            border: 3px solid #111;
+          `}
+        />
+        <span
+          css={css`
+            margin: 20px;
+            font-size: 20px;
+          `}
+        >
+          ~
+        </span>
+        <input
+          type="date"
+          css={css`
+            height: 23px;
+            padding: 10px;
+            font-size: 14px;
+            border: 3px solid #111;
+          `}
+        />
       </Box>
 
       {/* 자기평가 */}
-      <Box sx={{ mb: "48px" }}>
+      <Box sx={{ mb: "48px", display: "flex" }}>
         <span
           css={css`
-            margin-right: 64px;
+            margin-right: 35px;
           `}
         >
           자기평가

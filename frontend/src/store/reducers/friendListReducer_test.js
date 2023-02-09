@@ -1,6 +1,10 @@
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
 
+import authHeader from "auth/authHeader";
+import getRefreshToken from "auth/getRefreshToken";
+import Logout from "auth/Logout";
+
 const initialFriendListState = {
   isFriendListLoading: false,
   friendList: [],
@@ -28,7 +32,7 @@ export const friendListReducer = createSlice({
 });
 
 // 친구 검색 axios -> pagination 추가해야함 ...
-export const getFriendListAxios = (type="nickname", text="") => {
+export const getFriendListAxios = (type = "nickname", text = "") => {
   return async (dispatch) => {
     dispatch(friendActions.isFriendListLoading());
     // const startDate = moment().format("YYYY-MM-DDTHH:mm:sszz")
@@ -69,24 +73,40 @@ export const getFriendListAxios = (type="nickname", text="") => {
 // 친구 신청 목록 axios
 export const getFriendRequestListAxios = () => {
   return async (dispatch) => {
-    dispatch(friendActions.isFriendRequestListLoading());
+    
     const sendRequest = async () => {
+      dispatch(friendActions.isFriendRequestListLoading());
+      console.log("get friendrequest list!");
+      console.log(authHeader())
       const response = await axios.get(
-        `${process.env.REACT_APP_HOST}/friend/receive/${sessionStorage.getItem(
-          "userId"
-        )}`
+        `${process.env.REACT_APP_HOST}/friend/receive/${sessionStorage.getItem("userId")}`,
+        {headers: authHeader()},
+        {
+          validateStatus: (status) =>
+            status === 200 || status === 204 || status === 401,
+        }
       );
-      if (response.status === 200) {
+      if (response.status === 401) {
+        console.log("unauthorized!");
+        const refreshResponse = getRefreshToken();
+        if (refreshResponse) {
+          return sendRequest();
+        } else {
+          Logout();
+          return false;
+        }
+      } else if (response.status === 200) {
         return response.data.recvList;
       } else if (response.status === 204) {
         return [];
       }
     };
+
     try {
-        const friendRequestList = await sendRequest();
-        dispatch(friendActions.getFriendRequestList(friendRequestList));
+      const friendRequestList = await sendRequest();
+      dispatch(friendActions.getFriendRequestList(friendRequestList));
     } catch (e) {
-        console.error(e);
+      console.error(e);
     }
     dispatch(friendActions.isFriendRequestListLoading());
   };
@@ -94,4 +114,3 @@ export const getFriendRequestListAxios = () => {
 
 export const friendActions = friendListReducer.actions;
 export const { initialState } = friendListReducer;
-

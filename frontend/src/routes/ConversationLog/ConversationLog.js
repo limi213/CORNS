@@ -1,11 +1,10 @@
 import React, { Route, Switch, Redirect } from "react-router-dom";
-import Navbar from "../../components/GlobalComponents/Navbar";
-import Sidebar from "../../components/GlobalComponents/Sidebar";
+import Navbar from "components/GlobalComponents/Navbar";
+import Sidebar from "components/GlobalComponents/Sidebar";
 import Log from "./Log";
 import LogBookmark from "./LogBookmark";
 import LogDetail from "./LogDetail";
 import LogWord from "./LogWord";
-import NotFound from "../../routes/NotFound";
 import Grid from "@mui/material/Grid";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -47,7 +46,7 @@ function ConversationLog({}) {
               />
               <Route
                 exact
-                path="/conversationLog/logdetail/:room_no"
+                path="/conversationLog/logdetail/:roomNo"
                 component={LogDetail}
               />
               <Route exact path="/conversationLog/words" component={LogWord} />
