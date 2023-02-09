@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getExpLog } from "store/reducers/expLogReducer";
 import {
@@ -14,8 +14,10 @@ import {
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-import changeTinyNumber from "store/reducers/roomFilterReducer";
-import toStringDate from "store/reducers/roomFilterReducer";
+import {
+  changeTinyNumber,
+  toStringDate,
+} from "store/reducers/roomFilterReducer";
 
 function createData(date, contents, exp) {
   let transContents = "";
@@ -33,12 +35,16 @@ function ExperienceTable({}) {
   const dispatch = useDispatch();
   const { data, loading } = useSelector((state) => state.expLogReducer);
   const userId = sessionStorage.getItem("userId");
+  const [date, setDate] = useState("");
+  const now = new Date();
   const pp = {
     page: 0,
-    size: 10,
+    size: 100,
     userId,
-    baseTime: "2023-02-08 11:03:00",
+    baseTime: toStringDate(now),
   };
+  console.log(data);
+
   useEffect(() => {
     dispatch(getExpLog(pp));
   }, [dispatch]);
