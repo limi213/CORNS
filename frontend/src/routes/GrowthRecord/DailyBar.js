@@ -103,7 +103,6 @@ function WeeklyLiner() {
       },
     ];
 
-    console.log(dailyData);
     return (
       <Box sx={{ width: "100%", border: "3px solid #111" }}>
         <Box sx={{ width: "80%", height: "500px", m: "64px auto" }}>

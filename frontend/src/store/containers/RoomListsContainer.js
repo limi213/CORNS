@@ -14,7 +14,7 @@ function RoomListsContainer({ main }) {
   const [list, setList] = useState([]);
   const [addList, setAddList] = useState([]);
   const [flag, setFlag] = useState(true);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     dispatch(getRoomList(filter));
@@ -49,27 +49,25 @@ function RoomListsContainer({ main }) {
   }, [page]);
 
   const handleScroll = () => {
-    // Get the current scroll position
     const scrollTop =
       (document.documentElement && document.documentElement.scrollTop) ||
       document.body.scrollTop;
-    // Get the total height of the content
     const scrollHeight =
       (document.documentElement && document.documentElement.scrollHeight) ||
       document.body.scrollHeight;
-    // Get the height of the viewport
+
     const clientHeight =
       document.documentElement.clientHeight || window.innerHeight;
-    // Calculate the threshold for triggering a load
-    const threshold = 50;
-    // Check if the user has scrolled to the bottom
-    if (scrollTop + clientHeight >= scrollHeight - threshold) {
-      // Increment the page number
 
+    const threshold = 20;
+
+    if (scrollTop + clientHeight >= scrollHeight - threshold) {
       setPage(page + 1);
-      dispatch(addPage(page, "ADD_PAGE"));
+      const pageFilter = { ...filter };
+      pageFilter.page = page;
+      dispatch(getRoomList(pageFilter));
+
       setAddList([...addList, ...list]);
-      console.log("닿음");
       if (addList.length > 0) {
         setFlag(() => false);
       }

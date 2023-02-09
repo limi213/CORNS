@@ -1,20 +1,42 @@
 import { React, useState } from "react";
-
+import { useDispatch } from "react-redux";
 import SubjectsContainer from "store/containers/SubjectsContainer";
-
 import {
-  Box,
-  TextField,
-  Checkbox,
-  Button,
-  Typography,
-  Input,
-} from "@mui/material";
+  modifyMinTime,
+  modifyMaxTime,
+  modifyIsAvail,
+} from "store/reducers/roomFilterReducer";
+import { Box, Checkbox, Button, Input } from "@mui/material";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
 function ConversationRoomFilter() {
+  const dispatch = useDispatch();
+
+  const getMintime = (e) => {
+    checkFilter("min", e.target.value);
+  };
+
+  const getMaxtime = (e) => {
+    checkFilter("max", e.target.value);
+  };
+
+  const getAvail = (e) => {
+    checkFilter("avail", e.target.value);
+  };
+
+  // 필터 변경할 때마다 params 수정하는 함수
+  const checkFilter = (content, e) => {
+    if (content === "min") {
+      dispatch(modifyMinTime(e, "MODIFY_MIN_TIME"));
+    } else if (content === "max") {
+      dispatch(modifyMaxTime(e, "MODIFY_MAX_TIME"));
+    } else {
+      dispatch(modifyIsAvail(e, "MODIFY_AVAIL"));
+    }
+  };
+
   return (
     <>
       <Box
@@ -62,6 +84,7 @@ function ConversationRoomFilter() {
               width: "128px",
               height: "45px",
             }}
+            onChange={getMintime}
           />
           <span
             css={css`
@@ -80,6 +103,7 @@ function ConversationRoomFilter() {
               width: "128px",
               height: "45px",
             }}
+            onChange={getMaxtime}
           />
         </Box>
         <Box sx={{ mb: "48px", mr: "64px" }}>

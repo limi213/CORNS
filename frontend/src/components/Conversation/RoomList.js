@@ -6,7 +6,8 @@ import { Box, Grid } from "@mui/material";
 
 function RoomList({ roomLists, maxRoomList }) {
   let roomList = "";
-
+  // let cnt = 0
+  console.log(roomLists);
   if (maxRoomList) {
     const limitRoomList = roomLists.slice(0, 6);
 
