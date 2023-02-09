@@ -15,6 +15,7 @@ import com.w6w.corns.dto.conversationlog.RoomLogResponseDto;
 import com.w6w.corns.dto.conversationlog.RoomMemberDto;
 import com.w6w.corns.service.room.RoomService;
 import com.w6w.corns.util.PageableResponseDto;
+import com.w6w.corns.util.code.RoomUserCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -48,24 +49,35 @@ public class ConversationLogServiceImpl implements ConversationLogService {
     //대화(방) 상세정보 조회
     @Override
     public RoomLogResponseDto getRoomLogInfo(int roomNo, int userId) {
-        Room room = roomRepo.findById(roomNo).get();
+        RoomLogResponseDto roomLogResponseDto;
         RoomUser roomUser = roomUserRepo.findByUserIdAndRoomNo(userId, roomNo);
-        SelfEvaluation selfEvaluation = selfEvaluationRepo.findById(SelfEvaluationPK.builder()
-                                                                        .roomNo(roomNo)
-                                                                        .userId(userId)
-                                                                        .build()).get();
 
-        RoomLogResponseDto roomLogResponseDto = RoomLogResponseDto.builder()
-                                                    .roomNo(roomNo)
-                                                    .isBookmark((roomUser.getBookmarkYN()=='Y')?true:false)
-                                                    .subject(room.getSubjectNo())
-                                                    .title(room.getTitle())
-                                                    .startTime(room.getStartTm().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                                                    .time(room.getTime())
-                                                    .member(room.getCurrentMember())
-                                                    .selfScore(selfEvaluation.getScore())
-                                                    .thumbCnt(roomUser.getThumbCnt())
-                                                    .build();
+        if (roomUser.getRoomUserCd() == RoomUserCode.ROOM_USER_END.getCode()) {
+            Room room = roomRepo.findById(roomNo).get();
+            SelfEvaluation selfEvaluation = selfEvaluationRepo.findById(SelfEvaluationPK.builder()
+                                                                                .roomNo(roomNo)
+                                                                                .userId(userId)
+                                                                                .build()).get();
+
+            roomLogResponseDto = RoomLogResponseDto.builder()
+                                            .roomNo(roomNo)
+                                            .isBookmark((roomUser.getBookmarkYN()=='Y')?true:false)
+                                            .subject(room.getSubjectNo())
+                                            .title(room.getTitle())
+                                            .startTime(room.getStartTm().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                                            .time(room.getTime())
+                                            .member(room.getCurrentMember())
+                                            .selfScore(selfEvaluation.getScore())
+                                            .thumbCnt(roomUser.getThumbCnt())
+                                            .canRead(true)
+                                            .build();
+        } else {
+            roomLogResponseDto = RoomLogResponseDto.builder()
+                                            .roomNo(roomNo)
+                                            .canRead(false)
+                                            .build();
+        }
+
         return roomLogResponseDto;
     }
 
