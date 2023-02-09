@@ -6,8 +6,8 @@ export const pageReducer = createSlice({
     pageCount: 0,
   },
   reducers: {
-    addPageCount: (state) => {
-      state.pageCount += 1;
+    addPageCount: (state, action) => {
+      state.pageCount = action.payload;
     },
   },
 });
