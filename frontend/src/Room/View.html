@@ -24,32 +24,26 @@
       <script src="openVidu/openvidu.js"></script>
     </head>
     <body>
+      <button id="startSttttt" style="display:none"></button>
       <div id="roomViewBackground">
         <!-- 탑바 -->
         <div id="roomViewTopBar">
-          <span id="roomViewTitle">🎈 제목이 들어갈 자리입니다. [일상]</span>
-          <span id="roomViewTimer">10:00</span>
-          <span id="roomViewMemberCount">2/3</span>
+          <span id="roomViewTitle"><!--🎈 제목이 들어갈 자리입니다. [일상]--></span>
+          <span id="roomViewTimer"><!--10:00--></span>
+          <span id="roomViewMemberCount"><!--2/3--></span>
           <span id="roomViewMike"><i class="fa-solid fa-microphone"></i></span>
           <span id="roomViewVideo"><i class="fa-solid fa-video"></i></span>
-          <span id="roomViewPlay"><i class="fa-solid fa-play"></i></span>
+          <span id="roomViewPlay" onclick="startConversation()" hidden><i class="fa-solid fa-play"></i></span>
           <span id="roomViewOut"><i class="fa-solid fa-right-from-bracket"></i></span>
 
         </div>
         <!-- 채팅창 -->
         <div id="roomViewChatting">
           <div id="roomViewChattingReceive">
-            <div style="float:left; margin:10px;">앤드류 : 안녕하세요. </div>
-            <div style="float:right; margin:10px;">가필드 : 안녕하세요! 반갑습니다.</div>
-            <div style="float:left; margin:10px;">앤드류 : 주제 확인하셨나요? </div>
-            <div style="float:right; margin:10px;">가필드 : 네 일상주제 확인했습니다.</div>
-            <div style="float:left; margin:10px;">앤드류 : 넵 3분만 더 기다리고 </div>
-            <div style="float:left; margin:10px;">앤드류 : 시작할게요~~~ </div> <br>
-            <div style="float:right; margin:10px;">가필드 : 네.</div>
           </div>
           <div id="roomViewChattingSend">
-            <input id="roomViewChattingSendMessage" type="text"/>
-            <a id="roomViewChattingSendButton"><i class="fa-regular fa-paper-plane"></i></a>    
+            <input id="roomViewChattingSendMessage" type="text" onkeyup="onKeyUpChatting()"/>
+            <a id="roomViewChattingSendButton" onclick="sendChatting()"><i class="fa-regular fa-paper-plane"></i></a>    
             <!-- <div id="roomViewChattingSendMessage">
             </div> -->
           </div>
@@ -95,7 +89,7 @@
         let session = urlParams.get('session');
         let username = urlParams.get('username'); // sessionstorage의 nickname
         let userid = urlParams.get('userId');     // sessionstorage의 userId
-        let jroomno = urlParams.get('nroomno');
+        let jroomno = urlParams.get('jroomno');
         // alert('session = ' + session)
 
         if(!session ){
@@ -109,11 +103,38 @@
           $("#jRoomNo").val(jroomno);
           $("#userId").val(userid);
 
-          joinSession();
-          
+          joinSession();          
+          initRoomInfo();
+
         }
 
 
       });
+    </script>
+
+    <script>
+     window.onload = function() {
+    		console.log("[window onload] : [start]");
+    		console.log("");
+    		
+    		/* 브라우저 닫기 이벤트 감지 실시 [1]
+    		window.addEventListener("beforeunload", function (event) {
+    			console.log("[window beforeunload] : [start]");
+    			console.log("");        			
+    			// event.returnValue = "브라우저를 종료하시겠습니까?";    			
+        	// outRoom($("#userId").val());
+    		});    		
+    		*/
+    	};
+    	
+    	
+    	/* 브라우저 닫기 이벤트 감지 실시 [2] */
+    	window.onbeforeunload = function() {
+    		console.log("[window onbeforeunload] : [start]");
+    		console.log("");
+    		
+        // outRoom($("#userId").val());
+    		// return "브라우저를 종료하시겠습니까?";
+    	};	 
     </script>
 </html>

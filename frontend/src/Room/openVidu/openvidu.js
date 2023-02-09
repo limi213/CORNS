@@ -3,44 +3,37 @@ var session;
 
 var roomListId = "roomViewUser";
 
-// 비디오 사이즈
-// let videoWidth = parseInt($(window).width() * 0.35); //Math.floor(screen.width * 0.35); // "35vw";
-// let videoHeight = parseInt($(window).height() * 0.375); //"37.5vh";
+// serverurl
+// let serverUrl = "https://corns.co.kr:4463/";
+let serverUrl = "https://corns.co.kr:4463/";
 
-// let videoWidth = 640;
-// let videoHeight = 360;
-
-
-// 현재 인원수
-// var count = 2;
-// 최대 인원수
-// var maxcount = 4;
+if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
+	serverUrl = "https://corns.co.kr:4463/";
+}
 
 // 칸이 차 있는지
 var userArray = [false,false,false,false];
 
+var mySessionId;
+var myUserName;
+var jRoomNo;
+var userId;
 
-// function setVideoSize(){
-// 	// videoWidth = parseInt($(window).width() * 0.35); //Math.floor(screen.width * 0.35); // "35vw";
-// 	// videoHeight = parseInt($(window).height() * 0.375); //"37.5vh";
-// 	videoWidth = 640;
-// 	videoHeight = 360;
-	
-// }
+var myStream;
 
 /* OPENVIDU METHODS */
 
 function joinSession() {
 
-	var mySessionId = document.getElementById("sessionId").value;
-	var myUserName = document.getElementById("userName").value;
+	mySessionId = document.getElementById("sessionId").value;
+	myUserName = document.getElementById("userName").value;
+	jRoomNo = document.getElementById("jRoomNo").value;
+	userId = document.getElementById("userId").value;
 
 	// $("#sessionId").val(session);
 	// $("#userName").val(username);
 	// $("#jRoomNo").val(jroomno);
 	// $("#userId").val(userid);
-	// 방 입장처리 한다.
-	// intoRoom();
 
 
 	// --- 1) Get an OpenVidu object ---
@@ -57,7 +50,6 @@ function joinSession() {
 	getConnections(mySessionId).then(data => {
 		if(data.numberOfElements > 0){
 			for(let i = 0 ; i < data.numberOfElements ; i++){
-				// console.log(data.content[i]);
 				// console.log(data.content[i].stream);
 			}	
 		}
@@ -103,27 +95,27 @@ function joinSession() {
 		console.warn(exception);
 	});
 
+	// Listen the speechToText events for showing them on page view
+	session.on('speechToTextMessage', (event) => {
+		// 여기에서 스크립트 만드는 api 호출
+	
+		console.log(event.text);
+	});
+
 
 	// --- 4) Connect to the session with a valid user token ---
 	// Get a token from the OpenVidu deployment
 	getToken(mySessionId).then(token => {
 
-		console.log("token : " + token.token);
 		token = token.token;
 
 		// First param is the token got from the OpenVidu deployment. Second param can be retrieved by every user on event
 		// 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
-		session.connect(token, { clientData: myUserName })
+		session.connect(token, { userId : userId, userName: myUserName })
 			.then(() => {
 
 				// --- 5) Set page layout for active call ---
-
-				// document.getElementById('session-title').innerText = mySessionId;
-				// document.getElementById('join').style.display = 'none';
-				// document.getElementById('session').style.display = 'block';
-
 				// 내가 무조건 1번에 뜨게 한다.
-				// setVideoSize();
 				// --- 6) Get your own camera stream with the desired properties ---
 				var publisher = OV.initPublisher("roomViewUser1", {
 					audioSource: undefined, // The source of audio. If undefined default microphone
@@ -141,16 +133,19 @@ function joinSession() {
 
 				// When our HTML video has been added to DOM...
 				publisher.on('videoElementCreated', function (event) {
-					console.log("my");
-					console.log(event.stream);
-					// initMainVideo(event.element, myUserName);
 					appendUserData(event.element, myUserName, "");
-					// event.element['muted'] = true;
+					// alert(document.getElementById("startSttttt"))
+					appendCaptionsButton(event.element, publisher.stream);
+					myStream = publisher.stream;
 				});
 
 				// --- 8) Publish your stream ---
 
 				session.publish(publisher);
+
+				
+				// 방 입장처리 한다.
+				intoRoom(myUserName, '', token);
 
 			})
 			.catch(error => {
@@ -158,20 +153,173 @@ function joinSession() {
 			});
 	});
 
+
+	// 이벤트 받기
+	session.on('signal', (event) => {
+		//시작
+		if(event.type==="signal:start"){
+			// alert("dd")
+			// $("#startSttttt").click();
+			this.session.subscribeToSpeechToText(myStream, 'en-US');
+		}
+		//채팅
+		else{
+			/* <div id="roomViewChattingReceive">
+            <div style="float:left; margin:10px;">앤드류 : 안녕하세요. </div>
+            <div style="float:right; margin:10px;">가필드 : 안녕하세요! 반갑습니다.</div>
+            <div style="float:left; margin:10px;">앤드류 : 주제 확인하셨나요? </div>
+            <div style="float:right; margin:10px;">가필드 : 네 일상주제 확인했습니다.</div>
+            <div style="float:left; margin:10px;">앤드류 : 넵 3분만 더 기다리고 </div>
+            <div style="float:left; margin:10px;">앤드류 : 시작할게요~~~ </div> <br>
+            <div style="float:right; margin:10px;">가필드 : 네.</div>
+          </div> */
+		  if(event.data.includes(myUserName + " : ")){
+			// 내 메시지
+			var c_html = `<div><div style="float:right; margin:10px; ">` + event.data + `</div><div>`;
+			$("#roomViewChattingReceive").append(c_html);
+			
+		  }
+		  else{
+			// 남의 메시지
+			var o_html = `<div style="float:left; margin:10px;">` + event.data + `</div>`;
+			$("#roomViewChattingReceive").append(o_html);
+		  }
+		}
+		
+
+		// console.log(event.data); // Message
+		// console.log(event.from); // Connection object of the sender
+		// console.log(event.type); // The type of message
+	});
+
 }
 
-// 방 입장 처리
-function intoRoom(){
+function onKeyUpChatting(){
+	if (window.event.keyCode == 13){
+		sendChatting();
+	}
+}
+
+function sendToOpenvidu(type, data){
+	var senddata = {
+		"session":mySessionId,
+		"type":type,
+		"data":data
+	};
+	
 	$.ajax({
-		type : "POST",            // HTTP method type(GET, POST) 형식이다.
-		url : "/test/ajax",      // 컨트롤러에서 대기중인 URL 주소이다.
-		data : params,            // Json 형식의 데이터이다.
-		success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-			// 응답코드 > 0000
-			alert(res.code);
+		type : "POST",
+		url : OPENVIDU_URL + "openvidu/api/signal",
+		headers: { "Content-Type": "application/json",
+					"Authorization" : "Basic " + OPENVIDU_SECRET,
+					"Access-Control-Allow-Origin" : "*"},
+		data: JSON.stringify(senddata),
+		success: function(data, textStatus, xhr) {
+			console.log(data);
+			console.log(textStatus);
+			console.log(xhr);
+			console.log("채팅 전송완료");
+			if(type === "chat"){
+				$("#roomViewChattingSendMessage").val("");
+			}
 		},
-		error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-			alert("통신 실패.")
+		error:function(request,status,error){
+			// alert("채팅처리 실패 : " + request.statusText);
+			console.log(request);
+			console.log(status);
+			console.log(error);
+		}
+	});
+}
+
+function sendChatting(){
+	if($("#roomViewChattingSendMessage").val().length === 0){
+		alert("메세지 내용을 입력해주세요.");
+		$("#roomViewChattingSendMessage").focus();
+	}
+	else{
+		sendToOpenvidu("chat", myUserName + " : " + $("#roomViewChattingSendMessage").val());
+	}
+}
+
+
+function appendCaptionsButton(videoElement,myStream) {
+
+	document.getElementById("startSttttt").onmouseup = async (ev) => {
+		alert("zz")
+		await this.session.subscribeToSpeechToText(myStream, 'en-US');
+	};
+}
+
+
+// 방 입장 처리
+function intoRoom(connectionId, recordId, token){
+	var data = {
+		"roomNo": jRoomNo,
+		"roomUser": {
+		   "connectionId": connectionId, 
+		   "recordId": recordId,
+		   "token": token
+		},
+		"userId": userId
+	  };
+
+	$.ajax({
+		type : "POST",
+		url : serverUrl + "room/user",    
+		headers: { "Content-Type": "application/json",
+					"Authorization" : "Basic " + OPENVIDU_SECRET,
+					"Access-Control-Allow-Credentials" : "true"},    
+		contentType : "application/json",
+		data : JSON.stringify(data),
+		success: function(data, textStatus, xhr) {
+			console.log(data);
+			console.log(textStatus);
+			console.log(xhr);
+			console.log("입장처리 완료");
+		},
+		error:function(request,status,error){
+			// alert("방 입장처리 실패 : " + request.statusText);
+			console.log(request);
+			console.log(status);
+			console.log(error);
+			if(request.status === 409){
+				console.log("이미 접속완료된 회원");
+				// 어디방인지 확인하고 이 방 아니면 나가게하자
+			}
+		}
+	});
+}
+
+function outRoom(rUserId){	// 떠나는 사람 방 번호 받는다.
+	var data = {
+		"roomNo": jRoomNo,
+		"userId": rUserId
+	  };
+
+	$.ajax({
+		type : "PATCH",
+		url : serverUrl + "room/user",      
+		headers: { "Content-Type": "application/json",
+					"Authorization" : "Basic " + OPENVIDU_SECRET,
+					"Access-Control-Allow-Credentials" : "true"},   
+		contentType : "application/json",
+		data : JSON.stringify(data),
+		success: function(data, textStatus, xhr) {
+			console.log(data);
+			console.log(textStatus);
+			console.log(xhr);
+			console.log("퇴장처리 완료");
+		},
+		error:function(request,status,error){
+			// alert("방 퇴장처리 실패 : " + request.statusText);
+			console.log(request);
+			console.log(status);
+			console.log(error);
+			if(request.status === 409){
+				console.log("이미 접속완료된 회원");
+				// 어디방인지 확인하고 이 방 아니면 나가게하자
+			}
 		}
 	});
 }
@@ -202,15 +350,13 @@ function removeUserData(connection) {
 	else if(pid === "roomViewUser4"){
 		userArray[2] = false;
 	}
-	// alert("delete처리 완")
-	// alert(connection.connectionId)
-	// var dataNode = document.getElementById("data-" + connection.connectionId);
-	// dataNode.parentNode.removeChild(dataNode);
-	// remote-video-str_CAM_OHsQ_con_BTsNbIQ1ZD
-	// con_XAUvl6LqwV
-	// var videoNode = document.getElementById("remote-video-str_CAM_Ifyr_" + connection.connectionId);
-	// if(videoNode.parentNode.id)
-	// alert(videoNode.parentNode.parentNode.id);
+
+	console.log("ruserData");
+	console.log(connection);
+	var rUserData = JSON.parse(connection.data);
+	console.log(rUserData);
+
+	// outRoom(rUserData.userId);
 }
 
 
@@ -219,8 +365,6 @@ var OPENVIDU_URL= "https://corns.co.kr:4430/";
 var OPENVIDU_SECRET = btoa("OPENVIDUAPP:a506w6w");
 function getToken(mySessionId) {
 	return createToken(mySessionId);
-	// return createSession(mySessionId).then(sessionId => createToken(sessionId));
-	// return getConnections(mySessionId).then(sessionId => createToken(sessionId));
 }
 
 function createSession(sessionId) {
@@ -244,7 +388,7 @@ function createToken(sessionId) {
 	return new Promise((resolve, reject) => {
 		$.ajax({
 			type: 'POST',
-			url: OPENVIDU_URL + 'openvidu/api/sessions/' + sessionId + '/connection',
+			url: OPENVIDU_URL + 'openvidu/api/sessions/' + sessionId + '/connection',	// 새 연결 만들기
 			data: JSON.stringify({}),
 			headers: { "Content-Type": "application/json",
 						"Authorization" : "Basic " + OPENVIDU_SECRET,
@@ -282,4 +426,78 @@ function getConnections(sessionId){
 		});
 	});
 	
+}
+
+
+
+// 대화 시작
+function startConversation(){
+	// 시작했다고 모두에게 알리기
+	sendToOpenvidu("start", "data");
+}
+
+var maxMemberCount = 0;
+
+// 방 정보 세팅
+function initRoomInfo(){
+	console.log("initRoomInfo")
+	$.ajax({
+		type : "GET",
+		url : serverUrl + "room/" + jRoomNo, 
+		headers: { "Content-Type": "application/json",
+					"Authorization" : "Basic " + OPENVIDU_SECRET,
+					"Access-Control-Allow-Credentials" : "true"},     
+		contentType : "application/json",
+		success: function(data, textStatus, xhr) {
+			/* 
+						{
+			"room": {
+				"room": {
+				"roomNo": 30,
+				"title": "쫑알!",
+				"time": 10,
+				"currentMember": 1,
+				"maxMember": 4,
+				"hostUserId": 1001,
+				"sessionId": "ssss",
+				"avail": true
+				},
+				"subject": {
+				"subjectNo": 1,
+				"imgUrl": "https://corns.co.kr:4435/uploads/subjects/1.jpg",
+				"value": "일상"
+				}
+			}
+			}*/
+
+			// var roomData = JSON.parse(data);
+
+			// console.log(roomData + "["alert(ata.room.room.title) + data.room.subject.value + "]");
+
+			$("#roomViewTitle").text(data.room.room.title + "   [" + data.room.subject.value + "]");
+			$("#roomViewTimer").text(data.room.room.time + "분");
+			maxMemberCount = data.room.room.currentMember;
+			setMemberCount(data.room.room.currentMember);
+
+			// 방장이면 시작하기 버튼 세팅
+			if(data.room.room.hostUserId == userId){
+				$("#roomViewPlay").show();
+			}
+
+			console.log(data);
+			console.log(textStatus);
+			console.log(xhr);
+		},
+		error:function(request,status,error){
+			// alert("방 퇴장처리 실패 : " + request.statusText);
+			console.log(request);
+			console.log(status);
+			console.log(error);
+		}
+	});
+}
+
+
+function setMemberCount(curr){
+	$("#roomViewMemberCount").text(curr + "/" + maxMemberCount);
 }
