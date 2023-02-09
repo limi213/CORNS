@@ -226,7 +226,10 @@ public class RoomServiceImpl implements RoomService {
             room.setStartTmNow();
             roomRepository.save(room);
 
-            roomUsers.stream().forEach(user -> user.setUserCd(RoomUserCode.ROOM_USER_CONVERSATION.getCode()));
+            roomUsers.stream().forEach(user -> {
+                user.setUserCd(RoomUserCode.ROOM_USER_CONVERSATION.getCode());
+                selfEvaluationRepository.save(SelfEvaluation.builder().roomNo(body.getRoomNo()).userId(user.getUserId()).build());
+            });
             roomUserRepository.saveAll(roomUsers);
             return findRoomAndRoomUserByRoomNo(body.getRoomNo(), RoomUserCode.ROOM_USER_CONVERSATION.getCode());
         }
@@ -301,7 +304,6 @@ public class RoomServiceImpl implements RoomService {
         List<RoomUser> roomUsers = roomUserRepository.findByRoomNoAndRoomUserCd(body.getRoomNo(), RoomUserCode.ROOM_USER_CONVERSATION.getCode());
         roomUsers.stream().forEach(user -> {
             user.setUserCd(RoomUserCode.ROOM_USER_END.getCode());
-            selfEvaluationRepository.save(SelfEvaluation.builder().roomNo(body.getRoomNo()).userId(user.getUserId()).build());
             growthService.giveExp(ExpLogRequestDto.builder()
                                         .userId(user.getUserId())
                                         .gainExp(room.getTime())
