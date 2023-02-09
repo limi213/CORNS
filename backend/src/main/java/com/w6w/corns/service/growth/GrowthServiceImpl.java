@@ -84,13 +84,12 @@ public class GrowthServiceImpl implements GrowthService {
     @Override
     @Transactional
     public void giveExp(ExpLogRequestDto expLogRequestDto){
-
-        expLogRepository.save(expLogRequestDto.toEntity());
-
         //expTotal 증가
         User user = userRepository.findByUserId(expLogRequestDto.getUserId());
         user.setExpTotal(user.getExpTotal()+expLogRequestDto.getGainExp());
         userRepository.save(user);
+
+        expLogRepository.save(expLogRequestDto.toEntity());
     }
 
     //출석률 반환

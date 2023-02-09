@@ -81,8 +81,14 @@ public class FriendServiceImpl implements FriendService {
         relation2.setFriendCd(FriendCode.FRIEND_ACCEPT.getCode());
         friendRepo.save(relation2);
 
-        //누적 친구수 갱신
+        //유저 누적 친구수 증가
+        User fromUser = userRepo.findById(friendRequestDto.getFromId()).get();
+        fromUser.setFriendTotal(fromUser.getFriendTotal()+1);
+        userRepo.save(fromUser);
 
+        User toUser = userRepo.findById(friendRequestDto.getToId()).get();
+        toUser.setFriendTotal(toUser.getFriendTotal()+1);
+        userRepo.save(toUser);
     }
 
     //친구 거절
@@ -120,7 +126,14 @@ public class FriendServiceImpl implements FriendService {
                                                 .build()).get();
         friendRepo.delete(relation2);
 
-        //누적 친구수 갱신
+        //유저 누적 친구수 감소
+        User fromUser = userRepo.findById(friendRequestDto.getFromId()).get();
+        fromUser.setFriendTotal(fromUser.getFriendTotal()-1);
+        userRepo.save(fromUser);
+
+        User toUser = userRepo.findById(friendRequestDto.getToId()).get();
+        toUser.setFriendTotal(toUser.getFriendTotal()-1);
+        userRepo.save(toUser);
     }
 
     //친구 목록 가져오기
