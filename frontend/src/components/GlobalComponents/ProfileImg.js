@@ -16,7 +16,8 @@ function ProfileImg({ imgSrc, nickname, width }) {
           alt={nickname}
           css={css`
             width: 100%;
-            object-fit: contain;
+            height: 100%;
+            object-fit: cover;
             border-radius: 50%;
           `}
         />
@@ -30,7 +31,7 @@ function ProfileImg({ imgSrc, nickname, width }) {
           css={css`
             width: 100%;
             margin-top: 10%;
-            object-fit: contain;
+            object-fit: cover;
             border-radius: 50%;
           `}
         />

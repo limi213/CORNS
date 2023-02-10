@@ -28,7 +28,7 @@ function UserProfileInfo({ basicInfo }) {
         }}
       >
         <Box sx={{ mr: "135px" }}>
-          <ProfileImg imgSrc={imgUrl} nickname={nickname} width={"110%"} />
+          <ProfileImg imgSrc={imgUrl} nickname={nickname} width={"100%"} />
         </Box>
 
         <Box

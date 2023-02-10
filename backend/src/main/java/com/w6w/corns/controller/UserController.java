@@ -203,21 +203,22 @@ public class UserController {
 
     /**
      * 토큰 재발급
-     * @param userId
+     * @param map
      * @param request
      * @return
      */
     @ApiOperation(value = "access token 재발급", notes = "프론트에서 refresh token을 가져와서 요청 시 access token 재발급, 테스트 필요")
     @PostMapping("/refresh")
-    public ResponseEntity<?> reissueToken(@RequestBody int userId, HttpServletRequest request){
+    public ResponseEntity<?> reissueToken(@RequestBody Map<String, Object> map, HttpServletRequest request){
 
-        String token = request.getHeader("refreshToken");
-        log.debug("token : {}",token);
+        int userId = Integer.parseInt((String)map.get("userId"));
+        log.debug("userId : {}", userId);
+        String token = request.getHeader("refreshtoken");
         try{
             if(jwtService.checkToken(token) && token.equals(userService.getRefreshToken(userId))){
 
                 String accessToken = jwtService.createAccessToken("id", userId);
-                log.debug("토큰 재발급");
+                log.debug("reissue");
 
                 Map<String, Object> result = new HashMap<>();
                 result.put("accessToken",accessToken);

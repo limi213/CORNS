@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
 import { Box, Button } from "@mui/material";
@@ -6,14 +6,54 @@ import { Box, Button } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
+
+// 회원정보 수정 axios
+const changeProfileAxios = async (formData) => {
+  for (let value of formData.values()) {
+    console.log(value);
+  }
+
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_HOST}/user`,
+      {
+        data: formData,
+      }
+    );
+    if (response.status === 200) {
+      console.log(response.data)
+      sessionStorage.setItem("userId", response.data.userId);
+      sessionStorage.setItem("imgUrl", response.data.imgUrl);
+      alert('회원정보가 수정되었습니다.')
+      return true;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+
 function ChangeProfile() {
   const [nickname, setNickname] = useState("");
+  const [stateNickname, setStateNickname] = useState(true);
   const [imgSrc, setImgSrc] = useState("");
+  const [imgFile, setImgFile] = useState(null);
   const fileInput = useRef("");
+
+  const formData = new FormData();
 
   const onChangeNickname = (e) => {
     setNickname(e.target.value);
   };
+
+  useEffect(() => {
+    // 닉네임 유효성 검사
+    const validateNickname = (nickname) => {
+      return nickname.match(/^[a-zA-Z]*$/) && nickname.length > 0 && nickname.length < 21;
+    };
+    setStateNickname(Boolean(nickname && validateNickname(nickname)));
+  }, [nickname]);
+
 
   const handleClick = (e) => {
     fileInput.current.click();
@@ -21,15 +61,34 @@ function ChangeProfile() {
 
   const onUploadImg = (e) => {
     const file = e.target.files[0];
+    setImgFile(file)
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
       setImgSrc(reader.result);
     };
-    console.log(imgSrc)
   };
 
-  const onSubmit = async (e) => {};
+  const submitHandler = async () => {
+    if (!nickname && !imgSrc) {
+      return;
+    }
+    if (nickname && !stateNickname) {
+      return;
+    }
+    console.log("submit!");
+    console.log(nickname, imgFile)
+
+    
+    formData.append("userId", sessionStorage.getItem("userId"));
+    formData.append("nickname", nickname);
+    formData.append("multipartFile", imgFile)
+
+    const res = await changeProfileAxios(formData)
+    if (res) {
+      window.location.reload();
+    }
+  };
 
   return (
     <>
@@ -57,8 +116,22 @@ function ChangeProfile() {
               width: 50%;
               height: 45px;
               font-size: 19px;
+              padding-left: 10px;
             `}
           />
+          <p
+            css={css`
+              font-size: 14px;
+              margin: 10px;
+              color: ${
+                (nickname && !stateNickname) ? "red" : "black"
+              };
+              }
+            `}
+          >
+            닉네임은 실제로 불릴 이름이며, 1-20글자 사이의 영문으로
+            표기해야합니다.
+          </p>
         </Box>
 
         <Box>
@@ -74,18 +147,18 @@ function ChangeProfile() {
               height: "240px",
             }}
           >
-            {imgSrc ? (
+            {imgSrc && (
               <img
                 src={imgSrc}
                 css={css`
-                  width: 100px;
-                  height: 100px;
+                  width: 120px;
+                  height: 120px;
                   border-radius: 200px;
                   border: 2px solid #111;
+                  margin-bottom: 20px;
+                  object-fit: cover;
                 `}
               />
-            ) : (
-              <p>이미지를 끌어서 업로드하세요.</p>
             )}
 
             <Button
@@ -118,7 +191,7 @@ function ChangeProfile() {
             width: "10%",
             mt: "5%",
           }}
-          onClick={onSubmit}
+          onClick={submitHandler}
         >
           적용
         </Button>

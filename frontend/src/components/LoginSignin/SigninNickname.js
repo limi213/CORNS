@@ -19,7 +19,7 @@ function SigninNickname({
     // 닉네임 유효성 검사
     // 지금 숫자 들어감 -> 수정해야함
     const validateNickname = (nickname) => {
-      return nickname.toLowerCase().match(/^[a-z|A-Z|].{1,20}$/);
+      return nickname.match(/^[a-zA-Z]*$/) && nickname.length > 0 && nickname.length < 21;
     };
 
     setStateNickname(Boolean(nickname && validateNickname(nickname)));

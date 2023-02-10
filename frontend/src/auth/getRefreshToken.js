@@ -5,25 +5,27 @@ const getRefreshToken = async () => {
 
   try {
     const response = await axios.post(
-      `${process.env.REACT_APP_HOST}/user/refresh`,
-      {
-        headers: {
-          "Authorization-refresh": `Bearer ${sessionStorage.getItem(
-            "refreshToken"
-          )}`,
-        },
+      `${process.env.REACT_APP_HOST}/user/refresh`, {
+        userId: sessionStorage.getItem("userId")
       },
       {
-        validateStatus: (status) => status === 200 || status === 401,
+        headers: {
+          refreshToken: `${sessionStorage.getItem("refreshToken")}`,
+        },
+        validateStatus: (status) => {
+          return status === 200 || status === 401;
+        },
       }
     );
-
+    console.log('get refresh response', response)
     if (response.status === 200) {
       console.log("refresh token success!");
       sessionStorage.setItem("accessToken", response.data.accessToken);
-      return true;
+      return 200;
     } else if (response.status === 401) {
-      return false;
+      console.log('refresh token failed!')
+      console.log(response)
+      return 401;
     } else {
       return false;
     }

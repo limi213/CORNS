@@ -6,9 +6,28 @@ import { Box, Button, Input } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
+// 비밀번호 수정 axios
+const changePasswordAxios = async (userId, password, newPassword) => {
+  try {
+    const response = await axios.patch(
+      `${process.env.REACT_APP_HOST}/user`,
+      {
+        userId: userId,
+        password: password,
+        newPassword: newPassword,
+      },
+      {
+        validateStatus: (status) => status === 200 || status === 403,
+      }
+    );
+    return response.status
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 function ChangePassword() {
   const [nowPassword, setNowPassword] = useState("");
-  // const [stateNowPassword, setStateNowPassword] = useState(false);
   const [password1, setPassword1] = useState("");
   const [statePassword1, setStatePassword1] = useState(false);
   const [password2, setPassword2] = useState("");
@@ -37,15 +56,18 @@ function ChangePassword() {
       return;
     }
 
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_HOST}/user`, {
-        userId: sessionStorage.getItem("userId"),
-        password: nowPassword,
-        newPassword: password1,
-      });
-      console.log(response);
-    } catch (e) {
-      console.log(e);
+    const res = await changePasswordAxios(
+      sessionStorage.getItem("userId"),
+      nowPassword,
+      password1
+    );
+    if (res === 200) {
+      alert("비밀번호가 수정되었습니다.");
+      setNowPassword("");
+      setPassword1("");
+      setPassword2("");
+    } else if (res === 403) {
+      alert("틀린 비밀번호입니다.")
     }
   };
 
@@ -56,49 +78,35 @@ function ChangePassword() {
       <Box sx={{ fontSize: "20px" }}>
         <Box>
           <h5>현재 비밀번호</h5>
-          <Input
+          <input
             type="password"
             autoComplete="off"
             placeholder="현재 비밀번호를 입력하세요."
-            sx={{
-              backgroundColor: "#fff",
-              border: "3px solid #111",
-              pl: "1rem",
-              mr: "1rem",
-              width: "50%",
-              height: "45px",
-            }}
+            css={css`
+              border: 3px solid #111;
+              width: 50%;
+              height: 45px;
+              font-size: 15px;
+              padding-left: 10px;
+            `}
             value={nowPassword}
             onChange={onChangeNowPassword}
           />
-          {/* 
-          <Button
-            sx={{
-              border: "3px solid #111",
-              color: "#111111",
-              backgroundColor: "#FFC804",
-              width: "8%",
-            }}
-            // onClick={onSubmit}
-          >
-            확인
-          </Button> */}
         </Box>
 
         <Box>
           <h5>새 비밀번호</h5>
-          <Input
+          <input
             type="password"
             autoComplete="off"
             placeholder="새 비밀번호를 입력하세요."
-            sx={{
-              backgroundColor: "#fff",
-              border: "3px solid #111",
-              pl: "1rem",
-              mr: "1rem",
-              width: "50%",
-              height: "45px",
-            }}
+            css={css`
+              border: 3px solid #111;
+              width: 50%;
+              height: 45px;
+              font-size: 15px;
+              padding-left: 10px;
+            `}
             value={password1}
             onChange={onChangePassword1}
           />
@@ -115,18 +123,17 @@ function ChangePassword() {
 
         <Box>
           <h5>비밀번호 재확인</h5>
-          <Input
+          <input
             type="password"
             autoComplete="off"
             placeholder="비밀번호를 재입력하세요."
-            sx={{
-              backgroundColor: "#fff",
-              border: "3px solid #111",
-              pl: "1rem",
-              mr: "1rem",
-              width: "50%",
-              height: "45px",
-            }}
+            css={css`
+              border: 3px solid #111;
+              width: 50%;
+              height: 45px;
+              font-size: 15px;
+              padding-left: 10px;
+            `}
             value={password2}
             onChange={onChangePassword2}
           />

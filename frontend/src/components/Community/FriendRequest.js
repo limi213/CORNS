@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getFriendRequestListAxios } from "store/reducers/friendListReducer";
+import { getFriendRequestListAxios, useFriendRequestListAxios } from "store/reducers/friendListReducer";
 
 import RequestList from "./RequestList";
 import { Box } from "@mui/material";
@@ -16,6 +16,7 @@ function FriendRequest() {
 
   useEffect(() => {
     dispatch(getFriendRequestListAxios());
+    // dispatch(useFriendRequestListAxios());
   }, [dispatch]);
 
   return (

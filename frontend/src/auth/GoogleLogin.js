@@ -14,7 +14,11 @@ const GoogleLogin = async (code) => {
       sessionStorage.setItem("imgUrl", response.data.loginUser.imgUrl);
       sessionStorage.setItem("email", response.data.loginUser.email);
       sessionStorage.setItem("nickname", response.data.loginUser.nickname);
-
+      
+      if (response.data.isCombine) {
+        alert('CORNS 계정이 있으시군요! \n GOOGLE 계정에 연결기존 계정과 모두 자유롭게 이용하실 수 있습니다.')
+      }
+    
       // Home 페이지로 이동
       window.location.href = '/'
     }

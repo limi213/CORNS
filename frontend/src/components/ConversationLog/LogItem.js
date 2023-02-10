@@ -133,7 +133,7 @@ function LogItem({ log }) {
 
         {/* 제목 */}
         <TableCell width="25%" align="center">
-          {window.location.href.includes("logdetail") || canRead === false ? (
+          {window.location.href.includes("logdetail") ? (
             title
           ) : (
             <Link
