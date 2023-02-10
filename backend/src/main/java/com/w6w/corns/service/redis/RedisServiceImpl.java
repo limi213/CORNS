@@ -18,10 +18,7 @@ import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -165,9 +162,8 @@ public class RedisServiceImpl implements RedisService {
             File file = new File(saveUrl);
 
             if (!fileDir.exists()) fileDir.mkdirs();
-            FileWriter fw = new FileWriter(file);
 
-            BufferedWriter writer = new BufferedWriter(fw);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"));
             writer.write(scriptText);
             writer.close();
 
