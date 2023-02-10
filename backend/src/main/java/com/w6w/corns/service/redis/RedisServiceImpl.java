@@ -18,7 +18,10 @@ import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -66,6 +69,7 @@ public class RedisServiceImpl implements RedisService {
         // ---------------------------------------------------------------------------------------
 
         //HTML 문법 텍스트
+        String ENCODE = "<meta charset=\"utf-8\">";
         String TITLE = "<h1/>";
         String SUBTITLE = "<h2/>";
         String SCRIPT = "<h3/>";
@@ -86,6 +90,7 @@ public class RedisServiceImpl implements RedisService {
 
         // 스크립트 공통 텍스트(방 정보) 세팅
         StringBuilder roomInfoText = new StringBuilder();
+        roomInfoText.append(ENCODE);
         roomInfoText.append(CENTER_START).append(TITLE).append("[ ").append(roomInfo.getRoom().getTitle()).append(" ]").append(ENTER);
         roomInfoText.append(SUBTITLE).append(ICON_SUBJECT).append(roomInfo.getSubject().getValue())
                     .append(" | ").append(ICON_TIME).append(roomInfo.getRoom().getTime())
@@ -162,8 +167,9 @@ public class RedisServiceImpl implements RedisService {
             File file = new File(saveUrl);
 
             if (!fileDir.exists()) fileDir.mkdirs();
+            FileWriter fw = new FileWriter(file);
 
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8"));
+            BufferedWriter writer = new BufferedWriter(fw);
             writer.write(scriptText);
             writer.close();
 
