@@ -42,19 +42,23 @@ public class OAuthServiceImpl implements OAuthService{
                 User user = userRepository.findByEmail(googleUser.getEmail());
 
                 Map<String, Object> map = new HashMap<>();
-                if(user == null){ //새로운 회원
 
+                if(user == null){ //새로운 회원
+                    user = User.builder()
+                            .email(googleUser.getEmail())
+                            .social(2)
+                            .imgUrl(googleUser.getImgUrl())
+                            .build();
                     user.setEmail(googleUser.getEmail());
                     user.setSocial(2);
                     user.setImgUrl(googleUser.getImgUrl());
-                    userRepository.save(user);
 
                 }else if((user.getSocial() & (1 << 1)) == 0){ //기본 로그인으로만 등록되어있던 회원
                     //후에 소셜로그인 enum으로 관리하면 함수 따로 만들기
-                    user.setUserCd(user.getSocial() & (1 << 1));
-                    userRepository.save(user);
+                    user.setSocial(user.getSocial() | (1<<1));
                     map.put("message", "통합");
                 }
+                userRepository.save(user);
                 UserDetailResponseDto loginResponseDto = UserDetailResponseDto.fromEntity(user);
 
                 map.put("responseDto", loginResponseDto);

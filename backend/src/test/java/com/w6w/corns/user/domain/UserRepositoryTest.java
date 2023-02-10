@@ -40,7 +40,6 @@ public class UserRepositoryTest {
         //then
         User user = userList.get(0);
 
-        System.out.println("user = " + user);
         assertThat(user.getUserId()).isEqualTo(1);
         assertThat(user.getEmail()).isEqualTo(email);
         assertThat(user.getSocial()).isEqualTo(social);
