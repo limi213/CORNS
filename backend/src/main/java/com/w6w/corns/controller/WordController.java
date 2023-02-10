@@ -38,7 +38,7 @@ public class WordController {
         HttpStatus status;
 
         try {
-            PageableResponseDto response = wordService.searchBySlice(baseTime, wordStatus, pageable);
+            PageableResponseDto response = wordService.searchBySlice(userId, baseTime, wordStatus, pageable);
             if (response.getList().isEmpty()) {
                 status = HttpStatus.NO_CONTENT;
             } else {

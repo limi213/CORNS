@@ -12,7 +12,7 @@ import java.util.List;
 public interface WordService {
 
     // 쫑알단어 리스트 (페이징)
-    public PageableResponseDto searchBySlice(String baseTime, int wordStatus, Pageable pageable);
+    public PageableResponseDto searchBySlice(int userId, String baseTime, int wordStatus, Pageable pageable);
     // 쫑알단어 추가
     public WordReponseDto saveWord(CreateWordRequestDto request);
     // 쫑알단어 수정

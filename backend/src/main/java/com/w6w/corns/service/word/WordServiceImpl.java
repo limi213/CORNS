@@ -25,8 +25,8 @@ public class WordServiceImpl implements WordService {
 
     // 쫑알단어 리스트 (페이징)
     @Override
-    public PageableResponseDto searchBySlice(String baseTime, int wordStatus, Pageable pageable) {
-        Slice<Word> slice = wordRepository.searchBySlice(baseTime, wordStatus, pageable);
+    public PageableResponseDto searchBySlice(int userId, String baseTime, int wordStatus, Pageable pageable) {
+        Slice<Word> slice = wordRepository.searchBySlice(userId, baseTime, wordStatus, pageable);
         List<WordReponseDto> words = slice.getContent().stream()
                 .map(m -> WordReponseDto.builder()
                         .wordSq(m.getWordSq())

@@ -28,8 +28,11 @@ public class CustomWordRepositoryImpl implements CustomWordRepository {
     }
 
     @Override
-    public Slice<Word> searchBySlice(String baseTime, int wordStatus, Pageable pageable) {
+    public Slice<Word> searchBySlice(int userId, String baseTime, int wordStatus, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
+
+        // userId
+        builder.and(word.userId.eq(userId));
 
         // baseTime
         builder.and(word.modTm.lt(LocalDateTime.parse(baseTime, DateTimeFormatter.ofPattern(("yyyy-MM-dd HH:mm:ss")))));
@@ -43,7 +46,7 @@ public class CustomWordRepositoryImpl implements CustomWordRepository {
 
         List<Word> words = jpaQueryFactory.selectFrom(word)
                 .where(builder)
-                .orderBy(word.modTm.desc())
+                .orderBy(word.wordEng.asc()) // 사전순 정렬
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize() + 1)
                 .fetch();

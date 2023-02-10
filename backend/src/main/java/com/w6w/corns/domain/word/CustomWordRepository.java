@@ -7,5 +7,5 @@ import org.springframework.data.domain.Slice;
 public interface CustomWordRepository {
 
     // 쫑알단어 리스트 (페이징)
-    Slice<Word> searchBySlice(String baseTime, int wordStatus, Pageable pageable);
+    Slice<Word> searchBySlice(int userId, String baseTime, int wordStatus, Pageable pageable);
 }
