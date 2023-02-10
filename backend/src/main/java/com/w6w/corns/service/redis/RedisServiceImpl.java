@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @RequiredArgsConstructor
@@ -99,12 +100,15 @@ public class RedisServiceImpl implements RedisService {
         Map<Integer, User> userInfoList = new HashMap<>();
 
         Map<Integer, StringBuilder> scriptText = new HashMap<>(); // key : 개인 스크립트는 userId, 합본은 0
+        Map<Integer, Integer> scriptSize = new HashMap<>();
+        AtomicInteger scriptSizeAll = new AtomicInteger();
 
         for (int i = 0; i < roomUserList.size(); i++) {
             int userId = roomUserList.get(i).getUserId();
             userInfoList.put(userId, userRepo.findById(userId).get());
             BACKGROUND_START.put(userId, COLOR[i]);
             scriptText.put(userId, new StringBuilder(roomInfoText.toString()));
+            scriptSize.put(userId, 0);
         }
         scriptText.put(0, new StringBuilder(roomInfoText.toString()));
 
@@ -117,26 +121,22 @@ public class RedisServiceImpl implements RedisService {
                                                 .append(sentence.toString())
                                                 .append(BACKGROUND_END).append(ENTER));
             scriptText.put(userId, scriptText.get(userId).append(sentence.toString()).append(ENTER));
+
+            int size = script.getSentence().length();
+            scriptSizeAll.addAndGet(size);
+            scriptSize.put(userId, scriptSize.get(userId) + size);
         });
         
         // HTML 파일로 업로드
-        // -- 개인 스크립트 (파일 업로드 및 파일 사이즈 구하기)
-        Map<Integer, Long> fileSize = new HashMap<>();
-        long fileSizeAll = 0;
-
+        // -- 개인 스크립트
         for (RoomUser roomUser : roomUserList) {
-            long size = uploadScriptFile(roomUser.getRoomNo(), roomUser.getUserId(), scriptText.get(roomUser.getUserId()).toString());
-            fileSize.put(roomUser.getUserId(), size);
-            fileSizeAll += size;
-        }
+            uploadScriptFile(roomUser.getRoomNo(), roomUser.getUserId(), scriptText.get(roomUser.getUserId()).toString());
 
-        // -- 개인 스크립트 (스크립트 url, 이번 대화 발화량, 유저 누적 발화량 DB 저장)
-        for (RoomUser roomUser : roomUserList) {
             String scriptUrl = domainPath + "/scripts/" + roomInfo.getRoom().getRoomNo() + "_" + roomUser.getUserId() + ".html";
             roomUser.setScriptUrl(scriptUrl);
 
-            int scriptPerc = (int)(fileSize.get(roomUser.getUserId()) / fileSizeAll * 100);
-            int speakingSec = (roomInfo.getRoom().getTime()*60) * scriptPerc / 100;
+            double scriptPerc = (double)scriptSize.get(roomUser.getUserId()) / scriptSizeAll.get() * 100;
+            int speakingSec = (int)Math.round((roomInfo.getRoom().getTime()* 60) * scriptPerc / 100);
             roomUser.setSpeakingSec(speakingSec);
 
             User user = userInfoList.get(roomUser.getUserId());
@@ -145,7 +145,7 @@ public class RedisServiceImpl implements RedisService {
         }
         roomUserRepo.saveAll(roomUserList);
 
-        // -- 합본 스크립트 (파일 업로드 및 스크립트 url DB 저장)
+        // -- 합본 스크립트
         uploadScriptFile(roomInfo.getRoom().getRoomNo(), 0, scriptText.get(0).toString());
 
         String scriptUrl = domainPath + "/scripts/" + roomInfo.getRoom().getRoomNo() + "_" + 0 + ".html";
@@ -154,11 +154,10 @@ public class RedisServiceImpl implements RedisService {
         roomRepo.save(room);
     }
 
-    // 스크립트 파일 업로드 후 크기(byte) 반환
-    public long uploadScriptFile(int roomNo, int userId, String scriptText) {
+    // 스크립트 파일 업로드
+    public void uploadScriptFile(int roomNo, int userId, String scriptText) {
         String saveDir = uploadPath + "/scripts/";
         String saveUrl = saveDir + roomNo + "_" + userId + ".html";
-        long size = 0;
 
         try {
             // 파일 객체 생성
@@ -172,13 +171,9 @@ public class RedisServiceImpl implements RedisService {
             writer.write(scriptText);
             writer.close();
 
-            size = file.length();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return size;
     }
 
 }
