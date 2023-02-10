@@ -6,6 +6,7 @@ import com.w6w.corns.domain.room.Room;
 import com.w6w.corns.domain.room.RoomRepository;
 import com.w6w.corns.domain.roomuser.RoomUser;
 import com.w6w.corns.domain.roomuser.RoomUserRepository;
+import com.w6w.corns.domain.user.User;
 import com.w6w.corns.domain.user.UserRepository;
 import com.w6w.corns.dto.redis.SaveScriptRequestDto;
 import com.w6w.corns.dto.redis.ScriptDto;
@@ -95,13 +96,13 @@ public class RedisServiceImpl implements RedisService {
 
         // 해당 방 roomUser 리스트, user 정보 가져오기
         List<RoomUser> roomUserList = roomUserRepo.findStartRoomUserInRoom(roomInfo.getRoom().getRoomNo(), RoomUserCode.ROOM_USER_END.getCode());
-        Map<Integer, String> nicknameList = new HashMap<>();
+        Map<Integer, User> userInfoList = new HashMap<>();
 
         Map<Integer, StringBuilder> scriptText = new HashMap<>(); // key : 개인 스크립트는 userId, 합본은 0
 
         for (int i = 0; i < roomUserList.size(); i++) {
             int userId = roomUserList.get(i).getUserId();
-            nicknameList.put(userId, userRepo.findByUserId(userId).getNickname());
+            userInfoList.put(userId, userRepo.findById(userId).get());
             BACKGROUND_START.put(userId, COLOR[i]);
             scriptText.put(userId, new StringBuilder(roomInfoText.toString()));
         }
@@ -110,7 +111,7 @@ public class RedisServiceImpl implements RedisService {
         // HTML 문법으로 스크립트 저장
         scriptList.stream().forEach(script -> {
             int userId = script.getUserId();
-            StringBuilder sentence = new StringBuilder().append(nicknameList.get(userId)).append("#").append(userId)
+            StringBuilder sentence = new StringBuilder().append(userInfoList.get(userId).getNickname()).append("#").append(userId)
                                                         .append(ICON_SPEAK).append(script.getSentence());
             scriptText.put(0, scriptText.get(0).append(BACKGROUND_START.get(userId))
                                                 .append(sentence.toString())
@@ -119,16 +120,32 @@ public class RedisServiceImpl implements RedisService {
         });
         
         // HTML 파일로 업로드
-        // -- 개인 스크립트
-        for (RoomUser roomUser : roomUserList) {
-            uploadScriptFile(roomUser.getRoomNo(), roomUser.getUserId(), scriptText.get(roomUser.getUserId()).toString());
+        // -- 개인 스크립트 (파일 업로드 및 파일 사이즈 구하기)
+        Map<Integer, Long> fileSize = new HashMap<>();
+        long fileSizeAll = 0;
 
+        for (RoomUser roomUser : roomUserList) {
+            long size = uploadScriptFile(roomUser.getRoomNo(), roomUser.getUserId(), scriptText.get(roomUser.getUserId()).toString());
+            fileSize.put(roomUser.getUserId(), size);
+            fileSizeAll += size;
+        }
+
+        // -- 개인 스크립트 (스크립트 url, 이번 대화 발화량, 유저 누적 발화량 DB 저장)
+        for (RoomUser roomUser : roomUserList) {
             String scriptUrl = domainPath + "/scripts/" + roomInfo.getRoom().getRoomNo() + "_" + roomUser.getUserId() + ".html";
             roomUser.setScriptUrl(scriptUrl);
+
+            int scriptPerc = (int)(fileSize.get(roomUser.getUserId()) / fileSizeAll * 100);
+            int speakingSec = (roomInfo.getRoom().getTime()*60) * scriptPerc / 100;
+            roomUser.setSpeakingSec(speakingSec);
+
+            User user = userInfoList.get(roomUser.getUserId());
+            user.setSpeakingTotal(user.getSpeakingTotal()+speakingSec);
+            userRepo.save(user);
         }
         roomUserRepo.saveAll(roomUserList);
 
-        // -- 합본 스크립트
+        // -- 합본 스크립트 (파일 업로드 및 스크립트 url DB 저장)
         uploadScriptFile(roomInfo.getRoom().getRoomNo(), 0, scriptText.get(0).toString());
 
         String scriptUrl = domainPath + "/scripts/" + roomInfo.getRoom().getRoomNo() + "_" + 0 + ".html";
@@ -137,10 +154,11 @@ public class RedisServiceImpl implements RedisService {
         roomRepo.save(room);
     }
 
-    // 스크립트 파일 업로드
-    public void uploadScriptFile(int roomNo, int userId, String scriptText) {
+    // 스크립트 파일 업로드 후 크기(byte) 반환
+    public long uploadScriptFile(int roomNo, int userId, String scriptText) {
         String saveDir = uploadPath + "/scripts/";
         String saveUrl = saveDir + roomNo + "_" + userId + ".html";
+        long size = 0;
 
         try {
             // 파일 객체 생성
@@ -154,9 +172,13 @@ public class RedisServiceImpl implements RedisService {
             writer.write(scriptText);
             writer.close();
 
+            size = file.length();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return size;
     }
 
 }
