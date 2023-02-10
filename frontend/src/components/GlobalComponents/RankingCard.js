@@ -1,5 +1,6 @@
 import React from "react";
 
+import ProfileImg from "./ProfileImg";
 import leaf_left from "assets/leaf_left.png";
 import leaf_right from "assets/leaf_right.png";
 import { Box, Grid, Typography } from "@mui/material";
@@ -7,7 +8,7 @@ import { Box, Grid, Typography } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-export default function RankingCard({ rankInfo }) {
+export default function RankingCard({ rankInfo, customWidth }) {
   const { type, nickname, user_id } = rankInfo;
 
   let transKorean = "";
@@ -16,7 +17,7 @@ export default function RankingCard({ rankInfo }) {
   if (type === "sungsil") {
     transKorean = "성실";
     bgColor = "#FFD704";
-    unit = "경험치";
+    unit = "exp";
   } else if (type === "ddabong") {
     transKorean = "따봉";
     bgColor = "#3C90F2";
@@ -31,6 +32,8 @@ export default function RankingCard({ rankInfo }) {
     unit = "명";
   }
 
+  const width = customWidth.toString() + "px";
+
   return (
     <>
       <Grid item xs={3} sx={{}}>
@@ -43,49 +46,62 @@ export default function RankingCard({ rankInfo }) {
           }}
         >
           <img
-            src="https://cdn.vox-cdn.com/thumbor/B9HHx8vQRoUtBJA8vcuT8WhNrOU=/0x0:5242x3495/1200x800/filters:focal(2029x1954:2867x2792)/cdn.vox-cdn.com/uploads/chorus_image/image/64897255/shutterstock_204525697.0.jpg"
-            css={css`
-              display: block;
-              width: 205px;
-              height: 205px;
-              border-radius: 200px;
-              border: 3px solid #111;
-              margin-top: 24px;
-              margin-left: calc((100% - 205px) / 2);
-            `}
-            alt="userimage"
-          />
-          <img
             src={leaf_left}
             alt="leaf"
             css={css`
-              display: block;
+              width: ${customWidth / 1.5}px;
               position: absolute;
               top: 35%;
-              left: -1%;
-              transform: rotate(-10deg);
+              left: -2%;
             `}
           />
+          <div
+            css={css`
+              display: flex;
+              justify-content: center;
+              margin-top: 32px;
+            `}
+          >
+            <ProfileImg imgSrc={null} nickname={null} width={width} />
+          </div>
           <img
             src={leaf_right}
             alt="leaf"
             css={css`
-              display: block;
+              width: ${customWidth / 1.5}px;
               position: absolute;
               top: 35%;
-              right: -1%;
-              transform: rotate(10deg);
+              right: -2%;
             `}
           />
-          <Typography
-            variant="h5"
-            sx={{ position: "absolute", top: "70%", left: "42%" }}
+          <p
+            css={css`
+              font-size: 24px;
+              margin: 0;
+              text-align: center;
+              margin-top: 16px;
+            `}
           >
             {transKorean}왕
-          </Typography>
-          <Box sx={{ mt: "64px", textAlign: "center" }}>
+          </p>
+          <Box
+            sx={{
+              mt: "16px",
+              textAlign: "center",
+              fontSize: "20px",
+              fontWeight: "bold",
+            }}
+          >
             <span>
-              {nickname}#{user_id} 500{unit}
+              {nickname}#{user_id}
+            </span>
+            <span
+              css={css`
+                color: red;
+                margin-left: 8px;
+              `}
+            >
+              500{unit}
             </span>
           </Box>
         </Box>

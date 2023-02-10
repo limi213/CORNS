@@ -58,7 +58,7 @@ function LoginCard() {
           src={yellow_logo}
           alt="corns-logo"
           css={css`
-            height: 2rem;
+            height: 3rem;
           `}
         />
       </NavLink>
@@ -78,6 +78,9 @@ function LoginCard() {
           css={css`
             width: 95%;
             height: 45px;
+            border: 3px solid #111;
+            padding-left: 16px;
+            box-sizing: border-box;
           `}
         />
       </Box>
@@ -104,6 +107,9 @@ function LoginCard() {
             css={css`
               width: 95%;
               height: 45px;
+              border: 3px solid #111;
+              padding-left: 16px;
+              box-sizing: border-box;
             `}
           />
         </form>
@@ -122,9 +128,17 @@ function LoginCard() {
         sx={{
           backgroundColor: "#3C90F2",
           color: "#111111",
-          margin: "64px 0",
+          margin: "64px 0 48px 0",
           width: "214px",
           height: "60px",
+          border: "3px solid #111",
+          boxSizing: "border-box",
+          borderRadius: "0",
+          fontWeight: "bold",
+          fontSize: "20px",
+          "&:hover": {
+            backgroundColor: "#1766C3",
+          },
         }}
         onClick={onLogin}
       >

@@ -62,6 +62,10 @@ function SigninPassword({
           css={css`
             width: 95%;
             height: 45px;
+            border: 3px solid #111;
+            border-radius: 0;
+            padding-left: 16px;
+            box-sizing: border-box;
           `}
         />
       </form>
@@ -89,6 +93,10 @@ function SigninPassword({
           css={css`
             width: 95%;
             height: 45px;
+            border: 3px solid #111;
+            border-radius: 0;
+            padding-left: 16px;
+            box-sizing: border-box;
           `}
         />
       </form>

@@ -23,13 +23,9 @@ function Navbar() {
     setUser(false);
   };
 
-
   // router / window 바뀔때마다 is new? 체크하고 빨간거 만들고
   // 새로 들어온거 있으면 무조건 api -> true (빨간거 띄우고)
   // 친구 page 들어오면 -> 확인했다고 api 보내면 -> false (빨간거 없어짐)
-  
-
-
 
   return (
     <>
@@ -40,8 +36,8 @@ function Navbar() {
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            padding: 0 24px;
-            width: calc(100% - 250px);
+            padding: 0 36px;
+            width: 86%;
             height: 60px;
             background: #ffc804;
             position: absolute;
@@ -85,7 +81,11 @@ function Navbar() {
             <li>
               <NavLink
                 to="/conversation"
-                style={{ textDecoration: "none", color: "black" }}
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                  fontSize: "20px",
+                }}
                 activeStyle={{ fontWeight: "bold" }}
               >
                 쫑알쫑알
@@ -94,7 +94,11 @@ function Navbar() {
             <li>
               <NavLink
                 to="/conversationLog/loglist"
-                style={{ textDecoration: "none", color: "black" }}
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                  fontSize: "20px",
+                }}
                 activeStyle={{ fontWeight: "bold" }}
               >
                 쫑알로그
@@ -103,7 +107,11 @@ function Navbar() {
             <li>
               <NavLink
                 to="/growthRecord/myProfile"
-                style={{ textDecoration: "none", color: "black" }}
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                  fontSize: "20px",
+                }}
                 activeStyle={{ fontWeight: "bold" }}
               >
                 성장기록
@@ -112,7 +120,11 @@ function Navbar() {
             <li>
               <NavLink
                 to="/community/ranking/sincerity"
-                style={{ textDecoration: "none", color: "black" }}
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                  fontSize: "20px",
+                }}
                 activeStyle={{ fontWeight: "bold" }}
               >
                 커뮤니티
@@ -125,7 +137,11 @@ function Navbar() {
                 <li>
                   <NavLink
                     to="/login"
-                    style={{ textDecoration: "none", color: "black" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                      fontSize: "20px",
+                    }}
                   >
                     로그인
                   </NavLink>
@@ -133,7 +149,11 @@ function Navbar() {
                 <li>
                   <NavLink
                     to="/signin"
-                    style={{ textDecoration: "none", color: "black" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                      fontSize: "20px",
+                    }}
                   >
                     회원가입
                   </NavLink>
@@ -144,7 +164,11 @@ function Navbar() {
                 <li>
                   <NavLink
                     to="/"
-                    style={{ textDecoration: "none", color: "black" }}
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                      fontSize: "20px",
+                    }}
                     onClick={onLogout}
                   >
                     로그아웃

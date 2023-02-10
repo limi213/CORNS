@@ -1,21 +1,14 @@
 import React from "react";
 import SubjectsContainer from "store/containers/SubjectsContainer";
 import SelfEvaluationFilter from "components/ConversationLog/SelfEvaluationFilter";
+import ThumbBadgeFilter from "components/ConversationLog/ThumbBadgeFilter";
 
-import {
-  Checkbox,
-  Box,
-  FormControlLabel,
-  Button,
-  Input,
-} from "@mui/material";
-
+import { Checkbox, Box, FormControlLabel, Button, Input } from "@mui/material";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
 function LogFilter() {
-
   return (
     <Box
       component="form"
@@ -25,9 +18,8 @@ function LogFilter() {
         p: "32px",
       }}
     >
-      
       {/* 주제 */}
-      <Box sx={{ mb: "48px", display: "flex"}}>
+      <Box sx={{ mb: "48px", display: "flex" }}>
         <span
           css={css`
             margin-right: 64px;
@@ -142,8 +134,9 @@ function LogFilter() {
         >
           따봉뱃지
         </span>
-        <FormControlLabel control={<Checkbox />} label="있음" />
-        <FormControlLabel control={<Checkbox />} label="없음" />
+        <ThumbBadgeFilter />
+        {/* <FormControlLabel control={<Checkbox />} label="있음" />
+        <FormControlLabel control={<Checkbox />} label="없음" /> */}
       </Box>
 
       <Box sx={{ display: "flex", flexDirection: "row-reverse" }}>
@@ -155,7 +148,7 @@ function LogFilter() {
             backgroundColor: "#3C90F2",
             color: "#111",
             "&:hover": {
-              backgroundColor: "#45971E",
+              backgroundColor: "#1766C3",
             },
           }}
         >

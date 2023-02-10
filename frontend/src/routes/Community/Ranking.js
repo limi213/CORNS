@@ -209,8 +209,8 @@ function Ranking({ location, history }) {
       <h2>알맹이 랭킹</h2>
 
       {/* 1-4등 데이터 prop */}
-      <Box sx={{ padding: "5%" }}>
-        <RankingList />
+      <Box sx={{ py: "64px" }}>
+        <RankingList width={150} />
       </Box>
 
       <Tabmenu Items={TabMenus} Location={location.pathname} />

@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -47,11 +47,14 @@ export default function TopBtn({}) {
               fontWeight: "bold",
               fontSize: "15px",
               padding: "15px 10px",
-              backgroundColor: "#ddd",
+              backgroundColor: "#FFC804",
               color: "#111",
               border: "3px solid #111",
               borderRadius: "50%",
               cursor: "pointer",
+              "&:hover": {
+                backgroundColor: "#FFA903",
+              },
             }}
           >
             Top

@@ -15,17 +15,15 @@ function SigninNickname({
     setNickname(e.target.value);
   };
 
-
   useEffect(() => {
     // 닉네임 유효성 검사
     // 지금 숫자 들어감 -> 수정해야함
     const validateNickname = (nickname) => {
       return nickname.toLowerCase().match(/^[a-z|A-Z|].{1,20}$/);
     };
-    
-    setStateNickname(Boolean(nickname && validateNickname(nickname)))
-  }, [nickname])
 
+    setStateNickname(Boolean(nickname && validateNickname(nickname)));
+  }, [nickname]);
 
   return (
     <Box sx={{ width: "90%" }}>
@@ -43,6 +41,10 @@ function SigninNickname({
         css={css`
           width: 95%;
           height: 45px;
+          border: 3px solid #111;
+          border-radius: 0;
+          padding-left: 16px;
+          box-sizing: border-box;
         `}
       />
 

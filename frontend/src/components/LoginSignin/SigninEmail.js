@@ -35,18 +35,17 @@ function SigninEmail({ email, setEmail, stateEmail, setStateEmail }) {
     }
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_HOST}/user/email-check/${email}`, 
-        // `/user/email-check/${email}`, 
+        `${process.env.REACT_APP_HOST}/user/email-check/${email}`,
+        // `/user/email-check/${email}`,
         {
-          validateStatus: (status) => (status === 200 || status === 409)
+          validateStatus: (status) => status === 200 || status === 409,
         }
       );
       if (response.status === 200) {
         setStateEmail(true);
       } else if (response.status === 409) {
-        alert('이미 존재하는 이메일입니다.')
-      }
-      else {
+        alert("이미 존재하는 이메일입니다.");
+      } else {
         throw new Error();
       }
     } catch (e) {
@@ -71,12 +70,23 @@ function SigninEmail({ email, setEmail, stateEmail, setStateEmail }) {
           css={css`
             width: 70%;
             height: 45px;
+            border: 3px solid #111;
+            border-radius: 0;
+            padding-left: 16px;
+            box-sizing: border-box;
           `}
         />
         <Button
           sx={{
-            backgroundColor: "#FFB800",
+            width: "120px",
+            backgroundColor: "#FFC804",
+            fontWeight: "bold",
             color: "#111111",
+            border: "3px solid #111",
+            borderRadius: "0",
+            "&:hover": {
+              backgroundColor: "#FFB800",
+            },
           }}
           onClick={onCheckEmail}
         >

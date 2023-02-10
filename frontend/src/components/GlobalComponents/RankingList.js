@@ -6,12 +6,12 @@ import { Box, Grid, Typography } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-export default function RankingList({}) {
+export default function RankingList({ width }) {
   const rankInfos = [
     {
       type: "sungsil",
       nickname: "dorothy",
-      user_id: 1000156,
+      user_id: 1180,
       level: 30,
       exp: 1980,
       friendCnt: 10,
@@ -22,7 +22,7 @@ export default function RankingList({}) {
     {
       type: "ddabong",
       nickname: "dorothy",
-      user_id: 1000556,
+      user_id: 1056,
       level: 30,
       exp: 1980,
       friendCnt: 10,
@@ -33,7 +33,7 @@ export default function RankingList({}) {
     {
       type: "suda",
       nickname: "dorothy",
-      user_id: 1000756,
+      user_id: 1759,
       level: 30,
       exp: 1980,
       friendCnt: 10,
@@ -44,7 +44,7 @@ export default function RankingList({}) {
     {
       type: "ingi",
       nickname: "dorothy",
-      user_id: 1000656,
+      user_id: 1002,
       level: 30,
       exp: 1980,
       friendCnt: 10,
@@ -58,7 +58,13 @@ export default function RankingList({}) {
     <>
       <Grid container spacing={1}>
         {rankInfos.map((rankInfo) => {
-          return <RankingCard rankInfo={rankInfo} key={rankInfo.user_id} />;
+          return (
+            <RankingCard
+              rankInfo={rankInfo}
+              key={rankInfo.user_id}
+              customWidth={width}
+            />
+          );
         })}
       </Grid>
     </>

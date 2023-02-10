@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import axios from "axios";
-import Login from 'auth/Login'
+import Login from "auth/Login";
 
 import SigninEmail from "./SigninEmail";
 import SigninPassword from "./SigninPassword";
@@ -13,7 +13,7 @@ import yellow_logo from "assets/corns_logo_yellow.png";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-function SigninCard({ checked }) {
+function SigninCard({ checked1, checked2 }) {
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
@@ -32,10 +32,11 @@ function SigninCard({ checked }) {
       alert("항목을 확인해주세요.");
       return;
     }
-    if (!checked) {
+    if (!checked1 || !checked2) {
       alert("약관에 동의해주세요.");
       return;
     }
+
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_HOST}/user/join`,
@@ -46,10 +47,9 @@ function SigninCard({ checked }) {
         }
       );
       if (response.status === 200) {
-      
         // 홈페이지 이동
         window.location.href = "/";
-        alert('회원가입이 완료되었습니다.')
+        alert("회원가입이 완료되었습니다.");
       }
     } catch (e) {
       console.log(e);
@@ -73,7 +73,7 @@ function SigninCard({ checked }) {
           src={yellow_logo}
           alt="corns-logo"
           css={css`
-            height: 2rem;
+            height: 3rem;
           `}
         />
       </NavLink>
@@ -105,11 +105,18 @@ function SigninCard({ checked }) {
 
       <Button
         sx={{
-          backgroundColor: "#FFC804",
-          color: "#111111",
-          margin: "64px 0",
+          color: "#111",
+          mt: "32px",
           width: "240px",
           height: "60px",
+          backgroundColor: "#FFC804",
+          fontSize: "16px",
+          fontWeight: "bold",
+          border: "3px solid #111",
+          borderRadius: "0",
+          "&:hover": {
+            backgroundColor: "#FFB800",
+          },
         }}
         onClick={onSubmit}
       >
