@@ -41,6 +41,7 @@ public class UserDetailResponseDto {
                 .attendTotal(user.getAttendTotal())
                 .speakingTotal(user.getSpeakingTotal())
                 .thumbTotal(user.getThumbTotal())
+                .friendTotal(user.getFriendTotal())
                 .social(user.getSocial())
                 .build();
 
