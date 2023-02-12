@@ -141,14 +141,14 @@
       console.log("[window onload] : [start]");
       console.log("");
   
-      /* 브라우저 닫기 이벤트 감지 실시 [1]
+      /* 브라우저 닫기 이벤트 감지 실시 [1]*/
       window.addEventListener("beforeunload", function (event) {
       console.log("[window beforeunload] : [start]");
       console.log("");        			
     			// event.returnValue = "브라우저를 종료하시겠습니까?";    			
-       	// outRoom($("#userId").val());
+      outRoom($("#userId").val());
       });    		
-      */
+      
     };
     
     
@@ -157,7 +157,7 @@
         console.log("[window onbeforeunload] : [start]");
         console.log("");
   
-        // outRoom($("#userId").val());
+        outRoom($("#userId").val());
     		// return "브라우저를 종료하시겠습니까?";
       };	 
     </script>

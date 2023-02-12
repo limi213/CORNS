@@ -1,0 +1,134 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <meta
+            name="description"
+            content="Web site created using create-react-app"
+        />
+        <!-- Bootstrap -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+    
+    </body>
+    <script type="text/javascript">
+        $(document).ready(function(){
+        
+            let urlParams = new URL(location.href).searchParams;
+
+            let username = urlParams.get('username'); // sessionstorage의 nickname
+            let userid = urlParams.get('userId');     // sessionstorage의 userId
+            let jroomno = urlParams.get('jroomno');
+            // alert('session = ' + session)
+            // 쫑알룸 방 번호를 받거나 아니면 정보를 받아서 방을 생성해준다.
+            //subject, type, time, count
+            let subject = urlParams.get('subject');
+            let type = urlParams.get('type');
+            let time = urlParams.get('time');
+            let count = urlParams.get('count');
+
+            let accessToken= urlParams.get("accessToken");
+
+            if(jroomno){
+                // 만들어진 방 입장
+                let serverUrl = "https://corns.co.kr:4463/";
+
+                $.ajax({
+                    type : "GET",
+                    url : serverUrl + "room/" + jroomno, 
+                    headers: { "Content-Type": "application/json",
+                                "Authorization" : "Basic " + accessToken,
+                                "Access-Control-Allow-Credentials" : "true"},     
+                    contentType : "application/json",
+                    success: function(data, textStatus, xhr) {
+                        console.log(data);
+                        var url;
+                        
+                        if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
+                            url = "https://localhost:5000/src/Room/View.html?"+
+                            "session=" + data.room.room.sessionId + "&" + 
+                            "username=" + username
+                            + "&userId=" + userid
+                            + "&accessToken=" + accessToken
+                            + "&jroomno=" + jroomno;
+                        }
+                        else{
+                            url = "https://localhost:5000/src/Room/View.html?"+
+                            "session=" + data.room.room.sessionId + "&" + 
+                            "username=" + username
+                            + "&userId=" + userid
+                            + "&accessToken=" + accessToken
+                            + "&jroomno=" + jroomno;
+                        }
+
+                        window.location.href = url;
+                    },
+                    error:function(request,status,error){
+                        console.log(request);
+                        console.log(status);
+                        console.log(error);
+                    }
+                });
+            }
+            else{
+                // 새로 방 만들기
+                
+                var OPENVIDU_URL= "https://corns.co.kr:4430/";
+
+                var OPENVIDU_SECRET = btoa("OPENVIDUAPP:a506w6w");
+
+                var senddata = {
+                    "mediaMode": "ROUTED",
+                    "recordingMode": "MANUAL",
+                    "defaultRecordingProperties": {
+                        "hasAudio": true,
+                        "hasVideo": true,
+                        "outputMode": "INDIVIDUAL"
+                    },
+                    "mediaNode": {
+                        "id": "media_3.36.120.19"
+                    }
+                };
+                
+                $.ajax({
+                    type : "POST",
+                    url : OPENVIDU_URL + "openvidu/api/sessions",
+                    headers: { "Content-Type": "application/json",
+                                "Authorization" : "Basic " + OPENVIDU_SECRET,
+                                "Access-Control-Allow-Origin" : "*"},
+                    data: JSON.stringify(senddata),
+                    success: function(data, textStatus, xhr) {
+                        console.log(data);
+                        console.log("세션 생성 완료");
+
+                        if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
+                            window.location.href = "https://localhost:5000/src/Room/View.html?"+
+                            "session=" + data.sessionId + "&" + 
+                            "username=" + username
+                            + "&userId=" + userid
+                            + "&subject=" + subject + "&type=" + type + "&time=" + time + "&count=" + count + "&accessToken=" + accessToken;
+                        }
+                        else{
+                            window.location.href = "https://localhost:5000/src/Room/View.html?"+
+                            "session=" + data.sessionId + "&" + 
+                            "username=" + username
+                            + "&userId=" + userid
+                            + "&subject=" + subject + "&type=" + type + "&time=" + time + "&count=" + count + "&accessToken=" + accessToken;
+                        }
+                    },
+                    error:function(request,status,error){
+                        console.log("세션 생성중 오류가 발생했습니다. ----");
+                        console.log(request);
+                        console.log(status);
+                        console.log(error);
+                    }
+                });
+            }
+
+
+        });
+    </script>
+
+</html>

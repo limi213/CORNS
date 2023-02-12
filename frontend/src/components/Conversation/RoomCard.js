@@ -26,6 +26,21 @@ function RoomCard({ room, subject }) {
   } = room;
   const { imgUrl, subjectNo, value } = subject;
 
+  let url;
+
+  if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
+    url = "https://localhost:5000/src/Room/GoToView.html?"+
+      "username=" + sessionStorage.getItem("nickname")
+      + "&userId=" + sessionStorage.getItem("userId") 
+      + "&jroomno=" + roomNo + "&accessToken=" + sessionStorage.getItem("accessToken");
+  }
+  else{
+    url = "https://localhost:5000/src/Room/GoToView.html?"+
+      "username=" + sessionStorage.getItem("nickname")
+      + "&userId=" + sessionStorage.getItem("userId") 
+      + "&jroomno=" + roomNo + "&accessToken=" + sessionStorage.getItem("accessToken");
+  }
+
   let badgeColor = "";
 
   switch (subjectNo) {
@@ -103,7 +118,10 @@ function RoomCard({ room, subject }) {
             backgroundColor: "#45971E",
           },
         }}
-      >
+        onClick={() => {
+          window.location.href = url
+        }}
+        >
         쫑알룸 입장하기
       </Button>
     </Card>

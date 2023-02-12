@@ -32,6 +32,7 @@ var myStream;
 
 function joinSession() {
 
+	// 초기 데이터 처리
 	mySessionId = document.getElementById("sessionId").value;
 	myUserName = document.getElementById("userName").value;
 	jRoomNo = document.getElementById("jRoomNo").value;
@@ -44,13 +45,6 @@ function joinSession() {
 
 	accessToken = document.getElementById("accessToken").value;
 
-
-	// $("#sessionId").val(session);
-	// $("#userName").val(username);
-	// $("#jRoomNo").val(jroomno);
-	// $("#userId").val(userid);
-
-
 	// --- 1) Get an OpenVidu object ---
 
 	OV = new OpenVidu();
@@ -59,42 +53,31 @@ function joinSession() {
 
 	session = OV.initSession();
 
-	// --- 3) Specify the actions when events take place in the session ---
-	// 현재 세션에 연결된 사용자들 띄우기
-	// let connections = 
-	// getConnections(mySessionId).then(data => {
-	// 	if(data.numberOfElements > 0){
-	// 		for(let i = 0 ; i < data.numberOfElements ; i++){
-	// 			// console.log(data.content[i].stream);
-	// 		}	
-	// 	}
-	// });
-
 	// On every new Stream received...
 	session.on('streamCreated', event => {
 		// Subscribe to the Stream to receive it. HTML video will be appended to element with roomListId id
-			var roomno;
-			if(userArray[0] === false){
-				roomno = "roomViewUser2";
-				userArray[0] = true;
-			}
-			else if(userArray[1] === false){
-				roomno = "roomViewUser3";
-				userArray[1] = true;
-			}
-			else if(userArray[2] === false){
-				roomno = "roomViewUser4";
-				userArray[2] = true;
-			}
+		var roomno;
+		if(userArray[0] === false){
+			roomno = "roomViewUser2";
+			userArray[0] = true;
+		}
+		else if(userArray[1] === false){
+			roomno = "roomViewUser3";
+			userArray[1] = true;
+		}
+		else if(userArray[2] === false){
+			roomno = "roomViewUser4";
+			userArray[2] = true;
+		}
 
-			var subscriber = session.subscribe(event.stream, roomno);
+		var subscriber = session.subscribe(event.stream, roomno);
 	
-			// When the HTML video has been appended to DOM...
-			subscriber.on('videoElementCreated', event => {
-				// 누군가 새로운 사람이 들어오면 여기에 뜬다.
-				// 2번부터 띄워준다.
-				appendUserData(event.element, subscriber.stream.connection, roomno);
-			});
+		// When the HTML video has been appended to DOM...
+		subscriber.on('videoElementCreated', event => {
+			// 누군가 새로운 사람이 들어오면 여기에 뜬다.
+			// 2번부터 띄워준다.
+			appendUserData(event.element, subscriber.stream.connection, roomno);
+		});
 		
 		
 	});
@@ -120,25 +103,17 @@ function joinSession() {
 
 
 	// --- 4) Connect to the session with a valid user token ---
-	// Get a token from the OpenVidu deployment
+	// 세션아이디로 토큰 받아오기
 	getToken(mySessionId).then(token => {
 
 		token = token.token;
 
-		// First param is the token got from the OpenVidu deployment. Second param can be retrieved by every user on event
-		// 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
 		session.connect(token, { userId : userId, userName: myUserName })
 			.then(() => {
 
 				// 방이 없으면 만들어줘야 한다.
 				if(!jRoomNo){
 					// 방 만들어야한다.
-
-					// var subject;// = urlParams.get('subject');
-					// var type;// = urlParams.get('type');
-					// var time;// = urlParams.get('time');
-					// var count;// = urlParams.get('count');
-		
 					var makeroomdata = {
 						"room": {
 							"maxMember": count,
@@ -164,11 +139,11 @@ function joinSession() {
 						contentType : "application/json",
 						data : JSON.stringify(makeroomdata),
 						success: function(data, textStatus, xhr) {
+							jRoomNo = data.room.room.roomNo;
 							console.log("방 만들기")
 							console.log(data);
 							console.log(textStatus);
 							console.log(xhr);
-							initRoomInfo();
 							
 						},
 						error:function(request,status,error){
@@ -178,6 +153,10 @@ function joinSession() {
 						}
 					});
 
+				}else{	//쫑알룸 번호가 있다
+						
+					// 방 입장처리 한다.
+					intoRoom(myUserName, '', token);
 				}
 		
 
@@ -209,10 +188,7 @@ function joinSession() {
 				// --- 8) Publish your stream ---
 
 				session.publish(publisher);
-
 				
-				// 방 입장처리 한다.
-				intoRoom(myUserName, '', token);
 
 			})
 			.catch(error => {
@@ -240,17 +216,17 @@ function joinSession() {
             <div style="float:left; margin:10px;">앤드류 : 시작할게요~~~ </div> <br>
             <div style="float:right; margin:10px;">가필드 : 네.</div>
           </div> */
-		  if(event.data.includes(myUserName + " : ")){
+		if(event.data.includes(myUserName + " : ")){
 			// 내 메시지
 			var c_html = `<div><div style="float:right; margin:10px; ">` + event.data + `</div><div>`;
 			$("#roomViewChattingReceive").append(c_html);
 			
-		  }
-		  else{
+		}
+		else{
 			// 남의 메시지
 			var o_html = `<div style="float:left; margin:10px;">` + event.data + `</div>`;
 			$("#roomViewChattingReceive").append(o_html);
-		  }
+		}
 		}
 		
 
@@ -330,6 +306,7 @@ function intoRoom(connectionId, recordId, token){
 		},
 		"userId": userId
 	};
+	
 
 	$.ajax({
 		type : "POST",
@@ -344,6 +321,8 @@ function intoRoom(connectionId, recordId, token){
 			console.log(textStatus);
 			console.log(xhr);
 			console.log("입장처리 완료");
+			initRoomInfo();
+
 		},
 		error:function(request,status,error){
 			// alert("방 입장처리 실패 : " + request.statusText);
