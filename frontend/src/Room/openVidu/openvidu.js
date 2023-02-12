@@ -227,7 +227,28 @@ function joinSession() {
 		// console.log(session)
 		//시작
 		if(event.type==="signal:start"){
-			this.session.subscribeToSpeechToText(session.connection.stream, 'en-US');
+
+			// var userdata = {
+			// 	"userId" : userId,
+			// 	"userName" : userName
+			// };
+
+			// getConnections(mySessionId).then(data => {
+			// 	if(data.numberOfElements > 0){
+			// 		for(let i = 0 ; i < data.numberOfElements ; i++){
+			// 			alert(data.content[i].clientData)
+			// 			if(data.content[i].clientData ===  JSON.stringify(userdata)){
+			// 				alert(1)
+			// 				this.session.subscribeToSpeechToText(data.content[i].stream, 'en-US');
+			// 			}
+			// 			// console.log(data.content[i].stream);
+			// 		}	
+			// 	}
+			// });
+	
+			// console.log(myStream)
+			this.session.subscribeToSpeechToText(myStream, 'en-US');
+
 			// $("#startSttttt").click();
 			// 시작했다는 알림 받음
 			// $("#roomViewLastTimer").text(data.room.room.time + ":00");
