@@ -1,5 +1,16 @@
+// {
+//     "liveServer.settings.port" : 5000,
+//     "liveServer.settings.root": "/",
+//     "liveServer.settings.CustomBrowser": "chrome",
+//     "liveServer.settings.https": {
+//         "enable": true,
+//         "cert": "C:\\OpenSSL\\bin\\localhost.pem",
+//         "key": "C:\\OpenSSL\\bin\\localhost.key.pen",
+//         "passphrase": "a506w6w"
+//     }
+// }
 {
-    "liveServer.settings.port" : 5000,
+    "liveServer.settings.port": 5000,
     "liveServer.settings.root": "/",
     "liveServer.settings.CustomBrowser": "chrome",
     "liveServer.settings.https": {

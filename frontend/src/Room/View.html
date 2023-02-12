@@ -79,6 +79,11 @@
       <input type="hidden" id="userName" />
       <input type="hidden" id="jRoomNo" />
       <input type="hidden" id="userId" />
+      <input type="hidden" id="subject" />
+      <input type="hidden" id="type" />
+      <input type="hidden" id="time" />
+      <input type="hidden" id="count" />
+      <input type="hidden" id="accessToken" />
     </body>
     <script type="text/javascript">
       $(document).ready(function(){
@@ -91,7 +96,15 @@
         let userid = urlParams.get('userId');     // sessionstorage의 userId
         let jroomno = urlParams.get('jroomno');
         // alert('session = ' + session)
+        // 쫑알룸 방 번호를 받거나 아니면 정보를 받아서 방을 생성해준다.
+        //subject, type, time, count
+					let subject = urlParams.get('subject');
+					let type = urlParams.get('type');
+					let time = urlParams.get('time');
+					let count = urlParams.get('count');
 
+          let accessToken= urlParams.get("accessToken");
+        
         if(!session ){
           alert("잘못된 접근입니다.");
           // 하고 여기서 다시 방 리스트로 보낸다.
@@ -102,9 +115,20 @@
           $("#userName").val(username);
           $("#jRoomNo").val(jroomno);
           $("#userId").val(userid);
+          
+          $("#subject").val(subject);
+          $("#type").val(type);
+          $("#time").val(time);
+          $("#count").val(count);
 
+          $("#accessToken").val(accessToken);
+          
           joinSession();          
-          initRoomInfo();
+          
+          if(jroomno){
+            initRoomInfo();
+          }
+          // initRoomInfo();
 
         }
 
@@ -113,28 +137,28 @@
     </script>
 
     <script>
-     window.onload = function() {
-    		console.log("[window onload] : [start]");
-    		console.log("");
-    		
-    		/* 브라우저 닫기 이벤트 감지 실시 [1]
-    		window.addEventListener("beforeunload", function (event) {
-    			console.log("[window beforeunload] : [start]");
-    			console.log("");        			
+    window.onload = function() {
+      console.log("[window onload] : [start]");
+      console.log("");
+  
+      /* 브라우저 닫기 이벤트 감지 실시 [1]
+      window.addEventListener("beforeunload", function (event) {
+      console.log("[window beforeunload] : [start]");
+      console.log("");        			
     			// event.returnValue = "브라우저를 종료하시겠습니까?";    			
-        	// outRoom($("#userId").val());
-    		});    		
-    		*/
-    	};
-    	
-    	
+       	// outRoom($("#userId").val());
+      });    		
+      */
+    };
+    
+    
     	/* 브라우저 닫기 이벤트 감지 실시 [2] */
-    	window.onbeforeunload = function() {
-    		console.log("[window onbeforeunload] : [start]");
-    		console.log("");
-    		
+      window.onbeforeunload = function() {
+        console.log("[window onbeforeunload] : [start]");
+        console.log("");
+  
         // outRoom($("#userId").val());
     		// return "브라우저를 종료하시겠습니까?";
-    	};	 
+      };	 
     </script>
 </html>

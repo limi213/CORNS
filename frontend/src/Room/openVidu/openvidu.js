@@ -19,6 +19,13 @@ var myUserName;
 var jRoomNo;
 var userId;
 
+var subject;// = urlParams.get('subject');
+var type;// = urlParams.get('type');
+var time;// = urlParams.get('time');
+var count;// = urlParams.get('count');
+
+var accessToken;
+
 var myStream;
 
 /* OPENVIDU METHODS */
@@ -29,6 +36,14 @@ function joinSession() {
 	myUserName = document.getElementById("userName").value;
 	jRoomNo = document.getElementById("jRoomNo").value;
 	userId = document.getElementById("userId").value;
+
+	subject = document.getElementById("subject").value;
+	type = document.getElementById("type").value;
+	time = document.getElementById("time").value;
+	count = document.getElementById("count").value;
+
+	accessToken = document.getElementById("accessToken").value;
+
 
 	// $("#sessionId").val(session);
 	// $("#userName").val(username);
@@ -47,13 +62,13 @@ function joinSession() {
 	// --- 3) Specify the actions when events take place in the session ---
 	// 현재 세션에 연결된 사용자들 띄우기
 	// let connections = 
-	getConnections(mySessionId).then(data => {
-		if(data.numberOfElements > 0){
-			for(let i = 0 ; i < data.numberOfElements ; i++){
-				// console.log(data.content[i].stream);
-			}	
-		}
-	});
+	// getConnections(mySessionId).then(data => {
+	// 	if(data.numberOfElements > 0){
+	// 		for(let i = 0 ; i < data.numberOfElements ; i++){
+	// 			// console.log(data.content[i].stream);
+	// 		}	
+	// 	}
+	// });
 
 	// On every new Stream received...
 	session.on('streamCreated', event => {
@@ -114,6 +129,57 @@ function joinSession() {
 		// 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
 		session.connect(token, { userId : userId, userName: myUserName })
 			.then(() => {
+
+				// 방이 없으면 만들어줘야 한다.
+				if(!jRoomNo){
+					// 방 만들어야한다.
+
+					// var subject;// = urlParams.get('subject');
+					// var type;// = urlParams.get('type');
+					// var time;// = urlParams.get('time');
+					// var count;// = urlParams.get('count');
+		
+					var makeroomdata = {
+						"room": {
+							"maxMember": count,
+							"sessionId": mySessionId,
+							"subjectNo": type,
+							"time": time,
+							"title": subject
+						},
+						"roomUser": {
+							"connectionId": userId,
+							"recordId": "",
+							"token": ""
+						},
+						"userId": userId
+					}
+
+					$.ajax({
+						type : "POST",
+						url : serverUrl + "room",    
+						headers: { "Content-Type": "application/json",
+									"Authorization" : "Basic " + accessToken,
+									"Access-Control-Allow-Credentials" : "true"},    
+						contentType : "application/json",
+						data : JSON.stringify(makeroomdata),
+						success: function(data, textStatus, xhr) {
+							console.log("방 만들기")
+							console.log(data);
+							console.log(textStatus);
+							console.log(xhr);
+							initRoomInfo();
+							
+						},
+						error:function(request,status,error){
+							console.log(request);
+							console.log(status);
+							console.log(error);
+						}
+					});
+
+				}
+		
 
 				// --- 5) Set page layout for active call ---
 				// 내가 무조건 1번에 뜨게 한다.
@@ -258,18 +324,18 @@ function intoRoom(connectionId, recordId, token){
 	var data = {
 		"roomNo": jRoomNo,
 		"roomUser": {
-		   "connectionId": connectionId, 
-		   "recordId": recordId,
-		   "token": token
+			"connectionId": connectionId, 
+			"recordId": recordId,
+			"token": token
 		},
 		"userId": userId
-	  };
+	};
 
 	$.ajax({
 		type : "POST",
 		url : serverUrl + "room/user",    
 		headers: { "Content-Type": "application/json",
-					"Authorization" : "Basic " + OPENVIDU_SECRET,
+					"Authorization" : "Basic " + accessToken,
 					"Access-Control-Allow-Credentials" : "true"},    
 		contentType : "application/json",
 		data : JSON.stringify(data),
@@ -296,13 +362,13 @@ function outRoom(rUserId){	// 떠나는 사람 방 번호 받는다.
 	var data = {
 		"roomNo": jRoomNo,
 		"userId": rUserId
-	  };
+	};
 
 	$.ajax({
 		type : "PATCH",
 		url : serverUrl + "room/user",      
 		headers: { "Content-Type": "application/json",
-					"Authorization" : "Basic " + OPENVIDU_SECRET,
+					"Authorization" : "Basic " + accessToken,
 					"Access-Control-Allow-Credentials" : "true"},   
 		contentType : "application/json",
 		data : JSON.stringify(data),
@@ -446,7 +512,7 @@ function initRoomInfo(){
 		type : "GET",
 		url : serverUrl + "room/" + jRoomNo, 
 		headers: { "Content-Type": "application/json",
-					"Authorization" : "Basic " + OPENVIDU_SECRET,
+					"Authorization" : "Basic " + accessToken,
 					"Access-Control-Allow-Credentials" : "true"},     
 		contentType : "application/json",
 		success: function(data, textStatus, xhr) {
