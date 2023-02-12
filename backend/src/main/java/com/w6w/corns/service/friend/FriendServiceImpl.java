@@ -7,6 +7,7 @@ import com.w6w.corns.domain.friendlog.FriendLogRepository;
 import com.w6w.corns.domain.user.User;
 import com.w6w.corns.domain.user.UserRepository;
 import com.w6w.corns.dto.friend.*;
+import com.w6w.corns.service.redis.RedisService;
 import com.w6w.corns.util.PageableResponseDto;
 import com.w6w.corns.util.code.FriendCode;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class FriendServiceImpl implements FriendService {
+
+    private final RedisService redisService;
 
     private final FriendLogRepository friendLogRepo;
 
@@ -60,6 +63,9 @@ public class FriendServiceImpl implements FriendService {
                             .message(friendRequestDto.getMessage())
                             .build()
                             .toEntity());
+
+        //신청받은 유저 새 알림 처리
+        redisService.updateNotify(friendRequestDto.getToId(), true);
     }
 
     //친구 수락

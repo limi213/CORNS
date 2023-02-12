@@ -2,6 +2,8 @@ package com.w6w.corns.service.redis;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.w6w.corns.domain.notification.Notification;
+import com.w6w.corns.domain.notification.NotificationRepository;
 import com.w6w.corns.domain.room.Room;
 import com.w6w.corns.domain.room.RoomRepository;
 import com.w6w.corns.domain.roomuser.RoomUser;
@@ -14,6 +16,7 @@ import com.w6w.corns.dto.room.response.RoomListResponseDto;
 import com.w6w.corns.util.code.RoomUserCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -36,6 +39,8 @@ public class RedisServiceImpl implements RedisService {
     private final UserRepository userRepo;
 
     private final RoomRepository roomRepo;
+
+    private final NotificationRepository notificationRepo;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -176,6 +181,49 @@ public class RedisServiceImpl implements RedisService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // 새 알림 여부 조회
+    @Override
+    public boolean isExistNewNotify(int userId) {
+        // Redis에 있으면 해당 값 반환, 없으면 MySQL에서 가져온 뒤 반환
+        boolean isExist = false;
+        String key = "notification";
+        String hashKey = String.valueOf(userId);
+
+        Object redisResult = redisTemplate.opsForHash().get(key, hashKey);
+        if (redisResult != null) {
+            if ((char)redisResult == 'Y') {
+                isExist = true;
+            } else {
+                isExist = false;
+            }
+        } else {
+            Notification notification = notificationRepo.findById(userId).get();
+            redisTemplate.opsForHash().put(key, hashKey, notification.getNotificationYN());
+
+            if (notification.getNotificationYN() == 'Y') {
+                isExist = true;
+            } else {
+                isExist = false;
+            }
+        }
+
+        return isExist;
+    }
+
+    // 알림 상태 갱신
+    @Override
+    public void updateNotify(int userId, boolean isRegist) {
+        // Redis, MySQL 모두 적용
+        String key = "notification";
+        String hashKey = String.valueOf(userId);
+        char value = isRegist?'Y':'N';
+
+        redisTemplate.opsForHash().put(key, hashKey, value);
+        Notification notification = notificationRepo.findById(userId).get();
+        notification.setNotificationYN(value);
+        notificationRepo.save(notification);
     }
 
 }
