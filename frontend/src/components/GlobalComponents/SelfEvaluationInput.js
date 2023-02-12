@@ -38,7 +38,7 @@ function SelfEvaluationInput({ roomNo, selfScore, selfDesc }) {
   useEffect(() => {
     setRegistered(selfScore > 0)
     setScore(selfScore)
-    setDescription(selfDesc)
+    setDescription(selfDesc ? selfDesc : "")
   }, [selfScore, selfDesc])
 
 

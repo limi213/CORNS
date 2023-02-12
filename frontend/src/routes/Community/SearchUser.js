@@ -16,7 +16,7 @@ const GetUser = async (type, text, setUsers, setLoading) => {
       `${process.env.REACT_APP_HOST}/user?` +
         new URLSearchParams({
           page: 0,
-          size: 10,
+          size: 100,
           baseTime: "2023-02-30 00:00:00",
           filter: type,
           keyword: text,
@@ -61,6 +61,7 @@ function SearchUser() {
         text={text}
         setText={setText}
         setSearch={setSearch}
+        isIcon={true}
       />
 
       <Box padding="48px 112px">

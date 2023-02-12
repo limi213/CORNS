@@ -59,7 +59,7 @@ function NavbarDropdown() {
             <NavLink
               to="/mypage/changeProfile"
               style={{ textDecoration: "none", color: "black" }}
-              activeStyle={{ fontWeight: "bold" }}
+              css={css`font-weight: ${window.location.href.includes("mypage") && "bold"}`}
             >
               마이페이지
             </NavLink>
@@ -73,7 +73,7 @@ function NavbarDropdown() {
             <NavLink
               to="/community/friends"
               style={{ textDecoration: "none", color: "black" }}
-              activeStyle={{ fontWeight: "bold" }}
+              css={css`font-weight: ${window.location.href.includes("community/friends") && "bold"}`}
             >
               친구신청
             </NavLink>

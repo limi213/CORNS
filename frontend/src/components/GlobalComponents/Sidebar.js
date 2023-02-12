@@ -22,7 +22,7 @@ const Sidebar = ({ Items, ...rest }) => {
             to={item.route}
             key={index}
             style={{ textDecoration: "none", color: "black" }}
-            activeStyle={{ fontWeight: "bold" }}
+            css={css`font-weight: ${window.location.href.includes(item.route.split('/')[2]) && "bold"}`}
           >
             <div>{item.name}</div>
           </NavLink>

@@ -1,38 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 
+import ProfileImg from "components/GlobalComponents/ProfileImg";
 import UserNameTag from "components/GlobalComponents/UserNameTag";
 import { TableRow, TableCell } from "@mui/material";
 
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-
-function RankingTableItem({ item, ranking }) {
-  const { img_url, nickname, user_id, level, value } = item;
+function RankingTableItem({ item, unit }) {
+  const { ranking, userId, nickname, imgUrl, levelNo, value } = item;
 
   return (
     <>
       <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-        <TableCell>{ranking + 1}등</TableCell>
+        <TableCell>{ranking}등</TableCell>
         <TableCell>
-          <img
-            src={img_url}
-            alt={nickname}
-            css={css`
-              border-radius: 200px;
-              width: 40px;
-              height: 40px;
-            `}
-          />
+          <ProfileImg imgSrc={imgUrl} alt={nickname} width={"40px"} />
         </TableCell>
 
         <TableCell>
-          <UserNameTag nickname={nickname} userId={user_id} />
+          <UserNameTag nickname={nickname} userId={userId} />
         </TableCell>
 
-        <TableCell>Lv.{level}</TableCell>
-        <TableCell>{value}</TableCell>
+        <TableCell>Lv.{levelNo}</TableCell>
+        <TableCell>{value}{unit}</TableCell>
       </TableRow>
-
     </>
   );
 }

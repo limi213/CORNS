@@ -10,7 +10,7 @@ import getRefreshToken from "auth/getRefreshToken";
 import Logout from "auth/Logout";
 
 // 파일 이름 수정!!!!!!!!
-import useAxios from "auth/useAxiosTest";
+import useAxios from "auth/useAxios";
 import { useDispatch } from "react-redux";
 
 const initialFriendListState = {
@@ -136,7 +136,7 @@ export const getFriendRequestListAxios = () => {
 };
 
 // 친구신청 목록 axios
-// useAxios test
+// useAxios test -> 이거 못쓸듯
 export const useFriendRequestListAxios = () => {
   const dispatch = useDispatch();
   const { data, isLoading, sendRequest } = useAxios();

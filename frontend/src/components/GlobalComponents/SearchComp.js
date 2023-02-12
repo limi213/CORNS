@@ -5,7 +5,7 @@ import { Search } from "react-bootstrap-icons";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-function SearchComp({ type, setType, text, setText, setSearch }) {
+function SearchComp({ type, setType, text, setText, setSearch, isIcon }) {
   const [textInfo, setTextInfo] = useState("");
 
   // id or nickname 확인
@@ -42,6 +42,13 @@ function SearchComp({ type, setType, text, setText, setSearch }) {
     setSearch((prev) => prev + 1);
   };
 
+  // enterkey handle
+  const enterKey = (e) => {
+    if (e.key === "Enter") {
+      onSearch();
+    }
+  };
+
   return (
     <>
       <Box
@@ -61,27 +68,32 @@ function SearchComp({ type, setType, text, setText, setSearch }) {
         </Select>
         <Box sx={{ width: "100%", height: "100%" }}>
           <input
-            placeholder={`${type === "nickname" ? "닉네임을" : "아이디를"} 입력해주세요.`}
+            placeholder={`${
+              type === "nickname" ? "닉네임을" : "아이디를"
+            } 입력해주세요.`}
             value={text}
             onChange={onChange}
             css={css`
               border: 3px solid #111;
               border-radius: 5px;
-              width: 90%;
+              width: ${isIcon ? "90%" : "95%"};
               height: 45px;
               font-size: 17px;
               padding: 0 0 0 2%;
               margin: 0 2%;
             `}
+            onKeyUp={enterKey}
           />
 
-          <Search
-            css={css`
-              font-size: 18px;
-              cursor: pointer;
-            `}
-            onClick={onSearch}
-          />
+          {isIcon && (
+            <Search
+              css={css`
+                font-size: 18px;
+                cursor: pointer;
+              `}
+              onClick={onSearch}
+            />
+          )}
         </Box>
       </Box>
 

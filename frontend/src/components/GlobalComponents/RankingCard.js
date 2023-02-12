@@ -9,20 +9,20 @@ import { Box, Grid, Typography } from "@mui/material";
 import { css } from "@emotion/react";
 
 export default function RankingCard({ rankInfo, customWidth }) {
-  const { type, nickname, user_id } = rankInfo;
+  const { rankType, userId, nickname, imgUrl, levelNo, value } = rankInfo;
 
   let transKorean = "";
   let bgColor = "";
   let unit = "";
-  if (type === "sungsil") {
+  if (rankType === 1) {
     transKorean = "성실";
     bgColor = "#FFD704";
     unit = "exp";
-  } else if (type === "ddabong") {
+  } else if (rankType === 2) {
     transKorean = "따봉";
     bgColor = "#3C90F2";
     unit = "개";
-  } else if (type === "suda") {
+  } else if (rankType === 3) {
     transKorean = "수다";
     bgColor = "#67C73A";
     unit = "분";
@@ -62,7 +62,7 @@ export default function RankingCard({ rankInfo, customWidth }) {
               margin-top: 32px;
             `}
           >
-            <ProfileImg imgSrc={null} nickname={null} width={width} />
+            <ProfileImg imgSrc={imgUrl} nickname={nickname} width={width} />
           </div>
           <img
             src={leaf_right}
@@ -93,7 +93,7 @@ export default function RankingCard({ rankInfo, customWidth }) {
             }}
           >
             <span>
-              {nickname}#{user_id}
+              {nickname}#{userId}
             </span>
             <span
               css={css`
@@ -101,7 +101,7 @@ export default function RankingCard({ rankInfo, customWidth }) {
                 margin-left: 8px;
               `}
             >
-              500{unit}
+              {value}{unit}
             </span>
           </Box>
         </Box>

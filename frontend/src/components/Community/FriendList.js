@@ -27,6 +27,7 @@ function FriendList({ items }) {
         text={text}
         setText={setText}
         setSearch={setSearch}
+        isIcon={false}
       />
       <Box padding="48px 112px">
         {loading && <p>loading중...</p>}

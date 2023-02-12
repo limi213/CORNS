@@ -1,72 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
+import useAxios from "auth/useAxios";
 
 import RankingCard from "./RankingCard";
-import { Box, Grid, Typography } from "@mui/material";
-
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { Grid } from "@mui/material";
 
 export default function RankingList({ width }) {
-  const rankInfos = [
-    {
-      type: "sungsil",
-      nickname: "dorothy",
-      user_id: 1180,
-      level: 30,
-      exp: 1980,
-      friendCnt: 10,
-      totalDay: 13,
-      totalDdabong: 4,
-      totalTalk: 123,
-    },
-    {
-      type: "ddabong",
-      nickname: "dorothy",
-      user_id: 1056,
-      level: 30,
-      exp: 1980,
-      friendCnt: 10,
-      totalDay: 13,
-      totalDdabong: 4,
-      totalTalk: 123,
-    },
-    {
-      type: "suda",
-      nickname: "dorothy",
-      user_id: 1759,
-      level: 30,
-      exp: 1980,
-      friendCnt: 10,
-      totalDay: 13,
-      totalDdabong: 4,
-      totalTalk: 123,
-    },
-    {
-      type: "ingi",
-      nickname: "dorothy",
-      user_id: 1002,
-      level: 30,
-      exp: 1980,
-      friendCnt: 10,
-      totalDay: 13,
-      totalDdabong: 4,
-      totalTalk: 123,
-    },
-  ];
+  const { data, status, isLoading, sendRequest } = useAxios();
+
+  useEffect(() => {
+    sendRequest({
+      url: `${process.env.REACT_APP_HOST}/rank/hof`,
+    });
+  }, []);
 
   return (
     <>
-      <Grid container spacing={1}>
-        {rankInfos.map((rankInfo) => {
-          return (
-            <RankingCard
-              rankInfo={rankInfo}
-              key={rankInfo.user_id}
-              customWidth={width}
-            />
-          );
-        })}
-      </Grid>
+      {isLoading && <p>loading중...</p>}
+      {!isLoading && status === 200 && (
+        <Grid container spacing={1}>
+          {data.rankList.map((rankInfo) => {
+            return (
+              <RankingCard
+                key={rankInfo.rankType}
+                rankInfo={rankInfo}
+                customWidth={width}
+              />
+            );
+          })}
+        </Grid>
+      )}
     </>
   );
 }
