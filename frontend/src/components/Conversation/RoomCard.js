@@ -35,7 +35,7 @@ function RoomCard({ room, subject }) {
       + "&jroomno=" + roomNo + "&accessToken=" + sessionStorage.getItem("accessToken");
   }
   else{
-    url = "https://corns.co.kr:4435/frontend/src/Room/View.html?"+
+    url = "https://corns.co.kr:4435/frontend/src/Room/GoToView.html?"+
       "username=" + sessionStorage.getItem("nickname")
       + "&userId=" + sessionStorage.getItem("userId") 
       + "&jroomno=" + roomNo + "&accessToken=" + sessionStorage.getItem("accessToken");
