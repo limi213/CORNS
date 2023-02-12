@@ -35,7 +35,7 @@
           <span id="roomViewVideo"><i class="fa-solid fa-video"></i></span>
           <span id="roomViewPlay" onclick="startConversation()" hidden><i class="fa-solid fa-play"></i></span>
           <span id="roomViewOut"><i class="fa-solid fa-right-from-bracket"></i></span>
-
+          <span id="roomViewLastTimer">10:00</span>
         </div>
         <!-- 채팅창 -->
         <div id="roomViewChatting">
@@ -125,9 +125,9 @@
           
           joinSession();          
           
-          if(jroomno){
-            initRoomInfo();
-          }
+          // if(jroomno){
+          //   initRoomInfo();
+          // }
           // initRoomInfo();
 
         }
@@ -146,7 +146,8 @@
       console.log("[window beforeunload] : [start]");
       console.log("");        			
     			// event.returnValue = "브라우저를 종료하시겠습니까?";    			
-      outRoom($("#userId").val());
+        outRoom($("#userId").val());
+        alert("종료")
       });    		
       
     };
@@ -157,6 +158,7 @@
         console.log("[window onbeforeunload] : [start]");
         console.log("");
   
+        alert("종료")
         outRoom($("#userId").val());
     		// return "브라우저를 종료하시겠습니까?";
       };	 
