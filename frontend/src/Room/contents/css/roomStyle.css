@@ -30,8 +30,32 @@
     margin-left: 2vw;
 }
 
+#roomViewApp {
+    position: absolute;
+    border: 1px solid black;
+    width: 1600px;
+    height: 600px;
+    margin: 100px;
+    z-index: 100;
+    background-color: white;
+}
+
+#roomViewAppTitle {
+    font-size: 350%;
+    text-align: center;
+}
+
 #roomViewTitle {
     margin-right: 300px;
+}
+
+.roomViewAppMember {
+    border: 1px solid black;
+    width: 350px;
+    height: 500px;
+    margin: 10px;
+    margin-left: 30px;
+    float: left;
 }
 
 #video-container {

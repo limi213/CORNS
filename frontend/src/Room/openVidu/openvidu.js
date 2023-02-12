@@ -106,6 +106,25 @@ function joinSession() {
 				"time": "",
 				"userId": userId
 			};
+
+			$.ajax({
+				type : "POST",
+				url : serverUrl + "/room/script",    
+				headers: { "Content-Type": "application/json",
+							"Authorization" : "Basic " + accessToken,
+							"Access-Control-Allow-Credentials" : "true"},    
+				contentType : "application/json",
+				data : JSON.stringify(scriptData),
+				success: function(data, textStatus, xhr) {
+					console.log("스크립트저장")
+					
+				},
+				error:function(request,status,error){
+					console.log(request);
+					console.log(status);
+					console.log(error);
+				}
+			});
 		}
 	});
 
@@ -181,6 +200,8 @@ function joinSession() {
 					mirror: true       	// Whether to mirror your local video or not
 				});
 
+				// myStream = publisher.stream;
+
 				// --- 7) Specify the actions when events take place in our publisher ---
 
 				// When our HTML video has been added to DOM...
@@ -188,8 +209,11 @@ function joinSession() {
 					appendUserData(event.element, myUserName, "");
 					// alert(document.getElementById("startSttttt"))
 					appendCaptionsButton(event.element, publisher.stream);
-					myStream = publisher.stream;
 				});
+				// myStream = publisher.stream;
+				// console.log("myStream");
+				// console.log(myStream);
+				
 
 				// --- 8) Publish your stream ---
 
@@ -224,7 +248,29 @@ function joinSession() {
 				//타임아웃 시
 				if (totalTime < 0) {
 					clearInterval(x); //setInterval() 실행을 끝냄
-					alert("대화끝!");
+					// alert("대화끝!");
+					var sendData = {
+						"roomNo": jRoomNo
+					};
+					$.ajax({
+						type : "PATCH",
+						url : serverUrl + "room/end" ,
+						data :  JSON.stringify(sendData),
+						headers: { "Content-Type": "application/json",
+									"Authorization" : "Basic " + accessToken,
+									"Access-Control-Allow-Credentials" : "true"},     
+						contentType : "application/json",
+						success: function(data, textStatus, xhr) {
+							console.log(data)
+							// sendToOpenvidu("start", "data");
+						},
+						error:function(request,status,error){
+							// alert("방 퇴장처리 실패 : " + request.statusText);
+							console.log(request);
+							console.log(status);
+							console.log(error);
+						}
+					});
 				}
 			}, 1000);
 		}
@@ -296,10 +342,11 @@ function sendChatting(){
 }
 
 
-function appendCaptionsButton(videoElement,myStream) {
+function appendCaptionsButton(videoElement,myStream1) {
 
+	myStream = myStream1;
 	document.getElementById("startSttttt").onmouseup = async (ev) => {
-		await this.session.subscribeToSpeechToText(myStream, 'en-US');
+		await this.session.subscribeToSpeechToText(myStream1, 'en-US');
 	};
 }
 
@@ -499,6 +546,7 @@ function startConversation(){
 					"Access-Control-Allow-Credentials" : "true"},     
 		contentType : "application/json",
 		success: function(data, textStatus, xhr) {
+			console.log("대화 시작");
 			console.log(data)
 			sendToOpenvidu("start", "data");
 		},
