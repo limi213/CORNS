@@ -1,5 +1,6 @@
 var OV;
 var session;
+var publisher;
 
 var roomListId = "roomViewUser";
 
@@ -188,7 +189,7 @@ function joinSession() {
 				// --- 5) Set page layout for active call ---
 				// 내가 무조건 1번에 뜨게 한다.
 				// --- 6) Get your own camera stream with the desired properties ---
-				var publisher = OV.initPublisher("roomViewUser1", {
+				publisher = OV.initPublisher("roomViewUser1", {
 					audioSource: undefined, // The source of audio. If undefined default microphone
 					videoSource: undefined, // The source of video. If undefined default webcam
 					publishAudio: true,  	// Whether you want to start publishing with your audio unmuted or not
@@ -200,8 +201,6 @@ function joinSession() {
 					mirror: true       	// Whether to mirror your local video or not
 				});
 
-				// myStream = publisher.stream;
-
 				// --- 7) Specify the actions when events take place in our publisher ---
 
 				// When our HTML video has been added to DOM...
@@ -209,11 +208,8 @@ function joinSession() {
 					appendUserData(event.element, myUserName, "");
 					// alert(document.getElementById("startSttttt"))
 					appendCaptionsButton(event.element, publisher.stream);
+					myStream = publisher.stream;
 				});
-				// myStream = publisher.stream;
-				// console.log("myStream");
-				// console.log(myStream);
-				
 
 				// --- 8) Publish your stream ---
 
@@ -231,7 +227,7 @@ function joinSession() {
 	session.on('signal', (event) => {
 		//시작
 		if(event.type==="signal:start"){
-			this.session.subscribeToSpeechToText(myStream, 'en-US');
+			this.session.subscribeToSpeechToText(publisher.stream, 'en-US');
 			// 시작했다는 알림 받음
 			// $("#roomViewLastTimer").text(data.room.room.time + ":00");
 			// totalTime = data.room.room.time * 60;
@@ -342,11 +338,10 @@ function sendChatting(){
 }
 
 
-function appendCaptionsButton(videoElement,myStream1) {
+function appendCaptionsButton(videoElement,myStream) {
 
-	myStream = myStream1;
 	document.getElementById("startSttttt").onmouseup = async (ev) => {
-		await this.session.subscribeToSpeechToText(myStream1, 'en-US');
+		await this.session.subscribeToSpeechToText(myStream, 'en-US');
 	};
 }
 
@@ -546,7 +541,6 @@ function startConversation(){
 					"Access-Control-Allow-Credentials" : "true"},     
 		contentType : "application/json",
 		success: function(data, textStatus, xhr) {
-			console.log("대화 시작");
 			console.log(data)
 			sendToOpenvidu("start", "data");
 		},
