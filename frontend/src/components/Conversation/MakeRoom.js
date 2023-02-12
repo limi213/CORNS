@@ -12,7 +12,7 @@ const MakeRoom = async (subject, type, time, count= false) => {
         + "&subject=" + subject + "&type=" + type + "&time=" + time + "&count=" + count + "&accessToken=" + sessionStorage.getItem("accessToken");
     }
     else{
-        window.location.href = "https://corns.co.kr:4435/src/Room/GoToView.html?"+
+        window.location.href = "https://corns.co.kr:4435/frontend/src/Room/View.html?"+
         // "session=" + Response.data.content[0].sessionId + "&" + 
         "username=" + sessionStorage.getItem("nickname")
         + "&userId=" + sessionStorage.getItem("userId") 
