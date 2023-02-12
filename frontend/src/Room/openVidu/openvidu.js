@@ -1,6 +1,5 @@
 var OV;
 var session;
-var publisher;
 
 var roomListId = "roomViewUser";
 
@@ -189,7 +188,7 @@ function joinSession() {
 				// --- 5) Set page layout for active call ---
 				// 내가 무조건 1번에 뜨게 한다.
 				// --- 6) Get your own camera stream with the desired properties ---
-				publisher = OV.initPublisher("roomViewUser1", {
+				var publisher = OV.initPublisher("roomViewUser1", {
 					audioSource: undefined, // The source of audio. If undefined default microphone
 					videoSource: undefined, // The source of video. If undefined default webcam
 					publishAudio: true,  	// Whether you want to start publishing with your audio unmuted or not
@@ -214,7 +213,6 @@ function joinSession() {
 				// --- 8) Publish your stream ---
 
 				session.publish(publisher);
-				
 
 			})
 			.catch(error => {
@@ -225,9 +223,12 @@ function joinSession() {
 
 	// 이벤트 받기
 	session.on('signal', (event) => {
+		// console.log("session");
+		// console.log(session)
 		//시작
 		if(event.type==="signal:start"){
-			this.session.subscribeToSpeechToText(publisher.stream, 'en-US');
+			this.session.subscribeToSpeechToText(session.connection.stream, 'en-US');
+			// $("#startSttttt").click();
 			// 시작했다는 알림 받음
 			// $("#roomViewLastTimer").text(data.room.room.time + ":00");
 			// totalTime = data.room.room.time * 60;
