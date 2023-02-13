@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WithdrawRepository extends JpaRepository<Withdraw, Integer> {
 
-    Withdraw findByWithdrawNo(int withdrawNo);
 }

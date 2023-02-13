@@ -97,13 +97,14 @@ public class UserServiceImpl implements UserService{
         //해당 이메일을 가진 객체를 db에서 찾음
         User user = userRepository.findByEmail(requestUser.getEmail());
 
-        //탈퇴회원 및 이용정지회원은 나중에 처리하기
-        //이메일, 비밀번호 일치 확인 && 회원코드 확인
-        if(isSamePassword(requestUser) && user.getUserCd() == UserCode.USER_DEFAULT.getCode())
+        //이메일, 비밀번호 일치 확인
+        if(!isSamePassword(requestUser)) return null;
 
-            return getUser(user.getUserId());
+        //이용정지거나 탈퇴했는데 14일 지난 경우
+        if(user.getUserCd() == UserCode.USER_SUSPEND.getCode() ||
+                user.getUserCd() == UserCode.USER_UNREGISTER.getCode() && user.getLastLoginTm().plusDays(14).isBefore(LocalDateTime.now())) return null;
 
-        return null;
+        return getUser(user.getUserId());
     }
 
     @Override
@@ -200,6 +201,8 @@ public class UserServiceImpl implements UserService{
         return false;
     }
 
+    @Override
+    @Transactional
     public boolean updateUserPassword(UserPassModifyRequestDto requestDto) throws Exception{
 
         User user = userRepository.findByUserId(requestDto.getUserId());
@@ -301,10 +304,9 @@ public class UserServiceImpl implements UserService{
 
         //refresh token 제거
         deleteRefreshToken(requestDto.getUserId());
-        //탈퇴사유 테이블 내용 필요
 
         //탈퇴사유 번호로 찾기
-        Withdraw withdraw = withdrawRepository.findByWithdrawNo(requestDto.getWithdrawNo());
+        Withdraw withdraw = withdrawRepository.findById(requestDto.getWithdrawNo()).get();
 
         //탈퇴로그
         WithdrawLog withdrawLog = WithdrawLog.builder()
