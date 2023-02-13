@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public UserDetailResponseDto login(UserLoginRequestDto requestUser) throws Exception{
 
         //해당 이메일을 가진 객체를 db에서 찾음
@@ -104,6 +104,9 @@ public class UserServiceImpl implements UserService{
         if(user.getUserCd() == UserCode.USER_SUSPEND.getCode() ||
                 user.getUserCd() == UserCode.USER_UNREGISTER.getCode() && user.getLastLoginTm().plusDays(14).isBefore(LocalDateTime.now())) return null;
 
+        //탈퇴 취소 처리
+        user.setUserCd(UserCode.USER_DEFAULT.getCode());
+        userRepository.save(user);
         return getUser(user.getUserId());
     }
 
