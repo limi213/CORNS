@@ -1,5 +1,6 @@
 package com.w6w.corns.controller;
 
+import com.w6w.corns.dto.invitelog.InviteRoomListResponseDto;
 import com.w6w.corns.dto.invitelog.InviteRoomRequestDto;
 import com.w6w.corns.service.invitation.InvitationService;
 import io.swagger.annotations.Api;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -27,8 +29,14 @@ public class InvitationController {
         HttpStatus status;
 
         try {
-            resultmap.put("inviteList", invitationService.getInviteRoomList(userId));
-            status = HttpStatus.OK;
+            List<InviteRoomListResponseDto> inviteList = invitationService.getInviteRoomList(userId);
+
+            if (inviteList.isEmpty()) {
+                status = HttpStatus.NO_CONTENT;
+            } else {
+                resultmap.put("inviteList", inviteList);
+                status = HttpStatus.OK;
+            }
 
         } catch (Exception e) {
             resultmap.put("message", e.getMessage());
