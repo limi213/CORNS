@@ -80,6 +80,7 @@ function joinSession() {
 			// 누군가 새로운 사람이 들어오면 여기에 뜬다.
 			// 2번부터 띄워준다.
 			appendUserData(event.element, subscriber.stream.connection, roomno);
+			initRoomInfo();
 		});
 		
 		
@@ -708,7 +709,8 @@ function initRoomInfo(){
 			$("#roomViewTimer").text(data.room.room.time + "분");
 			$("#roomViewLastTimer").text(data.room.room.time + ":00");
 			totalTime = data.room.room.time * 3;
-			maxMemberCount = data.room.room.currentMember;
+			maxMemberCount = data.room.room.maxMember;
+			console.log("현재 인원 : " + data.room.room.currentMember);
 			setMemberCount(data.room.room.currentMember);
 
 			// 방장이면 시작하기 버튼 세팅
