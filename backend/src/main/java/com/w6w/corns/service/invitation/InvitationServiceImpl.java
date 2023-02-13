@@ -56,4 +56,10 @@ public class InvitationServiceImpl implements InvitationService {
 
         return roomList;
     }
+
+    //쫑알룸 초대 로그 삭제
+    @Override
+    public void removeInviteLog(int inviteLogNo) {
+        inviteLogRepo.deleteById(inviteLogNo);
+    }
 }

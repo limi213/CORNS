@@ -12,11 +12,14 @@ import lombok.*;
 @ToString
 @ApiModel(value="쫑알룸 초대 리스트 응답 정보")
 public class InviteRoomListResponseDto {
+    int inviteLogNo;
     InviteUserDto inviteUser;
     InviteRoomDto inviteRoom;
 
-    public InviteRoomListResponseDto(int userId, String nickname, String imgUrl,
+    public InviteRoomListResponseDto(int inviteLogNo,
+                                     int userId, String nickname, String imgUrl,
                                      int roomNo, String title, int time, int maxMember, int subjectNo) {
+        this.inviteLogNo = inviteLogNo;
         this.inviteUser = new InviteUserDto(userId, nickname, imgUrl);
         this.inviteRoom = new InviteRoomDto(roomNo, title, time, maxMember, subjectNo, null);
     }

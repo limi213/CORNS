@@ -55,4 +55,22 @@ public class InvitationController {
 
         return new ResponseEntity<Map>(resultmap, status);
     }
+
+    @ApiOperation("쫑알룸 초대 로그 삭제")
+    @DeleteMapping("/{inviteLogNo}")
+    public ResponseEntity<?> removeInviteLog(@PathVariable int inviteLogNo) {
+        Map resultmap = new HashMap<>();
+        HttpStatus status;
+
+        try {
+            invitationService.removeInviteLog(inviteLogNo);
+            status = HttpStatus.OK;
+
+        } catch (Exception e) {
+            resultmap.put("message", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<Map>(resultmap, status);
+    }
 }

@@ -39,6 +39,7 @@ public class CustomInviteLogRepositoryImpl implements CustomInviteLogRepository 
     public List<InviteRoomListResponseDto> findInviteRoomByUserId(int userId) {
         return queryFactory
                 .select(Projections.constructor(InviteRoomListResponseDto.class,
+                        inviteLog.inviteLogSq,
                         user.userId,
                         user.nickname,
                         user.imgUrl,

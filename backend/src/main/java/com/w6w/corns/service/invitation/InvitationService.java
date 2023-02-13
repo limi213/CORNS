@@ -12,4 +12,6 @@ public interface InvitationService {
     void addInviteLog(InviteRoomRequestDto inviteRoomRequestDto);
     //쫑알룸 초대 목록 가져오기
     List<InviteRoomListResponseDto> getInviteRoomList(int userId);
+    //쫑알룸 초대 로그 삭제
+    void removeInviteLog(int inviteLogNo);
 }
