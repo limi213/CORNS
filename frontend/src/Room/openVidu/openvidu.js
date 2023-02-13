@@ -3,6 +3,8 @@ var session;
 
 var roomListId = "roomViewUser";
 
+var myTocken;
+
 // serverurl
 // let serverUrl = "https://corns.co.kr:4463/";
 let serverUrl = "https://corns.co.kr:4463/";
@@ -136,57 +138,12 @@ function joinSession() {
 	// 세션아이디로 토큰 받아오기
 	getToken(mySessionId).then(token => {
 		token = token.token;
+		myTocken = token;
 		session.connect(token, { userId : userId, userName: myUserName })
 			.then(() => {
-				// 방이 없으면 만들어줘야 한다.
-				if(!jRoomNo){
-					// 방 만들어야한다.
-					var makeroomdata = {
-						"room": {
-							"maxMember": count,
-							"sessionId": mySessionId,
-							"subjectNo": type,
-							"time": time,
-							"title": subject
-						},
-						"roomUser": {
-							"connectionId": userId,
-							"recordId": "",
-							"token": ""
-						},
-						"userId": userId
-					}
 
-					$.ajax({
-						type : "POST",
-						url : serverUrl + "room",    
-						headers: { "Content-Type": "application/json",
-									"Authorization" : "Basic " + accessToken,
-									"Access-Control-Allow-Credentials" : "true"},    
-						contentType : "application/json",
-						data : JSON.stringify(makeroomdata),
-						success: function(data, textStatus, xhr) {
-							jRoomNo = data.room.room.roomNo;
-							initRoomInfo();
-							console.log("방 만들기");
-							console.log(data);
-							console.log(textStatus);
-							console.log(xhr);
-							
-						},
-						error:function(request,status,error){
-							console.log(request);
-							console.log(status);
-							console.log(error);
-						}
-					});
-
-				}else{	//쫑알룸 번호가 있다
-						
-					// 방 입장처리 한다.
-					intoRoom(myUserName, '', token);
-				}
-		
+				// 입장이나 방만들기 하기 전에 접속된 방이 있다면 나가기 처리를 해준다.
+				outAllRoom();				
 
 				// --- 5) Set page layout for active call ---
 				// 내가 무조건 1번에 뜨게 한다.
@@ -511,6 +468,41 @@ function outRoom(rUserId){	// 떠나는 사람 방 번호 받는다.
 	});
 }
 
+function outOneRoom(rUserId,roomNo){	// 떠나는 사람 방 번호 받는다.
+
+	var outdata = {
+		"roomNo": roomNo,
+		"userId": rUserId
+	};
+
+	console.log("roomNo : " + roomNo);
+	console.log("userId : " +rUserId);
+
+	$.ajax({
+		type : "PATCH",
+		url : serverUrl + "room/user",      
+		headers: { "Content-Type": "application/json",
+					"Authorization" : "Basic " + accessToken,
+					"Access-Control-Allow-Credentials" : "true"},   
+		contentType : "application/json",
+		data : JSON.stringify(outdata),
+		success: function(data, textStatus, xhr) {
+			console.log(data);
+			console.log(textStatus);
+			console.log(xhr);
+			console.log("퇴장처리 완료");
+			makeOrIntoRoom();
+
+		},
+		error:function(request,status,error){
+			console.log("방 퇴장처리 실패 : " + request.statusText);
+			console.log(request);
+			console.log(status);
+			console.log(error);
+		}
+	});
+}
+
 function appendUserData(videoElement, connection, roomno) {
 	
 	if(roomno !== ""){var dataNode = document.createElement('div');
@@ -793,8 +785,97 @@ function setNoOneBlack(){
 		// alert($(this).html())
 		// console.log($(this));
 		if($(this).html().includes("video") != true){
-			alert($(this).html(`<i class="fa-regular fa-rectangle-xmark" style="font-size: 200; margin-left:200; margin-top:80"></i>`))
+			$(this).html(`<i class="fa-regular fa-rectangle-xmark" style="font-size: 200; margin-left:200; margin-top:80"></i>`)
 
 		}
 	});
+}
+
+
+function outAllRoom(){
+	$.ajax({
+		type : "GET",
+		url : serverUrl + "room/list/" + userId, 
+		headers: { "Content-Type": "application/json",
+					"Authorization" : "Basic " + accessToken,
+					"Access-Control-Allow-Credentials" : "true"},     
+		contentType : "application/json",
+		success: function(data, textStatus, xhr) {
+			// alert(data.rooms.length)
+			if(data != null && data.rooms != null && data.rooms.length > 0){
+				// alert("있음!")
+				for(var i = 0 ; i < data.rooms.length; i++){
+					outOneRoom(userId, data.rooms[i].room.roomNo);
+				}
+			}
+			else{
+				makeOrIntoRoom();
+			}
+
+
+	
+
+			console.log(data);
+			console.log(textStatus);
+			console.log(xhr);
+		},
+		error:function(request,status,error){
+			console.log("방 퇴장처리 실패 : " + request.statusText);
+			console.log(request);
+			console.log(status);
+			console.log(error);
+		}
+	});
+}
+
+function makeOrIntoRoom(){
+		
+	// 퇴장처리 다 하면
+	// 방이 없으면 만들어줘야 한다.
+	if(!jRoomNo){
+			
+		// 방 만들어야한다.
+		var makeroomdata = {
+			"room": {
+				"maxMember": count,
+				"sessionId": mySessionId,
+				"subjectNo": type,
+				"time": time,
+				"title": subject
+			},
+			"roomUser": {
+				"connectionId": userId,
+				"recordId": "",
+				"token": ""
+			},
+			"userId": userId
+		}
+		$.ajax({
+			type : "POST",
+			url : serverUrl + "room",    
+			headers: { "Content-Type": "application/json",
+						"Authorization" : "Basic " + accessToken,
+						"Access-Control-Allow-Credentials" : "true"},    
+			contentType : "application/json",
+			data : JSON.stringify(makeroomdata),
+			success: function(data, textStatus, xhr) {
+				jRoomNo = data.room.room.roomNo;
+				initRoomInfo();
+				console.log("방 만들기");
+				console.log(data);
+				console.log(textStatus);
+				console.log(xhr);
+				
+			},
+			error:function(request,status,error){
+				console.log(request);
+				console.log(status);
+				console.log(error);
+			}
+		});
+		}else{	//쫑알룸 번호가 있다
+				
+			// 방 입장처리 한다.
+			intoRoom(myUserName, '', myTocken);
+		}
 }
