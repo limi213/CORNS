@@ -243,7 +243,7 @@ function LogFilter() {
         <FormControlLabel control={<Checkbox />} label="없음" /> */}
       </Box>
 
-      <Box sx={{ display: "flex", flexDirection: "row-reverse" }}>
+      {/* <Box sx={{ display: "flex", flexDirection: "row-reverse" }}>
         <Button
           variant="contained"
           sx={{
@@ -258,7 +258,7 @@ function LogFilter() {
         >
           전체해제
         </Button>
-      </Box>
+      </Box> */}
     </Box>
   );
 }

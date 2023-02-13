@@ -216,7 +216,13 @@ function Home() {
           </Box>
         </Box>
         <Box sx={{ mx: "105px", mt: "64px" }}>
-          <img src={textImg} alt="conversation script" />
+          <img
+            src={textImg}
+            alt="conversation script"
+            css={css`
+              width: 100%;
+            `}
+          />
 
           <Grid container sx={{ mb: "64px" }}>
             <Grid item xs={4}>

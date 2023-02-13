@@ -6,7 +6,6 @@ import getRefreshToken from "auth/getRefreshToken";
 import Logout from "auth/Logout";
 import { toStringDate } from "./roomFilterReducer";
 
-
 const initialFriendListState = {
   isFriendListLoading: false,
   friendList: [],
@@ -36,11 +35,10 @@ export const friendListReducer = createSlice({
 // 친구 검색 axios -> pagination 추가해야함 ...
 export const getFriendListAxios = (type = "nickname", text = "") => {
   return async (dispatch) => {
-    
     const sendRequest = async () => {
       dispatch(friendActions.isFriendListLoading(true));
-      console.log('get friendlist!')
-      
+      console.log("get friendlist!");
+
       const response = await axios.get(
         `${process.env.REACT_APP_HOST}/friend/${sessionStorage.getItem(
           "userId"
@@ -54,10 +52,11 @@ export const getFriendListAxios = (type = "nickname", text = "") => {
           }),
         {
           headers: authHeader(),
-          validateStatus: (status) => status === 200 || status === 204 || status === 401,
+          validateStatus: (status) =>
+            status === 200 || status === 204 || status === 401,
         }
       );
-      
+
       if (response.status === 401) {
         console.log("unauthorized!-> refresh!");
         const refreshResponse = await getRefreshToken();
@@ -65,13 +64,11 @@ export const getFriendListAxios = (type = "nickname", text = "") => {
         if (refreshResponse === 200) {
           return sendRequest();
         } else {
-          alert("세션이 만료되었습니다.")
+          alert("세션이 만료되었습니다.");
           Logout();
           return false;
         }
-      }
-
-      else if (response.status === 200) {
+      } else if (response.status === 200) {
         return response.data.list;
       } else if (response.status === 204) {
         return [];
@@ -86,7 +83,6 @@ export const getFriendListAxios = (type = "nickname", text = "") => {
     dispatch(friendActions.isFriendListLoading(false));
   };
 };
-
 
 // 친구 신청 목록 axios
 // refresh token 성공
@@ -143,7 +139,6 @@ export const getFriendRequestListAxios = () => {
     dispatch(friendActions.isFriendRequestListLoading(false));
   };
 };
-
 
 export const friendActions = friendListReducer.actions;
 export const { initialState } = friendListReducer;

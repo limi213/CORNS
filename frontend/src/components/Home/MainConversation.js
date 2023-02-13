@@ -1,23 +1,28 @@
 import RoomList from "components/Conversation/RoomList";
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getRoomList } from "store/reducers/roomListReducer";
+import { getRoomListAxios } from "store/reducers/roomListReducer";
 import { initialState } from "store/reducers/roomFilterReducer";
 function MainConversation() {
   const dispatch = useDispatch();
-  const { data, loading } = useSelector((state) => state.roomListReducer);
+  const data = useSelector((state) => state.roomListReducer.roomList);
+  const loading = useSelector(
+    (state) => state.roomListReducer.isRoomListLoading
+  );
   const filter = initialState;
+  // useEffect(() => {
+  //   dispatch(getRoomList(filter));
+  // }, []);
   useEffect(() => {
-    dispatch(getRoomList(filter));
-  }, []);
+    dispatch(getRoomListAxios(filter));
+  }, [dispatch, filter]);
 
-  if (!loading) {
-    return (
-      <div>{data.list && <RoomList roomLists={data.list.slice(0, 6)} />}</div>
-    );
-  } else {
-    return <div>로딩중</div>;
-  }
+  return (
+    <div>
+      {loading && <p>loading 중...</p>}
+      {!loading && data?.list && <RoomList roomLists={data.list.slice(0, 6)} />}
+    </div>
+  );
 }
 
 export default MainConversation;

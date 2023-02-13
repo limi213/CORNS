@@ -1,28 +1,31 @@
 import RoomList from "components/Conversation/RoomList";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getRoomList } from "store/reducers/roomListReducer";
+import { getRoomListAxios } from "store/reducers/roomListReducer";
 import { addPage } from "store/reducers/roomFilterReducer";
 import { addPageCount } from "store/reducers/pageReducer";
 
 function RoomListsContainer() {
   const dispatch = useDispatch();
-  const { data, loading } = useSelector((state) => state.roomListReducer);
+  const data = useSelector((state) => state.roomListReducer.roomList);
+  const loading = useSelector(
+    (state) => state.roomListReducer.isRoomListLoading
+  );
   // const { pageCount } = useSelector((state) => state.pageReducer);
   const filter = useSelector((state) => state.roomFilterReducer);
   // const page = useRef(pageCount);
-  const [list, setList] = useState([]);
+
   // const [addList, setAddList] = useState([]);
   // const [flag, setFlag] = useState(true);
   // const [page, setPage] = useState(0);
 
   useEffect(() => {
-    dispatch(getRoomList(filter));
+    dispatch(getRoomListAxios(filter));
   }, [dispatch, filter]);
 
-  useEffect(() => {
-    setList(data.list);
-  }, [data]);
+  // useEffect(() => {
+  //   setList(data.list);
+  // }, [data]);
 
   // useEffect(() => {
   //   if (list !== undefined) {
@@ -84,8 +87,9 @@ function RoomListsContainer() {
 
   return (
     <div>
+      {loading && <p>loading 중...</p>}
       {
-        list && <RoomList roomLists={list} />
+        !loading && data?.list && <RoomList roomLists={data.list} />
         // <RoomList roomLists={addList} />
       }
     </div>

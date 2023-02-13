@@ -130,7 +130,7 @@ function ConversationRoomFilter() {
           </span>
           <Checkbox onClick={getAvail} checked={checked} />
         </Box>
-        <Box
+        {/* <Box
           sx={{ display: "flex", flexDirection: "row-reverse" }}
           onClick={reset}
         >
@@ -148,7 +148,7 @@ function ConversationRoomFilter() {
           >
             전체해제
           </Button>
-        </Box>
+        </Box> */}
       </Box>
     </>
   );

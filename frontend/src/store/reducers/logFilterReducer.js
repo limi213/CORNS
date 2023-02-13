@@ -23,7 +23,7 @@ export const logFilterReducer = createSlice({
     addSubject: (state, action) => {
       state.subject += action.payload + " ";
     },
-    remobeSubject: (state, action) => {
+    removeSubject: (state, action) => {
       const subjectList = state.subject.split(" ");
       const cleaned = subjectList
         .filter((sub) => parseInt(sub) !== action.payload)

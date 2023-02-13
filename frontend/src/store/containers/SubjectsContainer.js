@@ -1,4 +1,4 @@
-import SubjectBtn from "components/Conversation/SubjectBtn";
+import LogSubjectBtn from "components/ConversationLog/LogSubjectBtn";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getSubjects } from "store/reducers/subjectsReducer";
@@ -12,7 +12,7 @@ function SubjectsContainer({ reset }) {
   }, [dispatch]);
 
   const subjectBtn = subjects.map((item) => (
-    <SubjectBtn subject={item} key={item.subjectNo} reset={reset} />
+    <LogSubjectBtn subject={item} key={item.subjectNo} reset={reset} />
   ));
   return <div>{subjects && subjectBtn}</div>;
 }
