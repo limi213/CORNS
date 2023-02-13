@@ -261,12 +261,13 @@ public class UserController {
     @ApiOperation(value = "user 정보 수정", notes = "닉네임, 이미지 수정")
     @PutMapping
     public ResponseEntity<?> modifyUserInfo(@RequestPart UserModifyRequestDto modifyRequestDto,
-                                            @RequestParam MultipartFile multipartFile){
+                                            @RequestParam(required = false) MultipartFile multipartFile){
 
         try {
-            log.debug("modifyRequestDto = " + modifyRequestDto + ", multipartFile = " + multipartFile);
-            userService.updateUserInfo(modifyRequestDto, multipartFile);
-            return new ResponseEntity<>(HttpStatus.OK);
+            log.debug("modifyRequestDto = " + modifyRequestDto.toString() + ", multipartFile = " + multipartFile);
+            UserResponseDto user = userService.updateUserInfo(modifyRequestDto, multipartFile);
+            log.debug("user : {}", user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
 
         } catch (Exception e) {
             log.error(e.getMessage());

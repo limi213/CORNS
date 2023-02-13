@@ -16,9 +16,14 @@ const changeProfileAxios = async (formData) => {
   try {
     const response = await axios.put(
       `${process.env.REACT_APP_HOST}/user`,
-      {
-        data: formData,
-      }
+        formData,
+        {
+          headers:{
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+            "Access-Control-Allow-Credentials": true,
+            "Content-Type":"multipart/form-data"
+          }
+        }
     );
     if (response.status === 200) {
       console.log(response.data)
@@ -85,8 +90,6 @@ function ChangeProfile() {
       nickname: nickname,
     }
     
-    // formData.append("userId", sessionStorage.getItem("userId"));
-    // formData.append("nickname", nickname);
     formData.append("modifyRequestDto", new Blob([JSON.stringify(modifyRequestDto)], {type: "application/json"}))
     formData.append("multipartFile", imgFile)
 

@@ -31,7 +31,7 @@ public interface UserService {
     //비밀번호 변경 
     boolean updateUserPassword(UserPassModifyRequestDto requestDto) throws Exception;
     //닉네임, 이미지 수정
-    void updateUserInfo(UserModifyRequestDto modifyRequestDto, MultipartFile multipartFile) throws Exception;
+    UserResponseDto updateUserInfo(UserModifyRequestDto modifyRequestDto, MultipartFile multipartFile) throws Exception;
     //회원 상태코드 변경
     void updateUserCd(int userId, int userCd) throws Exception;
     //조건에 따른 객체 리스트 페이지처리

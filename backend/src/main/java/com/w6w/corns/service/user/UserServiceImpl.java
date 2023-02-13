@@ -222,14 +222,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public void updateUserInfo(UserModifyRequestDto modifyRequestDto, MultipartFile multipartFile) throws Exception{
+    public UserResponseDto updateUserInfo(UserModifyRequestDto modifyRequestDto, MultipartFile multipartFile) throws Exception{
 
         User user = userRepository.findByUserId(modifyRequestDto.getUserId());
-
         //일단 이미지를 내리는 기능은 없어서 null로 넘어오면 기존 이미지로 유지
         String imgUrl;
         if(multipartFile != null && !multipartFile.isEmpty()){
-
             String saveUrl = uploadPath + "/users/" + user.getUserId()+"_" + multipartFile.getOriginalFilename();
 
             //똑같은 id의 이미지가 있는지 확인 -> 있으면 삭제 후 새로운 파일 업로드
@@ -257,11 +255,15 @@ public class UserServiceImpl implements UserService{
 
             user.setImgUrl(imgUrl);
         }
-        //설정 안하면 null로 넘어오는지, 아니면 기존 내용이 넘어오는지 아마도 후자?!
-        if(modifyRequestDto.getNickname() != null)
+        if(modifyRequestDto.getNickname() != null && !modifyRequestDto.getNickname().isEmpty())
             user.setNickname(modifyRequestDto.getNickname());
 
         userRepository.save(user);
+
+        return UserResponseDto.builder().userId(user.getUserId())
+                .nickname(user.getNickname())
+                .imgUrl(user.getImgUrl())
+                .build();
     }
 
     @Override
