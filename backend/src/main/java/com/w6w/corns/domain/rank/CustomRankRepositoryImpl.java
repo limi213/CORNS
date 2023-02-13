@@ -70,6 +70,7 @@ public class CustomRankRepositoryImpl implements CustomRankRepository {
                 .from(rank)
                 .join(user).on(rank.userId.eq(user.userId))
                 .where(builder)
+                .limit(50)
                 .fetch();
     }
 
