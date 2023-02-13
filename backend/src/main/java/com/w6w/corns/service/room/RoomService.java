@@ -32,7 +32,7 @@ public interface RoomService {
     // 방 정보 + 유저 목록
     public RoomAndRoomUserListResponseDto findRoomAndRoomUserByRoomNo(int roomNo, int roomUserCd);
     // 유저가 대화중인지 체크
-    public boolean isNotUserInConversation(int userId, int roomCd);
+    public boolean isNotUserInConversation(int userId, int roomUserCd);
     // 쫑알룸 대화가 시작되었는지 체크
     public boolean isNotStartRoomInConversation(int roomNo);
     // 쫑알룸 정원 체크
@@ -45,5 +45,7 @@ public interface RoomService {
     public RoomAndRoomUserListResponseDto exitRoom(UpdateRoomRequestDto body);
     // 대화 종료
     public RoomAndRoomUserListResponseDto endConversation(StartEndRoomRequestDto body);
+    // 유저가 대화중인 방 정보 반환
+    public List<RoomListResponseDto> findRoomByUserId(int userId);
 
 }

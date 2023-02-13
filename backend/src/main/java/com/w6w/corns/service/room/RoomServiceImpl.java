@@ -167,9 +167,9 @@ public class RoomServiceImpl implements RoomService {
     // 유저가 대화중인지 체크
     @Override
     @Transactional(readOnly = true)
-    public boolean isNotUserInConversation(int userId, int roomCd) {
+    public boolean isNotUserInConversation(int userId, int roomUserCd) {
         //// 유저가 대화 참여 가능하면 true 반환 - 6000(대기중), 6001(대기중)이 아닐 때
-        if (roomUserRepository.findUserInRoom(userId, roomCd).isEmpty()) return true;
+        if (roomUserRepository.findUserInRoom(userId, roomUserCd).isEmpty()) return true;
         return false;
     }
 
@@ -324,6 +324,16 @@ public class RoomServiceImpl implements RoomService {
                                                 .build());
 
         return findRoomAndRoomUserByRoomNo(body.getRoomNo(), RoomUserCode.ROOM_USER_END.getCode());
+    }
+
+    @Override
+    public List<RoomListResponseDto> findRoomByUserId(int userId) {
+        List<RoomUser> roomUser = roomUserRepository.findUserInRoom(userId, RoomUserCode.ROOM_USER_CONVERSATION.getCode());
+        if (roomUser.isEmpty()) return null;
+
+        List<RoomListResponseDto> response = new ArrayList<>();
+        roomUser.forEach(user -> response.add(findRoomByRoomNo(user.getRoomNo())));
+        return response;
     }
 
 }

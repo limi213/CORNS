@@ -120,7 +120,7 @@ public class RoomController {
             if (roomUsers == null) {
                 status = HttpStatus.NO_CONTENT;
             } else {
-                resultMap.put("room", roomUsers);
+                resultMap.put("roomUsers", roomUsers);
                 status = HttpStatus.OK;
             }
         } catch (Exception e) {
@@ -241,6 +241,28 @@ public class RoomController {
         try {
             redisService.saveScript(body);
             status = HttpStatus.OK;
+        } catch (Exception e) {
+            resultMap.put("message", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+
+        return new ResponseEntity<Map>(resultMap, status);
+    }
+
+    @ApiOperation(value = "유저가 대화방에 들어있는지 확인하는 api, 대화중이면 대화방의 정보 반환")
+    @GetMapping(value = "/list/{userId}")
+    private ResponseEntity<?> getRoomByUserId(@PathVariable int userId) {
+        Map resultMap = new HashMap<>();
+        HttpStatus status;
+
+        try {
+            List<RoomListResponseDto> response = roomService.findRoomByUserId(userId);
+            if (response == null) {
+                status = HttpStatus.NO_CONTENT;
+            } else {
+                status = HttpStatus.OK;
+                resultMap.put("rooms", response);
+            }
         } catch (Exception e) {
             resultMap.put("message", e.getMessage());
             status = HttpStatus.INTERNAL_SERVER_ERROR;
