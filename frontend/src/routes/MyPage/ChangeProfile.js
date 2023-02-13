@@ -79,9 +79,15 @@ function ChangeProfile() {
     console.log("submit!");
     console.log(nickname, imgFile)
 
+
+    const modifyRequestDto = {
+      userId: sessionStorage.getItem("userId"),
+      nickname: nickname,
+    }
     
-    formData.append("userId", sessionStorage.getItem("userId"));
-    formData.append("nickname", nickname);
+    // formData.append("userId", sessionStorage.getItem("userId"));
+    // formData.append("nickname", nickname);
+    formData.append("modifyRequestDto", new Blob([JSON.stringify(modifyRequestDto)], {type: "application/json"}))
     formData.append("multipartFile", imgFile)
 
     const res = await changeProfileAxios(formData)

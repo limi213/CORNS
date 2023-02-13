@@ -17,7 +17,6 @@ function useAxios() {
   const sendRequest = useCallback(async (requestConfig) => {
     setIsLoading(true);
     console.log('sendRequest!', requestConfig.url);
-    console.log(requestConfig.body)
     try {
       const response = await axios(
         requestConfig.url,

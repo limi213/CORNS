@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useAxios from "auth/useAxios";
 
 import {
@@ -35,17 +35,20 @@ function Withdrawl() {
     await sendRequest({
       url: `${process.env.REACT_APP_HOST}/user`,
       method: 'POST',
-      body: {
+      data: {
         userId: sessionStorage.getItem("userId"),
         withdrawNo : option, 
         description : text,
       }
     })
-    if (status && status === 200) {
+  }
+
+  useEffect(() => {
+    if (status === 200) {
       alert('탈퇴 신청이 완료되었습니다.')
       Logout();
     }
-  }
+  }, [status])
 
 
   return (
