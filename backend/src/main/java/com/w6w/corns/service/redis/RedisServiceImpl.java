@@ -185,7 +185,7 @@ public class RedisServiceImpl implements RedisService {
 
     // 새 알림 여부 조회
     @Override
-    public boolean isExistNewNotify(int userId) {
+    public boolean isExistNewNotify(int userId, int category) {
         // Redis에 있으면 해당 값 반환, 없으면 MySQL에서 가져온 뒤 반환
         boolean isExist = false;
         String key = "notification";
@@ -193,19 +193,16 @@ public class RedisServiceImpl implements RedisService {
 
         Object redisResult = redisTemplate.opsForHash().get(key, hashKey);
         if (redisResult != null) {
-            if ((char)redisResult == 'Y') {
+            if (((int)redisResult & 1<<category) != 0) {
                 isExist = true;
-            } else {
-                isExist = false;
             }
+
         } else {
             Notification notification = notificationRepo.findById(userId).get();
-            redisTemplate.opsForHash().put(key, hashKey, notification.getNotificationYN());
+            redisTemplate.opsForHash().put(key, hashKey, notification.getStatus());
 
-            if (notification.getNotificationYN() == 'Y') {
+            if ((notification.getStatus() & 1<<category) != 0) {
                 isExist = true;
-            } else {
-                isExist = false;
             }
         }
 
@@ -214,15 +211,21 @@ public class RedisServiceImpl implements RedisService {
 
     // 알림 상태 갱신
     @Override
-    public void updateNotify(int userId, boolean isRegist) {
+    public void updateNotify(int userId, int category, boolean isRegist) {
         // Redis, MySQL 모두 적용
         String key = "notification";
         String hashKey = String.valueOf(userId);
-        char value = isRegist?'Y':'N';
+        Notification notification = notificationRepo.findById(userId).get();
+        int value = notification.getStatus();
+
+        if (isRegist) {
+            value |= (1<<category);
+        } else {
+            value &= ~(1<<category);
+        }
 
         redisTemplate.opsForHash().put(key, hashKey, value);
-        Notification notification = notificationRepo.findById(userId).get();
-        notification.setNotificationYN(value);
+        notification.setStatus(value);
         notificationRepo.save(notification);
     }
 

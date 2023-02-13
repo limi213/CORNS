@@ -3,21 +3,11 @@ package com.w6w.corns.domain.rank;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.w6w.corns.domain.friend.CustomFriendRepository;
-import com.w6w.corns.domain.friend.QFriend;
 import com.w6w.corns.domain.user.QUser;
-import com.w6w.corns.dto.friend.FriendListRequestDto;
-import com.w6w.corns.dto.friend.FriendListResponseDto;
 import com.w6w.corns.dto.rank.RankListResponseDto;
-import com.w6w.corns.util.code.FriendCode;
 import com.w6w.corns.util.code.RankCode;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.SliceImpl;
 
 import javax.persistence.EntityManager;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class CustomRankRepositoryImpl implements CustomRankRepository {

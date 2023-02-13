@@ -17,16 +17,15 @@ public class Notification {
     @Id
     private int userId;
 
-    @Column(name = "notification_yn")
-    private char notificationYN;
+    private int status;
 
-    public void setNotificationYN(char notificationYN) {
-        this.notificationYN = notificationYN;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Builder
-    public Notification(int userId, char notificationYN) {
+    public Notification(int userId, int status) {
         this.userId = userId;
-        this.notificationYN = notificationYN;
+        this.status = status;
     }
 }

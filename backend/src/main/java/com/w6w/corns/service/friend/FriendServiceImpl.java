@@ -7,6 +7,7 @@ import com.w6w.corns.domain.friendlog.FriendLogRepository;
 import com.w6w.corns.domain.user.User;
 import com.w6w.corns.domain.user.UserRepository;
 import com.w6w.corns.dto.friend.*;
+import com.w6w.corns.dto.notification.ReadNotifyRequestDto;
 import com.w6w.corns.service.redis.RedisService;
 import com.w6w.corns.util.PageableResponseDto;
 import com.w6w.corns.util.code.FriendCode;
@@ -65,7 +66,7 @@ public class FriendServiceImpl implements FriendService {
                             .toEntity());
 
         //신청받은 유저 새 알림 처리
-        redisService.updateNotify(friendRequestDto.getToId(), true);
+        redisService.updateNotify(friendRequestDto.getToId(), 0, true);
     }
 
     //친구 수락

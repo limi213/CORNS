@@ -12,8 +12,8 @@ public interface RedisService {
     public void makeScriptFile(RoomListResponseDto roomInfo);
     // 스크립트 파일 업로드
     public void uploadScriptFile(int roomNo, int userId, String scriptText);
-    // 새 알림 여부 조회
-    public boolean isExistNewNotify(int userId);
+    // 새 알림 여부 조회 (친구 신청)
+    public boolean isExistNewNotify(int userId, int category);
     // 알림 읽음 처리
-    public void updateNotify(int userId, boolean isRegist);
+    public void updateNotify(int userId, int category, boolean isRegist);
 }
