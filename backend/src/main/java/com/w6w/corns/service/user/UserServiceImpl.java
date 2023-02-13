@@ -1,6 +1,8 @@
 package com.w6w.corns.service.user;
 
 import com.w6w.corns.domain.loginlog.LoginLogRepository;
+import com.w6w.corns.domain.rank.Rank;
+import com.w6w.corns.domain.rank.RankRepository;
 import com.w6w.corns.domain.user.User;
 import com.w6w.corns.domain.user.UserRepository;
 import com.w6w.corns.domain.withdraw.Withdraw;
@@ -9,6 +11,7 @@ import com.w6w.corns.domain.withdraw.WithdrawLogRepository;
 import com.w6w.corns.domain.withdraw.WithdrawRepository;
 import com.w6w.corns.dto.explog.ExpLogRequestDto;
 import com.w6w.corns.dto.loginlog.LoginLogSaveDto;
+import com.w6w.corns.dto.rank.UserRankResponseDto;
 import com.w6w.corns.dto.user.*;
 import com.w6w.corns.dto.withdraw.WithdrawRequestDto;
 import com.w6w.corns.service.growth.GrowthService;
@@ -16,6 +19,7 @@ import com.w6w.corns.service.jwt.JwtService;
 import com.w6w.corns.util.PageableResponseDto;
 import com.w6w.corns.util.SHA256Util;
 import com.w6w.corns.util.code.ExpCode;
+import com.w6w.corns.util.code.RankCode;
 import com.w6w.corns.util.code.UserCode;
 
 import java.io.File;
@@ -45,6 +49,7 @@ public class UserServiceImpl implements UserService{
     private final WithdrawLogRepository withdrawLogRepository;
     private final GrowthService growthService;
     private final JwtService jwtService;
+    private final RankRepository rankRepository;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -148,7 +153,25 @@ public class UserServiceImpl implements UserService{
 
         //랭킹 나중에 추가
         UserDetailResponseDto responseDto = UserDetailResponseDto.fromEntity(user);
+        List<UserRankResponseDto> userRank = new ArrayList<>();
 
+        for(RankCode rankCd : RankCode.values()){ //null인 경우 처리 필요
+            Rank rank = rankRepository.findByUserIdAndRankCd(user.getUserId(), rankCd.getCode());
+            if(rank == null){
+                userRank.add(UserRankResponseDto.builder()
+                        .ranking(-1)
+                        .value(0)
+                        .rankCd(rankCd.getCode())
+                        .build());
+            }else{
+                userRank.add(UserRankResponseDto.builder()
+                        .ranking(rank.getRanking())
+                        .value(rank.getValue())
+                        .rankCd(rank.getRankCd())
+                        .build());
+            }
+        }
+        responseDto.setRank(userRank);
         return responseDto;
     }
 

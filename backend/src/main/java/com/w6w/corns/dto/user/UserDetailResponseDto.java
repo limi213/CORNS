@@ -1,7 +1,9 @@
 package com.w6w.corns.dto.user;
 
 import com.w6w.corns.domain.user.User;
+import com.w6w.corns.dto.rank.UserRankResponseDto;
 import io.swagger.annotations.ApiModel;
+import java.util.List;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -27,6 +29,7 @@ public class UserDetailResponseDto {
     private long attendTotal;
     private long speakingTotal;
     private long thumbTotal;
+    private List<UserRankResponseDto> rank;
 
     public static UserDetailResponseDto fromEntity(User user){
 
