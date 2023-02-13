@@ -9,22 +9,22 @@ import { Box, Grid, Typography } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-function UserProfileRankingCard({ ranking }) {
-  const { type, rank, indicate } = ranking;
+function UserProfileRankingCard({ rank }) {
+  const { ranking, rankCd, value } = rank;
 
   let crown = "";
   let unit = "";
   let transKorean = "";
 
-  if (type === "sungsil") {
+  if (rankCd === 2000) {
     crown = sungsil_crown;
-    unit = "경험치";
+    unit = "exp";
     transKorean = "성실";
-  } else if (type === "ddabong") {
+  } else if (rankCd === 2002) {
     crown = ddabong_crown;
     unit = "개";
     transKorean = "따봉";
-  } else if (type === "suda") {
+  } else if (rankCd === 2001) {
     crown = suda_crown;
     unit = "분";
     transKorean = "수다";
@@ -45,16 +45,16 @@ function UserProfileRankingCard({ ranking }) {
             mt: "1rem",
           }}
         >
-          <img src={crown} alt={type} />
+          <img src={crown} alt={rankCd} />
           <Typography>{transKorean}왕</Typography>
         </Box>
-        {rank !== null ? (
+        {(ranking > 0 && ranking < 101) ? (
           <p
             css={css`
               text-align: center;
             `}
           >
-            {rank} 위
+            {ranking} 위
           </p>
         ) : (
           <p
@@ -71,7 +71,7 @@ function UserProfileRankingCard({ ranking }) {
             text-align: center;
           `}
         >
-          {indicate} {unit}
+          {(rankCd === 2001) ? Math.round(value/60) : value} {unit}
         </p>
       </Box>
     </Grid>

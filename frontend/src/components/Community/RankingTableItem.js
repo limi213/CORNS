@@ -20,7 +20,7 @@ function RankingTableItem({ item, unit }) {
         </TableCell>
 
         <TableCell>Lv.{levelNo}</TableCell>
-        <TableCell>{value}{unit}</TableCell>
+        <TableCell>{(unit === "분") ? Math.round(value/60) : value } {unit}</TableCell>
       </TableRow>
     </>
   );

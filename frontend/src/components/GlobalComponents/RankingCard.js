@@ -101,7 +101,7 @@ export default function RankingCard({ rankInfo, customWidth }) {
                 margin-left: 8px;
               `}
             >
-              {value}{unit}
+              {(rankType === 3) ? Math.round(value/60) : value} {unit}
             </span>
           </Box>
         </Box>

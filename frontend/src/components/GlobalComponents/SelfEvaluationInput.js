@@ -47,7 +47,7 @@ function SelfEvaluationInput({ roomNo, selfScore, selfDesc }) {
     const res = await onEvaluationAxios(
       roomNo,
       sessionStorage.getItem("userId"),
-      score,
+      Math.max(score, 1),
       description
     );
     setRegistered(res);

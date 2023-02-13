@@ -27,7 +27,7 @@ const changeProfileAxios = async (formData) => {
     );
     if (response.status === 200) {
       console.log(response.data)
-      sessionStorage.setItem("userId", response.data.userId);
+      sessionStorage.setItem("nickname", response.data.nickname);
       sessionStorage.setItem("imgUrl", response.data.imgUrl);
       alert('회원정보가 수정되었습니다.')
       return true;

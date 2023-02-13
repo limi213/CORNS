@@ -61,7 +61,7 @@ function UserProfileInfo({ basicInfo }) {
               <Typography>누적 칭찬수 {thumbTotal}개</Typography>
             </Grid>
             <Grid item xs={4}>
-              <Typography>누적 발화량 {speakingTotal}분</Typography>
+              <Typography>누적 발화량 {Math.round(speakingTotal/60)}분</Typography>
             </Grid>
           </Grid>
         </Box>

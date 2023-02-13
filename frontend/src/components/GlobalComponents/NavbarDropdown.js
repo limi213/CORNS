@@ -78,6 +78,7 @@ function NavbarDropdown() {
       <ul
         css={css`
           list-style: none;
+          background-color: white;
         `}
       >
         <Collapse
@@ -88,7 +89,7 @@ function NavbarDropdown() {
             position: "absolute",
             top: "50px",
             right: "3%",
-            backgroundColor: "#fff",
+            backgroundColor: "white",
             border: "3px solid #111",
             width: "120px",
           }}

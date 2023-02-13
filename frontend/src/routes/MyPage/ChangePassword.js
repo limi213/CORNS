@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { validatePwd, checkPwd } from "components/LoginSignin/SigninPassword";
 import axios from "axios";
+import useAxios from "auth/useAxios";
 
 import { Box, Button, Input } from "@mui/material";
 /** @jsxImportSource @emotion/react */
@@ -20,7 +21,7 @@ const changePasswordAxios = async (userId, password, newPassword) => {
         validateStatus: (status) => status === 200 || status === 403,
       }
     );
-    return response.status
+    return response.status;
   } catch (e) {
     console.log(e);
   }
@@ -32,6 +33,8 @@ function ChangePassword() {
   const [statePassword1, setStatePassword1] = useState(false);
   const [password2, setPassword2] = useState("");
   const [statePassword2, setStatePassword2] = useState(false);
+
+  const { status, isLoading, sendRequest } = useAxios();
 
   const onChangeNowPassword = (e) => {
     setNowPassword(e.target.value);
@@ -49,27 +52,35 @@ function ChangePassword() {
   }, [password1, password2]);
 
   // 비밀번호 수정
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
     if (!nowPassword || !statePassword1 || !statePassword2) {
       return;
     }
 
-    const res = await changePasswordAxios(
-      sessionStorage.getItem("userId"),
-      nowPassword,
-      password1
-    );
-    if (res === 200) {
+    sendRequest({
+      url: `${process.env.REACT_APP_HOST}/user`,
+      method: "PATCH",
+      data: {
+        userId: sessionStorage.getItem("userId"),
+        password: nowPassword,
+        newPassword: password1,
+      },
+      validateStatus: [200, 401, 403]
+    });
+  };
+
+  useEffect(() => {
+    if (status === 200) {
       alert("비밀번호가 수정되었습니다.");
       setNowPassword("");
       setPassword1("");
       setPassword2("");
-    } else if (res === 403) {
+    } else if (status === 403) {
       alert("틀린 비밀번호입니다.")
     }
-  };
+  }, [status]);
 
   return (
     <>
