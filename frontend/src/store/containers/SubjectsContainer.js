@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getSubjects } from "store/reducers/subjectsReducer";
 
-function SubjectsContainer() {
+function SubjectsContainer({ reset }) {
   const dispatch = useDispatch();
   const subjects = useSelector((state) => state.subjectsReducer);
 
@@ -12,7 +12,7 @@ function SubjectsContainer() {
   }, [dispatch]);
 
   const subjectBtn = subjects.map((item) => (
-    <SubjectBtn subject={item} key={item.subjectNo} />
+    <SubjectBtn subject={item} key={item.subjectNo} reset={reset} />
   ));
   return <div>{subjects && subjectBtn}</div>;
 }

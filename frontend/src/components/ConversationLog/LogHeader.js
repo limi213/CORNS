@@ -25,15 +25,27 @@ function LogHeader() {
 
   return (
     <TableRow>
-      <TableCell width="10%" align="center">
+      <TableCell
+        width="10%"
+        align="center"
+        sx={{ fontSize: "18px", fontWeight: "bold" }}
+      >
         북마크
       </TableCell>
 
-      <TableCell width="10%" align="center">
+      <TableCell
+        width="10%"
+        align="center"
+        sx={{ fontSize: "18px", fontWeight: "bold" }}
+      >
         주제
       </TableCell>
 
-      <TableCell width="25%" align="center">
+      <TableCell
+        width="25%"
+        align="center"
+        sx={{ fontSize: "18px", fontWeight: "bold" }}
+      >
         제목
       </TableCell>
 
@@ -43,26 +55,42 @@ function LogHeader() {
           variant="standard"
           size="small"
           onChange={changeHandler}
-          sx={{ fontSize: "14px" }}
+          sx={{ fontSize: "18px", fontWeight: "bold" }}
         >
           <MenuItem value={"startTm,DESC"}>최신순</MenuItem>
           <MenuItem value={"startTm,ASC"}>오래된순</MenuItem>
         </Select>
       </TableCell>
 
-      <TableCell width="10%" align="center">
+      <TableCell
+        width="10%"
+        align="center"
+        sx={{ fontSize: "18px", fontWeight: "bold" }}
+      >
         대화시간
       </TableCell>
 
-      <TableCell width="10%" align="center">
+      <TableCell
+        width="10%"
+        align="center"
+        sx={{ fontSize: "18px", fontWeight: "bold" }}
+      >
         인원
       </TableCell>
 
-      <TableCell width="10%" align="center">
+      <TableCell
+        width="10%"
+        align="center"
+        sx={{ fontSize: "18px", fontWeight: "bold" }}
+      >
         자기평가
       </TableCell>
 
-      <TableCell width="10%" align="center">
+      <TableCell
+        width="10%"
+        align="center"
+        sx={{ fontSize: "18px", fontWeight: "bold" }}
+      >
         따봉개수
       </TableCell>
     </TableRow>

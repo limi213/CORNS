@@ -12,9 +12,9 @@ function RoomListsContainer() {
   const filter = useSelector((state) => state.roomFilterReducer);
   // const page = useRef(pageCount);
   const [list, setList] = useState([]);
-  const [addList, setAddList] = useState([]);
-  const [flag, setFlag] = useState(true);
-  const [page, setPage] = useState(0);
+  // const [addList, setAddList] = useState([]);
+  // const [flag, setFlag] = useState(true);
+  // const [page, setPage] = useState(0);
 
   useEffect(() => {
     dispatch(getRoomList(filter));
@@ -36,59 +36,58 @@ function RoomListsContainer() {
   //   addNext();
   // };
 
-  useEffect(() => {
-    // Fetch data for the first time
-    // Add the scroll event listener
-    window.addEventListener("scroll", handleScroll);
-    // Clean up the event listener when the component unmounts
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [page]);
+  // useEffect(() => {
+  // Fetch data for the first time
+  // Add the scroll event listener
+  // window.addEventListener("scroll", handleScroll);
+  // Clean up the event listener when the component unmounts
+  // return () => window.removeEventListener("scroll", handleScroll);
+  // }, [page]);
 
-  const handleScroll = () => {
-    const scrollTop =
-      (document.documentElement && document.documentElement.scrollTop) ||
-      document.body.scrollTop;
-    const scrollHeight =
-      (document.documentElement && document.documentElement.scrollHeight) ||
-      document.body.scrollHeight;
+  // const handleScroll = () => {
+  //   const scrollTop =
+  //     (document.documentElement && document.documentElement.scrollTop) ||
+  //     document.body.scrollTop;
+  //   const scrollHeight =
+  //     (document.documentElement && document.documentElement.scrollHeight) ||
+  //     document.body.scrollHeight;
 
-    const clientHeight =
-      document.documentElement.clientHeight || window.innerHeight;
+  //   const clientHeight =
+  //     document.documentElement.clientHeight || window.innerHeight;
 
-    const threshold = 20;
+  //   const threshold = 20;
 
-    if (scrollTop + clientHeight >= scrollHeight - threshold) {
-      setPage(page + 1);
-      const pageFilter = { ...filter };
-      pageFilter.page = page;
-      dispatch(getRoomList(pageFilter));
+  //   if (scrollTop + clientHeight >= scrollHeight - threshold) {
+  //     setPage(page + 1);
+  //     const pageFilter = { ...filter };
+  //     pageFilter.page = page;
+  //     dispatch(getRoomList(pageFilter));
 
-      setAddList([...addList, ...list]);
-      if (addList.length > 0) {
-        setFlag(() => false);
-      }
-    }
-  };
+  //     setAddList([...addList, ...list]);
+  //     if (addList.length > 0) {
+  //       setFlag(() => false);
+  //     }
+  //   }
+  // };
 
-  const throttle = (callback, delay) => {
-    let timer = null;
-    return (arg) => {
-      if (timer === null) {
-        timer = setTimeout(() => {
-          callback(arg);
-          timer = null;
-        }, delay);
-      }
-    };
-  };
+  // const throttle = (callback, delay) => {
+  //   let timer = null;
+  //   return (arg) => {
+  //     if (timer === null) {
+  //       timer = setTimeout(() => {
+  //         callback(arg);
+  //         timer = null;
+  //       }, delay);
+  //     }
+  //   };
+  // };
 
   return (
-    <div onScroll={throttle(handleScroll, 300)}>
-      {list && flag ? (
-        <RoomList roomLists={list} />
-      ) : (
-        <RoomList roomLists={addList} />
-      )}
+    <div>
+      {
+        list && <RoomList roomLists={list} />
+        // <RoomList roomLists={addList} />
+      }
     </div>
   );
 }

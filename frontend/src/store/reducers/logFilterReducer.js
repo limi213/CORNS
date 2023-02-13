@@ -33,6 +33,24 @@ export const logFilterReducer = createSlice({
     toggleSortOption(state, actions) {
       state.sort = actions.payload;
     },
+    modifyMinTime: (state, action) => {
+      return { ...state, minTime: action.payload };
+    },
+    modifyMaxTime: (state, action) => {
+      return { ...state, maxTime: action.payload };
+    },
+    modifyStartDate: (state, action) => {
+      return { ...state, startDate: action.payload };
+    },
+    modifyEndDate: (state, action) => {
+      return { ...state, endDate: action.payload };
+    },
+    modifyThumb: (state, action) => {
+      return { ...state, getThumb: action.payload };
+    },
+    modifySelfEvaluation: (state, action) => {
+      return { ...state, selfScore: action.payload };
+    },
   },
 });
 

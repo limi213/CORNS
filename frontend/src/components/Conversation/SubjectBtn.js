@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { addSubject, removeSubject } from "store/reducers/roomFilterReducer";
 
-function SubjectBtn({ subject }) {
+function SubjectBtn({ subject, reset }) {
   const dispatch = useDispatch();
   const filter = useSelector((state) => state.roomFilterReducer);
 
@@ -15,6 +15,10 @@ function SubjectBtn({ subject }) {
   const btnColorToggle = (e) => {
     setToggle((prev) => !prev);
   };
+
+  if (reset) {
+    setToggle(() => true);
+  }
 
   // 주제 버튼 누를 때마다 params 주제 해제하는 함수
   const checkFilter = () => {

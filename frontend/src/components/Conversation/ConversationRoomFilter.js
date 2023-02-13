@@ -5,6 +5,7 @@ import {
   modifyMinTime,
   modifyMaxTime,
   modifyIsAvail,
+  resetFilter,
 } from "store/reducers/roomFilterReducer";
 import { Box, Checkbox, Button, Input } from "@mui/material";
 
@@ -12,6 +13,8 @@ import { Box, Checkbox, Button, Input } from "@mui/material";
 import { css } from "@emotion/react";
 
 function ConversationRoomFilter() {
+  const [checked, setChecked] = useState(false);
+  const [clickReset, setClickReset] = useState(false);
   const dispatch = useDispatch();
 
   const getMintime = (e) => {
@@ -22,10 +25,20 @@ function ConversationRoomFilter() {
     checkFilter("max", e.target.value);
   };
 
-  const getAvail = (e) => {
-    checkFilter("avail", e.target.value);
+  const getAvail = () => {
+    setChecked((prev) => !prev);
+    checkFilter("avail", checked);
   };
 
+  const reset = () => {
+    dispatch(resetFilter(true, "RESET_FILTER"));
+    setClickReset(() => true);
+    console.log(clickReset);
+  };
+
+  const resetSubject = () => {};
+
+  const resetAvail = () => {};
   // 필터 변경할 때마다 params 수정하는 함수
   const checkFilter = (content, e) => {
     if (content === "min") {
@@ -104,6 +117,7 @@ function ConversationRoomFilter() {
               height: "45px",
             }}
             onChange={getMaxtime}
+            // defaultValue={30}
           />
         </Box>
         <Box sx={{ mb: "48px", mr: "64px" }}>
@@ -114,9 +128,12 @@ function ConversationRoomFilter() {
           >
             입장가능여부
           </span>
-          <Checkbox />
+          <Checkbox onClick={getAvail} checked={checked} />
         </Box>
-        <Box sx={{ display: "flex", flexDirection: "row-reverse" }}>
+        <Box
+          sx={{ display: "flex", flexDirection: "row-reverse" }}
+          onClick={reset}
+        >
           <Button
             variant="contained"
             sx={{

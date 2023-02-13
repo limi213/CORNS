@@ -27,9 +27,9 @@ const now = new Date();
 
 export const initialState = {
   page: 0,
-  size: 18,
+  size: 1000,
   baseTime: toStringDate(now),
-  subject: "1 2 3 4 5 6 ",
+  subject: "1 2 3 4 5 ",
   minTime: 0,
   maxTime: 30,
   isAvail: false,
@@ -56,7 +56,10 @@ export const roomFilterReducer = createSlice({
       return { ...state, maxTime: action.payload };
     },
     modifyIsAvail: (state, action) => {
-      return { ...state, isAvail: action.payload };
+      return { ...state, isAvail: !action.payload };
+    },
+    resetFilter: (state, action) => {
+      return (state = initialState);
     },
   },
 });
@@ -69,4 +72,5 @@ export const {
   modifyMinTime,
   modifyMaxTime,
   modifyIsAvail,
+  resetFilter,
 } = roomFilterReducer.actions;
