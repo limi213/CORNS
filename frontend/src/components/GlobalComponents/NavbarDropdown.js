@@ -109,7 +109,9 @@ function NavbarDropdown() {
               마이페이지
             </NavLink>
           </li>
+          
           <Divider />
+          
           <li
             css={css`
               padding: 5%;
@@ -139,6 +141,27 @@ function NavbarDropdown() {
               />
             )}
           </li>
+          
+          <Divider />
+          
+          <li
+            css={css`
+              padding: 5%;
+              display: flex;
+            `}
+          >
+            <NavLink
+              to="/invitationList"
+              style={{ textDecoration: "none", color: "black" }}
+              css={css`
+                font-weight: ${window.location.href.includes(
+                  "invitationList"
+                ) && "bold"};
+              `}
+            >
+              초대목록
+            </NavLink>
+            </li>
         </Collapse>
       </ul>
     </>

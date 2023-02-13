@@ -1,0 +1,28 @@
+import React from "react";
+import Navbar from "components/GlobalComponents/Navbar";
+
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
+function ResultEvolution({ match }) {
+  const { roomNo } = match.params;
+
+  return (
+    <div
+      css={css`
+        margin: 0 105px;
+      `}
+    >
+      <Navbar />
+      <div
+        css={css`
+          margin: 124px 0 0 0;
+        `}
+      >
+        <h1>{roomNo} Result Evolution</h1>
+      </div>
+    </div>
+  );
+}
+
+export default ResultEvolution;
