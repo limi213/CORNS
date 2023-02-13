@@ -234,10 +234,7 @@ function joinSession() {
 
 			this.session.subscribeToSpeechToText(myStream, 'en-US');
 
-			// $("#startSttttt").click();
-			// 시작했다는 알림 받음
-			// $("#roomViewLastTimer").text(data.room.room.time + ":00");
-			// totalTime = data.room.room.time * 60;
+			setNoOneBlack();
 
 			var x = setInterval(function() {
 				//parseInt() : 정수를 반환
@@ -497,16 +494,19 @@ function outRoom(rUserId){	// 떠나는 사람 방 번호 받는다.
 			console.log(textStatus);
 			console.log(xhr);
 			console.log("퇴장처리 완료");
+			if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
+				window.location.href = "https://localhost:3000/conversation";
+			}
+			else{
+				window.location.href = "https://corns.co.kr:4438/conversation";
+			}
+		
 		},
 		error:function(request,status,error){
 			// alert("방 퇴장처리 실패 : " + request.statusText);
 			console.log(request);
 			console.log(status);
 			console.log(error);
-			if(request.status === 409){
-				console.log("이미 접속완료된 회원");
-				// 어디방인지 확인하고 이 방 아니면 나가게하자
-			}
 		}
 	});
 }
@@ -781,4 +781,20 @@ function toogleChatting(){
 	else{
 		$("#roomViewTranslation").css("display", "none");
 	}
+}
+
+function outRoomBtn(){
+	outRoom(userId);
+}
+
+function setNoOneBlack(){
+	// 시작하면 비어있는 칸은 검정엑스
+	$('.roomViewUser').each(function(index,item){
+		// alert($(this).html())
+		// console.log($(this));
+		if($(this).html().includes("video") != true){
+			alert($(this).html(`<i class="fa-regular fa-rectangle-xmark" style="font-size: 200; margin-left:200; margin-top:80"></i>`))
+
+		}
+	});
 }
