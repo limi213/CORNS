@@ -6,6 +6,8 @@ import { XSquare } from "react-bootstrap-icons";
 import { css } from "@emotion/react";
 import axios from "axios";
 import { toStringDate } from "store/reducers/roomFilterReducer";
+import authHeader from "auth/authHeader";
+import getRefreshToken from "auth/getRefreshToken";
 
 function AddWordButton({ setBaseTime, reload, setReload }) {
   const [openModal, setOpenModal] = useState(false);
@@ -37,13 +39,41 @@ function AddWordButton({ setBaseTime, reload, setReload }) {
   };
 
   const clickedSubmitButton = async () => {
+    if (!wordEng) {
+      window.alert("영어 단어를 입력해 주세요.");
+      return;
+    }
+    const sendRequest = async () => {
+      console.log(`[add word] - eng: ${wordEng}, kor: ${wordKor}`);
+      const response = await axios.post(
+        `${process.env.REACT_APP_HOST}/word`,
+        {
+          userId: sessionStorage.getItem("userId"),
+          wordEng: wordEng,
+          wordKor: wordKor,
+        },
+        {
+          headers: authHeader(),
+          validateStatus: (status) =>
+            status === 200 || status === 204 || status === 401,
+        }
+      );
+
+      if (response.status === 401) {
+        console.log("unauthorized!-> refresh!");
+        const refreshResponse = await getRefreshToken();
+
+        if (refreshResponse === 200) {
+          sendRequest();
+        }
+      } else if (response.status === 200) {
+        return response;
+      }
+    };
     try {
-      const response = await axios.post(`${process.env.REACT_APP_HOST}/word`, {
-        userId: sessionStorage.getItem("userId"),
-        wordEng: wordEng,
-        wordKor: wordKor,
-      });
-      if (response.status === 200) {
+      const submit = await sendRequest();
+      console.log(submit);
+      if (submit.status === 200) {
         setWordEng("");
         setWordKor("");
         setBaseTime(toStringDate(new Date()));

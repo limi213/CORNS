@@ -5,9 +5,19 @@ import EditIcon from "@mui/icons-material/EditOutlined";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import axios from "axios";
-import { Box, Button, Grid, Input, Modal, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Input,
+  Modal,
+  Typography,
+} from "@mui/material";
 import { XSquare } from "react-bootstrap-icons";
 import { toStringDate } from "store/reducers/roomFilterReducer";
+import useAxios from "auth/useAxios";
+import { useEffect } from "react";
 
 function EditWordButton({ word, setBaseTime, reload, setReload }) {
   const [openModal, setOpenModal] = useState(false);
@@ -38,31 +48,40 @@ function EditWordButton({ word, setBaseTime, reload, setReload }) {
     p: "32px 0 200px",
   };
 
+  const { status: editWordStatus, sendRequest: editWordRequest } = useAxios();
+
   const clickedEditButton = async () => {
-    try {
-      const response = await axios.put(`${process.env.REACT_APP_HOST}/word`, {
+    editWordRequest({
+      url: `${process.env.REACT_APP_HOST}/word`,
+      method: "PUT",
+      data: {
         wordSq: word.wordSq,
         wordEng: eng,
         wordKor: kor,
-      });
-      if (response.status === 200) {
-        setBaseTime(toStringDate(new Date()));
-        setReload(!reload);
-        handleCloseModal();
-      }
-    } catch (e) {
-      console.log(e);
-    }
+      },
+    });
   };
+
+  useEffect(() => {
+    if (editWordStatus === 200) {
+      console.log(
+        `[edit word] wordEng: ${word.wordEng} => ${eng}, wordKor: ${word.wordKor} => ${kor}`
+      );
+      setBaseTime(toStringDate(new Date()));
+      setReload(!reload);
+      handleCloseModal();
+    }
+  }, [editWordStatus]);
 
   return (
     <>
-      <EditIcon
-        color="warning"
-        className="editButton"
-        onClick={handleOpenModal}
-      ></EditIcon>
-
+      <IconButton onClick={handleOpenModal}>
+        <EditIcon
+          key={word.wordSq + "edit-btn"}
+          color="warning"
+          className="editButton"
+        ></EditIcon>
+      </IconButton>
       <Modal
         open={openModal}
         onClose={handleCloseModal}
@@ -109,7 +128,7 @@ function EditWordButton({ word, setBaseTime, reload, setReload }) {
                   backgroundColor: "white",
                   padding: "1rem 5.5rem 1rem 1rem",
                 }}
-                disabled="true"
+                disabled={true}
               ></Input>
             </Grid>
             <Grid

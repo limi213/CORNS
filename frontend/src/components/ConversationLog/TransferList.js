@@ -11,6 +11,8 @@ import { toStringDate } from "store/reducers/roomFilterReducer";
 import { GetDoneWord, GetTodoWord } from "./GetWord";
 import WordListItem from "./WordItemList";
 import AddWordButton from "./AddWordButton";
+import getRefreshToken from "auth/getRefreshToken";
+import Logout from "auth/Logout";
 
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);
@@ -78,12 +80,31 @@ export default function TransferList() {
 
   // [PATCH] 단어 상태 변경
   const updateWordStatus = async (body) => {
-    try {
+    const sendRequest = async () => {
+      console.log(`[patch] update word status`);
       const response = await axios.patch(
         `${process.env.REACT_APP_HOST}/word`,
         body
       );
-      if (response.status === 200) {
+      if (response.status === 401) {
+        console.log("unauthorized!-> refresh!");
+        const refreshResponse = await getRefreshToken();
+
+        if (refreshResponse === 200) {
+          return sendRequest();
+        } else {
+          alert("세션이 만료되었습니다.");
+          Logout();
+          return false;
+        }
+      } else if (response.status === 200) {
+        return response;
+      }
+    };
+
+    try {
+      const updateWord = await sendRequest();
+      if (updateWord.status === 200) {
         setBaseTime(toStringDate(new Date()));
         setReload(!reload);
       }
@@ -123,7 +144,7 @@ export default function TransferList() {
           </Grid>
         </Grid>
         <Paper sx={{ width: "100%", height: "600px", overflow: "auto" }}>
-          <List dense component="div" role="list">
+          <List aria-labelledby="todo-word-list">
             {todoLoading && (
               <Grid
                 sx={{
@@ -137,17 +158,20 @@ export default function TransferList() {
             )}
             {!todoLoading &&
               todoWords.length > 0 &&
-              todoWords.map((item, id) => (
-                <WordListItem
-                  item={item}
-                  id={id}
-                  setBaseTime={setBaseTime}
-                  reload={reload}
-                  setReload={setReload}
-                  handleToggle={handleToggle}
-                  checked={checked}
-                />
-              ))}
+              todoWords.map((item, id) => {
+                return (
+                  <div key={id}>
+                    <WordListItem
+                      item={item}
+                      setBaseTime={setBaseTime}
+                      reload={reload}
+                      setReload={setReload}
+                      handleToggle={handleToggle}
+                      checked={checked}
+                    />
+                  </div>
+                );
+              })}
             {!todoLoading && todoWords.length === 0 && (
               <Grid sx={{ ml: "16px" }}>
                 <p>쫑알단어를 등록하고 학습해보세요!</p>
@@ -233,19 +257,22 @@ export default function TransferList() {
             </Grid>
           )}
           {!doneLoading && (
-            <List dense component="div" role="list">
+            <List aria-labelledby="done-word-list">
               {doneWords.length > 0 &&
-                doneWords.map((item, id) => (
-                  <WordListItem
-                    item={item}
-                    id={id}
-                    setBaseTime={setBaseTime}
-                    reload={reload}
-                    setReload={setReload}
-                    handleToggle={handleToggle}
-                    checked={checked}
-                  />
-                ))}
+                doneWords.map((item, id) => {
+                  return (
+                    <div key={id}>
+                      <WordListItem
+                        item={item}
+                        setBaseTime={setBaseTime}
+                        reload={reload}
+                        setReload={setReload}
+                        handleToggle={handleToggle}
+                        checked={checked}
+                      />
+                    </div>
+                  );
+                })}
               {doneWords.length === 0 && (
                 <Grid sx={{ ml: "16px" }}>
                   <p>쫑알단어를 학습하고 외운 단어로 옮겨보세요!</p>
