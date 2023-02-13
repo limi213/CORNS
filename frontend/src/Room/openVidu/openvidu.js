@@ -27,6 +27,7 @@ var count;// = urlParams.get('count');
 var accessToken;
 
 var myStream;
+var myPublisher;
 
 var totalTime;
 
@@ -208,6 +209,7 @@ function joinSession() {
 					// alert(document.getElementById("startSttttt"))
 					appendCaptionsButton(event.element, publisher.stream);
 					myStream = publisher.stream;
+					myPublisher = publisher;
 				});
 
 				// --- 8) Publish your stream ---
@@ -761,4 +763,38 @@ function saveWord(){
 			console.log(error);
 		}
 	});
+}
+
+var audioEnabled = true;
+var videoEnabled = true;
+
+function MikeToggle(){
+	// alert("mike")
+	console.log(myStream);
+	// myPublisher.stream.audioActive = !myPublisher.stream.audioActive;
+	audioEnabled = !audioEnabled;
+	myPublisher.publishAudio(audioEnabled);   // true to unmute the audio track, false to mute it
+	if(!audioEnabled){
+		// 불투명처리
+		$("#roomViewMike").css("opacity",0.3);
+	}
+	else{
+		$("#roomViewMike").css("opacity",1.0);
+	}
+}
+
+function VideoToggle(){
+	// alert("mike")
+	console.log(myStream);
+	// myPublisher.stream.videoActive = !myPublisher.stream.videoActive;
+	videoEnabled = !videoEnabled;
+	myPublisher.publishVideo(videoEnabled);   // true to enable the video track, false to disable it
+
+	if(!videoEnabled){
+		// 불투명처리
+		$("#roomViewVideo").css("opacity",0.3);
+	}
+	else{
+		$("#roomViewVideo").css("opacity",1.0);
+	}
 }

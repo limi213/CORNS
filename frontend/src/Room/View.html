@@ -31,8 +31,8 @@
           <span id="roomViewTitle"><!--🎈 제목이 들어갈 자리입니다. [일상]--></span>
           <span id="roomViewTimer"><!--10:00--></span>
           <span id="roomViewMemberCount"><!--2/3--></span>
-          <span id="roomViewMike"><i class="fa-solid fa-microphone"></i></span>
-          <span id="roomViewVideo"><i class="fa-solid fa-video"></i></span>
+          <span id="roomViewMike" onclick="MikeToggle()"><i class="fa-solid fa-microphone"></i></span>
+          <span id="roomViewVideo" onclick="VideoToggle()"><i class="fa-solid fa-video"></i></span>
           <span id="roomViewPlay" onclick="startConversation()" hidden><i class="fa-solid fa-play"></i></span>
           <span id="roomViewOut"><i class="fa-solid fa-right-from-bracket"></i></span>
           <span id="roomViewLastTimer">10:00</span>
@@ -121,10 +121,10 @@
         // alert('session = ' + session)
         // 쫑알룸 방 번호를 받거나 아니면 정보를 받아서 방을 생성해준다.
         //subject, type, time, count
-					let subject = urlParams.get('subject');
-					let type = urlParams.get('type');
-					let time = urlParams.get('time');
-					let count = urlParams.get('count');
+				let subject = urlParams.get('subject');
+				let type = urlParams.get('type');
+				let time = urlParams.get('time');
+				let count = urlParams.get('count');
 
           let accessToken= urlParams.get("accessToken");
         
