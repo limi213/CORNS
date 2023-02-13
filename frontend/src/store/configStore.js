@@ -8,7 +8,6 @@ import thunk from "redux-thunk";
 import { roomListReducer } from "store/reducers/roomListReducer";
 import { subjectsReducer } from "store/reducers/subjectsReducer";
 import { roomFilterReducer } from "store/reducers/roomFilterReducer";
-import { userInfoReducer } from "store/reducers/userInfoReducer";
 import { friendListReducer } from "store/reducers/friendListReducer";
 import { expProgressBarReducer } from "store/reducers/expProgressBarReducer";
 import { attendProgressBarReducer } from "store/reducers/attendProgressBarReducer";
@@ -16,16 +15,12 @@ import { wordListReducer } from "./reducers/wordListReducer";
 import { logBookmarkListReducer } from "store/reducers/logBookmarkListReducer";
 import { logFilterReducer } from "store/reducers/logFilterReducer";
 import { logListReducer } from "store/reducers/logListReducer";
-import { expLogReducer } from "store/reducers/expLogReducer";
-import { expTopReducer } from "store/reducers/expTopReducer";
-import { indicatorsReducer } from "store/reducers/indicatorsReducer";
 import { pageReducer } from "store/reducers/pageReducer";
 
 const rootReducer = combineReducers({
   roomListReducer: roomListReducer.reducer,
   subjectsReducer: subjectsReducer.reducer,
   roomFilterReducer: roomFilterReducer.reducer,
-  userInfoReducer: userInfoReducer.reducer,
   friendListReducer: friendListReducer.reducer,
   expProgressBarReducer: expProgressBarReducer.reducer,
   attendProgressBarReducer: attendProgressBarReducer.reducer,
@@ -33,9 +28,6 @@ const rootReducer = combineReducers({
   logBookmarkListReducer: logBookmarkListReducer.reducer,
   logFilterReducer: logFilterReducer.reducer,
   logListReducer: logListReducer.reducer,
-  expLogReducer: expLogReducer.reducer,
-  expTopReducer: expTopReducer.reducer,
-  indicatorsReducer: indicatorsReducer.reducer,
   pageReducer: pageReducer.reducer,
 });
 

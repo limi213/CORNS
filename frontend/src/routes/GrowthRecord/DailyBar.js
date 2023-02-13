@@ -1,95 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { ResponsiveLine } from "@nivo/line";
-import { useDispatch, useSelector } from "react-redux";
-import { getIndicators } from "store/reducers/indicatorsReducer";
+import useAxios from "auth/useAxios";
+// import { useDispatch, useSelector } from "react-redux";
+// import { getIndicators } from "store/reducers/indicatorsReducer";
 import { Box } from "@mui/material";
 
 function WeeklyLiner() {
-  const dispatch = useDispatch();
-  const { data, loading } = useSelector((state) => state.indicatorsReducer);
+  // const dispatch = useDispatch();
+  // const { data, loading } = useSelector((state) => state.indicatorsReducer);
+  const { data, status, isLoading, sendRequest } = useAxios();
+  const userId = sessionStorage.getItem("userId");
   const [graphData, setGraphData] = useState([]);
 
+  // useEffect(() => {
+  //   dispatch(getIndicators(3));
+  // }, [dispatch]);
+
   useEffect(() => {
-    dispatch(getIndicators(3));
-  }, [dispatch]);
+    sendRequest({
+      url: `${process.env.REACT_APP_HOST}/growth/indicator/${userId}/3`,
+    });
+  }, []);
 
   useEffect(() => {
     setGraphData(data);
   }, [data]);
 
-  if (!loading) {
-    // console.log(graphData);
-    // if (graphData !== undefined) {
-    //   setChangeData(
-    //     graphData.map((day, idx) => {
-    //       const dd = 6;
-    //       return (day.x = (dd - idx).toString() + "일 전");
-    //     })
-    //   );
-    // }
-    // console.log(changeData);
-
-    // const thisWeek = [
-    //   {
-    //     x: "금",
-    //     y: "0",
-    //   },
-    //   {
-    //     x: "토",
-    //     y: "15",
-    //   },
-    //   {
-    //     x: "일",
-    //     y: "0",
-    //   },
-    //   {
-    //     x: "월",
-    //     y: "5",
-    //   },
-    //   {
-    //     x: "화",
-    //     y: "3",
-    //   },
-    //   {
-    //     x: "수",
-    //     y: "3",
-    //   },
-    //   {
-    //     x: "목",
-    //     y: "3",
-    //   },
-    // ];
-    // const lastWeek = [
-    //   {
-    //     x: "금",
-    //     y: "18",
-    //   },
-    //   {
-    //     x: "토",
-    //     y: "5",
-    //   },
-    //   {
-    //     x: "일",
-    //     y: "0",
-    //   },
-    //   {
-    //     x: "월",
-    //     y: "20",
-    //   },
-    //   {
-    //     x: "화",
-    //     y: "3",
-    //   },
-    //   {
-    //     x: "수",
-    //     y: "10",
-    //   },
-    //   {
-    //     x: "목",
-    //     y: "3",
-    //   },
-    // ];
-
+  if (!isLoading && status === 200) {
     const dailyData = [
       {
         id: "이번주",
@@ -176,7 +113,7 @@ function WeeklyLiner() {
       </Box>
     );
   } else {
-    return <p>로딩중</p>;
+    return <p>loading 중...</p>;
   }
 }
 

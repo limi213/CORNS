@@ -1,20 +1,22 @@
 import { React, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import useAxios from "auth/useAxios";
 import ExperienceInfo from "components/Conversation/ExperienceInfo";
-import { getExpTop } from "store/reducers/expTopReducer";
 import sungsil_crown from "assets/sungsil_crown.png";
 import { Box, Grid, Typography } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
 function ExperienceIndicator({}) {
-  const dispatch = useDispatch();
-  const { data, loading } = useSelector((state) => state.expTopReducer);
+  const { data, status, isLoading, sendRequest } = useAxios();
   const nickName = sessionStorage.getItem("nickname");
+  const userId = sessionStorage.getItem("userId");
 
+  // useAxios 활용
   useEffect(() => {
-    dispatch(getExpTop());
-  }, [dispatch]);
+    sendRequest({
+      url: `${process.env.REACT_APP_HOST}/growth/exp/${userId}`,
+    });
+  }, []);
 
   return (
     <>
@@ -61,9 +63,12 @@ function ExperienceIndicator({}) {
                   alt="성실왕관"
                 />
               </Box>
-              <Typography sx={{ width: "60%" }}>
-                {nickName}님의 경험치는 상위 {data.percentile}% 입니다.
-              </Typography>
+              {isLoading && <p>loading 중...</p>}
+              {!isLoading && status === 200 && (
+                <Typography sx={{ width: "60%" }}>
+                  {nickName}님의 경험치는 상위 {data.percentile}% 입니다.
+                </Typography>
+              )}
             </Box>
           </Box>
         </Grid>

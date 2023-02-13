@@ -1,22 +1,31 @@
 import React, { useEffect, useState } from "react";
+import useAxios from "auth/useAxios";
 import { ResponsivePie } from "@nivo/pie";
-import { useDispatch, useSelector } from "react-redux";
-import { getIndicators } from "store/reducers/indicatorsReducer";
+// import { useDispatch, useSelector } from "react-redux";
+// import { getIndicators } from "store/reducers/indicatorsReducer";
 import { Box } from "@mui/material";
 
 function SubjectCircle() {
-  const dispatch = useDispatch();
-  const { data, loading } = useSelector((state) => state.indicatorsReducer);
+  // const dispatch = useDispatch();
+  // const { data, loading } = useSelector((state) => state.indicatorsReducer);
+  const { data, status, isLoading, sendRequest } = useAxios();
+  const userId = sessionStorage.getItem("userId");
   const [graphData, setGraphData] = useState([]);
+
   useEffect(() => {
-    dispatch(getIndicators(2));
-  }, [dispatch]);
+    sendRequest({
+      url: `${process.env.REACT_APP_HOST}/growth/indicator/${userId}/2`,
+    });
+  }, []);
+  // useEffect(() => {
+  //   dispatch(getIndicators(2));
+  // }, [dispatch]);
 
   useEffect(() => {
     setGraphData(data.subjectRatio);
   }, [data]);
 
-  if (!loading) {
+  if (!isLoading && status === 200) {
     return (
       <Box sx={{ width: "100%", border: "3px solid #111" }}>
         <Box sx={{ width: "80%", height: "500px", m: "64px auto" }}>
@@ -136,7 +145,7 @@ function SubjectCircle() {
       </Box>
     );
   } else {
-    return <p>로딩중</p>;
+    return <p>loading 중...</p>;
   }
 }
 

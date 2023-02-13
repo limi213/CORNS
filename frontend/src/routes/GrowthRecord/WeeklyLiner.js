@@ -1,34 +1,31 @@
 import React, { useEffect, useState } from "react";
+import useAxios from "auth/useAxios";
 import { ResponsiveLine } from "@nivo/line";
-import { useDispatch, useSelector } from "react-redux";
-import { getIndicators } from "store/reducers/indicatorsReducer";
+// import { useDispatch, useSelector } from "react-redux";
+// import { getIndicators } from "store/reducers/indicatorsReducer";
 import { Box } from "@mui/material";
 
 function WeeklyLiner() {
-  const dispatch = useDispatch();
-  const { data, loading } = useSelector((state) => state.indicatorsReducer);
+  // const dispatch = useDispatch();
+  // const { data, loading } = useSelector((state) => state.indicatorsReducer);
+  const { data, status, isLoading, sendRequest } = useAxios();
+  const userId = sessionStorage.getItem("userId");
+
   const [graphData, setGraphData] = useState([]);
-  const [changeData, setChangeData] = useState([]);
   useEffect(() => {
-    dispatch(getIndicators(1));
-  }, [dispatch]);
+    sendRequest({
+      url: `${process.env.REACT_APP_HOST}/growth/indicator/${userId}/1`,
+    });
+  }, []);
+  // useEffect(() => {
+  //   dispatch(getIndicators(1));
+  // }, [dispatch]);
 
   useEffect(() => {
     setGraphData(data.dailySpeakingByWeek);
   }, [data]);
 
-  if (!loading) {
-    // console.log(graphData);
-    // if (graphData !== undefined) {
-    //   setChangeData(
-    //     graphData.map((day, idx) => {
-    //       const dd = 6;
-    //       return (day.x = (dd - idx).toString() + "일 전");
-    //     })
-    //   );
-    // }
-    // console.log(changeData);
-
+  if (!isLoading && status === 200) {
     const weekData = [
       {
         id: "발화량",
@@ -109,7 +106,7 @@ function WeeklyLiner() {
       </Box>
     );
   } else {
-    return <p>로딩중</p>;
+    return <p>loading 중...</p>;
   }
 }
 

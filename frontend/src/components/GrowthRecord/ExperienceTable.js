@@ -1,6 +1,8 @@
 import { React, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getExpLog } from "store/reducers/expLogReducer";
+// import { useSelector, useDispatch } from "react-redux";
+// import { getExpLog } from "store/reducers/expLogReducer";
+import useAxios from "auth/useAxios";
+
 import {
   Box,
   Table,
@@ -14,10 +16,7 @@ import {
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-import {
-  changeTinyNumber,
-  toStringDate,
-} from "store/reducers/roomFilterReducer";
+import { toStringDate } from "store/reducers/roomFilterReducer";
 
 function createData(date, contents, exp) {
   let transContents = "";
@@ -32,30 +31,28 @@ function createData(date, contents, exp) {
 }
 
 function ExperienceTable({}) {
-  const dispatch = useDispatch();
-  const { data, loading } = useSelector((state) => state.expLogReducer);
+  // const dispatch = useDispatch();
+  // const { data, loading } = useSelector((state) => state.expLogReducer);
+  const { data, status, isLoading, sendRequest } = useAxios();
   const userId = sessionStorage.getItem("userId");
-  const [date, setDate] = useState("");
+
   const now = new Date();
   const pp = {
     page: 0,
-    size: 100,
+    size: 1000,
     userId,
     baseTime: toStringDate(now),
   };
   console.log(data);
 
   useEffect(() => {
-    dispatch(getExpLog(pp));
-  }, [dispatch]);
+    sendRequest({
+      url: `${process.env.REACT_APP_HOST}/growth/exp/list/${userId}`,
+      params: pp,
+    });
+  }, []);
 
-  if (loading === "pending") {
-    return <div>로딩중</div>;
-  }
-  if (loading === "failed") {
-    return <div>실패</div>;
-  }
-  if (loading === "successed") {
+  if (!isLoading && status === 200) {
     const expList = data.list;
 
     const rows = expList.map((exp) => {
@@ -91,6 +88,8 @@ function ExperienceTable({}) {
         </TableContainer>
       </>
     );
+  } else {
+    return <p>loading 중...</p>;
   }
 }
 
