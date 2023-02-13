@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import useAxios from "auth/useAxios";
 import UserProfile from "components/GlobalComponents/UserProfile";
 import { Box, Typography } from "@mui/material";
 import { XSquare } from "react-bootstrap-icons";
@@ -8,26 +9,6 @@ import FriendsBtn from "./FriendsBtn";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-// user detail get axios
-const GetUserModalDetail = async (from_id, to_id, setUser, setRelation) => {
-  try {
-    const apiUrl =
-      from_id === to_id.toString()
-        ? `/${from_id}`
-        : `/${from_id}/${to_id}`;
-
-    const response = await axios.get(`${process.env.REACT_APP_HOST}/user/${apiUrl}`);
-    if (response.status === 200) {
-      // console.log(response.data)
-      setUser(response.data.user);
-      setRelation(response.data.relation > -1 ? response.data.relation : -1);
-
-      // ranking 데이터 추가되면 setRanking 추가
-    }
-  } catch (e) {
-    console.log(e);
-  }
-};
 
 function UserProfileModal({ openModal, toId, handleCloseModal }) {
   const style = {
@@ -47,6 +28,32 @@ function UserProfileModal({ openModal, toId, handleCloseModal }) {
   const [relation, setRelation] = useState(-1);
   const fromId = sessionStorage.getItem("userId");
 
+  const {data, status, isLoading, sendRequest} = useAxios();
+
+  useEffect(() => {
+    if (!openModal) {
+      return;
+    }
+    const apiUrl =
+    fromId === toId.toString()
+      ? `/${fromId}`
+      : `/${fromId}/${toId}`;
+    
+    sendRequest({
+      url: `${process.env.REACT_APP_HOST}/user/${apiUrl}`,
+    })
+  }, [])
+
+
+  useEffect(() => {
+    if (status === 200) {
+      console.log(data);
+      setUser(data.user);
+      setRelation(data.relation);
+    }
+  }, [data])
+
+
   // dummy data
   const rankingList = [
     { type: "sungsil", rank: 80, indicate: 1800 },
@@ -55,17 +62,6 @@ function UserProfileModal({ openModal, toId, handleCloseModal }) {
     { type: "ingi", rank: null, indicate: 4 },
   ];
 
-  useEffect(() => {
-    if (!openModal) {
-      return;
-    }
-    GetUserModalDetail(
-      fromId,
-      toId,
-      setUser,
-      setRelation
-    );
-  }, [fromId, relation, openModal, toId]);
 
   return (
     user && (

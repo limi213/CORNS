@@ -1,54 +1,32 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import useAxios from "auth/useAxios";
+import { toStringDate } from "store/reducers/roomFilterReducer";
 import SearchComp from "components/GlobalComponents/SearchComp";
 import UserList from "components/Community/UserList";
 
 import Box from "@mui/material/Box";
 
-// user 검색 axios
-// 무한스크롤 구현 해야함
-const GetUser = async (type, text, setUsers, setLoading) => {
-  // const startDate = moment().format("YYYY-MM-DDTHH:mm:sszz")
-  // console.log(startDate)
-  setLoading(true)
-  try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_HOST}/user?` +
-        new URLSearchParams({
-          page: 0,
-          size: 100,
-          baseTime: "2023-02-30 00:00:00",
-          filter: type,
-          keyword: text,
-        }),
-      {
-        validateStatus: (status) => status === 200 || status === 204,
-      }
-    );
-    if (response.status === 200) {
-      setUsers(response.data.list)
-
-    } else if (response.status === 204) {
-      // 검색 결과 없는 경우
-      setUsers([]);
-    }
-  } catch (e) {
-    console.log(e);
-  }
-  setLoading(false)
-};
 
 function SearchUser() {
   const [type, setType] = useState("nickname");
   const [text, setText] = useState("");
   const [search, setSearch] = useState(0);
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
 
+  const { data, status, isLoading, sendRequest } = useAxios();
 
+  // useAxios 활용
   useEffect(() => {
     if (text) {
-      GetUser(type, text, setUsers, setLoading)
+      sendRequest({
+        url: `${process.env.REACT_APP_HOST}/user?`,
+        params: {
+          page: 0,
+          size: 100,
+          baseTime: toStringDate(new Date()),
+          filter: type,
+          keyword: text,
+        },
+      });
     }
   }, [search]);
 
@@ -65,9 +43,13 @@ function SearchUser() {
       />
 
       <Box padding="48px 112px">
-        {loading && <p>loading 중...</p>}
-        {!loading && search > 0 && users.length > 0 && <UserList userList={users} />}
-        {!loading && search > 0 && users.length === 0 && <p>검색 결과가 없습니다.</p>}
+        {isLoading && <p>loading 중...</p>}
+        {!isLoading && search > 0 && status === 200 && (
+          <UserList userList={data.list} />
+        )}
+        {!isLoading && search > 0 && status === 204 && (
+          <p>검색 결과가 없습니다.</p>
+        )}
       </Box>
     </>
   );

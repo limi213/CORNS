@@ -5,6 +5,7 @@ function authHeader() {
     return {
       Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
       "Access-Control-Allow-Credentials": true,
+      "Content-Type": "application/json"
     };
   } else {
     return {};

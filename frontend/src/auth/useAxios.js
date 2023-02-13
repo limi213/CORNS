@@ -17,7 +17,7 @@ function useAxios() {
   const sendRequest = useCallback(async (requestConfig) => {
     setIsLoading(true);
     console.log('sendRequest!', requestConfig.url);
-
+    console.log(requestConfig.body)
     try {
       const response = await axios(
         requestConfig.url,
@@ -25,6 +25,8 @@ function useAxios() {
           method: requestConfig.method ? requestConfig.method : "GET",
           headers: authHeader(),
           body: requestConfig.body && JSON.stringify(requestConfig.body),
+          data: requestConfig.data && JSON.stringify(requestConfig.data),
+          params: requestConfig.params,
           validateStatus: (status) => {
             if (requestConfig.validatedateStatus) {
               return requestConfig.validatedateStatus.includes(status) || status === 401;

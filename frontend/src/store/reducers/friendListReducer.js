@@ -1,17 +1,11 @@
-// test 중!!!!!!!!!!!!!!!!!!!!!!!1
-
-
-import React, {useEffect} from 'react';
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
 
 import authHeader from "auth/authHeader";
 import getRefreshToken from "auth/getRefreshToken";
 import Logout from "auth/Logout";
+import { toStringDate } from "./roomFilterReducer";
 
-// 파일 이름 수정!!!!!!!!
-import useAxios from "auth/useAxios";
-import { useDispatch } from "react-redux";
 
 const initialFriendListState = {
   isFriendListLoading: false,
@@ -42,10 +36,11 @@ export const friendListReducer = createSlice({
 // 친구 검색 axios -> pagination 추가해야함 ...
 export const getFriendListAxios = (type = "nickname", text = "") => {
   return async (dispatch) => {
-    dispatch(friendActions.isFriendListLoading(true));
-    // const startDate = moment().format("YYYY-MM-DDTHH:mm:sszz")
-    // console.log(startDate)
+    
     const sendRequest = async () => {
+      dispatch(friendActions.isFriendListLoading(true));
+      console.log('get friendlist!')
+      
       const response = await axios.get(
         `${process.env.REACT_APP_HOST}/friend/${sessionStorage.getItem(
           "userId"
@@ -53,16 +48,30 @@ export const getFriendListAxios = (type = "nickname", text = "") => {
           new URLSearchParams({
             filter: type,
             keyword: text,
-            baseTime: "2023-02-28 00:00:00",
+            baseTime: toStringDate(new Date()),
             page: 0,
-            size: 20,
+            size: 100,
           }),
         {
-          validateStatus: (status) => status === 200 || status === 204,
+          headers: authHeader(),
+          validateStatus: (status) => status === 200 || status === 204 || status === 401,
         }
       );
-      // console.log('search friend axios', type, text)
-      if (response.status === 200) {
+      
+      if (response.status === 401) {
+        console.log("unauthorized!-> refresh!");
+        const refreshResponse = await getRefreshToken();
+
+        if (refreshResponse === 200) {
+          return sendRequest();
+        } else {
+          alert("세션이 만료되었습니다.")
+          Logout();
+          return false;
+        }
+      }
+
+      else if (response.status === 200) {
         return response.data.list;
       } else if (response.status === 204) {
         return [];
@@ -77,6 +86,7 @@ export const getFriendListAxios = (type = "nickname", text = "") => {
     dispatch(friendActions.isFriendListLoading(false));
   };
 };
+
 
 // 친구 신청 목록 axios
 // refresh token 성공
@@ -118,7 +128,6 @@ export const getFriendRequestListAxios = () => {
       }
       // 2. axios 요청 잘된 경우
       else if (response.status === 200) {
-        console.log("axios success!");
         return response.data.recvList;
       } else if (response.status === 204) {
         return [];
@@ -134,27 +143,6 @@ export const getFriendRequestListAxios = () => {
     dispatch(friendActions.isFriendRequestListLoading(false));
   };
 };
-
-// 친구신청 목록 axios
-// useAxios test -> 이거 못쓸듯
-export const useFriendRequestListAxios = () => {
-  const dispatch = useDispatch();
-  const { data, isLoading, sendRequest } = useAxios();
-  sendRequest({
-    url: `${process.env.REACT_APP_HOST}/friend/receive/${sessionStorage.getItem(
-      "userId"
-    )}`,
-  });
-
-  useEffect(() => {
-    dispatch(friendActions.isFriendRequestListLoading(isLoading));
-  }, [isLoading]);
-
-  useEffect(() => {
-    dispatch(friendActions.getFriendRequestList(data.recvList))
-  }, [data]);
-};
-
 
 
 export const friendActions = friendListReducer.actions;

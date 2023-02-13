@@ -1,31 +1,11 @@
-import React, { useState } from "react";
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import useAxios from "auth/useAxios";
 import { Box, TextField, Button } from "@mui/material";
 import { XSquare } from "react-bootstrap-icons";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-
-
-// 친구 신청 보내기 axios
-const sendFriend = async (fromId, toId, message, setRelation, handleCloseForm) => {
-  try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_HOST}/friend/send`, {
-        fromId: fromId,
-        toId: toId,
-        message: message,
-      }
-    )
-    if (response.status === 200) {
-      setRelation(1)
-      handleCloseForm()
-    }
-  } catch (e) {
-    console.log(e)
-  }
-}
-
 
 function RequestForm({ fromId, toId, handleCloseForm, setRelation }) {
   const style = {
@@ -45,10 +25,30 @@ function RequestForm({ fromId, toId, handleCloseForm, setRelation }) {
   };
 
   const [text, setText] = useState("우리 친구해요!");
+  const { status, isLoading, sendRequest } = useAxios();
 
   const onChange = (e) => {
     setText(e.target.value);
   };
+
+  const sendFriend = (fromId, toId, message, setRelation, handleCloseForm) => {
+    sendRequest({
+      url: `${process.env.REACT_APP_HOST}/friend/send`,
+      method: "POST",
+      data: {
+        fromId: fromId,
+        toId: toId,
+        message: message,
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (status === 200) {
+      setRelation(1);
+      handleCloseForm();
+    }
+  }, [status]);
 
   return (
     <Box sx={style}>
@@ -85,7 +85,6 @@ function RequestForm({ fromId, toId, handleCloseForm, setRelation }) {
         onChange={onChange}
       />
 
-
       <Button
         sx={{
           backgroundColor: "#FFC804",
@@ -95,7 +94,9 @@ function RequestForm({ fromId, toId, handleCloseForm, setRelation }) {
           width: "30%",
           height: "30%",
         }}
-        onClick={() => sendFriend(fromId, toId, text, setRelation, handleCloseForm)}
+        onClick={() =>
+          sendFriend(fromId, toId, text, setRelation, handleCloseForm)
+        }
       >
         친구신청 보내기
       </Button>
