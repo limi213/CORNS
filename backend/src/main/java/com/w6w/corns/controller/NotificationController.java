@@ -57,7 +57,7 @@ public class NotificationController {
     }
 
     @ApiOperation("알림 읽음 처리")
-    @PutMapping("/")
+    @PutMapping
     public ResponseEntity<?> readNotify(@RequestBody ReadNotifyRequestDto readNotifyRequestDto) {
         Map resultmap = new HashMap<>();
         HttpStatus status;

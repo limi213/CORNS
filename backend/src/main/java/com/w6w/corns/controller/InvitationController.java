@@ -47,7 +47,7 @@ public class InvitationController {
     }
 
     @ApiOperation("쫑알룸 초대")
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<?> inviteRoom(@RequestBody InviteRoomRequestDto inviteRoomRequestDto) {
         Map resultmap = new HashMap<>();
         HttpStatus status;
