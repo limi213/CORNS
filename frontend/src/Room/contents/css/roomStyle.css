@@ -1,223 +1,269 @@
 /* 나중에 공통 css로 뺄 예정 */
 #roomViewBackground {
-    position: absolute;
-    background-image: url('../img/background.png');
-    width: calc(100vw - 2vw - 2vw);
-    height: calc(100vh - 4vh - 4vh);
-    /* 비교해보기 쉽게 calc 사용. 최종결정되면 숫자로 변경 예정 */
-    margin-left: 2vw;
-    margin-right: 2vw;
-    margin-top: 4vh;
-    margin-bottom: 4vh;
-    /* z-index: -1; */
-    border: 2px solid black;
+  position: absolute;
+  background-image: url("../img/background.png");
+  width: calc(100vw - 2vw - 2vw);
+  height: calc(100vh - 4vh - 4vh);
+  /* 비교해보기 쉽게 calc 사용. 최종결정되면 숫자로 변경 예정 */
+  margin-left: 2vw;
+  margin-right: 2vw;
+  margin-top: 4vh;
+  margin-bottom: 4vh;
+  /* z-index: -1; */
+  border: 2px solid black;
 }
 
 #roomViewTopBar {
-    position: absolute;
-    margin-left: 2vw;
-    margin-top: 3vh;
-    height: 7vh;
-    width: 71vw;
-    border: 1px solid black;
-    background-color: white;
+  position: absolute;
+  left: 2vw;
+  top: 3vh;
+  height: 7vh;
+  width: 71vw;
+  border: 1px solid black;
+  background-color: white;
 }
 
 #roomViewTopBar > span {
-    font-size: large;
-    line-height: 7vh;
-    vertical-align: middle;
-    margin-left: 2vw;
+  font-size: large;
+  line-height: 7vh;
+  vertical-align: middle;
+  margin-left: 2vw;
 }
 
 #roomViewApp {
-    position: absolute;
-    border: 1px solid black;
-    width: 1600px;
-    height: 600px;
-    margin: 100px;
-    z-index: 100;
-    background-color: white;
+  position: absolute;
+  border: 1px solid black;
+  width: 1600px;
+  height: 600px;
+  margin: 100px;
+  z-index: 100;
+  background-color: white;
 }
 
 #roomViewAppTitle {
-    font-size: 350%;
-    text-align: center;
+  font-size: 350%;
+  text-align: center;
 }
 
 #roomViewTitle {
-    margin-right: 300px;
+  margin-right: 300px;
 }
 
 .roomViewAppMember {
-    border: 1px solid black;
-    width: 350px;
-    height: 500px;
-    margin: 10px;
-    margin-left: 30px;
-    float: left;
-    display: none;
+  border: 1px solid black;
+  width: 350px;
+  height: 500px;
+  margin: 10px;
+  margin-left: 30px;
+  float: left;
+  display: none;
 }
 
 .roomViewAppMemberImage {
-    width: 350px;
-    height: 250px;
-    /* border: 1px solid black; */
+  width: 350px;
+  height: 250px;
+  /* border: 1px solid black; */
 }
 
 #video-container {
-    position: absolute;
+  position: absolute;
 }
 
 .roomViewUser {
-    position: absolute;
-    width: 640; /*35vw;*/
-    height: 360; /*37.5vh;*/
-    border: 1px solid black;
-    background-color: white;
+  position: absolute;
+  width: 640; /*35vw;*/
+  height: 360; /*37.5vh;*/
+  border: 1px solid black;
+  background-color: white;
 }
 
 #roomViewUser1 {
-    margin-left: 3vw;
-    margin-top: 11vh;
+  margin-left: 3vw;
+  margin-top: 11vh;
 }
 
 #roomViewUser2 {
-    margin-left: 3vw;
-    margin-top: calc(12vh + 37.5vh + 1vh);
+  margin-left: 3vw;
+  margin-top: calc(12vh + 37.5vh + 1vh);
 }
 
 #roomViewUser3 {
-    margin-left: calc(2vw + 35vw + 1vw);
-    margin-top: 11vh;
+  margin-left: calc(2vw + 35vw + 1vw);
+  margin-top: 11vh;
 }
 
 #roomViewUser4 {
-    margin-left: calc(2vw + 35vw + 1vw);
-    margin-top: calc(12vh + 37.5vh + 1vh);
+  margin-left: calc(2vw + 35vw + 1vw);
+  margin-top: calc(12vh + 37.5vh + 1vh);
 }
 
 #roomViewChatting {
-    position: absolute;
-    margin-left: calc(2vw + 71vw + 2vw);
-    margin-top: 4vh;
-    border: 1px solid black;
-    background-color: white;
-    width: 19vw;
-    height: 84vh;
+  position: absolute;
+  margin-left: calc(2vw + 71vw + 2vw);
+  margin-top: 4vh;
+  border: 1px solid black;
+  background-color: white;
+  width: 19vw;
+  height: 84vh;
 }
 
 #roomViewLastTimer {
-    width: 10px;
-    height: 10px;
-    border: 1px solid black;
-    background-color: red;
-    color: white;
-    padding: 12px;
+  width: 10px;
+  height: 10px;
+  border: 1px solid black;
+  background-color: red;
+  color: white;
+  padding: 12px;
 }
 
 #roomViewChattingReceive {
-    border-radius: 6px;
-    width: calc(19vw - 2vw);
-    height: calc(74vh - 4vh);
-    border: 1px solid black;
-    margin-left: 1vw;
-    margin-top: 2vh;
-    /* margin-left: calc(0.5vw - 1px);
+  border-radius: 6px;
+  width: calc(19vw - 2vw);
+  height: calc(74vh - 4vh);
+  border: 1px solid black;
+  margin-left: 1vw;
+  margin-top: 2vh;
+  /* margin-left: calc(0.5vw - 1px);
     margin-bottom: 0.5vh; */
-    overflow: auto;
+  overflow: auto;
 }
 
 #roomViewChattingSend {
-    border-radius: 6px;
-    width: calc(19vw - 2vw);
-    height: calc(10vh - 4vh);
-    margin-left: 1vw;
-    margin-top: 3vh;
-    border: 1px solid black;
+  border-radius: 6px;
+  width: calc(19vw - 2vw);
+  height: calc(10vh - 4vh);
+  margin-left: 1vw;
+  margin-top: 3vh;
+  border: 1px solid black;
 }
 
 #roomViewChattingSendMessage {
-    margin-top: 1.5vh;
-    border:0 solid black;
+  margin-top: 1.5vh;
+  border: 0 solid black;
 }
 
-#roomViewChattingSendMessage:focus { 
-    outline: none; 
+#roomViewChattingSendMessage:focus {
+  outline: none;
 }
 
 #roomViewChattingSendButton {
-    float: right;
-    margin-top: 2vh;
-    margin-right: 2vh;
+  float: right;
+  margin-top: 2vh;
+  margin-right: 2vh;
 }
 
 #roomViewTranslation {
-    position: absolute;
-    margin-left: calc(2vw + 71vw + 2vw);
-    margin-top: 4vh;
-    border: 1px solid black;
-    background-color: white;
-    width: 19vw;
-    height: 84vh;
+  position: absolute;
+  margin-left: calc(2vw + 71vw + 2vw);
+  margin-top: 4vh;
+  border: 1px solid black;
+  background-color: white;
+  width: 19vw;
+  height: 84vh;
 }
 
 #roomViewTranslationDo {
-    border: 1px solid black;
-    margin-left : 1vw;
-    margin-top : 1.5vh;
-    width: 17vw;
-    height: calc(84vh/2 - 3vh);
+  border: 1px solid black;
+  margin-left: 1vw;
+  margin-top: 1.5vh;
+  width: 17vw;
+  height: calc(84vh / 2 - 3vh);
 }
 
 #roomViewTranslationSave {
-    border: 1px solid black;
-    margin-left : 1vw;
-    margin-top : 1.5vh;
-    width: 17vw;
-    height: calc(84vh/2 - 3vh);
+  border: 1px solid black;
+  margin-left: 1vw;
+  margin-top: 1.5vh;
+  width: 17vw;
+  height: calc(84vh / 2 - 3vh);
 }
 
 #roomViewTranslationSaveWord {
-    border: 1px solid black;
-    margin-left : 1vw;
-    margin-top : 1.5vh;
-    width: 15vw;
-    height: calc(84vh/4 - 4vh);
+  border: 1px solid black;
+  margin-left: 1vw;
+  margin-top: 1.5vh;
+  width: 15vw;
+  height: calc(84vh / 4 - 4vh);
 }
 
 #roomViewTranslationSaveWord > div {
-    border: 1px solid black;
-    margin-left : 1px;
-    margin-top : 1px;   /*선만큼 마진*/
-    width: calc(15vw/3);
-    height: calc((84vh/4 - 4vh)/6);
+  border: 1px solid black;
+  margin-left: 1px;
+  margin-top: 1px; /*선만큼 마진*/
+  width: calc(15vw / 3);
+  height: calc((84vh / 4 - 4vh) / 6);
 }
 
 #roomViewTranslationSaveSave {
-    border: 1px solid black;
-    margin-left : 1vw;
-    margin-top : 1.5vh;
-    width: 15vw;
-    height: calc(84vh/4 - 4vh);
+  border: 1px solid black;
+  margin-left: 1vw;
+  margin-top: 1.5vh;
+  width: 15vw;
+  height: calc(84vh / 4 - 4vh);
 }
 
 #roomViewTranslationSaveSave > div {
-    border: 1px solid black;
-    margin-left : 1px;
-    margin-top : 1px;   /*선만큼 마진*/
-    width: calc(15vw/3);
-    height: calc((84vh/4 - 4vh)/6);
+  border: 1px solid black;
+  margin-left: 1px;
+  margin-top: 1px; /*선만큼 마진*/
+  width: calc(15vw / 3);
+  height: calc((84vh / 4 - 4vh) / 6);
 }
 
 #saveWord {
-    float:right;
+  float: right;
 }
 
 ._word {
-    width: 250px;
-    height: 100px;
-    border: 0px solid black;
+  width: 250px;
+  height: 100px;
+  border: 0px solid black;
+}
+
+#friendList {
+  width: 25vw;
+  height: 40vh;
+  border: 3px solid #111;
+  background-color: #fff;
+  position: absolute;
+  left: 45%;
+  top: calc(3vh + 55px);
+  overflow-y: scroll;
+}
+
+#friendList > ul {
+  list-style: none;
+  padding: 0 8px;
+}
+
+#friendList > ul > li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 2px solid #111;
+}
+
+#friendList > ul > li > img {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #111;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#friendList > ul > li > p {
+  margin: 0;
+}
+
+#friendList > ul > li > button {
+  border: 2px solid #111;
+  background-color: #98da7a;
+  padding: 8px 8px;
+}
+
+#friendList > ul > li > button:hover {
+  background-color: #5ab133;
 }
 
 /* #roomViewChattingSendMessage {
@@ -236,4 +282,3 @@
     float: left; 
     width: 20%;
 } */
-

@@ -37,6 +37,7 @@
           <span id="roomViewChattingDisplay" onclick="toogleChatting()"><i class="fa-regular fa-message"></i></span>
           <span id="roomViewOut" onclick="outRoomBtn()"><i class="fa-solid fa-right-from-bracket"></i></span>
           <span id="roomViewLastTimer">10:00</span>
+          <span id="roomViewAddMember"><i class="fa-solid fa-user-plus"></i></span>
         </div>
         <!-- 평가 -->
         <div id="roomViewApp" style="display: none;" >
@@ -114,6 +115,20 @@
           <!-- 유저4 -->
           <div id="roomViewUser4" class="roomViewUser"></div>
         </div>
+        <div id="friendList">
+          <ul>
+            <li>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZCbmyXv0Ot7qnc0pVi68_ptYAi7jnpcCUEQ&usqp=CAU" alt="user-image" />
+              <p>nickname #1530</p>
+              <button>초대하기</button>
+            </li>
+            <li>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZCbmyXv0Ot7qnc0pVi68_ptYAi7jnpcCUEQ&usqp=CAU" alt="user-image" />
+              <p>nickname #1530</p>
+              <button>초대하기</button>
+            </li>
+          </ul>
+        </div>
       </div>
       <input type="hidden" id="sessionId" />
       <input type="hidden" id="userName" />
@@ -124,6 +139,7 @@
       <input type="hidden" id="time" />
       <input type="hidden" id="count" />
       <input type="hidden" id="accessToken" />
+      
     </body>
     <script type="text/javascript">
       $(document).ready(function(){
