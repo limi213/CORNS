@@ -29,7 +29,7 @@ function SigninCard({ checked1, checked2 }) {
     e.preventDefault();
 
     if (!stateEmail || !statePassword1 || !statePassword2 || !stateNickname) {
-      alert("항목을 확인해주세요.");
+      alert("빈칸을 채워주세요.");
       return;
     }
     if (!checked1 || !checked2) {
@@ -65,7 +65,7 @@ function SigninCard({ checked1, checked2 }) {
         flexDirection: "column",
         alignItems: "center",
         backgroundColor: "white",
-        height: "800px",
+        height: "620px",
       }}
     >
       <NavLink to="/">
@@ -106,7 +106,7 @@ function SigninCard({ checked1, checked2 }) {
       <Button
         sx={{
           color: "#111",
-          mt: "32px",
+          mt: "16px",
           width: "240px",
           height: "60px",
           backgroundColor: "#FFC804",

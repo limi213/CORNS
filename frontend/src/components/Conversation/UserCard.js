@@ -1,10 +1,9 @@
 import React from "react";
 
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
+import { Box, Card, CardContent, CardMedia } from "@mui/material";
+
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
 function UserCard({ nickname, level, id }) {
   return (
@@ -17,6 +16,8 @@ function UserCard({ nickname, level, id }) {
           backgroundColor: "#ffa903",
           height: "436px",
           border: "3px solid #111",
+          padding: "32px",
+          boxSizing: "border-box",
         }}
       >
         <CardMedia
@@ -31,18 +32,53 @@ function UserCard({ nickname, level, id }) {
           alt="Live from space album cover"
         />
         <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <CardContent sx={{ flex: "1 0 auto" }}>
-            <Typography component="div" sx={{ fontSize: 42 }}>
-              Hello!
-              <br />
+          <CardContent sx={{ flex: "1 0 auto", ml: "32px" }}>
+            <p
+              component="div"
+              css={css`
+                font-size: 42px;
+                font-weight: 800;
+                margin: 0;
+                margin-bottom: 16px;
+              `}
+            >
+              Hi, Welcome!
+            </p>
+            <p
+              component="div"
+              css={css`
+                font-size: 42px;
+                font-weight: 800;
+                margin: 0;
+                margin-bottom: 16px;
+                word-break: break-all;
+                text-shadow: 2px 2px 0 #fff;
+              `}
+            >
               {nickname}!
-            </Typography>
-            <Typography sx={{ fontSize: "42px" }} component="div">
+            </p>
+            <p
+              component="div"
+              css={css`
+                font-size: 36px;
+                font-weight: bold;
+                margin: 0;
+                margin-bottom: 16px;
+              `}
+            >
               Lv.{level}
-            </Typography>
-            <Typography sx={{ fontSize: 16 }} component="div">
+            </p>
+            <p
+              component="div"
+              css={css`
+                font-size: 32px;
+                font-weight: bold;
+                margin: 0;
+                margin-bottom: 16px;
+              `}
+            >
               #{id}
-            </Typography>
+            </p>
           </CardContent>
           <Box
             sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}

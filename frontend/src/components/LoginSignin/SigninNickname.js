@@ -19,7 +19,11 @@ function SigninNickname({
     // 닉네임 유효성 검사
     // 지금 숫자 들어감 -> 수정해야함
     const validateNickname = (nickname) => {
-      return nickname.match(/^[a-zA-Z]*$/) && nickname.length > 0 && nickname.length < 21;
+      return (
+        nickname.match(/^[a-zA-Z]*$/) &&
+        nickname.length > 0 &&
+        nickname.length < 21
+      );
     };
 
     setStateNickname(Boolean(nickname && validateNickname(nickname)));
@@ -30,6 +34,7 @@ function SigninNickname({
       <h5
         css={css`
           font-size: 20px;
+          margin: 8px 0;
         `}
       >
         닉네임

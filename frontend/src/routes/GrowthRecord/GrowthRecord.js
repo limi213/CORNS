@@ -24,7 +24,7 @@ function GrowthRecord() {
     >
       <Navbar />
 
-      <Grid container spacing={1} sx={{margin: '124px 0 0 0'}}>
+      <Grid container spacing={1} sx={{ margin: "64px 0 0 0" }}>
         <Grid item xs={2}>
           <Sidebar Items={SidebarItems} />
         </Grid>
@@ -37,7 +37,7 @@ function GrowthRecord() {
               component={ExperienceDetail}
             />
             <Route path="/growthRecord/indicators" component={Indicators} />
-            <Redirect to ="/NotFound" />
+            <Redirect to="/NotFound" />
           </Switch>
         </Grid>
       </Grid>

@@ -18,8 +18,7 @@ import { useSelector } from "react-redux";
 import MakeRoomSubjectBtn from "components/Conversation/MakeRoomSubjectBtn";
 
 const style = {
-  display: "flex",
-  justifyContent: "space-around",
+  justifyContent: "space-between",
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -29,7 +28,8 @@ const style = {
   bgcolor: "background.paper",
   border: "3px solid #111",
   boxShadow: 24,
-  p: 4,
+  p: "32px",
+  fontFamily: "'Noto Sans KR', sans-serif",
 };
 
 export default function RoomCreateModal() {
@@ -122,106 +122,166 @@ export default function RoomCreateModal() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <div
+            css={css`
+              padding: 0 32px;
+              display: flex;
+              justify-content: space-between;
+            `}
+          >
+            <p
+              css={css`
+                font-size: 32px;
+                font-weight: bold;
+                margin: 0;
+              `}
+            >
+              쫑알룸 만들기
+            </p>
+            <XSquare
+              css={css`
+                cursor: pointer;
+                font-size: 28px;
+              `}
+              onClick={handleClose}
+            />
+          </div>
+
           <Box
             css={css`
-              margin-left: 50px;
+              margin: 32px 80px 0;
             `}
           >
             <input
               css={css`
                 border: 3px solid #111;
-                width: 1300px;
-                height: 40px;
-                margin-top: 70px;
+                width: 100%;
+                height: 45px;
+                padding-left: 16px;
+                box-sizing: border-box;
               `}
               value={subject}
               onChange={({ target: { value } }) => setSubject(value)}
               placeholder="제목을 입력해주세요."
             ></input>
-            <Box
+
+            <div
               css={css`
-                // margin: 25px;
-                margin-top: 25px;
+                display: flex;
               `}
             >
               <div
                 css={css`
-                  margin-bottom: 5px;
+                  margin-top: 32px;
+                  font-size: 20px;
+                  font-weight: bold;
+                  padding-right: 40px;
+                  margin-right: 40px;
+                  border-right: 3px solid #111;
                 `}
               >
-                주제
+                <p
+                  css={css`
+                    margin: 0;
+                    margin-bottom: 80px;
+                  `}
+                >
+                  주제
+                </p>
+                <p
+                  css={css`
+                    margin: 0;
+                    margin-bottom: 80px;
+                  `}
+                >
+                  시간
+                </p>
+                <p
+                  css={css`
+                    margin: 0;
+                  `}
+                >
+                  인원
+                </p>
               </div>
-              {subjectBtn}
-            </Box>
-            <Box
-              css={css`
-                // margin: 25px;
-                margin-top: 25px;
-              `}
-            >
-              시간
-              <FormControl
-                variant="standard"
-                sx={{
-                  backgroundColor: "#fff",
-                  border: "3px solid #111",
-                  width: "50%",
-                  height: "100%",
-                  pl: "1%",
-                  margin: "5px",
-                }}
-              >
-                <Select min-width="100px" onChange={onChangeSelectTime}>
-                  <MenuItem value={5}>5분</MenuItem>
-                  <MenuItem value={10}>10분</MenuItem>
-                  <MenuItem value={15}>15분</MenuItem>
-                  <MenuItem value={20}>20분</MenuItem>
-                  <MenuItem value={25}>25분</MenuItem>
-                  <MenuItem value={30}>30분</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-            <Box
-              css={css`
-                // margin: 25px;
-                margin-top: 25px;
-              `}
-            >
-              인원
-              <FormControl
-                variant="standard"
-                sx={{
-                  backgroundColor: "#fff",
-                  border: "3px solid #111",
-                  width: "50%",
-                  height: "100%",
-                  pl: "1%",
-                  margin: "5px",
-                }}
-              >
-                <Select onChange={onChangeSelectCount} min-width="100px">
-                  <MenuItem value="2">2</MenuItem>
-                  <MenuItem value="3">3</MenuItem>
-                  <MenuItem value="4">4</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-            <Button
+              <div>
+                <Box
+                  css={css`
+                    margin-top: 40px;
+                    margin-bottom: 72px;
+                  `}
+                >
+                  {subjectBtn}
+                </Box>
+                <Box
+                  css={css`
+                    margin-bottom: 60px;
+                  `}
+                >
+                  <FormControl
+                    variant="standard"
+                    sx={{
+                      backgroundColor: "#fff",
+                      border: "3px solid #111",
+                      width: "50%",
+                      height: "100%",
+                      pl: "1%",
+                      margin: "5px",
+                    }}
+                  >
+                    <Select min-width="100px" onChange={onChangeSelectTime}>
+                      <MenuItem value={5}>5분</MenuItem>
+                      <MenuItem value={10}>10분</MenuItem>
+                      <MenuItem value={15}>15분</MenuItem>
+                      <MenuItem value={20}>20분</MenuItem>
+                      <MenuItem value={25}>25분</MenuItem>
+                      <MenuItem value={30}>30분</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
+                <Box
+                  css={css`
+                    // margin: 25px;
+                    margin-top: 25px;
+                  `}
+                >
+                  <FormControl
+                    variant="standard"
+                    sx={{
+                      backgroundColor: "#fff",
+                      border: "3px solid #111",
+                      width: "50%",
+                      height: "100%",
+                      pl: "1%",
+                      margin: "5px",
+                    }}
+                  >
+                    <Select onChange={onChangeSelectCount} min-width="100px">
+                      <MenuItem value="2">2</MenuItem>
+                      <MenuItem value="3">3</MenuItem>
+                      <MenuItem value="4">4</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
+              </div>
+            </div>
+            <button
               css={css`
                 float: right;
+                padding: 8px 16px;
+                font-size: 18px;
+                font-weight: bold;
+                border-radius: 0;
+                border: 3px solid #111;
+                background-color: #67c73a;
+                cursor: pointer;
               `}
               variant="contained"
               onClick={goToMakeRoom}
             >
               방만들기
-            </Button>
+            </button>
           </Box>
-          <XSquare
-            css={css`
-              cursor: pointer;
-            `}
-            onClick={handleClose}
-          />
         </Box>
       </Modal>
     </div>

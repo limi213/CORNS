@@ -24,7 +24,7 @@ function ConversationLog({}) {
     >
       <Navbar />
 
-      <Grid container spacing={1} sx={{ margin: "124px 0 0 0" }}>
+      <Grid container spacing={1} sx={{ margin: "64px 0 0 0" }}>
         <Grid item xs={2}>
           <Sidebar Items={SidebarItems} />
         </Grid>
@@ -50,7 +50,7 @@ function ConversationLog({}) {
                 component={LogDetail}
               />
               <Route exact path="/conversationLog/words" component={LogWord} />
-              <Redirect to ="/NotFound" />
+              <Redirect to="/NotFound" />
             </Switch>
           </div>
         </Grid>

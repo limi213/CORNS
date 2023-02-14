@@ -44,6 +44,7 @@ function SigninPassword({
       <h5
         css={css`
           font-size: 20px;
+          margin: 8px 0;
         `}
       >
         비밀번호

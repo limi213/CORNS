@@ -22,7 +22,7 @@ function AgreeCard({ checked1, setChecked1, checked2, setChecked2 }) {
         flexDirection: "column",
         alignItems: "center",
         backgroundColor: "white",
-        height: "800px",
+        height: "620px",
       }}
     >
       <h1

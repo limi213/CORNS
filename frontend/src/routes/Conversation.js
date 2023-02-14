@@ -23,7 +23,7 @@ function Conversation() {
       <Navbar />
       <div
         css={css`
-          margin: 124px 0 0 0;
+          margin: 64px 0 0 0;
         `}
       >
         {user ? <LogInUserArea /> : null}

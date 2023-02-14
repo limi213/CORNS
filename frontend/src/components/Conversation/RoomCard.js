@@ -86,8 +86,14 @@ function RoomCard({ room, subject }) {
           position: "relative",
           border: "3px solid #111",
           borderRadius: 0,
+          cursor: "pointer",
         }}
         variant="outlined"
+        onClick={() => {
+          if (IsLogin()) {
+            window.location.href = url;
+          } else alert("로그인이 필요한 서비스입니다.");
+        }}
       >
         <CardMedia
           component="img"
@@ -107,18 +113,35 @@ function RoomCard({ room, subject }) {
         >
           {value}
         </div>
-        <CardContent sx={{ height: 110 - 32 }}>
-          <Typography gutterBottom variant="p" component="div">
+        <CardContent sx={{ height: "100px", p: "0 16px" }}>
+          <p
+            gutterBottom
+            variant="p"
+            component="div"
+            css={css`
+              margin: 8px 0;
+              font-size: 20px;
+              font-weight: bold;
+              height: 50px;
+            `}
+          >
             {title}
-          </Typography>
-          <Typography variant="body2">
+          </p>
+          <p
+            variant="body2"
+            css={css`
+              margin: 8px 0;
+              display: flex;
+              justify-content: space-between;
+            `}
+          >
             <span>
               <Stopwatch /> {time}분
             </span>
             <span>
               <People /> {currentMember} / {maxMember}명
             </span>
-          </Typography>
+          </p>
         </CardContent>
 
         <Button
@@ -131,17 +154,15 @@ function RoomCard({ room, subject }) {
             borderTop: "3px solid #111",
             borderRadius: 0,
             "&:hover": {
-              backgroundColor: "#45971E",
+              backgroundColor: "#98DA7A",
             },
+            fontFamily: "'Noto Sans KR', sans-serif",
+
             fontSize: "20px",
-          }}
-          onClick={() => {
-            if (IsLogin()) {
-              window.location.href = url;
-            } else alert("로그인이 필요한 서비스입니다.");
+            fontWeight: "bold",
           }}
         >
-          쫑알룸 입장하기
+          입장하기
         </Button>
       </Card>
     );
@@ -176,18 +197,35 @@ function RoomCard({ room, subject }) {
         >
           {value}
         </div>
-        <CardContent sx={{ height: 110 - 32 }}>
-          <Typography gutterBottom variant="p" component="div">
+        <CardContent sx={{ height: "100px", p: "0 16px" }}>
+          <p
+            gutterBottom
+            variant="p"
+            component="div"
+            css={css`
+              margin: 8px 0;
+              font-size: 20px;
+              font-weight: bold;
+              height: 50px;
+            `}
+          >
             {title}
-          </Typography>
-          <Typography variant="body2">
+          </p>
+          <p
+            variant="body2"
+            css={css`
+              margin: 8px 0;
+              display: flex;
+              justify-content: space-between;
+            `}
+          >
             <span>
               <Stopwatch /> {time}분
             </span>
             <span>
               <People /> {currentMember} / {maxMember}명
             </span>
-          </Typography>
+          </p>
         </CardContent>
 
         <Button
@@ -203,7 +241,9 @@ function RoomCard({ room, subject }) {
               backgroundColor: "#ddd",
             },
             cursor: "default",
+            fontFamily: "'Noto Sans KR', sans-serif",
             fontSize: "20px",
+            fontWeight: "bold",
           }}
         >
           입장할 수 없는 방

@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { addSubject, removeSubject } from "store/reducers/roomFilterReducer";
 
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 function SubjectBtn({ subject, reset }) {
   const dispatch = useDispatch();
   const filter = useSelector((state) => state.roomFilterReducer);
@@ -40,6 +42,9 @@ function SubjectBtn({ subject, reset }) {
           border: "3px solid #111",
           borderRadius: "0",
           color: "#111",
+          fontFamily: "'Noto Sans KR', sans-serif",
+          fontWeight: "bold",
+          fontSize: "16px",
           backgroundColor: toggle ? "#98DA7A" : "#ddd",
           "&:hover": {
             backgroundColor: "#BAE8A4",

@@ -58,6 +58,7 @@ function SigninEmail({ email, setEmail, stateEmail, setStateEmail }) {
       <h5
         css={css`
           font-size: 20px;
+          margin: 16px 0;
         `}
       >
         이메일

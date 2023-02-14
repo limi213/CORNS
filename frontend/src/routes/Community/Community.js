@@ -13,7 +13,7 @@ import { css } from "@emotion/react";
 function Community() {
   const SidebarItems = [
     { name: "알맹이랭킹", route: "/community/ranking/sincerity" },
-    { name: "유저검색", route: "/community/searchUser" },
+    { name: "알맹이검색", route: "/community/searchUser" },
     { name: "친구", route: "/community/friends" },
     { name: "초대목록", route: "/community/invitation" },
   ];
@@ -23,10 +23,10 @@ function Community() {
       css={css`
         margin: 0 105px;
       `}
-    > 
+    >
       <Navbar />
 
-      <Grid container spacing={1} sx={{margin: '124px 0 0 0'}}>
+      <Grid container spacing={1} sx={{ margin: "64px 0 0 0" }}>
         <Grid item xs={2}>
           <Sidebar Items={SidebarItems} />
         </Grid>
@@ -47,8 +47,12 @@ function Community() {
               />
               <Route exact path="/community/friends" component={Friends} />
 
-              <Route exact path="/community/invitation" component={Invitation} />
-              
+              <Route
+                exact
+                path="/community/invitation"
+                component={Invitation}
+              />
+
               <Redirect to="/NotFound" />
             </Switch>
           </div>
