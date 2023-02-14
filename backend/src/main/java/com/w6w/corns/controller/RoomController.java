@@ -175,11 +175,18 @@ public class RoomController {
         try {
             RoomAndRoomUserListResponseDto response = roomService.exitRoom(body);
             if (response == null) {
-                resultMap.put("message", "대기방 폭파");
                 status = HttpStatus.ACCEPTED;
-            } else if (response.getRoom().getRoom().isAvail() == false) {
+                resultMap.put("message", "방에 포함되지 않은 유저입니다");
+            } else if (response.getRoom().getRoom().getCurrentMember() == -2) {
+                status = HttpStatus.ACCEPTED;
                 resultMap.put("message", "종료된 방");
-                status = HttpStatus.ACCEPTED;
+            }
+            else if (response.getRoom().getRoom().getRoomNo() == -1) {
+                status = HttpStatus.OK;
+                resultMap.put("message", "대기방 폭파");
+            } else if (response.getRoom().getRoom().getCurrentMember() == -1) {
+                status = HttpStatus.OK;
+                resultMap.put("message", "대화방 폭파");
             } else {
                 status = HttpStatus.OK;
                 return new ResponseEntity<RoomAndRoomUserListResponseDto>(response, status);

@@ -13,6 +13,7 @@ import com.w6w.corns.dto.room.request.EnterRoomRequestDto;
 import com.w6w.corns.dto.room.request.StartEndRoomRequestDto;
 import com.w6w.corns.dto.room.request.UpdateRoomRequestDto;
 import com.w6w.corns.dto.room.response.*;
+import com.w6w.corns.dto.user.UserResponseDto;
 import com.w6w.corns.service.growth.GrowthService;
 import com.w6w.corns.service.redis.RedisService;
 import com.w6w.corns.service.subject.SubjectService;
@@ -243,13 +244,24 @@ public class RoomServiceImpl implements RoomService {
 
         if (room.getRoomCd() == RoomCode.ROOM_WAITING.getCode()) { // 대기방일 때
             // room_user table 에서 삭제
-            roomUserRepository.deleteByUserIdAndRoomNo(body.getUserId(), body.getRoomNo());
-            room.setCurrentMember(room.getCurrentMember() - 1);
+            RoomUser roomUser = roomUserRepository.findByUserIdAndRoomNo(body.getUserId(), body.getRoomNo());
+            if (roomUser == null) {
+                return null;
+            } else {
+                roomUserRepository.delete(roomUser);
+                room.setCurrentMember(room.getCurrentMember() - 1);
+            }
 
             // 대화방에 아무도 남아있지 않을 때 room table 에서 삭제
             if (room.getCurrentMember() == 0) {
                 roomRepository.deleteById(body.getRoomNo());
-                return null;
+                return RoomAndRoomUserListResponseDto.builder()
+                        .room(RoomListResponseDto.builder()
+                                .room(RoomResponseDto.builder()
+                                        .roomNo(-1)
+                                        .build())
+                                .build())
+                        .build();
             }
             // 방장일 때 방장 교체
             else if (room.getHostUserId() == body.getUserId()) {
@@ -262,14 +274,19 @@ public class RoomServiceImpl implements RoomService {
 
         } else if (room.getRoomCd() == RoomCode.ROOM_START.getCode()) { // 대화 중일 때
             RoomUser roomUser = roomUserRepository.findByUserIdAndRoomNo(body.getUserId(), body.getRoomNo());
-            roomUser.setUserCd(RoomUserCode.ROOM_USER_EXIT.getCode());
-            roomUserRepository.save(roomUser);
+            if (roomUser == null) {
+                return null;
+            } else {
+                roomUser.setUserCd(RoomUserCode.ROOM_USER_EXIT.getCode());
+                roomUserRepository.save(roomUser);
+            }
 
             // 대화방에 혼자 있을 때 대화 종료
-            if (room.getCurrentMember() == 2) {
+            List<RoomUser> users = roomUserRepository.findRoomUserInRoom(body.getRoomNo(), RoomUserCode.ROOM_USER_CONVERSATION.getCode());
+            if (users.size() == 1) {
                 room.setRoomCd(RoomCode.ROOM_END.getCode());
 
-                RoomUser remainUser = roomUserRepository.findRoomUserInRoom(body.getRoomNo(), RoomUserCode.ROOM_USER_CONVERSATION.getCode()).get(0);
+                RoomUser remainUser = users.get(0);
                 remainUser.setUserCd(RoomUserCode.ROOM_USER_END.getCode());
                 roomUserRepository.save(remainUser);
                 growthService.giveExp(ExpLogRequestDto.builder()
@@ -277,16 +294,21 @@ public class RoomServiceImpl implements RoomService {
                                             .gainExp(room.getTime())
                                             .expCd(ExpCode.EXP_CONVERSATION.getCode())
                                             .build());
+                return RoomAndRoomUserListResponseDto.builder()
+                        .room(RoomListResponseDto.builder()
+                                .room(RoomResponseDto.builder()
+                                        .currentMember(-1)
+                                        .build())
+                                .build())
+                        .build();
+            } else {
+                return findRoomAndRoomUserByRoomNo(body.getRoomNo(), RoomUserCode.ROOM_USER_END.getCode());
             }
-
-            roomRepository.save(room);
-
-            return findRoomAndRoomUserByRoomNo(body.getRoomNo(), RoomUserCode.ROOM_USER_END.getCode());
         } else {
             return RoomAndRoomUserListResponseDto.builder()
                     .room(RoomListResponseDto.builder()
                             .room(RoomResponseDto.builder()
-                                    .isAvail(false)
+                                    .currentMember(-2)
                                     .build())
                             .build())
                     .build();
