@@ -16,15 +16,15 @@ import com.w6w.corns.dto.room.response.RoomListResponseDto;
 import com.w6w.corns.util.code.RoomUserCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -180,6 +180,21 @@ public class RedisServiceImpl implements RedisService {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    // 스크립트 파일 다운로드
+    public InputStreamResource downloadScriptFile(int roomNo, int userId) {
+        String saveDir = uploadPath + "/scripts/";
+        String saveUrl = saveDir + roomNo + "_" + userId + ".html";
+
+        try {
+            Path filePath = Paths.get(saveUrl);
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(filePath.toString()));
+            return resource;
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 

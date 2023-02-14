@@ -5,16 +5,17 @@ import com.w6w.corns.dto.conversationlog.RoomLogFilterDto;
 import com.w6w.corns.dto.conversationlog.RoomLogResponseDto;
 import com.w6w.corns.dto.conversationlog.RoomMemberDto;
 import com.w6w.corns.service.conversationlog.ConversationLogService;
+import com.w6w.corns.service.redis.RedisService;
 import com.w6w.corns.util.PageableResponseDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -24,6 +25,8 @@ import java.util.*;
 public class ConversationLogController {
 
     private final ConversationLogService conversationLogService;
+
+    private final RedisService redisService;
 
     @ApiOperation("쫑알로그 목록")
     @GetMapping("/{userId}")
@@ -147,5 +150,25 @@ public class ConversationLogController {
         }
 
         return new ResponseEntity<Map>(resultmap, status);
+    }
+
+    @ApiOperation("스크립트 다운로드")
+    @GetMapping("/script/{roomNo}/{userId}")
+    public ResponseEntity<?> downloadScript(@PathVariable int roomNo, @PathVariable int userId) {
+        Map resultmap = new HashMap<>();
+        HttpStatus status;
+
+        try {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .cacheControl(CacheControl.noCache())
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=대화 스크립트")
+                    .body(redisService.downloadScriptFile(roomNo, userId));
+        } catch (Exception e) {
+            resultmap.put("message", e.getMessage());
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+            return new ResponseEntity<Map>(resultmap, status);
+        }
     }
 }
