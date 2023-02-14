@@ -159,10 +159,15 @@ public class ConversationLogController {
         HttpStatus status;
 
         try {
+            HttpHeaders header = new HttpHeaders();
+            header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=script.html");
+            header.add("Cache-Control", "no-cache, no-store, must-revalidate");
+            header.add("Pragma", "no-cache");
+            header.add("Expires", "0");
+
             return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .cacheControl(CacheControl.noCache())
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=대화 스크립트")
+                    .headers(header)
+                    .contentType(MediaType.parseMediaType("application/octet-stream"))
                     .body(redisService.downloadScriptFile(roomNo, userId));
         } catch (Exception e) {
             resultmap.put("message", e.getMessage());
