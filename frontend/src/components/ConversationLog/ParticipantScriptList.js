@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-function ParticipantScriptList({ participants }) {
+function ParticipantScriptList({ roomNo, participants }) {
   return (
     <ul
       css={css`
@@ -25,7 +25,7 @@ function ParticipantScriptList({ participants }) {
             `}
           >
             <Box sx={{ border: "3px solid #111" }}>
-              <ParticipantScriptCard participant={item} />
+              <ParticipantScriptCard roomNo={roomNo} participant={item} />
             </Box>
           </li>
         );

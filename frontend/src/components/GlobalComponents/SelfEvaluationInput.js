@@ -31,16 +31,15 @@ const onEvaluationAxios = async (roomNo, userId, score, description) => {
 
 function SelfEvaluationInput({ roomNo, selfScore, selfDesc }) {
   const [registered, setRegistered] = useState(false);
-  const [score, setScore] = useState(0)
-  const [description, setDescription] = useState("")
+  const [score, setScore] = useState(0);
+  const [description, setDescription] = useState("");
 
   // props undefined 해결,,
   useEffect(() => {
-    setRegistered(selfScore > 0)
-    setScore(selfScore)
-    setDescription(selfDesc ? selfDesc : "")
-  }, [selfScore, selfDesc])
-
+    setRegistered(selfScore > 0);
+    setScore(selfScore);
+    setDescription(selfDesc ? selfDesc : "");
+  }, [selfScore, selfDesc]);
 
   const onEvaluationHandler = async (e) => {
     e.preventDefault();
@@ -51,7 +50,7 @@ function SelfEvaluationInput({ roomNo, selfScore, selfDesc }) {
       description
     );
     setRegistered(res);
-    console.log('registered', registered)
+    console.log("registered", registered);
   };
 
   const onChangeDescription = (e) => {
@@ -68,11 +67,16 @@ function SelfEvaluationInput({ roomNo, selfScore, selfDesc }) {
           border: "3px solid #111",
           position: "relative",
           width: "100%",
+          mt: "15px",
         }}
       >
-        <StarRating registered={registered} score={Math.max(1, score)} setScore={setScore} />
+        <StarRating
+          registered={registered}
+          score={Math.max(1, score)}
+          setScore={setScore}
+        />
         <Input
-          rows={4}
+          rows={5}
           multiline={true}
           value={description}
           onChange={onChangeDescription}
@@ -80,6 +84,8 @@ function SelfEvaluationInput({ roomNo, selfScore, selfDesc }) {
             width: "100%",
             backgroundColor: "white",
             padding: "1rem 5.5rem 1rem 1rem",
+            fontFamily: "Noto Sans KR",
+            fontSize: "16px",
           }}
         />
 
@@ -87,7 +93,20 @@ function SelfEvaluationInput({ roomNo, selfScore, selfDesc }) {
           <Button
             variant="contained"
             component="label"
-            sx={{ position: "absolute", bottom: "24px", right: "24px" }}
+            sx={{
+              position: "absolute",
+              bottom: "24px",
+              right: "24px",
+              border: "3px solid #111",
+              borderRadius: "0",
+              backgroundColor: "#3C90F2",
+              fontFamily: "Noto Sans KR",
+              fontSize: "16px",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "#1766C3",
+              },
+            }}
             onClick={onEvaluationHandler}
           >
             등록

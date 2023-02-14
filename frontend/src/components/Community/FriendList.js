@@ -16,7 +16,12 @@ function FriendList({ items }) {
 
   useEffect(() => {
     dispatch(getFriendListAxios(type, text));
-  }, [type, text, dispatch]);
+  }, [dispatch]);
+
+
+  useEffect(() => {
+    dispatch(getFriendListAxios(type, text));
+  }, [type, text]);
 
   return (
     <>

@@ -1,13 +1,10 @@
 import React, { useEffect } from "react";
 import useAxios from "auth/useAxios";
 import { useDispatch } from "react-redux";
-import {
-  getFriendListAxios,
-  getFriendRequestListAxios,
-} from "store/reducers/friendListReducer";
+import { getFriendListAxios } from "store/reducers/friendListReducer";
+import { friendActions } from "store/reducers/friendListReducer";
 
 import { Box, Button } from "@mui/material";
-
 
 // 친구신청 받은 상태
 function FriendBtnTwo({ fromId, toId, setRelation }) {
@@ -34,11 +31,14 @@ function FriendBtnTwo({ fromId, toId, setRelation }) {
         setRelation(3);
       }
       if (window.location.pathname.includes("friends")) {
-        dispatch(getFriendListAxios());
-        dispatch(getFriendRequestListAxios());
+        // dispatch(friendActions.removeFriendRequestList(toId));
+        // dispatch(getFriendListAxios());
+
+        // 임시 reload
+        window.location.reload();
       }
     }
-  }, [acceptStatus]);
+  }, [acceptStatus, dispatch]);
 
   // 거절
   const rejectHandler = (fromId, toId) => {
@@ -58,10 +58,13 @@ function FriendBtnTwo({ fromId, toId, setRelation }) {
         setRelation(0);
       }
       if (window.location.pathname.includes("friends")) {
-        dispatch(getFriendRequestListAxios());
+        // dispatch(friendActions.removeFriendRequestList(toId));
+       
+        // 임시 reload
+        window.location.reload();
       }
     }
-  }, [rejectStatus]);
+  }, [rejectStatus, dispatch]);
 
   return (
     <Box

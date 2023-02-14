@@ -23,12 +23,18 @@ export const friendListReducer = createSlice({
     getFriendList(state, actions) {
       state.friendList = actions.payload;
     },
+    removeFriendList(state, actions) {
+      state.friendList = state.friendList.filter((item) => item.userId !== actions.payload)
+    },
     isFriendRequestListLoading(state, actions) {
       state.isFriendListLoading = actions.payload;
     },
     getFriendRequestList(state, actions) {
       state.friendRequestList = actions.payload;
     },
+    removeFriendRequestList(state, actions) {
+      state.friendRequestList = state.friendRequestList.filter((item) => item.userId !== actions.payload)
+    }
   },
 });
 
@@ -77,6 +83,7 @@ export const getFriendListAxios = (type = "nickname", text = "") => {
     try {
       const friendList = await sendRequest();
       dispatch(friendActions.getFriendList(friendList));
+      console.log(friendList);
     } catch (e) {
       console.error(e);
     }
@@ -133,6 +140,7 @@ export const getFriendRequestListAxios = () => {
     try {
       const friendRequestList = await sendRequest();
       dispatch(friendActions.getFriendRequestList(friendRequestList));
+      console.log(friendRequestList)
     } catch (e) {
       console.error(e);
     }

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Box, Rating, Typography } from "@mui/material";
+import React from "react";
+import { Box, Rating } from "@mui/material";
 
 export default function StarRating({ registered, score, setScore }) {
 
@@ -18,13 +18,14 @@ export default function StarRating({ registered, score, setScore }) {
         backgroundColor: "#fff",
         display: "flex",
         justifyContent: "center",
+        pt: "10px",
       }}
     >
 
       {registered ? (
-        <Rating readOnly value={score} />
+        <Rating readOnly value={score} size="large"/>
       ) : (
-        <Rating value={score} onChange={changeHandler} />
+        <Rating value={score} size="large" onChange={changeHandler} />
       )}
     </Box>
   );

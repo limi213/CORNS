@@ -123,7 +123,7 @@ function LogItem({ log }) {
         </TableCell>
 
         {/* 주제 */}
-        <TableCell width="10%" align="center">
+        <TableCell width="10%" align="center" sx={{fontSize: "16px", fontFamily: "Noto Sans KR"}}>
           <div
             css={css`
               text-align: center;
@@ -135,7 +135,7 @@ function LogItem({ log }) {
         </TableCell>
 
         {/* 제목 */}
-        <TableCell width="25%" align="center">
+        <TableCell width="25%" align="center" sx={{fontSize: "16px", fontFamily: "Noto Sans KR"}}>
           {window.location.href.includes("logdetail") ? (
             title
           ) : (
@@ -149,12 +149,12 @@ function LogItem({ log }) {
         </TableCell>
 
         {/* 날짜 */}
-        <TableCell width="15%" align="center">
+        <TableCell width="15%" align="center" sx={{fontSize: "16px", fontFamily: "Noto Sans KR"}}>
           {startTime}
         </TableCell>
 
         {/* 대화시간 */}
-        <TableCell width="10%" align="center">
+        <TableCell width="10%" align="center" sx={{fontSize: "16px", fontFamily: "Noto Sans KR"}}>
           <div
             css={css`
               text-align: center;
@@ -166,7 +166,7 @@ function LogItem({ log }) {
         </TableCell>
 
         {/* 인원 */}
-        <TableCell width="10%" align="center">
+        <TableCell width="10%" align="center" sx={{fontSize: "16px", fontFamily: "Noto Sans KR"}}>
           {member}명
         </TableCell>
 

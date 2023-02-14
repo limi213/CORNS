@@ -1,7 +1,7 @@
 import React from "react";
 import ProfileImg from "components/GlobalComponents/ProfileImg";
 import UserNameTag from "components/GlobalComponents/UserNameTag";
-import { openScript } from "routes/ConversationLog/LogDetail";
+import { openScript, downloadScript } from "routes/ConversationLog/LogDetail";
 
 import { Box, Card, Button } from "@mui/material";
 import { HandThumbsUp } from "react-bootstrap-icons";
@@ -9,26 +9,7 @@ import { HandThumbsUp } from "react-bootstrap-icons";
 import { css } from "@emotion/react";
 
 
-// 수정 예정
-const downloadScript = (scriptUrl) => {
-  if (!scriptUrl) {
-    return;
-  }
-  let fileName = '파일이름.txt';
-  let output = "string 타입의 데이터";
-  const element = document.createElement('a');
-  const file = new Blob([output], {
-    type: 'text/plain',
-  });
-  element.href = scriptUrl;
-  element.download = fileName;
-  document.body.appendChild(element);
-  element.click();
-
-}
-
-
-function ParticipantScriptCard({ participant }) {
+function ParticipantScriptCard({ roomNo, participant }) {
   const { userId, nickname, imgUrl, thumbCnt, speaking, scriptUrl } = participant;
 
   return (
@@ -79,55 +60,13 @@ function ParticipantScriptCard({ participant }) {
           <span>발화량: {speaking}</span>
         </Box>
 
-        {/* <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "50%",
-            gap: "8px",
-            margin: "0 0 30px 0",
-          }}
-        >
-          <Button
-            sx={{
-              backgroundColor: "#FFC804",
-              color: "#111111",
-              border: "2px solid #111",
-            }}
-            onClick={() => openScript(scriptUrl)}
-          >
-            스크립트 보기
-          </Button>
-          <a
-            href={scriptUrl}
-            download
-            type="text/html"
-            target="_self"
-            css={css`
-              text-decoration: none;
-              color: black;
-            `}
-          >
-            <Button
-              sx={{
-                backgroundColor: "#024A9E",
-                color: "#111111",
-                border: "2px solid #111",
-                width: "100%",
-              }}
-            >
-              스크립트 다운
-            </Button>
-          </a>
-        </Box> */}
-
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
-            width: "50%",
+            width: "80%",
             gap: "8px",
-            margin: "0 0 30px 0",
+            margin: "15px 0 20px 0",
           }}
         >
           <Button
@@ -135,6 +74,15 @@ function ParticipantScriptCard({ participant }) {
               backgroundColor: "#FFC804",
               color: "#111111",
               border: "2px solid #111",
+              width: "100%",
+              height: "50px",
+              borderRadius: "0",
+              fontWeight: "bold",
+              fontSize: "16px",
+              fontFamily: "Noto Sans KR",
+              "&:hover": {
+                backgroundColor: "#FFD704",
+              },
             }}
             onClick={() => openScript(scriptUrl)}
           >
@@ -144,11 +92,19 @@ function ParticipantScriptCard({ participant }) {
           <Button
             sx={{
               backgroundColor: "#024A9E",
-              color: "#111111",
+              color: "white",
               border: "2px solid #111",
               width: "100%",
+              height: "50px",
+              borderRadius: "0",
+              fontWeight: "bold",
+              fontSize: "16px",
+              fontFamily: "Noto Sans KR",
+              "&:hover": {
+                backgroundColor: "#1766C3",
+              },
             }}
-            onClick={() => downloadScript(scriptUrl)}
+            onClick={() => downloadScript(scriptUrl, roomNo, userId)}
           >
             스크립트 다운
           </Button>

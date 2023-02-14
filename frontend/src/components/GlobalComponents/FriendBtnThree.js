@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import useAxios from "auth/useAxios";
 import { useDispatch } from "react-redux";
-import { getFriendListAxios } from "store/reducers/friendListReducer";
+import { friendActions } from "store/reducers/friendListReducer";
 import { Button } from "@mui/material";
 
 
@@ -30,10 +29,10 @@ function FriendBtnThree({ fromId, toId, setRelation }) {
         setRelation(0);
       }
       if (window.location.pathname.includes("friends")) {
-        dispatch(getFriendListAxios());
+        dispatch(friendActions.removeFriendList(toId));
       }
     }
-  });
+  }, [status]);
 
   return (
     <Button

@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from "react";
 import useAxios from "auth/useAxios";
+import axios from "axios";
 import LogItem from "components/ConversationLog/LogItem";
 import ParticipantScriptList from "components/ConversationLog/ParticipantScriptList";
 import SelfEvaluation from "components/GlobalComponents/SelfEvaluation";
 
 import { Table, TableBody, Box, Button } from "@mui/material";
 import backgroundImage from "assets/backgroundImage.png";
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
 
+// open handler
 const openScript = (scriptUrl) => {
   if (!scriptUrl) {
     return;
   }
   window.open(scriptUrl, "_blank");
+};
+
+// download handler
+const downloadScript = async (scriptUrl, roomNo, userId) => {
+  if (!scriptUrl) {
+    return;
+  }
+  window.open(
+    `${process.env.REACT_APP_HOST}/corns-log/script/${roomNo}/${userId}`,
+    "_blank"
+  );
 };
 
 function LogDetail({ match }) {
@@ -38,7 +49,7 @@ function LogDetail({ match }) {
       setLog(data.room);
       setParticipants(data.memberList);
     } else if (status === 500) {
-      setLog({});
+      setLog(false);
     }
   }, [status]);
 
@@ -54,9 +65,10 @@ function LogDetail({ match }) {
         </Table>
         <hr />
 
-        <ParticipantScriptList participants={participants} />
-
-        <hr />
+        <ParticipantScriptList
+          roomNo={log.roomNo}
+          participants={participants}
+        />
 
         <Box
           sx={{
@@ -74,36 +86,40 @@ function LogDetail({ match }) {
               border: "2px solid #111",
               width: "30%",
               height: "50px",
+              borderRadius: "0",
+              fontWeight: "bold",
+              fontSize: "18px",
+              fontFamily: "Noto Sans KR",
+              "&:hover": {
+                backgroundColor: "#FFD704",
+              },
             }}
             onClick={() => openScript(log.scriptUrl)}
           >
             전체 스크립트 보기
           </Button>
-          <a
-            href={log.scriptUrl}
-            download
-            type="text/html"
-            target="_self"
-            css={css`
-              text-decoration: none;
-              color: black;
-              width: 30%;
-              height 50px;
-            `}
+
+          <Button
+            sx={{
+              backgroundColor: "#024A9E",
+              color: "white",
+              border: "2px solid #111",
+              width: "30%",
+              height: "50px",
+              borderRadius: "0",
+              fontWeight: "bold",
+              fontSize: "18px",
+              fontFamily: "Noto Sans KR",
+              "&:hover": {
+                backgroundColor: "#1766C3",
+              },
+            }}
+            onClick={() => downloadScript(log.scriptUrl, roomNo, 0)}
           >
-            <Button
-              sx={{
-                backgroundColor: "#024A9E",
-                color: "#111111",
-                border: "2px solid #111",
-                width: "100%",
-                height: "50px",
-              }}
-            >
-              전체 스크립트 다운
-            </Button>
-          </a>
+            전체 스크립트 다운
+          </Button>
         </Box>
+        
 
         <Box
           sx={{
@@ -123,10 +139,12 @@ function LogDetail({ match }) {
         </Box>
       </>
     );
+  } else if (log) {
+    return <p>중도퇴장하여 확인할 수 없는 방입니다.</p>;
   } else {
     return <p>확인할 수 없는 방입니다.</p>;
   }
 }
 
 export default LogDetail;
-export { openScript };
+export { openScript, downloadScript };

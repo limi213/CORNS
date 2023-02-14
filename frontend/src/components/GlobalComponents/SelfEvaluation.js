@@ -15,6 +15,7 @@ export default function SelfEvaluation({
       <p
         css={css`
           font-size: 24px;
+          font-weight: bold;
           margin: 0;
         `}
       >
