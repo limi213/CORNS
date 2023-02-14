@@ -178,9 +178,10 @@ function LogItem({ log }) {
               width: 100%;
             `}
           >
-            {renderStar.map(() => {
+            {renderStar.map((item, index) => {
               return (
                 <StarFill
+                  key={index}
                   css={css`
                     font-size: 17px;
                   `}
@@ -198,9 +199,10 @@ function LogItem({ log }) {
               width: 100%;
             `}
           >
-            {renderThumb.map(() => {
+            {renderThumb.map((item, index) => {
               return (
                 <HandThumbsUpFill
+                  key={index}
                   css={css`
                     font-size: 17px;
                   `}

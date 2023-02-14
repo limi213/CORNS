@@ -4,7 +4,7 @@ import LogItem from "./LogItem";
 function LogList({ logs }) {  
   return (
     <>
-      {logs.map((item) => {
+      {logs.map((item, index) => {
         return <LogItem log={item} key={item.roomNo} />;
       })}
     </>

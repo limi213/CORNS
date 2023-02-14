@@ -12,7 +12,7 @@ function ParticipantScriptList({ participants }) {
         display: flex;
         padding: 0;
         width: 100%;
-        margin-bottom: 280px;
+        margin: 50px 0;
         gap: 10px;
       `}
     >
