@@ -31,10 +31,10 @@ public class CustomRankRepositoryImpl implements CustomRankRepository {
                 builder.and(rank.rankCd.eq(RankCode.RANK_EXP.getCode()));
                 break;
             case 2:
-                builder.and(rank.rankCd.eq(RankCode.RANK_THUMB.getCode()));
+                builder.and(rank.rankCd.eq(RankCode.RANK_SPEAKING.getCode()));
                 break;
             case 3:
-                builder.and(rank.rankCd.eq(RankCode.RANK_SPEAKING.getCode()));
+                builder.and(rank.rankCd.eq(RankCode.RANK_THUMB.getCode()));
                 break;
             case 4:
                 builder.and(rank.rankCd.eq(RankCode.RANK_FRIEND.getCode()));
