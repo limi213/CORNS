@@ -38,15 +38,6 @@ function ExperienceInfo({}) {
 
     return (
       <div>
-        <p
-          css={css`
-            margin: 0;
-            font-size: 20px;
-            font-weight: bold;
-          `}
-        >
-          경험치
-        </p>
         <Box
           sx={{
             display: "flex",

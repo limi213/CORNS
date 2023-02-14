@@ -76,7 +76,8 @@ export default function RankingCard({ rankInfo, customWidth }) {
           />
           <p
             css={css`
-              font-size: 24px;
+              font-size: 28px;
+              font-weight: bold;
               margin: 0;
               text-align: center;
               margin-top: 16px;
@@ -101,7 +102,7 @@ export default function RankingCard({ rankInfo, customWidth }) {
                 margin-left: 8px;
               `}
             >
-              {(rankType === 3) ? Math.round(value/60) : value} {unit}
+              {rankType === 3 ? Math.round(value / 60) : value} {unit}
             </span>
           </Box>
         </Box>

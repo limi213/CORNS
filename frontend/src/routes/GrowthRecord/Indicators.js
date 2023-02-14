@@ -1,4 +1,4 @@
-import React from "react";  // 주석추가
+import React from "react"; // 주석추가
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Box } from "@mui/material";
 import Tabmenu from "../../components/GlobalComponents/Tabmenu";
@@ -27,14 +27,33 @@ function Indicators({ location }) {
   ];
 
   return (
-    <Box sx={{ border: "3px solid #111", p: "32px", boxSizing: "border-box" }}>
+    <Box
+      sx={{
+        border: "3px solid #111",
+        p: "10px 32px 32px 32px",
+        boxSizing: "border-box",
+      }}
+    >
+      <h2>지표보기</h2>
       <Tabmenu Items={TabMenus} Location={location.pathname} />
 
       <Switch>
-        <Route exact path="/growthRecord/indicators/weeklyLiner" component={WeeklyLiner} />
-        <Route exact path="/growthRecord/indicators/subjectCircle" component={SubjectCircle} />
-        <Route exact path="/growthRecord/indicators/dailyBar" component={DailyBar} />
-        <Redirect to ="/NotFound" />
+        <Route
+          exact
+          path="/growthRecord/indicators/weeklyLiner"
+          component={WeeklyLiner}
+        />
+        <Route
+          exact
+          path="/growthRecord/indicators/subjectCircle"
+          component={SubjectCircle}
+        />
+        <Route
+          exact
+          path="/growthRecord/indicators/dailyBar"
+          component={DailyBar}
+        />
+        <Redirect to="/NotFound" />
       </Switch>
     </Box>
   );

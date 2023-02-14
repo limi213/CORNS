@@ -25,7 +25,7 @@ function ExperienceIndicator({}) {
           <Box
             sx={{
               border: "3px solid #111",
-              height: "200px",
+              height: "265px",
               mr: "1.5rem",
               p: "2rem",
               boxSizing: "border-box",
@@ -39,6 +39,8 @@ function ExperienceIndicator({}) {
                 p: "1rem",
                 boxSizing: "border-box",
                 boxShadow: "4px 4px 4px rgba(0,0,0,0.25)",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               <Box
@@ -65,15 +67,29 @@ function ExperienceIndicator({}) {
               </Box>
               {isLoading && <p>loading 중...</p>}
               {!isLoading && status === 200 && (
-                <Typography sx={{ width: "60%" }}>
-                  {nickName}님의 경험치는 상위 {data.percentile}% 입니다.
-                </Typography>
+                <p
+                  css={css`
+                    width: 60%;
+                    font-size: 18px;
+                    font-weight: bold;
+                  `}
+                >
+                  {nickName}님의 경험치는
+                  <br /> 상위 {data.percentile}% 입니다.
+                </p>
               )}
             </Box>
           </Box>
         </Grid>
         <Grid item xs={8}>
-          <Box sx={{ border: "3px solid #111", height: "200px" }}>
+          <Box
+            sx={{
+              border: "3px solid #111",
+              height: "265px",
+              boxSizing: "border-box",
+              p: "32px 24px",
+            }}
+          >
             <ExperienceInfo />
           </Box>
         </Grid>

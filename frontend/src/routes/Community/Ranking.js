@@ -15,7 +15,6 @@ function Ranking({ location, history }) {
   const [type, setType] = useState(1);
   const [unit, setUnit] = useState("");
 
-
   // location.pathname: 현재 url
   // 이중에 없으면 404
   useEffect(() => {
@@ -41,7 +40,7 @@ function Ranking({ location, history }) {
       <h2>알맹이 랭킹</h2>
 
       <Box sx={{ py: "64px" }}>
-        <RankingList width={150} /> 
+        <RankingList width={180} />
       </Box>
 
       <Tabmenu Items={TabMenus} Location={location.pathname} />

@@ -61,13 +61,42 @@ function ExperienceTable({}) {
 
     return (
       <>
-        <TableContainer component={Paper} sx={{ mt: "4rem" }}>
-          <Table sx={{ minWidth: 650 }} aria-label="a dense table">
+        <TableContainer sx={{ mt: "30px" }}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>날짜</TableCell>
-                <TableCell align="right">적립내용</TableCell>
-                <TableCell align="right">경험치</TableCell>
+                <TableCell
+                  sx={{
+                    pl: "64px",
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    fontFamily: "Noto Sans KR",
+                  }}
+                >
+                  날짜
+                </TableCell>
+                <TableCell
+                  align="right"
+                  sx={{
+                    pr: "64px",
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    fontFamily: "Noto Sans KR",
+                  }}
+                >
+                  적립내용
+                </TableCell>
+                <TableCell
+                  align="right"
+                  sx={{
+                    pr: "64px",
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    fontFamily: "Noto Sans KR",
+                  }}
+                >
+                  경험치
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -76,11 +105,37 @@ function ExperienceTable({}) {
                   key={row.date}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    sx={{
+                      pl: "64px",
+                      fontSize: "16px",
+                      fontFamily: "Noto Sans KR",
+                    }}
+                  >
                     {row.date}
                   </TableCell>
-                  <TableCell align="right">{row.transContents}</TableCell>
-                  <TableCell align="right">{row.exp}</TableCell>
+                  <TableCell
+                    align="right"
+                    sx={{
+                      pr: "64px",
+                      fontSize: "16px",
+                      fontFamily: "Noto Sans KR",
+                    }}
+                  >
+                    {row.transContents}
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    sx={{
+                      pr: "64px",
+                      fontSize: "16px",
+                      fontFamily: "Noto Sans KR",
+                    }}
+                  >
+                    {row.exp}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

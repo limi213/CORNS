@@ -28,7 +28,11 @@ function LogHeader() {
       <TableCell
         width="10%"
         align="center"
-        sx={{ fontSize: "18px", fontWeight: "bold" }}
+        sx={{
+          fontSize: "18px",
+          fontWeight: "bold",
+          fontFamily: "Noto Sans KR",
+        }}
       >
         북마크
       </TableCell>
@@ -36,7 +40,11 @@ function LogHeader() {
       <TableCell
         width="10%"
         align="center"
-        sx={{ fontSize: "18px", fontWeight: "bold" }}
+        sx={{
+          fontSize: "18px",
+          fontWeight: "bold",
+          fontFamily: "Noto Sans KR",
+        }}
       >
         주제
       </TableCell>
@@ -44,7 +52,11 @@ function LogHeader() {
       <TableCell
         width="25%"
         align="center"
-        sx={{ fontSize: "18px", fontWeight: "bold" }}
+        sx={{
+          fontSize: "18px",
+          fontWeight: "bold",
+          fontFamily: "Noto Sans KR",
+        }}
       >
         제목
       </TableCell>
@@ -55,7 +67,11 @@ function LogHeader() {
           variant="standard"
           size="small"
           onChange={changeHandler}
-          sx={{ fontSize: "18px", fontWeight: "bold" }}
+          sx={{
+            fontSize: "18px",
+            fontWeight: "bold",
+            fontFamily: "Noto Sans KR",
+          }}
         >
           <MenuItem value={"startTm,DESC"}>최신순</MenuItem>
           <MenuItem value={"startTm,ASC"}>오래된순</MenuItem>
@@ -65,7 +81,11 @@ function LogHeader() {
       <TableCell
         width="10%"
         align="center"
-        sx={{ fontSize: "18px", fontWeight: "bold" }}
+        sx={{
+          fontSize: "18px",
+          fontWeight: "bold",
+          fontFamily: "Noto Sans KR",
+        }}
       >
         대화시간
       </TableCell>
@@ -73,7 +93,11 @@ function LogHeader() {
       <TableCell
         width="10%"
         align="center"
-        sx={{ fontSize: "18px", fontWeight: "bold" }}
+        sx={{
+          fontSize: "18px",
+          fontWeight: "bold",
+          fontFamily: "Noto Sans KR",
+        }}
       >
         인원
       </TableCell>
@@ -81,7 +105,11 @@ function LogHeader() {
       <TableCell
         width="10%"
         align="center"
-        sx={{ fontSize: "18px", fontWeight: "bold" }}
+        sx={{
+          fontSize: "18px",
+          fontWeight: "bold",
+          fontFamily: "Noto Sans KR",
+        }}
       >
         자기평가
       </TableCell>
@@ -89,7 +117,11 @@ function LogHeader() {
       <TableCell
         width="10%"
         align="center"
-        sx={{ fontSize: "18px", fontWeight: "bold" }}
+        sx={{
+          fontSize: "18px",
+          fontWeight: "bold",
+          fontFamily: "Noto Sans KR",
+        }}
       >
         따봉개수
       </TableCell>

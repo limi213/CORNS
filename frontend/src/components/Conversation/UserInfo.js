@@ -5,7 +5,8 @@ import AttendanceInfo from "./AttendanceInfo";
 
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 function UserInfo({}) {
   return (
     <Card
@@ -16,6 +17,15 @@ function UserInfo({}) {
         p: "32px 24px",
       }}
     >
+      <p
+        css={css`
+          margin: 0;
+          font-size: 20px;
+          font-weight: bold;
+        `}
+      >
+        경험치
+      </p>
       <ExperienceInfo />
       <AttendanceInfo />
     </Card>

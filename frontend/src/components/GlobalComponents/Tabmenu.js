@@ -21,8 +21,10 @@ const Tabmenu = ({ Items, Location, ...rest }) => {
                 backgroundColor: { backgroundColor },
                 height: "60px",
                 alignItems: "center",
-                textSize: '26px',
-                margin: "0 10% 0 10%"
+                textSize: "26px",
+                margin: "0 10% 0 10%",
+                fontSize: "20px",
+                fontFamily: "Noto Sans KR",
               }}
             >
               <NavLink
