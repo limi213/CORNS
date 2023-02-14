@@ -2,7 +2,7 @@ import React from "react";
 
 import Navbar from "components/GlobalComponents/Navbar";
 import IsLogin from "auth/IsLogin";
-
+import Footer from "components/GlobalComponents/Footer";
 import LogInUserArea from "components/Conversation/LogInUserArea";
 import ConversationRoomFilter from "components/Conversation/ConversationRoomFilter";
 import RoomCreateModal from "components/Conversation/RoomCreateForm";
@@ -15,23 +15,29 @@ function Conversation() {
   const user = IsLogin();
 
   return (
-    <div
-      css={css`
-        margin: 0 105px;
-      `}
-    >
-      <Navbar />
+    <div>
       <div
         css={css`
-          margin: 64px 0 0 0;
+          margin: 0 105px;
+          height: auto;
+          min-height: 100%;
+          padding-bottom: 35vh;
         `}
       >
-        {user ? <LogInUserArea /> : null}
-        <h2>쫑알룸리스트</h2>
-        <ConversationRoomFilter />
-        <RoomListsContainer />
-        <RoomCreateModal />
+        <Navbar />
+        <div
+          css={css`
+            margin: 64px 0 0 0;
+          `}
+        >
+          {user ? <LogInUserArea /> : null}
+          <h2>쫑알룸리스트</h2>
+          <ConversationRoomFilter />
+          <RoomListsContainer />
+          <RoomCreateModal />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }

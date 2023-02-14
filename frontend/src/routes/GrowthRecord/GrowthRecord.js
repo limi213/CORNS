@@ -1,6 +1,7 @@
 import { Route, Switch, Redirect } from "react-router-dom";
 import Navbar from "../../components/GlobalComponents/Navbar";
 import Sidebar from "../../components/GlobalComponents/Sidebar";
+import Footer from "components/GlobalComponents/Footer";
 import MyProfile from "./MyProfile";
 import ExperienceDetail from "./ExperienceDetail";
 import Indicators from "./Indicators";
@@ -17,30 +18,40 @@ function GrowthRecord() {
   ];
 
   return (
-    <div
-      css={css`
-        margin: 0 105px;
-      `}
-    >
-      <Navbar />
+    <div>
+      <div
+        css={css`
+          margin: 0 105px;
+          height: auto;
+          min-height: 100%;
+          padding-bottom: 35vh;
+        `}
+      >
+        <Navbar />
 
-      <Grid container spacing={1} sx={{ margin: "64px 0 0 0" }}>
-        <Grid item xs={2}>
-          <Sidebar Items={SidebarItems} />
+        <Grid container spacing={1} sx={{ margin: "64px 0 0 0" }}>
+          <Grid item xs={2}>
+            <Sidebar Items={SidebarItems} />
+          </Grid>
+          <Grid item xs={10}>
+            <Switch>
+              <Route
+                exact
+                path="/growthRecord/myProfile"
+                component={MyProfile}
+              />
+              <Route
+                exact
+                path="/growthRecord/experienceDetail"
+                component={ExperienceDetail}
+              />
+              <Route path="/growthRecord/indicators" component={Indicators} />
+              <Redirect to="/NotFound" />
+            </Switch>
+          </Grid>
         </Grid>
-        <Grid item xs={10}>
-          <Switch>
-            <Route exact path="/growthRecord/myProfile" component={MyProfile} />
-            <Route
-              exact
-              path="/growthRecord/experienceDetail"
-              component={ExperienceDetail}
-            />
-            <Route path="/growthRecord/indicators" component={Indicators} />
-            <Redirect to="/NotFound" />
-          </Switch>
-        </Grid>
-      </Grid>
+      </div>
+      <Footer />
     </div>
   );
 }

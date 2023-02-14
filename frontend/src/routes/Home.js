@@ -30,7 +30,7 @@ function Home() {
         css={css`
           height: auto;
           min-height: 100%;
-          padding-bottom: 30vh;
+          padding-bottom: 35vh;
         `}
       >
         <Navbar />
@@ -85,7 +85,6 @@ function Home() {
                   textDecoration: "none",
                   fontSize: "18px",
                   fontFamily: "Noto Sans KR",
-
                 }}
               >
                 튜토리얼 보기
