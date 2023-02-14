@@ -7,7 +7,7 @@ import useAxios from "auth/useAxios";
 import Grid from "@mui/material/Grid";
 
 function LogInUserArea() {
-  const { userId, nickname } = sessionStorage;
+  const { userId, nickname, imgUrl } = sessionStorage;
   const { data, status, isLoading, sendRequest } = useAxios();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function LogInUserArea() {
     return (
       <Grid container sx={{ marginBottom: "64px" }}>
         <Grid item xs={5} sx={{ pr: "1.5rem" }}>
-          <UserCard id={userId} nickname={nickname} level={levelNo} />
+          <UserCard id={userId} nickname={nickname} imgUrl={imgUrl} level={levelNo} />
         </Grid>
         <Grid item xs={7}>
           <UserInfo />

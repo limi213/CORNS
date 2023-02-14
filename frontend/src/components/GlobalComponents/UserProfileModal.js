@@ -55,15 +55,12 @@ function UserProfileModal({ openModal, toId, handleCloseModal }) {
     return (
       <>
         <Box sx={style}>
-          <Box sx={{ display: "flex", width: "100%", mr: "10%" }}>
-            <Typography variant="h5" sx={{ ml: "32px" }}>
-              {user.nickname} 페이지
-            </Typography>
+          <Box sx={{ display: "flex", width: "100%"}}>
             <XSquare
               css={css`
-                margin-left: 75%;
                 font-size: 30px;
                 cursor: pointer;
+                margin-left: 95%
               `}
               onClick={handleCloseModal}
             />

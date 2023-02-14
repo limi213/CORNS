@@ -3,6 +3,9 @@ import React from "react";
 import { Box, Typography, Grid } from "@mui/material";
 import ProfileImg from "./ProfileImg";
 
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
 function UserProfileInfo({ basicInfo }) {
   const {
     userId,
@@ -24,11 +27,21 @@ function UserProfileInfo({ basicInfo }) {
       <Box
         sx={{
           display: "flex",
-          p: "64px 48px",
+          p: "20px 30px 50px 30px",
         }}
       >
-        <Box sx={{ mr: "135px" }}>
-          <ProfileImg imgSrc={imgUrl} nickname={nickname} width={"180px"} />
+        <Box sx={{ ml: "5%" }}>
+          <img
+            src={imgUrl}
+            alt={nickname}
+            css={css`
+                width: 200px;
+                height: 200px;
+                object-fit: contain;
+                border-radius: 50%;
+                border: 3px solid black;
+              `}
+          />
         </Box>
 
         <Box
@@ -37,31 +50,34 @@ function UserProfileInfo({ basicInfo }) {
             flexDirection: "column",
             justifyContent: "space-around",
             width: "100%",
+            ml: "10%",
+            fontWeight: "bold",
+            fontSize: "18px"
           }}
         >
-          <Typography variant="h5">
-            {nickname}#{userId}
-          </Typography>
+          <span>
+            <span css={css`font-size: 30px;`}>{nickname}</span> <span css={css`font-size: 20px;`}>#{userId}</span>
+          </span>
           <Grid container spacing={0}>
             <Grid item xs={4}>
-              <Typography>Lv.{levelNo}</Typography>
+              <p>Lv.{levelNo}</p>
             </Grid>
             <Grid item xs={4}>
-              <Typography>{expTotal}exp</Typography>
+              <p>{expTotal}exp</p>
             </Grid>
             <Grid item xs={4}>
-              <Typography>친구수{friendTotal}명</Typography>
+              <p>친구수{friendTotal}명</p>
             </Grid>
           </Grid>
           <Grid container spacing={0}>
             <Grid item xs={4}>
-              <Typography>누적 출석수 {attendTotal}일</Typography>
+              <p>누적 출석수 {attendTotal}일</p>
             </Grid>
             <Grid item xs={4}>
-              <Typography>누적 칭찬수 {thumbTotal}개</Typography>
+              <p>누적 칭찬수 {thumbTotal}개</p>
             </Grid>
             <Grid item xs={4}>
-              <Typography>누적 발화량 {Math.round(speakingTotal/60)}분</Typography>
+              <p>누적 발화량 {Math.round(speakingTotal / 60)}분</p>
             </Grid>
           </Grid>
         </Box>

@@ -13,7 +13,7 @@ function SocialLogin() {
   };
 
   return (
-    <Box sx={{ width: "80%" }}>
+    <Box sx={{ width: "80%", fontFamily: "Noto Sans KR"  }}>
       <h5
         css={css`
           font-size: 20px;
@@ -33,6 +33,7 @@ function SocialLogin() {
           borderRadius: 0,
           fontSize: "18px",
           fontWeight: "bold",
+          fontFamily: "Noto Sans KR",
           "&:hover": {
             backgroundColor: "#67C73A",
           },

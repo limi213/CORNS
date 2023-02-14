@@ -38,6 +38,9 @@ function SubjectBtn({ subject, reset }) {
           mr: "32px",
           border: "3px solid #111",
           borderRadius: "0",
+          fontFamily: "Noto Sans KR",
+          fontSize: "16px",
+          fontWeight: "bold",
           color: "#111",
           backgroundColor: toggle ? "#98DA7A" : "#ddd",
           "&:hover": {

@@ -20,7 +20,8 @@ function Log() {
   return (
     <>
       <h2>쫑알로그</h2>
-      <LogFilter />
+      
+      <LogFilter/>
 
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">

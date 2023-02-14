@@ -5,7 +5,8 @@ import SearchComp from "components/GlobalComponents/SearchComp";
 import UserList from "components/Community/UserList";
 
 import Box from "@mui/material/Box";
-
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
 function SearchUser() {
   const [type, setType] = useState("nickname");
@@ -32,7 +33,7 @@ function SearchUser() {
 
   return (
     <>
-      <h2>유저 검색</h2>
+      <h2 css={css`margin-bottom: 60px`}>유저 검색</h2>
       <SearchComp
         type={type}
         setType={setType}

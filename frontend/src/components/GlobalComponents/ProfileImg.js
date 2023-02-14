@@ -47,7 +47,6 @@ function ProfileImg({ imgSrc, nickname, width }) {
         borderRadius: "200px",
         border: "2px solid #111",
         backgroundColor: "white",
-        // backgroundImage: `url(${imgSrc})`,
       }}
     >
       {image()}

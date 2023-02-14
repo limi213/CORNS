@@ -37,9 +37,18 @@ function FriendBtnThree({ fromId, toId, setRelation }) {
   return (
     <Button
       sx={{
-        border: "3px solid #111",
-        color: "#111111",
         backgroundColor: "#FFC804",
+        color: "black",
+        border: "2px solid #111",
+        width: "30%",
+        height: "50px",
+        borderRadius: "0",
+        fontWeight: "bold",
+        fontSize: "18px",
+        fontFamily: "Noto Sans KR",
+        "&:hover": {
+          backgroundColor: "#FFD704",
+        },
       }}
       onClick={() => deleteHandler(fromId, toId)}
     >

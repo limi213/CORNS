@@ -115,11 +115,18 @@ function InvitationItem({ inviteNo, user, room, setInviteList }) {
       <Box sx={{ ml: "90px", width: "90px" }}>
         <Button
           sx={{
-            border: "2px solid #111",
-            color: "#111111",
             backgroundColor: "#FFC804",
-            width: "82px",
-            height: "38px",
+            color: "black",
+            border: "2px solid #111",
+            width: "90px",
+            height: "45px",
+            borderRadius: "0",
+            fontWeight: "bold",
+            fontSize: "16px",
+            fontFamily: "Noto Sans KR",
+            "&:hover": {
+              backgroundColor: "#FFD704",
+            },
           }}
           onClick={() => enterRoom(roomNo)}
         >

@@ -103,15 +103,15 @@ function ChangeProfile() {
     <>
       <h2>회원 수정</h2>
 
-      <Box sx={{ fontSize: "18px" }}>
+      <Box sx={{ fontSize: "20px" }}>
         <Box>
           <h5>아이디</h5>
-          <p>{sessionStorage.getItem("userId")}</p>
+          <p css={css`font-size: 16px; margin-bottom: 40px;`}>{sessionStorage.getItem("userId")}</p>
         </Box>
 
         <Box>
           <h5>이메일</h5>
-          <p>{sessionStorage.getItem("email")}</p>
+          <p css={css`font-size: 16px; margin-bottom: 40px;`}>{sessionStorage.getItem("email")}</p>
         </Box>
 
         <Box>
@@ -172,9 +172,18 @@ function ChangeProfile() {
 
             <Button
               sx={{
-                border: "3px solid #111",
-                color: "#111111",
                 backgroundColor: "#FFC804",
+                color: "black",
+                border: "2px solid #111",
+                width: "30%",
+                height: "50px",
+                borderRadius: "0",
+                fontWeight: "bold",
+                fontSize: "15px",
+                fontFamily: "Noto Sans KR",
+                "&:hover": {
+                  backgroundColor: "#FFD704",
+                },
               }}
               onClick={handleClick}
             >
@@ -194,11 +203,19 @@ function ChangeProfile() {
 
         <Button
           sx={{
-            border: "3px solid #111",
-            color: "#111111",
             backgroundColor: "#FFC804",
+            color: "black",
+            border: "2px solid #111",
             width: "10%",
-            mt: "5%",
+            mt: "3%",
+            height: "50px",
+            borderRadius: "0",
+            fontWeight: "bold",
+            fontSize: "15px",
+            fontFamily: "Noto Sans KR",
+            "&:hover": {
+              backgroundColor: "#FFD704",
+            },
           }}
           onClick={submitHandler}
         >

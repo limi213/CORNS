@@ -92,6 +92,8 @@ function LogFilter() {
         backgroundColor: "#FFD704",
         p: "32px",
         display: "flex",
+        margin: "30px 0",
+        fontFamily: "Noto Sans KR",
       }}
     >
       <Box
@@ -141,7 +143,7 @@ function LogFilter() {
         </Box>
 
         {/* 시간 */}
-        <Box sx={{ mb: "48px" }}>
+        <Box sx={{ mb: "48px", fontFamily: "Noto Sans KR" }}>
           <span
             css={css`
               margin-right: 1rem;
@@ -186,6 +188,7 @@ function LogFilter() {
               border: "3px solid #111",
               borderRadius: 0,
               backgroundColor: "#3C90F2",
+              fontFamily: "Noto Sans KR",
               color: "#111",
               "&:hover": {
                 backgroundColor: "#7DB6FA",
@@ -251,44 +254,7 @@ function LogFilter() {
               onChange={getThumb}
             />
           </span>
-
-          {/* <span>
-          <select
-            id="user-selection"
-            onChange={(e) => console.log(e.target.value)}
-            css={css`
-              width: 20vw;
-              height: 45px;
-              box-sizing: border-box;
-              border: 3px solid #111;
-              border-radius: 0;
-            `}
-          >
-            <option value="2">전체</option>
-            <option value="1">있음</option>
-            <option value="0">없음</option>
-          </select>
-        </span> */}
-          {/* <FormControlLabel control={<Checkbox />} label="있음" />
-        <FormControlLabel control={<Checkbox />} label="없음" /> */}
         </Box>
-
-        {/* <Box sx={{ display: "flex", flexDirection: "row-reverse" }}>
-        <Button
-          variant="contained"
-          sx={{
-            border: "3px solid #111",
-            borderRadius: "0",
-            backgroundColor: "#3C90F2",
-            color: "#111",
-            "&:hover": {
-              backgroundColor: "#1766C3",
-            },
-          }}
-        >
-          전체해제
-        </Button>
-      </Box> */}
       </Box>
     </Box>
   );

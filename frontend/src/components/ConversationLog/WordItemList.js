@@ -78,8 +78,16 @@ function WordListItem({
             }}
           />
         </ListItemIcon>
-        <ListItemText primary={`${item.wordEng}`} sx={{ width: "50%" }} />
-        <ListItemText primary={`${item.wordKor}`} sx={{ width: "50%" }} />
+        <ListItemText
+          primary={`${item.wordEng}`}
+          sx={{ width: "50%" }}
+          primaryTypographyProps={{ sx: {fontFamily: "Noto Sans KR"}}}
+        />
+        <ListItemText
+          primary={`${item.wordKor}`}
+          sx={{ width: "50%" }}
+          primaryTypographyProps={{ sx: {fontFamily: "Noto Sans KR"}}}
+        />
         <ListItemIcon></ListItemIcon>
       </ListItemButton>
     </ListItem>

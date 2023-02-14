@@ -48,7 +48,7 @@ function SigninCard({ checked1, checked2 }) {
       );
       if (response.status === 200) {
         // 홈페이지 이동
-        window.location.href = "/";
+        window.location.href = "/login";
         alert("회원가입이 완료되었습니다.");
       }
     } catch (e) {
@@ -110,6 +110,7 @@ function SigninCard({ checked1, checked2 }) {
           width: "240px",
           height: "60px",
           backgroundColor: "#FFC804",
+          fontFamily: "Noto sans KR",
           fontSize: "16px",
           fontWeight: "bold",
           border: "3px solid #111",

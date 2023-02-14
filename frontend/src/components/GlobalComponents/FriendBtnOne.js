@@ -7,8 +7,15 @@ function FriendBtnOne () {
   return (
     <Button
       sx={{
-        border: "3px solid #111",
         backgroundColor: "#3C90F2",
+        color: "white",
+        border: "2px solid #111",
+        width: "30%",
+        height: "50px",
+        borderRadius: "0",
+        fontWeight: "bold",
+        fontSize: "18px",
+        fontFamily: "Noto Sans KR",
       }}
       disabled
     >

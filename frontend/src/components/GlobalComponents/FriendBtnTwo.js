@@ -72,16 +72,24 @@ function FriendBtnTwo({ fromId, toId, setRelation }) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        gap: "10px",
+        gap: "5%",
+        width: "100%"
       }}
     >
       <Button
         sx={{
-          border: "3px solid #111",
-          color: "#111111",
           backgroundColor: "#FFC804",
-          width: "82px",
-          height: "38px",
+          color: "white",
+          border: "2px solid #111",
+          width: "20%",
+          height: "50px",
+          borderRadius: "0",
+          fontWeight: "bold",
+          fontSize: "18px",
+          fontFamily: "Noto Sans KR",
+          "&:hover": {
+            backgroundColor: "#FFD704",
+          },
         }}
         onClick={() => acceptHandler(fromId, toId)}
       >
@@ -90,10 +98,18 @@ function FriendBtnTwo({ fromId, toId, setRelation }) {
 
       <Button
         sx={{
-          border: "3px solid #111",
-          color: "#111111",
-          width: "82px",
-          height: "38px",
+          backgroundColor: "#024A9E",
+          color: "white",
+          border: "2px solid #111",
+          width: "20%",
+          height: "50px",
+          borderRadius: "0",
+          fontWeight: "bold",
+          fontSize: "18px",
+          fontFamily: "Noto Sans KR",
+          "&:hover": {
+            backgroundColor: "#1766C3",
+          },
         }}
         onClick={() => rejectHandler(fromId, toId)}
       >

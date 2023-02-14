@@ -5,7 +5,7 @@ import { Box, Card, CardContent, CardMedia } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-function UserCard({ nickname, level, id }) {
+function UserCard({ nickname, level, id, imgUrl }) {
   return (
     <>
       <Card
@@ -20,6 +20,7 @@ function UserCard({ nickname, level, id }) {
           boxSizing: "border-box",
         }}
       >
+        
         <CardMedia
           component="img"
           sx={{
@@ -28,9 +29,11 @@ function UserCard({ nickname, level, id }) {
             borderRadius: "200px",
             border: "15px solid white",
           }}
-          image="https://i.pinimg.com/564x/af/7b/de/af7bde50489a2cb932a98741b877704b.jpg"
-          alt="Live from space album cover"
+          image={imgUrl}
+          alt={nickname}
         />
+
+        
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <CardContent sx={{ flex: "1 0 auto", ml: "32px" }}>
             <p

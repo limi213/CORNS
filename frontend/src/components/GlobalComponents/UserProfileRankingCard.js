@@ -4,7 +4,7 @@ import sungsil_crown from "assets/sungsil_crown.png";
 import ddabong_crown from "assets/ddabong_crown.png";
 import suda_crown from "assets/suda_crown.png";
 import ingi_crown from "assets/ingi_crown.png";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -36,22 +36,23 @@ function UserProfileRankingCard({ rank }) {
 
   return (
     <Grid item xs={3}>
-      <Box sx={{ border: "3px solid #111", mr: "1.5rem" }}>
+      <Box sx={{ border: "3px solid #111", mr: "1.5rem", pt: "0.5rem" }}>
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            mt: "1rem",
+            gap: "0.5rem"
           }}
         >
           <img src={crown} alt={rankCd} />
-          <Typography>{transKorean}왕</Typography>
+          <p css={css`font-weight: bold; font-size: 18px`}>{transKorean}왕</p>
         </Box>
         {(ranking > 0 && ranking < 101) ? (
           <p
             css={css`
               text-align: center;
+              font-weight: bold;
             `}
           >
             {ranking} 위
@@ -60,6 +61,7 @@ function UserProfileRankingCard({ rank }) {
           <p
             css={css`
               text-align: center;
+              font-weight: bold;
             `}
           >
             랭크되지 못했어요
@@ -69,6 +71,7 @@ function UserProfileRankingCard({ rank }) {
         <p
           css={css`
             text-align: center;
+            font-weight: bold;
           `}
         >
           {(rankCd === 2001) ? Math.round(value/60) : value} {unit}

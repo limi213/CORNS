@@ -82,6 +82,7 @@ function SigninEmail({ email, setEmail, stateEmail, setStateEmail }) {
             width: "120px",
             backgroundColor: "#FFC804",
             fontWeight: "bold",
+            fontFamily: "Noto Sans KR",
             color: "#111111",
             border: "3px solid #111",
             borderRadius: "0",

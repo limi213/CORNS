@@ -126,9 +126,14 @@ function Withdrawl() {
             <Button
               sx={{
                 backgroundColor: "#F6F6F6",
-                color: "#111111",
-                width: "139px",
-                border: "3px solid #111", 
+                color: "black",
+                border: "2px solid #111",
+                width: "10%",
+                height: "50px",
+                borderRadius: "0",
+                fontWeight: "bold",
+                fontSize: "15px",
+                fontFamily: "Noto Sans KR",
               }}
               onClick={onSubmit}
             >

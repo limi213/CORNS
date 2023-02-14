@@ -14,9 +14,18 @@ function FriendBtnZero({fromId, toId, setRelation}) {
     <>
       <Button
         sx={{
-          border: "3px solid #111",
-          color: "#111111",
           backgroundColor: "#67C73A",
+          color: "black",
+          border: "2px solid #111",
+          width: "30%",
+          height: "50px",
+          borderRadius: "0",
+          fontWeight: "bold",
+          fontSize: "18px",
+          fontFamily: "Noto Sans KR",
+          "&:hover": {
+            backgroundColor: "#98DA7A",
+          },
         }}
         onClick={handleOpenForm}
       >

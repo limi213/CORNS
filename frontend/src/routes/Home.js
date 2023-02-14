@@ -84,6 +84,8 @@ function Home() {
                   color: "#111",
                   textDecoration: "none",
                   fontSize: "18px",
+                  fontFamily: "Noto Sans KR",
+
                 }}
               >
                 튜토리얼 보기

@@ -63,7 +63,7 @@ function LoginCard() {
         />
       </NavLink>
 
-      <Box sx={{ width: "80%" }}>
+      <Box sx={{ width: "80%", fontFamily: "Noto Sans KR" }}>
         <h5
           css={css`
             font-size: 20px;
@@ -85,7 +85,7 @@ function LoginCard() {
         />
       </Box>
 
-      <Box sx={{ width: "80%" }}>
+      <Box sx={{ width: "80%", fontFamily: "Noto Sans KR"  }}>
         <h5
           css={css`
             font-size: 20px;
@@ -135,6 +135,7 @@ function LoginCard() {
           boxSizing: "border-box",
           borderRadius: "0",
           fontWeight: "bold",
+          fontFamily: "Noto Sans KR",
           fontSize: "20px",
           "&:hover": {
             backgroundColor: "#1766C3",

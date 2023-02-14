@@ -20,11 +20,12 @@ function MyProfile() {
     const userInfo = data.user;
 
     return (
-      <Box sx={{ border: "3px solid #111", p: "32px 0 200px" }}>
-        <Typography variant="h5" sx={{ ml: "32px" }}>
-          내 정보
-        </Typography>
+      <Box sx={{ border: "3px solid #111", p:"10px 32px 32px 32px" }}>
+      
+        <h2>내정보</h2>
+      
         <UserProfile user={userInfo} rankingList={userInfo.rank} />
+      
       </Box>
     );
   } else {

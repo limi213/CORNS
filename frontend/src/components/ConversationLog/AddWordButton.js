@@ -36,6 +36,7 @@ function AddWordButton({ setBaseTime, reload, setReload }) {
     border: "3px solid #111",
     boxShadow: 24,
     p: "32px 0 200px",
+    fontFamily: "Noto Sans KR",
   };
 
   const clickedSubmitButton = async () => {
@@ -94,6 +95,7 @@ function AddWordButton({ setBaseTime, reload, setReload }) {
           border: "3px solid #111",
           borderRadius: "0",
           backgroundColor: "#3C90F2",
+          fontFamily: "Noto Sans KR",
           color: "#111",
           "&:hover": {
             backgroundColor: "#1766C3",
@@ -111,7 +113,10 @@ function AddWordButton({ setBaseTime, reload, setReload }) {
       >
         <Box sx={style}>
           <Box sx={{ display: "flex", width: "100%", mr: "10%", mb: "5%" }}>
-            <Typography variant="h5" sx={{ ml: "32px" }}>
+            <Typography
+              variant="h5"
+              sx={{ ml: "32px", fontFamily: "Noto Sans KR" }}
+            >
               단어 등록
             </Typography>
             <XSquare
@@ -181,6 +186,7 @@ function AddWordButton({ setBaseTime, reload, setReload }) {
                 border: "3px solid #111",
                 borderRadius: "0",
                 backgroundColor: "#3C90F2",
+                fontFamily: "Noto Sans KR",
                 color: "#111",
                 "&:hover": {
                   backgroundColor: "#1766C3",

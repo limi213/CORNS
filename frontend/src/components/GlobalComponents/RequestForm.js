@@ -73,26 +73,32 @@ function RequestForm({ fromId, toId, handleCloseForm, setRelation }) {
 
       <TextField
         multiline
-        rows={8}
+        rows={7}
         sx={{
           width: "70%",
           backgroundColor: "white",
           border: "3px solid #111",
-          mt: "10px",
         }}
         value={text}
-        inputProps={{ maxLength: 100 }}
+        inputProps={{ maxLength: 100, sx: { fontFamily: "Noto Sans KR", fontSize: "18px" } }}
         onChange={onChange}
       />
 
       <Button
         sx={{
           backgroundColor: "#FFC804",
-          border: "3px solid #111",
-          color: "#111111",
-          margin: "30px 0 35px 0",
+          color: "black",
+          border: "2px solid #111",
+          m: "30px 0",
           width: "30%",
           height: "30%",
+          borderRadius: "0",
+          fontWeight: "bold",
+          fontSize: "16px",
+          fontFamily: "Noto Sans KR",
+          "&:hover": {
+            backgroundColor: "#FFD704",
+          },
         }}
         onClick={() =>
           sendFriend(fromId, toId, text, setRelation, handleCloseForm)

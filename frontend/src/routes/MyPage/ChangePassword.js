@@ -67,7 +67,7 @@ function ChangePassword() {
         password: nowPassword,
         newPassword: password1,
       },
-      validateStatus: [200, 401, 403]
+      validateStatus: [200, 401, 403],
     });
   };
 
@@ -78,7 +78,7 @@ function ChangePassword() {
       setPassword1("");
       setPassword2("");
     } else if (status === 403) {
-      alert("틀린 비밀번호입니다.")
+      alert("틀린 비밀번호입니다.");
     }
   }, [status]);
 
@@ -161,11 +161,19 @@ function ChangePassword() {
 
         <Button
           sx={{
-            border: "3px solid #111",
-            color: "#111111",
             backgroundColor: "#FFC804",
+            color: "black",
+            border: "2px solid #111",
             width: "10%",
-            mt: "5%",
+            mt: "3%",
+            height: "50px",
+            borderRadius: "0",
+            fontWeight: "bold",
+            fontSize: "15px",
+            fontFamily: "Noto Sans KR",
+            "&:hover": {
+              backgroundColor: "#FFD704",
+            },
           }}
           onClick={onSubmit}
         >
