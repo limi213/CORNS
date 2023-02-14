@@ -864,6 +864,7 @@ function makeOrIntoRoom(){
 			data : JSON.stringify(makeroomdata),
 			success: function(data, textStatus, xhr) {
 				jRoomNo = data.room.room.roomNo;
+				$("#jRoomNo").val(jRoomNo);
 				initRoomInfo();
 				console.log("방 만들기");
 				console.log(data);

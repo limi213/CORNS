@@ -73,10 +73,11 @@ function inviteFriend(toUserId){
         "roomNo": jRoomNo,
         "toUserId": toUserId
       };
+      console.log( JSON.stringify(inviteData))
 
     $.ajax({
         type : "POST",
-        url : serverUrl + "/invitation",    
+        url : serverUrl + "invitation",    
         headers: { "Content-Type": "application/json",
                     "Authorization" : "Basic " + accessToken,
                     "Access-Control-Allow-Credentials" : "true"},    
@@ -84,7 +85,6 @@ function inviteFriend(toUserId){
         data : JSON.stringify(inviteData),
         success: function(data, textStatus, xhr) {
             
-            console.log( JSON.stringify(inviteData))
             console.log(xhr)
             if(xhr.status === 200){
                 alert("친구를 초대했습니다.");

@@ -177,19 +177,14 @@
 
         let accessToken= urlParams.get("accessToken");
 
-        //삭제예정
-        $("#userId").val(userid);
-        $("#accessToken").val(accessToken);
-        //삭제예정
-
         if(isNull(accessToken) || isNull(session)){
-          // alert("잘못된 접근입니다.");
-          // if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
-          //   window.location.href = "https://localhost:3000/conversation";
-          // }
-          // else{
-          //   window.location.href = "https://corns.co.kr:4438/conversation";
-          // }
+          alert("잘못된 접근입니다.");
+          if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
+            window.location.href = "https://localhost:3000/conversation";
+          }
+          else{
+            window.location.href = "https://corns.co.kr:4438/conversation";
+          }
         }
         else{
           // 이슈 없이 커넥션이랑 세션 다 들어옴!
