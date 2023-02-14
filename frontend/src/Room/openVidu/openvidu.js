@@ -225,17 +225,9 @@ function joinSession() {
 		}
 		//채팅
 		else{
-			if(event.data.includes(myUserName + " : ")){
-				// 내 메시지
-				var c_html = `<div><div style="float:right; margin:10px; ">` + event.data + `</div><div>`;
-				$("#roomViewChattingReceive").append(c_html);
-				
-			}
-			else{
-				// 남의 메시지
-				var o_html = `<div style="float:left; margin:10px;">` + event.data + `</div>`;
-				$("#roomViewChattingReceive").append(o_html);
-			}
+			//width:80%; margin:10px;
+			var o_html = `<div style="width:80%; margin:10px;">` + event.data + `</div>`;
+			$("#roomViewChattingReceive").append(o_html);
 		}
 		
 	});
@@ -458,12 +450,17 @@ function outRoom(rUserId){	// 떠나는 사람 방 번호 받는다.
 			else{
 				window.location.href = "https://corns.co.kr:4438/conversation";
 			}
-		
 		},
 		error:function(request,status,error){
 			console.log(request);
 			console.log(status);
 			console.log(error);
+			if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
+				window.location.href = "https://localhost:3000/conversation";
+			}
+			else{
+				window.location.href = "https://corns.co.kr:4438/conversation";
+			}
 		}
 	});
 }
