@@ -1,12 +1,11 @@
 import React from "react";
 
 import Navbar from "components/GlobalComponents/Navbar";
-import IsLogin from 'auth/IsLogin';
+import IsLogin from "auth/IsLogin";
 
 import LogInUserArea from "components/Conversation/LogInUserArea";
 import ConversationRoomFilter from "components/Conversation/ConversationRoomFilter";
 import RoomCreateModal from "components/Conversation/RoomCreateForm";
-import SelfEvaluationModal from "components/Conversation/SelfEvaluationModal";
 import RoomListsContainer from "store/containers/RoomListsContainer";
 
 /** @jsxImportSource @emotion/react */
@@ -32,7 +31,6 @@ function Conversation() {
         <ConversationRoomFilter />
         <RoomListsContainer />
         <RoomCreateModal />
-        <SelfEvaluationModal />
       </div>
     </div>
   );

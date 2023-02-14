@@ -1,5 +1,5 @@
 import React from "react";
-
+import IsLogin from "auth/IsLogin";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
@@ -136,7 +136,9 @@ function RoomCard({ room, subject }) {
             fontSize: "20px",
           }}
           onClick={() => {
-            window.location.href = url;
+            if (IsLogin()) {
+              window.location.href = url;
+            } else alert("로그인이 필요한 서비스입니다.");
           }}
         >
           쫑알룸 입장하기

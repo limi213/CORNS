@@ -32,37 +32,66 @@
 
 #roomViewApp {
   position: absolute;
-  border: 1px solid black;
+  border: 3px solid #111;
+  padding: 64px 32px;
   width: 1600px;
   height: 600px;
   margin: 100px;
   z-index: 100;
   background-color: white;
+  box-sizing: border-box;
 }
 
 #roomViewAppTitle {
-  font-size: 350%;
+  font-size: 48px;
   text-align: center;
+  margin-bottom: 32px;
 }
 
-#roomViewTitle {
-  margin-right: 300px;
+#roomViewAddMemberContainer {
+  width: 100%;
+  height: 80%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 24px;
+}
+
+#roomViewAppExit {
+  font-size: 32px;
+  text-align: right;
 }
 
 .roomViewAppMember {
-  border: 1px solid black;
-  width: 350px;
-  height: 500px;
-  margin: 10px;
-  margin-left: 30px;
-  float: left;
-  display: none;
+  border: 3px solid #111;
+
+  /* display: none; */
 }
 
 .roomViewAppMemberImage {
   width: 350px;
   height: 250px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   /* border: 1px solid black; */
+}
+
+.roomViewAppMemberImage > img {
+  width: 70%;
+  object-fit: contain;
+  border: 3px solid #111;
+  border-radius: 50%;
+}
+
+.roomViewAppMemberImage > span {
+  margin-top: 16px;
+  font-size: 24px;
+}
+
+.roomViewAppMember > input {
+  margin-top: 64px;
+  margin-left: 170px;
 }
 
 #video-container {

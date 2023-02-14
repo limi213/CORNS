@@ -16,13 +16,12 @@ export default function Footer() {
         transform: "translateY(-100%)",
       }}
     >
-      <h3
-        css={css`
-          text-align: center;
-        `}
-      >
-        푸터영역입니다.
-      </h3>
+      <Box>
+        <p>logo</p>
+        <p>sns아이콘</p>
+        <p>copyright</p>
+        <p>멀캠 주소</p>
+      </Box>
     </Box>
   );
 }

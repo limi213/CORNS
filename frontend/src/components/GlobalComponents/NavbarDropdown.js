@@ -16,21 +16,20 @@ function NavbarDropdown() {
     status: getFriendStatus,
     sendRequest: getFriendRequest,
   } = useAxios();
-  const { status: postFriendStatus, sendRequest: postFriendRequest } = useAxios();
+  const { status: postFriendStatus, sendRequest: postFriendRequest } =
+    useAxios();
   const [newFriend, setNewFriend] = useState(false);
 
   useEffect(() => {
     // 친구 목록 들어오면 읽었다고 보내기
     if (window.location.pathname.includes("community/friends")) {
       postFriendRequest({
-        url: `${
-          process.env.REACT_APP_HOST
-        }/notification`,
+        url: `${process.env.REACT_APP_HOST}/notification`,
         method: "PUT",
         data: {
           userId: sessionStorage.getItem("userId"),
-          read: 0
-        }
+          read: 0,
+        },
       });
       setNewFriend(false);
     }
@@ -50,28 +49,26 @@ function NavbarDropdown() {
     }
   }, [getFriendData]);
 
-
   // 초대 목록 확인
   const {
     data: getInviteData,
     status: getInviteStatus,
     sendRequest: getInviteRequest,
   } = useAxios();
-  const { status: postInviteStatus, sendRequest: postInviteRequest } = useAxios();
+  const { status: postInviteStatus, sendRequest: postInviteRequest } =
+    useAxios();
   const [newInvite, setNewInvite] = useState(false);
 
   useEffect(() => {
     // 초대 목록 들어오면 읽었다고 보내기
     if (window.location.pathname.includes("community/invitation")) {
       postInviteRequest({
-        url: `${
-          process.env.REACT_APP_HOST
-        }/notification`,
+        url: `${process.env.REACT_APP_HOST}/notification`,
         method: "PUT",
         data: {
           userId: sessionStorage.getItem("userId"),
-          read: 1
-        }
+          read: 1,
+        },
       });
       setNewInvite(false);
     }
@@ -85,14 +82,11 @@ function NavbarDropdown() {
     }
   }, [window.location.pathname]);
 
-
   useEffect(() => {
     if (getInviteStatus === 200 && getInviteData.isExist) {
       setNewInvite(true);
     }
   }, [getInviteData]);
-
-
 
   const handleClick = () => {
     setOpen(!open);
@@ -122,6 +116,8 @@ function NavbarDropdown() {
         css={css`
           list-style: none;
           background-color: white;
+          position: relative;
+          z-index: 10;
         `}
       >
         <Collapse
@@ -130,8 +126,8 @@ function NavbarDropdown() {
           unmountOnExit
           sx={{
             position: "absolute",
-            top: "50px",
-            right: "3%",
+            top: "5px",
+            right: "1%",
             backgroundColor: "white",
             border: "3px solid #111",
             width: "120px",
