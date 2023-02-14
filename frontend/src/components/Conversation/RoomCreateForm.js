@@ -51,14 +51,14 @@ export default function RoomCreateModal() {
   const [topic, setTopic] = useState("");
   const [selectTime, setSelectTime] = useState("");
   const [selectCount, setSelectCount] = useState("");
-
-  const onChangeTopic = (e) => {
-    console.log(e);
-    setTopic(e.target.value);
-  };
+  
+  const onChangeTopic=(e)=>{
+    console.log(e.target.value)
+    setTopic(e.target.value)
+  }
 
   const subjectBtn = subjects.map((item) => (
-    <MakeRoomSubjectBtn subject={item} key={item.subjectNo} />
+    <MakeRoomSubjectBtn subject={item} key={item.subjectNo} onChange={onChangeTopic} />
   ));
 
   const onChangeSelectTime = (e) => {
@@ -75,10 +75,10 @@ export default function RoomCreateModal() {
       return;
     }
 
-    // if(!topic){
-    //   alert("주제를 선택하세요");
-    //   return;
-    // }
+    if(!topic){
+      alert("주제를 선택하세요");
+      return;
+    }
 
     if (!selectTime) {
       alert("시간을 선택하세요");
@@ -91,8 +91,11 @@ export default function RoomCreateModal() {
     }
 
     // makeRoom(subject, topic, selectTime, selectCount);
-    makeRoom(subject, "2", selectTime, selectCount);
-  };
+    makeRoom(subject, topic, selectTime, selectCount);
+
+  }
+  
+
 
   return (
     <div>
