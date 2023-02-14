@@ -67,6 +67,7 @@ public class ConversationLogServiceImpl implements ConversationLogService {
                                             .startTime(room.getStartTm().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                                             .time(room.getTime())
                                             .member(room.getCurrentMember())
+                                            .scriptUrl(room.getScriptUrl())
                                             .selfScore(selfEvaluation.getScore())
                                             .selfDesc(selfEvaluation.getDescription())
                                             .thumbCnt(roomUser.getThumbCnt())

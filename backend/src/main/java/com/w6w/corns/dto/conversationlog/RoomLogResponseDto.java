@@ -15,6 +15,7 @@ public class RoomLogResponseDto {
     private String startTime;
     private int time;
     private int member;
+    private String scriptUrl;
     private int selfScore;
     private String selfDesc;
     private int thumbCnt;
