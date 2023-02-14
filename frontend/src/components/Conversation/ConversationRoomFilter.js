@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { useDispatch } from "react-redux";
-import SubjectsContainer from "store/containers/SubjectsContainer";
+import RoomSubjectsContainer from "store/containers/RoomSubjectsContainer";
 import {
   modifyMinTime,
   modifyMaxTime,
@@ -68,7 +68,7 @@ function ConversationRoomFilter() {
           >
             주제
           </span>
-          <SubjectsContainer />
+          <RoomSubjectsContainer />
         </Box>
 
         <Box sx={{ mb: "48px" }}>
