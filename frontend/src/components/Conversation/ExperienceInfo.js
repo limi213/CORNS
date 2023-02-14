@@ -6,6 +6,8 @@ import ExpInfo from "../../components/Conversation/ExpInfo";
 import Box from "@mui/material/Box";
 import useAxios from "auth/useAxios";
 // import { getExpProgressBar } from "store/reducers/expProgressBarReducer";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
 function ExperienceInfo({}) {
   const { data, status, isLoading, sendRequest } = useAxios();
@@ -35,20 +37,29 @@ function ExperienceInfo({}) {
     }
 
     return (
-      <>
-        <h5>경험치</h5>
+      <div>
+        <p
+          css={css`
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+          `}
+        >
+          경험치
+        </p>
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-around",
             alignItems: "center",
+            my: "1.5rem",
           }}
         >
           <ExpInfo level={levelNo} exp={startExp} />
           <ProgressBar percent={expPercent} color={"#FFC804"} />
           <ExpInfo level={levelNo + 1} exp={endExp} />
         </Box>
-      </>
+      </div>
     );
   } else {
     return <p>loading 중...</p>;

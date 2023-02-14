@@ -24,13 +24,22 @@ function AttendanceInfo({}) {
 
   if (!isLoading && status === 200) {
     return (
-      <>
-        <h5>이번달 출석률</h5>
+      <div>
+        <p
+          css={css`
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+          `}
+        >
+          이번달 출석률
+        </p>
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-around",
             alignItems: "center",
+            my: "1.5rem",
           }}
         >
           <Box
@@ -75,7 +84,7 @@ function AttendanceInfo({}) {
             </p>
           </Box>
         </Box>
-      </>
+      </div>
     );
   } else {
     return <p>loading 중...</p>;
