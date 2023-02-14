@@ -12,7 +12,6 @@ import Signin from "routes/SignIn";
 import Mypage from "routes/MyPage/MyPage";
 import Room from "routes/Room/Room";
 import ResultEvolution from "routes/ResultEvolution"
-import InvitationList from "routes/InvitationList";
 import NotFound from "routes/NotFound";
 import TopBtn from "components/GlobalComponents/TopBtn";
 
@@ -31,7 +30,6 @@ function App() {
         <AuthRoute path="/mypage" component={Mypage} />
         <AuthRoute path="/room" component={Room} />
         <AuthRoute exact path="/resultEvolution/:roomNo" component={ResultEvolution} />
-        <AuthRoute exact path="/invitationList" component={InvitationList} />
         <Route exact path="/NotFound" component={NotFound} />
         <Redirect to="/NotFound" />
       </Switch>

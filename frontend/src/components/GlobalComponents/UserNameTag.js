@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import UserProfileModal from "components/GlobalComponents/UserProfileModal";
 import { Box, Modal } from "@mui/material";
 
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
 function UserNameTag({ nickname, userId }) {
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
@@ -15,7 +18,7 @@ function UserNameTag({ nickname, userId }) {
           cursor: "pointer",
         }}
       >
-        {nickname}#{userId}
+        <span css={css`font-weight: bold;`}>{nickname}</span> #{userId}
       </Box>
 
       <Modal open={openModal} onClose={handleCloseModal}>

@@ -4,8 +4,8 @@ import Sidebar from "../../components/GlobalComponents/Sidebar";
 import Friends from "./Friends";
 import Ranking from "./Ranking";
 import SearchUser from "./SearchUser";
+import Invitation from "./Invitation";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -15,6 +15,7 @@ function Community() {
     { name: "알맹이랭킹", route: "/community/ranking/sincerity" },
     { name: "유저검색", route: "/community/searchUser" },
     { name: "친구", route: "/community/friends" },
+    { name: "초대목록", route: "/community/invitation" },
   ];
 
   return (
@@ -45,6 +46,8 @@ function Community() {
                 component={SearchUser}
               />
               <Route exact path="/community/friends" component={Friends} />
+
+              <Route exact path="/community/invitation" component={Invitation} />
               
               <Redirect to="/NotFound" />
             </Switch>
