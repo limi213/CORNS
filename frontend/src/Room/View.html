@@ -142,6 +142,16 @@
       
     </body>
     <script type="text/javascript">
+      
+      function isNull(value){
+        if( value == "null" || value == "" || value == null || value == undefined || 
+        ( value != null && typeof value == "object" && !Object.keys(value).length ) ){
+          return true;
+        }
+
+        return false; // null 아니면 false
+      }
+
       $(document).ready(function(){
         // 시작부분
         // 파라미터에서 세션값, 자기 연결값 가져오기
@@ -159,12 +169,16 @@
 				let time = urlParams.get('time');
 				let count = urlParams.get('count');
 
-          let accessToken= urlParams.get("accessToken");
-        
-        if(!session ){
+        let accessToken= urlParams.get("accessToken");
+
+        if(isNull(accessToken) || isNull(session)){
           alert("잘못된 접근입니다.");
-          
-          // 하고 여기서 다시 방 리스트로 보낸다.
+          if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
+            window.location.href = "https://localhost:3000/conversation";
+          }
+          else{
+            window.location.href = "https://corns.co.kr:4438/conversation";
+          }
         }
         else{
           // 이슈 없이 커넥션이랑 세션 다 들어옴!
