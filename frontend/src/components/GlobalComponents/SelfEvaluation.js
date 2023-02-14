@@ -2,11 +2,25 @@ import React from "react";
 
 import SelfEvaluationInput from "./SelfEvaluationInput";
 import { Box, Typography } from "@mui/material";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
-export default function SelfEvaluation({roomNo, selfScore=0, selfDesc=""}) {
+export default function SelfEvaluation({
+  roomNo,
+  selfScore = 0,
+  selfDesc = "",
+}) {
   return (
     <>
-      <Typography variant="h5">자기평가</Typography>
+      <p
+        css={css`
+          font-size: 24px;
+          margin: 0;
+        `}
+      >
+        자기평가
+      </p>
+
       <Box
         sx={{
           display: "flex",
@@ -14,7 +28,11 @@ export default function SelfEvaluation({roomNo, selfScore=0, selfDesc=""}) {
           alignItems: "center",
         }}
       >
-        <SelfEvaluationInput roomNo={roomNo} selfScore={selfScore} selfDesc={selfDesc} />
+        <SelfEvaluationInput
+          roomNo={roomNo}
+          selfScore={selfScore}
+          selfDesc={selfDesc}
+        />
       </Box>
     </>
   );

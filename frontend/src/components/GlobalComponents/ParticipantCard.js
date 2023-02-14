@@ -1,16 +1,18 @@
 import React from "react";
 
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
+import { Box, Card, Typography } from "@mui/material";
+
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
+import ProfileImg from "./ProfileImg";
 import { HandThumbsUp } from "react-bootstrap-icons";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-function ParticipantCard({ participant }) {
-  const { img_url, nickname, user_id, thumbs, ignition, script } = participant;
+function ParticipantCard({ participant, myId }) {
+  const { imgUrl, nickname, scriptUrl, speaking, thumbCnt, userId } =
+    participant;
+
   return (
     <>
       <Card
@@ -23,10 +25,11 @@ function ParticipantCard({ participant }) {
           height: "340px",
           padding: "24px 0 18px",
           boxSizing: "border-box",
-          backgroundColor: "#fff",
+          backgroundColor: myId == userId ? "#FFB800" : "#fff",
+          borderRadius: 0,
         }}
       >
-        <CardMedia
+        {/* <CardMedia
           component="img"
           sx={{
             height: "197px",
@@ -34,12 +37,13 @@ function ParticipantCard({ participant }) {
             borderRadius: "200px",
             border: "3px solid #111",
           }}
-          image={img_url}
-          alt="Live from space album cover"
-        />
+          image={imgUrl}
+          alt="user-image"
+        /> */}
+        <ProfileImg imgSrc={imgUrl} width={200} />
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Typography component="div" sx={{ fontSize: 18, p: "16px" }}>
-            {nickname}#{user_id}
+            {nickname}#{userId}
           </Typography>
         </Box>
         <Box
@@ -58,7 +62,7 @@ function ParticipantCard({ participant }) {
               margin-right: 8px;
             `}
           />
-          <span>{thumbs}</span>
+          <span>{thumbCnt}</span>
         </Box>
       </Card>
     </>
