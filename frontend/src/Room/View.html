@@ -23,6 +23,7 @@
       <link rel="stylesheet" href="contents/css/roomStyle.css">
       <script src="openVidu/openvidu.js"></script>
       <script src="contents/js/invite.js"></script>
+      <script src="contents/js/papago.js"></script>
     </head>
     <body>
       <button id="startSttttt" style="display:none"></button>
@@ -41,9 +42,9 @@
           <span id="roomViewAddMember" onclick="openInvite()"><i class="fa-solid fa-user-plus"></i></span>
         </div>
         <!-- 평가 -->
-        <div id="roomViewApp" style="display: none;">
+        <div id="roomViewApp" style="display:none">
           <div id="roomViewAppExit">
-            <i class="fa-regular fa-rectangle-xmark" ></i>
+            <i id="closeRoomViewApp" class="fa-regular fa-rectangle-xmark" onclick="goToEvolution()"></i>
           </div>
           <div id="roomViewAppTitle">이번 대화에서 따봉 멤버를 뽑아주세요!</div> <span id="roomViewAppTimer"></span>
           <div id="roomViewAddMemberContainer">
@@ -78,27 +79,26 @@
           </div>
         </div>
         <!-- 채팅창 -->
-        <div id="roomViewChatting">
+        <div id="roomViewChatting" style="display:none">
           <div id="roomViewChattingReceive">
           </div>
           <div id="roomViewChattingSend">
             <input id="roomViewChattingSendMessage" type="text" onkeyup="onKeyUpChatting()"/>
-            <a id="roomViewChattingSendButton" onclick="sendChatting()"><i class="fa-regular fa-paper-plane"></i></a>    
-            <!-- <div id="roomViewChattingSendMessage">
-            </div> -->
+            <a id="roomViewChattingSendButton" onclick="sendChatting()"><i class="fa-regular fa-paper-plane"></i></a>
           </div>
-            <!-- <input></input>
-            <button>
-              <img src="/image/chat.svg" />
-            </button> -->
           </label>
-          <!-- <div id="roomViewChattingSend">
-            <input type="text" class="form-control" placeholder="Your Email">
-            <span class="input-group-text">전송</span>
-          </div> -->
         </div>
-        <div id="roomViewTranslation" style="display:none">
-          <div id="roomViewTranslationDo"></div>
+        <div id="roomViewTranslation" >
+          <div id="roomViewTranslationDo">
+            <span id="roomViewTranslationSource" class="roomViewTranslationLang" >영어</span>
+            <input  type="hidden" id="roomViewTranslationSourceValue" value="en" />
+            <button onclick="changeTranslationLang()"><-></button>
+            <span id="roomViewTranslationTarget" class="roomViewTranslationLang" >한국어</span>
+            <input  type="hidden" id="roomViewTranslationTargetValue" value="ko" />
+            <textarea id="roomViewTranslationText"></textarea>
+            <button onclick="papago()">번역</button><br>
+            <span id="roomViewTranslationResult"></span>
+          </div>
           <div id="roomViewTranslationSave">
             <div id="roomViewTranslationSaveWord">
               <div>WORD</div>
@@ -178,13 +178,13 @@
         let accessToken= urlParams.get("accessToken");
 
         if(isNull(accessToken) || isNull(session)){
-          alert("잘못된 접근입니다.");
-          if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
-            window.location.href = "https://localhost:3000/conversation";
-          }
-          else{
-            window.location.href = "https://corns.co.kr:4438/conversation";
-          }
+          // alert("잘못된 접근입니다.");
+          // if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
+          //   window.location.href = "https://localhost:3000/conversation";
+          // }
+          // else{
+          //   window.location.href = "https://corns.co.kr:4438/conversation";
+          // }
         }
         else{
           // 이슈 없이 커넥션이랑 세션 다 들어옴!

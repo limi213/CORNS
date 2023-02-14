@@ -234,6 +234,10 @@ function joinSession() {
 
 }
 
+function goToEvolution(){
+	window.location.href = "https://corns.co.kr:4438/resultEvolution/" + jRoomNo;;
+}
+
 function setMember(){
 	// 따봉뽑기 창 열자!
 	$("#roomViewApp").css("display","block");
@@ -301,13 +305,15 @@ function setMember(){
 							}
 						});
 					}
+
+					// alert("https://localhost:3000/resultEvolution/" + jRoomNo)
 					
 					// 페이지 이동!
 					if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
-						window.location.href = "https://localhost:3000";	// 원하는 매개변수 넘길 예정~
+						window.location.href = "https://localhost:3000/resultEvolution/" + jRoomNo;	// 원하는 매개변수 넘길 예정~
 					}
 					else{
-						window.location.href = "https://corns.co.kr:3000";	// 원하는 매개변수 넘길 예정~
+						window.location.href = "https://corns.co.kr:4438/resultEvolution/" + jRoomNo;	// 원하는 매개변수 넘길 예정~
 					}
 				}
 			}, 1000);
@@ -444,23 +450,11 @@ function outRoom(rUserId){	// 떠나는 사람 방 번호 받는다.
 			console.log(textStatus);
 			console.log(xhr);
 			console.log("퇴장처리 완료");
-			if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
-				window.location.href = "https://localhost:3000/conversation";
-			}
-			else{
-				window.location.href = "https://corns.co.kr:4438/conversation";
-			}
 		},
 		error:function(request,status,error){
 			console.log(request);
 			console.log(status);
 			console.log(error);
-			if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
-				window.location.href = "https://localhost:3000/conversation";
-			}
-			else{
-				window.location.href = "https://corns.co.kr:4438/conversation";
-			}
 		}
 	});
 }
@@ -781,6 +775,12 @@ function toogleChatting(){
 
 function outRoomBtn(){
 	outRoom(userId);
+	if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
+		window.location.href = "https://localhost:3000/conversation";
+	}
+	else{
+		window.location.href = "https://corns.co.kr:4438/conversation";
+	}
 }
 
 function setNoOneBlack(){

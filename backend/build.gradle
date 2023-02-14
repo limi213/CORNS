@@ -37,6 +37,8 @@ dependencies {
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 	implementation 'org.apache.httpcomponents:httpclient'
+	implementation 'com.google.code.gson:gson:2.9.0'
+
 }
 
 tasks.named('test') {
