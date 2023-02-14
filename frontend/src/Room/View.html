@@ -22,6 +22,7 @@
       <script src="openVidu/openvidu-browser-2.25.0.js"></script>
       <link rel="stylesheet" href="contents/css/roomStyle.css">
       <script src="openVidu/openvidu.js"></script>
+      <script src="contents/js/invite.js"></script>
     </head>
     <body>
       <button id="startSttttt" style="display:none"></button>
@@ -37,7 +38,7 @@
           <span id="roomViewChattingDisplay" onclick="toogleChatting()"><i class="fa-regular fa-message"></i></span>
           <span id="roomViewOut" onclick="outRoomBtn()"><i class="fa-solid fa-right-from-bracket"></i></span>
           <span id="roomViewLastTimer">10:00</span>
-          <span id="roomViewAddMember"><i class="fa-solid fa-user-plus"></i></span>
+          <span id="roomViewAddMember" onclick="openInvite()"><i class="fa-solid fa-user-plus"></i></span>
         </div>
         <!-- 평가 -->
         <div id="roomViewApp" style="display: none;">
@@ -120,9 +121,9 @@
           <!-- 유저4 -->
           <div id="roomViewUser4" class="roomViewUser"></div>
         </div>
-        <div id="friendList" style="display: none;">
+        <div id="friendList" style="display:none;">
           <ul>
-            <li>
+            <!-- <li>
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZCbmyXv0Ot7qnc0pVi68_ptYAi7jnpcCUEQ&usqp=CAU" alt="user-image" />
               <p>nickname #1530</p>
               <button>초대하기</button>
@@ -131,7 +132,7 @@
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZCbmyXv0Ot7qnc0pVi68_ptYAi7jnpcCUEQ&usqp=CAU" alt="user-image" />
               <p>nickname #1530</p>
               <button>초대하기</button>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -176,14 +177,19 @@
 
         let accessToken= urlParams.get("accessToken");
 
+        //삭제예정
+        $("#userId").val(userid);
+        $("#accessToken").val(accessToken);
+        //삭제예정
+
         if(isNull(accessToken) || isNull(session)){
-          alert("잘못된 접근입니다.");
-          if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
-            window.location.href = "https://localhost:3000/conversation";
-          }
-          else{
-            window.location.href = "https://corns.co.kr:4438/conversation";
-          }
+          // alert("잘못된 접근입니다.");
+          // if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
+          //   window.location.href = "https://localhost:3000/conversation";
+          // }
+          // else{
+          //   window.location.href = "https://corns.co.kr:4438/conversation";
+          // }
         }
         else{
           // 이슈 없이 커넥션이랑 세션 다 들어옴!
