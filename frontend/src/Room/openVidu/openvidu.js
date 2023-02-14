@@ -426,7 +426,13 @@ function intoRoom(connectionId, recordId, token){
 			console.log(error);
 			if(request.status === 409){
 				console.log("이미 접속완료된 회원");
-				// 어디방인지 확인하고 이 방 아니면 나가게하자
+				if(window.location.href.includes("localhost") || window.location.href.includes("127.0.0.1")){
+					window.location.href = "https://localhost:3000/conversation";
+				}
+				else{
+					window.location.href = "https://corns.co.kr:4438/conversation";
+				}
+
 			}
 		}
 	});
