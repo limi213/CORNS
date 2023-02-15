@@ -978,6 +978,7 @@ function endConversation() {
 
 function setBestDisable(){
   $('input[name$="selectBestMember"]').attr("disabled","disabled");
+}
 
 function setHostName(){
   // 호스트 이름 세팅하기
