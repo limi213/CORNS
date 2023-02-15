@@ -2,6 +2,7 @@ var OV;
 var session;
 
 var roomListId = "roomViewUser";
+var hostId;
 
 var myTocken;
 var isStart = false;
@@ -172,7 +173,7 @@ function joinSession() {
 
         // When our HTML video has been added to DOM...
         publisher.on("videoElementCreated", function (event) {
-          appendUserData(event.element, myUserName, "");
+          appendUserData(event.element, publisher.stream.connection, "");
           // alert(document.getElementById("startSttttt"))
           // appendCaptionsButton(event.element, publisher.stream);
           setSttButton(publisher.stream);
@@ -554,12 +555,31 @@ function outOneRoom(rUserId, roomNo, current, total) {
 
 function appendUserData(videoElement, connection, roomno) {
   if (roomno !== "") {
-    var dataNode = document.createElement("div");
-    dataNode.className = "data-node";
-    dataNode.id = "data-" + connection.connectionId;
-    dataNode.roomno = "__" + roomno;
-    videoElement.parentNode.insertBefore(dataNode, videoElement.nextSibling);
+    var dn = document.createElement("div");
+    dn.className = "data-node";
+    dn.id = "data-" + connection.connectionId;
+    dn.roomno = "__" + roomno;
+    videoElement.parentNode.insertBefore(dn, videoElement.nextSibling);
   }
+
+  console.log("connection 정보");
+  console.log(connection);
+  
+  var conData = JSON.parse(connection.data);
+
+  console.log("conData 정보");
+  console.log(conData)
+
+  if(conData != null){
+    var dataNode = document.createElement('div');
+    dataNode.className = "data-node";
+    dataNode.id = "data-" + conData.userId;
+    dataNode.innerHTML = "<p class='userData' id=spanName" +conData.userId + ">" + conData.userName + "</p>";
+    videoElement.parentNode.insertBefore(dataNode, videoElement.nextSibling);
+
+    setHostName();
+  }
+	
 }
 
 function removeUserData(connection) {
@@ -711,31 +731,8 @@ function initRoomInfo() {
         endConversation();
         setMember(); // 베스트 멤버 뽑자!
       }
-      /* 
-						{
-			"room": {
-				"room": {
-				"roomNo": 30,
-				"title": "쫑알!",
-				"time": 10,
-				"currentMember": 1,
-				"maxMember": 4,
-				"hostUserId": 1001,
-				"sessionId": "ssss",
-				"avail": true
-				},
-				"subject": {
-				"subjectNo": 1,
-				"imgUrl": "https://corns.co.kr:4435/uploads/subjects/1.jpg",
-				"value": "일상"
-				}
-			}
-			}*/
-
-      // var roomData = JSON.parse(data);
-
-      // console.log(roomData + "["alert(ata.room.room.title) + data.room.subject.value + "]");
       else {
+        hostId = data.room.room.hostUserId;
         $("#roomViewTitle").text(
           data.room.room.title + "   [" + data.room.subject.value + "]"
         );
@@ -745,11 +742,13 @@ function initRoomInfo() {
         maxMemberCount = data.room.room.maxMember;
         console.log("현재 인원 : " + data.room.room.currentMember);
         setMemberCount(data.room.room.currentMember);
-
+        
         // 방장이면 시작하기 버튼 세팅
         if (data.room.room.hostUserId == userId) {
           $("#roomViewPlay").show();
         }
+
+        setHostName();
       }
       console.log(data);
       console.log(textStatus);
@@ -972,4 +971,22 @@ function endConversation() {
       console.log(error);
     },
   });
+}
+
+function setHostName(){
+  // 호스트 이름 세팅하기
+  if(hostId != undefined && hostId != null && hostId != "" && $("#spanName" + hostId).length){
+    // 호스트 이름이 있으면
+    if($("#spanName" + hostId)){
+      // alert("hh")
+      //userData
+
+      $('.userData').each(function(index, element) {
+        $(this).css("background-color","#11111175");
+      });
+
+      $("#spanName" + hostId).css("background-color","#f3232375");
+
+    }
+  }
 }

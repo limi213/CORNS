@@ -435,3 +435,15 @@
     float: left; 
     width: 20%;
 } */
+
+.userData {
+  background-color: #11111175;
+  width: 100px;
+  border: 1px solid #111;
+  color: white;
+  padding: 8px 16px;
+  font-weight: bold;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+}
