@@ -320,30 +320,33 @@ public class RoomServiceImpl implements RoomService {
     @Transactional
     public RoomAndRoomUserListResponseDto endConversation(StartEndRoomRequestDto body) {
         Room room = roomRepository.findById(body.getRoomNo()).get();
-        room.setRoomCd(RoomCode.ROOM_END.getCode());
-        roomRepository.save(room);
 
-        List<RoomUser> roomUsers = roomUserRepository.findByRoomNoAndRoomUserCd(body.getRoomNo(), RoomUserCode.ROOM_USER_CONVERSATION.getCode());
-        roomUsers.stream().forEach(user -> {
-            user.setUserCd(RoomUserCode.ROOM_USER_END.getCode());
-            growthService.giveExp(ExpLogRequestDto.builder()
-                                        .userId(user.getUserId())
-                                        .gainExp(room.getTime())
-                                        .expCd(ExpCode.EXP_CONVERSATION.getCode())
-                                        .build());
-        });
-        roomUserRepository.saveAll(roomUsers);
+        if (room.getRoomCd() != RoomCode.ROOM_END.getCode()) {
+            room.setRoomCd(RoomCode.ROOM_END.getCode());
+            roomRepository.save(room);
 
-        // 스크립트 생성
-        redisService.makeScriptFile(RoomListResponseDto.builder()
-                                        .room(RoomResponseDto.builder()
-                                                .roomNo(room.getRoomNo())
-                                                .title(room.getTitle())
-                                                .time(room.getTime())
-                                                .currentMember(room.getCurrentMember())
-                                                .build())
-                                        .subject(subjectService.findById(room.getSubjectNo()))
-                                                .build());
+            List<RoomUser> roomUsers = roomUserRepository.findByRoomNoAndRoomUserCd(body.getRoomNo(), RoomUserCode.ROOM_USER_CONVERSATION.getCode());
+            roomUsers.stream().forEach(user -> {
+                user.setUserCd(RoomUserCode.ROOM_USER_END.getCode());
+                growthService.giveExp(ExpLogRequestDto.builder()
+                        .userId(user.getUserId())
+                        .gainExp(room.getTime())
+                        .expCd(ExpCode.EXP_CONVERSATION.getCode())
+                        .build());
+            });
+            roomUserRepository.saveAll(roomUsers);
+
+            // 스크립트 생성
+            redisService.makeScriptFile(RoomListResponseDto.builder()
+                    .room(RoomResponseDto.builder()
+                            .roomNo(room.getRoomNo())
+                            .title(room.getTitle())
+                            .time(room.getTime())
+                            .currentMember(room.getCurrentMember())
+                            .build())
+                    .subject(subjectService.findById(room.getSubjectNo()))
+                    .build());
+        }
 
         return findRoomAndRoomUserByRoomNo(body.getRoomNo(), RoomUserCode.ROOM_USER_END.getCode());
     }
