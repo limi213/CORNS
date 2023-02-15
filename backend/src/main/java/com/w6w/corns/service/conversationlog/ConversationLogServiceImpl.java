@@ -107,7 +107,7 @@ public class ConversationLogServiceImpl implements ConversationLogService {
     }
 
     public String getSpeakingPhrases(int speakingSec, int time) {
-        return String.format("%d분 %d초(%d%%)", speakingSec/60, speakingSec%60, (speakingSec/(60*time))*100);
+        return String.format("%d분 %d초(%d%%)", speakingSec/60, speakingSec%60, (int)(((double)speakingSec/(60*time))*100));
     }
 
     //즐겨찾기 등록/해제
