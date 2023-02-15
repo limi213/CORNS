@@ -74,7 +74,7 @@ function UserProfileInfo({ basicInfo }) {
               <p>누적 출석수 {attendTotal}일</p>
             </Grid>
             <Grid item xs={4}>
-              <p>누적 칭찬수 {thumbTotal}개</p>
+              <p>누적 따봉수 {thumbTotal}개</p>
             </Grid>
             <Grid item xs={4}>
               <p>누적 발화량 {Math.round(speakingTotal / 60)}분</p>

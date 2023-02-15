@@ -22,7 +22,7 @@ export const logListReducer = createSlice({
 // 로그 리스트 axios
 // filter + pagination 추가...
 export const getLogListAxios = (filter) => {
-  console.log("log list axios!");
+  // console.log("log list axios!");
 
   return async (dispatch) => {
     dispatch(logListActions.isLogListLoading());

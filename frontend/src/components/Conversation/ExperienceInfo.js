@@ -41,12 +41,12 @@ function ExperienceInfo({}) {
             display: "flex",
             justifyContent: "space-around",
             alignItems: "center",
-            mt: "1rem",
+            // mt: "1rem",
             mb: "1.8rem",
           }}
         >
           <ExpInfo level={levelNo} exp={startExp} />
-          <ProgressBar percent={expPercent} color={"#FFC804"} />
+          <ProgressBar percent={expPercent} value={`${expTotal}exp`} color={"#FFC804"} />
           <ExpInfo level={levelNo + 1} exp={endExp} />
         </Box>
       </div>

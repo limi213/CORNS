@@ -18,7 +18,7 @@ const onEvaluationAxios = async (roomNo, userId, score, description) => {
       }
     );
     if (response.status === 200) {
-      console.log(response.data);
+      // console.log(response.data);
       return true;
     } else {
       return false;
@@ -50,7 +50,6 @@ function SelfEvaluationInput({ roomNo, selfScore, selfDesc }) {
       description
     );
     setRegistered(res);
-    console.log("registered", registered);
   };
 
   const onChangeDescription = (e) => {

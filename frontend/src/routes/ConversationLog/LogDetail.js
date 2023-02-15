@@ -45,7 +45,7 @@ function LogDetail({ match }) {
 
   useEffect(() => {
     if (status === 200) {
-      console.log(data);
+      // console.log(data);
       setLog(data.room);
       setParticipants(data.memberList);
     } else if (status === 500) {

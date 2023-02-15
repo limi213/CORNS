@@ -43,7 +43,7 @@ export const getFriendListAxios = (type = "nickname", text = "") => {
   return async (dispatch) => {
     const sendRequest = async () => {
       dispatch(friendActions.isFriendListLoading(true));
-      console.log("get friendlist!");
+      // console.log("get friendlist!");
 
       const response = await axios.get(
         `${process.env.REACT_APP_HOST}/friend/${sessionStorage.getItem(
@@ -64,7 +64,7 @@ export const getFriendListAxios = (type = "nickname", text = "") => {
       );
 
       if (response.status === 401) {
-        console.log("unauthorized!-> refresh!");
+        // console.log("unauthorized!-> refresh!");
         const refreshResponse = await getRefreshToken();
 
         if (refreshResponse === 200) {
@@ -83,7 +83,7 @@ export const getFriendListAxios = (type = "nickname", text = "") => {
     try {
       const friendList = await sendRequest();
       dispatch(friendActions.getFriendList(friendList));
-      console.log(friendList);
+      // console.log(friendList);
     } catch (e) {
       console.error(e);
     }
@@ -98,7 +98,7 @@ export const getFriendRequestListAxios = () => {
     // axios 보내는 함수
     const sendRequest = async () => {
       dispatch(friendActions.isFriendRequestListLoading(true));
-      console.log("get friendrequest list!");
+      // console.log("get friendrequest list!");
 
       const response = await axios.get(
         `${process.env.REACT_APP_HOST}/friend/receive/${sessionStorage.getItem(
@@ -115,7 +115,7 @@ export const getFriendRequestListAxios = () => {
       // 1. axios 요청 보냈는데 401 error -> access token 만료
       // refresh token 요청
       if (response.status === 401) {
-        console.log("unauthorized!-> refresh!");
+        // console.log("unauthorized!-> refresh!");
         const refreshResponse = await getRefreshToken();
 
         // 1.1 refresh 성공한 경우 -> 다시 sendrequest
@@ -140,7 +140,7 @@ export const getFriendRequestListAxios = () => {
     try {
       const friendRequestList = await sendRequest();
       dispatch(friendActions.getFriendRequestList(friendRequestList));
-      console.log(friendRequestList)
+      // console.log(friendRequestList)
     } catch (e) {
       console.error(e);
     }

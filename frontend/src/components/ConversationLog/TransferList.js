@@ -84,13 +84,13 @@ export default function TransferList() {
   // [PATCH] 단어 상태 변경
   const updateWordStatus = async (body) => {
     const sendRequest = async () => {
-      console.log(`[patch] update word status`);
+      // console.log(`[patch] update word status`);
       const response = await axios.patch(
         `${process.env.REACT_APP_HOST}/word`,
         body
       );
       if (response.status === 401) {
-        console.log("unauthorized!-> refresh!");
+        // console.log("unauthorized!-> refresh!");
         const refreshResponse = await getRefreshToken();
 
         if (refreshResponse === 200) {

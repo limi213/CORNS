@@ -197,8 +197,6 @@ function RoomCard({ room, subject }) {
         </div>
         <CardContent sx={{ height: "100px", p: "0 16px" }}>
           <p
-            gutterBottom
-            variant="p"
             component="div"
             css={css`
               margin: 8px 0;

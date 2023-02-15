@@ -29,9 +29,9 @@ function ParticipantScriptCard({ roomNo, participant }) {
       >
         <ProfileImg imgSrc={imgUrl} nickname={nickname} width={"197px"} />
 
-        <p css={css`font-size: 20px; margin: 10px;`}>
+        <span css={css`font-size: 20px; margin: 10px;`}>
           <UserNameTag nickname={nickname} userId={userId} />
-        </p>
+        </span>
 
         <Box
           sx={{

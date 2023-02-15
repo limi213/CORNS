@@ -36,9 +36,9 @@ function WordListItem({
 
   useEffect(() => {
     if (deleteWordStatus === 200) {
-      console.log(
-        `[delete word] wordSq: ${item.wordSq}, wordEng: ${item.wordEng}, wordKor: ${item.wordKor}`
-      );
+      // console.log(
+      //   `[delete word] wordSq: ${item.wordSq}, wordEng: ${item.wordEng}, wordKor: ${item.wordKor}`
+      // );
       setBaseTime(toStringDate(new Date()));
       setReload(!reload);
     }

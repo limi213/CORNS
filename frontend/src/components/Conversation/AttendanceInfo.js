@@ -62,7 +62,7 @@ function AttendanceInfo({}) {
               0%
             </p>
           </Box>
-          <ProgressBar percent={data.attendanceRate} color={"#45971E"} />
+          <ProgressBar percent={data.attendanceRate} value={`${data.attendanceRate}%`} color={"#45971E"} />
           <Box
             sx={{
               width: "55px",

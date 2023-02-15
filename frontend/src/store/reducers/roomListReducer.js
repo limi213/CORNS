@@ -6,38 +6,6 @@ import getRefreshToken from "auth/getRefreshToken";
 import Logout from "auth/Logout";
 import { toStringDate } from "./roomFilterReducer";
 
-// export const getRoomList = createAsyncThunk("GET_ROOM_LIST", async (filter) => {
-//   const response = await axios.get(`${process.env.REACT_APP_HOST}/room`, {
-//     params: filter,
-//   });
-//   return response.data;
-// });
-
-// export const roomListReducer = createSlice({
-//   name: "roomList",
-//   initialState: {
-//     data: {},
-//     loading: true,
-//   },
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(getRoomList.pending, (state) => void (state.loading = true))
-//       .addCase(getRoomList.fulfilled, (state, { payload }) => {
-//         state.loading = false;
-//         state.data = payload;
-//       })
-//       .addCase(getRoomList.rejected, (state) => void (state.loading = true));
-//   },
-// });
-
-//
-//
-//
-//#################하은이거 복붙한거 이름 고치고 있는거#############################
-//
-//
-//
 
 const initialRoomListState = {
   isRoomListLoading: false,
@@ -62,7 +30,7 @@ export const getRoomListAxios = (filter) => {
     // axios 보내는 함수
     const sendRequest = async () => {
       dispatch(roomListActions.isRoomListLoading(true));
-      console.log("get room list!");
+      // console.log("get room list!");
 
       const response = await axios.get(`${process.env.REACT_APP_HOST}/room`, {
         headers: authHeader(),
@@ -75,7 +43,7 @@ export const getRoomListAxios = (filter) => {
       // 1. axios 요청 보냈는데 401 error -> access token 만료
       // refresh token 요청
       if (response.status === 401) {
-        console.log("unauthorized!-> refresh!");
+        // console.log("unauthorized!-> refresh!");
         const refreshResponse = await getRefreshToken();
 
         // 1.1 refresh 성공한 경우 -> 다시 sendrequest
@@ -91,7 +59,7 @@ export const getRoomListAxios = (filter) => {
       }
       // 2. axios 요청 잘된 경우
       else if (response.status === 200) {
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
       } else if (response.status === 204) {
         return [];

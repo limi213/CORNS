@@ -43,7 +43,7 @@ function ExperienceTable({}) {
     userId,
     baseTime: toStringDate(now),
   };
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     sendRequest({

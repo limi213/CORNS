@@ -64,9 +64,9 @@ function EditWordButton({ word, setBaseTime, reload, setReload }) {
 
   useEffect(() => {
     if (editWordStatus === 200) {
-      console.log(
-        `[edit word] wordEng: ${word.wordEng} => ${eng}, wordKor: ${word.wordKor} => ${kor}`
-      );
+      // console.log(
+      //   `[edit word] wordEng: ${word.wordEng} => ${eng}, wordKor: ${word.wordKor} => ${kor}`
+      // );
       setBaseTime(toStringDate(new Date()));
       setReload(!reload);
       handleCloseModal();

@@ -6,7 +6,7 @@ import axios from "axios";
 export const GetTodoWord = async (baseTime, setTodoWords, setLoading) => {
   setLoading(true);
   const sendRequest = async () => {
-    console.log("success get todo word !");
+    // console.log("success get todo word !");
     const response = await axios.get(
       `${process.env.REACT_APP_HOST}/word/${sessionStorage.getItem(
         "userId"
@@ -24,7 +24,7 @@ export const GetTodoWord = async (baseTime, setTodoWords, setLoading) => {
       }
     );
     if (response.status === 401) {
-      console.log("unauthorized!-> refresh!");
+      // console.log("unauthorized!-> refresh!");
       const refreshResponse = await getRefreshToken();
 
       if (refreshResponse === 200) {
@@ -52,7 +52,7 @@ export const GetTodoWord = async (baseTime, setTodoWords, setLoading) => {
 export const GetDoneWord = async (baseTime, setDoneWords, setLoading) => {
   setLoading(true);
   const sendRequest = async () => {
-    console.log("success get done word !");
+    // console.log("success get done word !");
     const response = await axios.get(
       `${process.env.REACT_APP_HOST}/word/${sessionStorage.getItem(
         "userId"
@@ -70,7 +70,7 @@ export const GetDoneWord = async (baseTime, setDoneWords, setLoading) => {
       }
     );
     if (response.status === 401) {
-      console.log("unauthorized!-> refresh!");
+      // console.log("unauthorized!-> refresh!");
       const refreshResponse = await getRefreshToken();
 
       if (refreshResponse === 200) {

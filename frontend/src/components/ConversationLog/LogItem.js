@@ -17,7 +17,7 @@ import { css } from "@emotion/react";
 // doRegister: true -> 등록
 // doRegister: false -> 해제
 const toggleBookmark = async (roomNo, userId, doRegister) => {
-  console.log("toggle!", doRegister);
+  // console.log("toggle!", doRegister);
   try {
     const response = await axios.patch(
       `${process.env.REACT_APP_HOST}/corns-log/bookmark`,

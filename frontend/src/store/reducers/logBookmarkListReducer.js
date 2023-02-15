@@ -26,7 +26,7 @@ export const logBookmarkListReducer = createSlice({
 
 // 즐겨찾기 목록 가져오기 axios -> pagination 추가해야함 ...
 export const getLogBookmarkListAxios = (sort) => {
-  console.log("get Bookmark list!");
+  // console.log("get Bookmark list!");
   return async (dispatch) => {
     dispatch(logBookmarkListActions.isLogBookmarkListLoading());
 

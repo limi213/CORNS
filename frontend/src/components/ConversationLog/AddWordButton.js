@@ -45,7 +45,7 @@ function AddWordButton({ setBaseTime, reload, setReload }) {
       return;
     }
     const sendRequest = async () => {
-      console.log(`[add word] - eng: ${wordEng}, kor: ${wordKor}`);
+      // console.log(`[add word] - eng: ${wordEng}, kor: ${wordKor}`);
       const response = await axios.post(
         `${process.env.REACT_APP_HOST}/word`,
         {
@@ -61,7 +61,7 @@ function AddWordButton({ setBaseTime, reload, setReload }) {
       );
 
       if (response.status === 401) {
-        console.log("unauthorized!-> refresh!");
+        // console.log("unauthorized!-> refresh!");
         const refreshResponse = await getRefreshToken();
 
         if (refreshResponse === 200) {
@@ -73,7 +73,7 @@ function AddWordButton({ setBaseTime, reload, setReload }) {
     };
     try {
       const submit = await sendRequest();
-      console.log(submit);
+      // console.log(submit);
       if (submit.status === 200) {
         setWordEng("");
         setWordKor("");

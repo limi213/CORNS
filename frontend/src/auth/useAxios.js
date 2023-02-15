@@ -16,7 +16,7 @@ function useAxios() {
   //  axios 함수
   const sendRequest = useCallback(async (requestConfig) => {
     setIsLoading(true);
-    console.log('sendRequest!', requestConfig.url);
+    // console.log('sendRequest!', requestConfig.url);
     try {
       const response = await axios(requestConfig.url, {
         method: requestConfig.method ? requestConfig.method : "GET",
@@ -44,7 +44,7 @@ function useAxios() {
 
         // 1.1 refresh 성공한 경우 -> 다시 sendRequest
         if (refreshResponse === 200) {
-          console.log("refresh access!");
+          // console.log("refresh access!");
           sendRequest(requestConfig);
         }
         // 1.2 access token 못받은 경우 (refresh 만료)
@@ -56,7 +56,7 @@ function useAxios() {
 
       // 2. validate Status인 경우
       else {
-        console.log("axios success!");
+        // console.log("axios success!");
         setData(response.data);
         setStatus(response.status);
       }
