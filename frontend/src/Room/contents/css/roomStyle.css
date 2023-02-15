@@ -1,3 +1,7 @@
+* {
+  font-family: "Noto Sans KR";
+}
+
 /* 나중에 공통 css로 뺄 예정 */
 #roomViewBackground {
   position: absolute;
@@ -10,7 +14,7 @@
   margin-top: 4vh;
   margin-bottom: 4vh;
   /* z-index: -1; */
-  border: 2px solid black;
+  border: 3px solid #111;
 }
 
 #roomViewTopBar {
@@ -19,7 +23,7 @@
   top: 3vh;
   height: 7vh;
   width: 71vw;
-  border: 1px solid black;
+  border: 3px solid #111;
   background-color: white;
 }
 
@@ -28,6 +32,10 @@
   line-height: 7vh;
   vertical-align: middle;
   margin-left: 2vw;
+}
+
+#roomViewTopBar > span > i {
+  cursor: pointer;
 }
 
 #roomViewApp {
@@ -42,10 +50,35 @@
   box-sizing: border-box;
 }
 
+#roomViewAppTimerContainer {
+  width: 50px;
+  height: 50px;
+  animation: moveBorder alternate-reverse 1s infinite;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#roomViewAppTimer {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+@keyframes moveBorder {
+  0% {
+    border: 1px solid #ffe767;
+  }
+  100% {
+    border: 11px solid #ffa903;
+  }
+}
+
 #roomViewAppTitle {
   font-size: 48px;
   text-align: center;
   margin-bottom: 32px;
+  font-weight: bold;
 }
 
 #roomViewAddMemberContainer {
@@ -102,7 +135,7 @@
   position: absolute;
   width: 640; /*35vw;*/
   height: 360; /*37.5vh;*/
-  border: 1px solid black;
+  border: 3px solid #111;
   background-color: white;
 }
 
@@ -130,7 +163,7 @@
   position: absolute;
   margin-left: calc(2vw + 71vw + 2vw);
   margin-top: 4vh;
-  border: 1px solid black;
+  border: 3px solid #111;
   background-color: white;
   width: 19vw;
   height: 84vh;
@@ -139,17 +172,18 @@
 #roomViewLastTimer {
   width: 10px;
   height: 10px;
-  border: 1px solid black;
+  border: 3px solid #111;
+  box-sizing: border-box;
   background-color: red;
   color: white;
   padding: 12px;
 }
 
 #roomViewChattingReceive {
-  border-radius: 6px;
   width: calc(19vw - 2vw);
-  height: calc(74vh - 4vh);
-  border: 1px solid black;
+  height: 65vh;
+  border: 3px solid #111;
+  box-sizing: border-box;
   margin-left: 1vw;
   margin-top: 2vh;
   /* margin-left: calc(0.5vw - 1px);
@@ -158,17 +192,20 @@
 }
 
 #roomViewChattingSend {
-  border-radius: 6px;
   width: calc(19vw - 2vw);
-  height: calc(10vh - 4vh);
+  height: 12.5vh;
   margin-left: 1vw;
-  margin-top: 3vh;
-  border: 1px solid black;
+  margin-top: 16px;
+  border: 3px solid #111;
+  box-sizing: border-box;
 }
 
 #roomViewChattingSendMessage {
-  margin-top: 1.5vh;
-  border: 0 solid black;
+  display: block;
+  width: 100%;
+  height: 9vh;
+  border: 0;
+  word-wrap: break-word;
 }
 
 #roomViewChattingSendMessage:focus {
@@ -176,84 +213,150 @@
 }
 
 #roomViewChattingSendButton {
-  float: right;
-  margin-top: 2vh;
-  margin-right: 2vh;
+  font-size: 20px;
+  margin-right: 8px;
+  text-align: right;
+  cursor: pointer;
+  color: #1766c3;
 }
 
 #roomViewTranslation {
   position: absolute;
   margin-left: calc(2vw + 71vw + 2vw);
   margin-top: 4vh;
-  border: 1px solid black;
+  border: 3px solid #111;
+  box-sizing: border-box;
   background-color: white;
   width: 19vw;
   height: 84vh;
 }
 
 #roomViewTranslationDo {
-    border: 1px solid black;
-    margin-left: 1vw;
-    margin-top: 1.5vh;
-    width: 17vw;
-    height: calc(84vh / 2 - 3vh);
-    text-align: center;
-}
-
-.roomViewTranslationLang {
-    border: 1px solid black;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-#roomViewTranslationSave {
-  border: 1px solid black;
+  border: 3px solid #111;
+  box-sizing: border-box;
   margin-left: 1vw;
   margin-top: 1.5vh;
   width: 17vw;
   height: calc(84vh / 2 - 3vh);
+  text-align: center;
+  background-color: #fff;
+  padding: 24px;
+}
+
+#roomViewTranslationHeader {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.roomViewTranslationLang {
+  width: 120px;
+  box-sizing: border-box;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+#roomViewTranslationChange {
+  border: 3px solid #111;
+  box-sizing: border-box;
+  padding: 4px 16px;
+  background-color: #98da7a;
+}
+#roomViewTranslationChange:hover {
+  background-color: #b8ee9f;
+}
+
+#roomViewTranslationText {
+  width: 100%;
+  height: 13vh;
+  border: 3px solid #111;
+  box-sizing: border-box;
+  padding: 8px;
+}
+
+#roomViewTranslationDoBtn {
+  border: 0;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 4px 0;
+  background-color: #98da7a;
+  border-left: 3px solid #111;
+  border-right: 3px solid #111;
+  font-weight: bold;
+}
+
+#roomViewTranslationResult {
+  width: 100%;
+  height: 13vh;
+  border: 3px solid #111;
+  box-sizing: border-box;
+  text-align: left;
+  padding: 8px;
+}
+
+#roomViewTranslationSave {
+  border: 3px solid #111;
+  box-sizing: border-box;
+  margin-left: 1vw;
+  margin-top: 1.5vh;
+  width: 17vw;
+  height: calc(84vh / 2 - 3vh);
+  padding: 24px;
 }
 
 #roomViewTranslationSaveWord {
-  border: 1px solid black;
-  margin-left: 1vw;
-  margin-top: 1.5vh;
-  width: 15vw;
-  height: calc(84vh / 4 - 4vh);
+  border: 3px solid #111;
+  box-sizing: border-box;
+  width: 100%;
+  height: 14vh;
 }
 
 #roomViewTranslationSaveWord > div {
-  border: 1px solid black;
-  margin-left: 1px;
-  margin-top: 1px; /*선만큼 마진*/
+  padding-left: 8px;
+  border-right: 3px solid #111;
+  border-bottom: 3px solid #111;
+  box-sizing: border-box;
   width: calc(15vw / 3);
   height: calc((84vh / 4 - 4vh) / 6);
+  font-weight: bold;
 }
 
 #roomViewTranslationSaveSave {
-  border: 1px solid black;
-  margin-left: 1vw;
-  margin-top: 1.5vh;
-  width: 15vw;
-  height: calc(84vh / 4 - 4vh);
+  margin-top: 8px;
+  border: 3px solid #111;
+  box-sizing: border-box;
+  width: 100%;
+  height: 14vh;
 }
 
 #roomViewTranslationSaveSave > div {
-  border: 1px solid black;
-  margin-left: 1px;
-  margin-top: 1px; /*선만큼 마진*/
+  padding-left: 8px;
+  border-right: 3px solid #111;
+  border-bottom: 3px solid #111;
+  box-sizing: border-box;
   width: calc(15vw / 3);
   height: calc((84vh / 4 - 4vh) / 6);
+  font-weight: bold;
 }
 
 #saveWord {
+  margin-top: 8px;
   float: right;
+  font-weight: bold;
+  border: 3px solid #111;
+  box-sizing: border-box;
+  padding: 4px 16px;
+  background-color: #98da7a;
 }
 
 ._word {
-  width: 250px;
-  height: 100px;
+  width: 100%;
+  height: 9vh;
   border: 0px solid black;
+}
+._word:focus {
+  outline: none;
 }
 
 #friendList {

@@ -42,11 +42,14 @@
           <span id="roomViewAddMember" onclick="openInvite()"><i class="fa-solid fa-user-plus"></i></span>
         </div>
         <!-- 평가 -->
-        <div id="roomViewApp" style="display:none">
+        <div id="roomViewApp" style="display: none;">
           <div id="roomViewAppExit">
             <i id="closeRoomViewApp" class="fa-regular fa-rectangle-xmark" onclick="goToEvolution()"></i>
           </div>
-          <div id="roomViewAppTitle">이번 대화에서 따봉 멤버를 뽑아주세요!</div> <span id="roomViewAppTimer"></span>
+          <div id="roomViewAppTimerContainer">
+            <div id="roomViewAppTimer">10</div>
+          </div>
+          <div id="roomViewAppTitle">이번 대화에서 따봉 멤버를 뽑아주세요!</div>  
           <div id="roomViewAddMemberContainer">
             <div class="roomViewAppMember">
               <div class="roomViewAppMemberImage">
@@ -79,25 +82,29 @@
           </div>
         </div>
         <!-- 채팅창 -->
-        <div id="roomViewChatting" style="display:none">
+        <div id="roomViewChatting" >
           <div id="roomViewChattingReceive">
           </div>
           <div id="roomViewChattingSend">
-            <input id="roomViewChattingSendMessage" type="text" onkeyup="onKeyUpChatting()"/>
-            <a id="roomViewChattingSendButton" onclick="sendChatting()"><i class="fa-regular fa-paper-plane"></i></a>
+            <textarea id="roomViewChattingSendMessage" onkeyup="onKeyUpChatting()"></textarea>
+            <div id="roomViewChattingSendButton" onclick="sendChatting()"><i class="fa-regular fa-paper-plane"></i></div>
           </div>
           </label>
         </div>
-        <div id="roomViewTranslation" >
+        <div id="roomViewTranslation"  style="display:none">
           <div id="roomViewTranslationDo">
-            <span id="roomViewTranslationSource" class="roomViewTranslationLang" >영어</span>
+            <div id="roomViewTranslationHeader">
+              <span id="roomViewTranslationSource" class="roomViewTranslationLang" >영어</span>
+              <button id="roomViewTranslationChange" onclick="changeTranslationLang()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+              </svg></button>
+              <span id="roomViewTranslationTarget" class="roomViewTranslationLang" >한국어</span>
+            </div>
             <input  type="hidden" id="roomViewTranslationSourceValue" value="en" />
-            <button onclick="changeTranslationLang()"><-></button>
-            <span id="roomViewTranslationTarget" class="roomViewTranslationLang" >한국어</span>
             <input  type="hidden" id="roomViewTranslationTargetValue" value="ko" />
             <textarea id="roomViewTranslationText"></textarea>
-            <button onclick="papago()">번역</button><br>
-            <span id="roomViewTranslationResult"></span>
+            <button id="roomViewTranslationDoBtn" onclick="papago()">번역</button>
+            <div id="roomViewTranslationResult"></div>
           </div>
           <div id="roomViewTranslationSave">
             <div id="roomViewTranslationSaveWord">

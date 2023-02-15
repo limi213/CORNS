@@ -11,13 +11,15 @@ import Login from "routes/LogIn";
 import Signin from "routes/SignIn";
 import Mypage from "routes/MyPage/MyPage";
 import Room from "routes/Room/Room";
-import ResultEvolution from "routes/ResultEvolution"
+import ResultEvolution from "routes/ResultEvolution";
 import NotFound from "routes/NotFound";
 import TopBtn from "components/GlobalComponents/TopBtn";
+import ScrollToTop from "components/GlobalComponents/ScrollTop";
 
 function App() {
   return (
     <div className="App">
+      <ScrollToTop />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/tutorial" component={Tutorial} />
@@ -29,7 +31,11 @@ function App() {
         <Route exact path="/signin" component={Signin} />
         <AuthRoute path="/mypage" component={Mypage} />
         <AuthRoute path="/room" component={Room} />
-        <AuthRoute exact path="/resultEvolution/:roomNo" component={ResultEvolution} />
+        <AuthRoute
+          exact
+          path="/resultEvolution/:roomNo"
+          component={ResultEvolution}
+        />
         <Route exact path="/NotFound" component={NotFound} />
         <Redirect to="/NotFound" />
       </Switch>
