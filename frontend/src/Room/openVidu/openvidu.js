@@ -739,7 +739,7 @@ function initRoomInfo() {
         );
         $("#roomViewTimer").text(data.room.room.time + "분");
         $("#roomViewLastTimer").text(data.room.room.time + ":00");
-        totalTime = data.room.room.time * 1;
+        totalTime = data.room.room.time * 60;
         maxMemberCount = data.room.room.maxMember;
         console.log("현재 인원 : " + data.room.room.currentMember);
         setMemberCount(data.room.room.currentMember);
