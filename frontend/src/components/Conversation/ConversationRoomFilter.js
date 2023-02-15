@@ -92,7 +92,7 @@ function ConversationRoomFilter() {
           >
             시간
           </p>
-          <p>입장가능여부</p>
+          <p>대화시작여부</p>
         </Box>
         <Box>
           <Box sx={{ mb: "48px" }}>

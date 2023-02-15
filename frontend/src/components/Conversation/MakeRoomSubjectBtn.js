@@ -3,18 +3,13 @@ import { Button } from "@mui/material";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-
-
-
-  function MakeRoomSubjectBtn({ subject,onChange }) {
-  
-    const { subjectNo, value } = subject;
-    const [toggle, setToggle] = useState(true);
-
+function MakeRoomSubjectBtn({ subject, onChange }) {
+  const { subjectNo, value } = subject;
+  const [toggle, setToggle] = useState(true);
+  const setId = subjectNo + value;
 
   return (
     <>
-
       <span
         css={css`
           border: 3px solid #111;
@@ -26,8 +21,24 @@ import { css } from "@emotion/react";
           font-weight: bold;
         `}
       >
-        <input type="radio" name="topic" defaultValue={subjectNo} onChange={(e)=>onChange(e)}/> {value}
-        
+        <input
+          type="radio"
+          name="topic"
+          id={setId}
+          value={subjectNo}
+          onChange={(e) => onChange(e)}
+          css={css`
+            cursor: pointer;
+          `}
+        />
+        <label
+          htmlFor={setId}
+          css={css`
+            cursor: pointer;
+          `}
+        >
+          {value}
+        </label>
       </span>
 
       {/* <Button
@@ -53,8 +64,8 @@ import { css } from "@emotion/react";
       >
         { value }
       </Button> */}
-</>
-  )
+    </>
+  );
 }
 
 export default MakeRoomSubjectBtn;

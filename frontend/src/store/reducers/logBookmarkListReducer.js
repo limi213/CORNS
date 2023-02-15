@@ -38,7 +38,7 @@ export const getLogBookmarkListAxios = (sort) => {
           new URLSearchParams({
             baseTime: toStringDate(new Date()),
             page: 0,
-            size: 20,
+            size: 100,
             sort: `${sort}`,
           }),
         {
