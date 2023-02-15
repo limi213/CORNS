@@ -72,9 +72,10 @@ function Login() {
               ></div>
               <p
                 css={css`
+                  width: 100%;
                   text-align: center;
                   color: #111;
-                  font-size: 24px;
+                  font-size: 1.2vw;
                 `}
               >
                 아직도 CORNS에 가입하지 않으셨다구요? <br />
@@ -83,7 +84,7 @@ function Login() {
               <Button
                 variant="contained"
                 sx={{
-                  ml: "calc((100% - 264px)/2)",
+                  ml: "calc((100% - 310px)/2)",
                   mt: "16px",
                   color: "#111",
                   border: "3px solid #111",
@@ -98,7 +99,7 @@ function Login() {
                 <Link
                   to="signin"
                   css={css`
-                    font-size: 24px;
+                    font-size: 1.5vw;
                     text-decoration: none;
                     color: #111;
                     font-weight: bold;

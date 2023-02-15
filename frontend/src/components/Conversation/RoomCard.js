@@ -114,17 +114,22 @@ function RoomCard({ room, subject }) {
           {value}
         </div>
         <CardContent sx={{ height: "100px", p: "0 16px" }}>
-          <p
-            component="div"
+          <div
             css={css`
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              white-space: normal;
               margin: 8px 0;
               font-size: 20px;
               font-weight: bold;
-              height: 50px;
+              height: 60px;
+              overflow: hidden;
+              text-overflow: ellipsis;
             `}
           >
             {title}
-          </p>
+          </div>
           <p
             variant="body2"
             css={css`

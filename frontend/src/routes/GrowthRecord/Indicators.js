@@ -10,12 +10,12 @@ import DailyBar from "./DailyBar";
 function Indicators({ location }) {
   const TabMenus = [
     {
-      name: "최근 일주일 일별 대화량",
+      name: "최근 일주일 일별 발화량",
       route: "/growthRecord/indicators/weeklyLiner",
       color: "#FFD704",
     },
     {
-      name: "대화 주제 비율",
+      name: "누적 대화 주제 비율",
       route: "/growthRecord/indicators/subjectCircle",
       color: "#FFD704",
     },

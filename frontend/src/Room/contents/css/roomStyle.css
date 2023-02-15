@@ -41,10 +41,11 @@
 #roomViewApp {
   position: absolute;
   border: 3px solid #111;
-  padding: 64px 32px;
+  padding: 32px 32px;
   width: 1600px;
-  height: 600px;
-  margin: 100px;
+  height: 700px;
+  top: 10%;
+  left: 6%;
   z-index: 100;
   background-color: white;
   box-sizing: border-box;
@@ -79,11 +80,12 @@
   text-align: center;
   margin-bottom: 32px;
   font-weight: bold;
+  margin: 0 0 32px 0;
 }
 
 #roomViewAddMemberContainer {
   width: 100%;
-  height: 80%;
+  height: 70%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   column-gap: 24px;
@@ -96,8 +98,7 @@
 
 .roomViewAppMember {
   border: 3px solid #111;
-
-  display: none;
+  /* display: none; */
 }
 
 .roomViewAppMemberImage {
@@ -123,7 +124,7 @@
 }
 
 .roomViewAppMember > input {
-  margin-top: 64px;
+  margin-top: 120px;
   margin-left: 170px;
 }
 
