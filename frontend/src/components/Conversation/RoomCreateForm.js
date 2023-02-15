@@ -163,6 +163,7 @@ export default function RoomCreateModal() {
               value={subject}
               onChange={({ target: { value } }) => setSubject(value)}
               placeholder="제목을 입력해주세요."
+              maxlength='50'
             ></input>
 
             <div

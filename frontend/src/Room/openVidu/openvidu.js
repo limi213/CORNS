@@ -200,7 +200,8 @@ function joinSession() {
 		//시작
 		if(event.type==="signal:start"){
 
-			this.session.subscribeToSpeechToText(myStream, 'en-US');
+			// this.session.subscribeToSpeechToText(myStream, 'en-US');
+			callstt();
 
 			setNoOneBlack();
 			isStart = true;
@@ -232,6 +233,10 @@ function joinSession() {
 		
 	});
 
+}
+
+async function callstt(){
+	await this.session.subscribeToSpeechToText(myStream, 'en-US');
 }
 
 function goToEvolution(){
