@@ -7,11 +7,21 @@ import { friendActions } from "store/reducers/friendListReducer";
 import { Box, Button } from "@mui/material";
 
 // 친구신청 받은 상태
-function FriendBtnTwo({ fromId, toId, setRelation, height="50px", fontSize="18px" }) {
+function FriendBtnTwo({
+  fromId,
+  toId,
+  setRelation,
+  height = "50px",
+  fontSize = "18px",
+}) {
   const dispatch = useDispatch();
 
-  const { status: acceptStatus, sendRequest: acceptRequest } = useAxios();
-  const { status: rejectStatus, sendRequest: rejectRequest } = useAxios();
+  const {
+    data: acceptData,
+    status: acceptStatus,
+    sendRequest: acceptRequest,
+  } = useAxios();
+  const { status: rejectStatus, isLoading: rejectLoading, sendRequest: rejectRequest } = useAxios();
 
   // 수락
   const acceptHandler = (fromId, toId) => {
@@ -31,14 +41,11 @@ function FriendBtnTwo({ fromId, toId, setRelation, height="50px", fontSize="18px
         setRelation(3);
       }
       if (window.location.pathname.includes("friends")) {
-        // dispatch(friendActions.removeFriendRequestList(toId));
-        // dispatch(getFriendListAxios());
-
-        // 임시 reload
-        window.location.reload();
+        dispatch(friendActions.removeFriendRequestList(toId));
+        dispatch(friendActions.addFriendList(acceptData.acceptFriend))
       }
     }
-  }, [acceptStatus, dispatch]);
+  }, [acceptData, acceptStatus, dispatch]);
 
   // 거절
   const rejectHandler = (fromId, toId) => {
@@ -58,13 +65,10 @@ function FriendBtnTwo({ fromId, toId, setRelation, height="50px", fontSize="18px
         setRelation(0);
       }
       if (window.location.pathname.includes("friends")) {
-        // dispatch(friendActions.removeFriendRequestList(toId));
-       
-        // 임시 reload
-        window.location.reload();
+        dispatch(friendActions.removeFriendRequestList(toId));
       }
     }
-  }, [rejectStatus, dispatch]);
+  }, [rejectLoading, rejectStatus, dispatch]);
 
   return (
     <Box
@@ -73,7 +77,7 @@ function FriendBtnTwo({ fromId, toId, setRelation, height="50px", fontSize="18px
         justifyContent: "center",
         alignItems: "center",
         gap: "5%",
-        width: "100%"
+        width: "100%",
       }}
     >
       <Button

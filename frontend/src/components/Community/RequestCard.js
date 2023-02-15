@@ -63,9 +63,9 @@ function RequestCard({ user }) {
         <ProfileImg imgSrc={imgUrl} nickname={nickname} width={"100px"}/>
 
         <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <p css={css`font-size: ${nickname.length < 14 ? "18px" : "15px"}`}>
+          <span css={css`font-size: ${nickname.length < 14 ? "18px" : "15px"}; margin: 10px 0`}>
             <UserNameTag nickname={nickname} userId={userId} />
-          </p>
+          </span>
         </Box>
 
         <FriendBtnTwo fromId={sessionStorage.getItem("userId")} toId={userId} height={"40px"} fontSize={"16px"}/>

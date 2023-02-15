@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import useAxios from "auth/useAxios";
-import axios from "axios";
 import LogItem from "components/ConversationLog/LogItem";
 import ParticipantScriptList from "components/ConversationLog/ParticipantScriptList";
 import SelfEvaluation from "components/GlobalComponents/SelfEvaluation";
 
 import { Table, TableBody, Box, Button } from "@mui/material";
 import backgroundImage from "assets/backgroundImage.png";
+import almeng_sad from "assets/almeng_sad.png";
+
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 
 // open handler
 const openScript = (scriptUrl) => {
@@ -119,7 +122,6 @@ function LogDetail({ match }) {
             전체 스크립트 다운
           </Button>
         </Box>
-        
 
         <Box
           sx={{
@@ -140,9 +142,61 @@ function LogDetail({ match }) {
       </>
     );
   } else if (log) {
-    return <p>중도퇴장하여 확인할 수 없는 방입니다.</p>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "50px",
+        }}
+      >
+        <p
+          css={css`
+            font-size: 20px;
+          `}
+        >
+          중도퇴장하여 확인할 수 없는 방입니다.
+        </p>
+        <span>
+          <img
+            src={almeng_sad}
+            css={css`
+              width: 200px;
+              object-fit: contain;
+            `}
+          />
+        </span>
+      </Box>
+    );
   } else {
-    return <p>확인할 수 없는 방입니다.</p>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "50px",
+        }}
+      >
+        <p
+          css={css`
+            font-size: 20px;
+          `}
+        >
+          확인할 수 없는 방입니다.
+        </p>
+        <span>
+          <img
+            src={almeng_sad}
+            css={css`
+              width: 200px;
+              object-fit: contain;
+            `}
+          />
+        </span>
+      </Box>
+    );
   }
 }
 

@@ -23,6 +23,9 @@ export const friendListReducer = createSlice({
     getFriendList(state, actions) {
       state.friendList = actions.payload;
     },
+    addFriendList(state, actions) {
+      state.friendList = [actions.payload, ...state.friendList];
+    },
     removeFriendList(state, actions) {
       state.friendList = state.friendList.filter((item) => item.userId !== actions.payload)
     },

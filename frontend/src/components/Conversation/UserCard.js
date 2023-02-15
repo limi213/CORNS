@@ -28,6 +28,7 @@ function UserCard({ nickname, level, id, imgUrl }) {
             width: "12vw",
             borderRadius: "200px",
             border: "15px solid white",
+            backgroundColor: "white",
           }}
           image={imgUrl}
           alt={nickname}
