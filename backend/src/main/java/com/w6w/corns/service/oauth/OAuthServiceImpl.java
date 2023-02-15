@@ -8,9 +8,12 @@ import com.w6w.corns.dto.user.UserDetailResponseDto;
 import com.w6w.corns.service.jwt.JwtService;
 import com.w6w.corns.util.Constant.SocialType;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
+
+import com.w6w.corns.util.code.UserCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -58,6 +61,10 @@ public class OAuthServiceImpl implements OAuthService{
                     user.setSocial(user.getSocial() | (1<<1));
                     map.put("message", "통합");
                 }
+                //이용정지거나 탈퇴했는데 14일 지난 경우
+                if(user.getUserCd() == UserCode.USER_SUSPEND.getCode() ||
+                        user.getUserCd() == UserCode.USER_UNREGISTER.getCode() && user.getLastLoginTm().plusDays(14).isBefore(LocalDateTime.now())) return null;
+
                 userRepository.save(user);
                 UserDetailResponseDto loginResponseDto = UserDetailResponseDto.fromEntity(user);
 

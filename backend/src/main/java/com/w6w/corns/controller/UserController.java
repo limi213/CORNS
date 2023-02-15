@@ -152,6 +152,10 @@ public class UserController {
             Map<String, Object> result = new HashMap<>();
 
             Map<String, Object> map = oAuthService.oAuthLogin(socialType, code);
+
+            //탈퇴 또는 이용정지 회원
+            if(map == null || map.isEmpty()) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            
             UserDetailResponseDto responseDto = (UserDetailResponseDto) map.get("responseDto");
 
             //토큰
