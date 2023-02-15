@@ -98,7 +98,7 @@
 
 .roomViewAppMember {
   border: 3px solid #111;
-  /* display: none; */
+  display: none;
 }
 
 .roomViewAppMemberImage {
