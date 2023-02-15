@@ -40,11 +40,23 @@ function ParticipantCard({ participant, myId }) {
           image={imgUrl}
           alt="user-image"
         /> */}
-        <ProfileImg imgSrc={imgUrl} width={200} />
+        <ProfileImg imgSrc={imgUrl} width={200} border={"3px solid #111"} />
         <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Typography component="div" sx={{ fontSize: 18, p: "16px" }}>
-            {nickname}#{userId}
-          </Typography>
+          <div
+            css={css`
+              font-size: 18px;
+              padding: 16px;
+            `}
+          >
+            <span
+              css={css`
+                font-weight: bold;
+              `}
+            >
+              {nickname}
+            </span>{" "}
+            <span> #{userId}</span>
+          </div>
         </Box>
         <Box
           sx={{

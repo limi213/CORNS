@@ -54,6 +54,8 @@ function ResultEvolution({ match }) {
           <div
             css={css`
               margin: 64px 0 0 0;
+              border: 3px solid #111;
+              padding: 64px 32px 32px;
             `}
           >
             <div
@@ -95,8 +97,8 @@ function ResultEvolution({ match }) {
             </div>
             <ParticipantList participants={resultList} myId={userId} />
             <SelfEvaluation roomNo={roomNo} />
+            <p>(작성하지 않고 나가시면 쫑알로그에서 작성하실 수 있습니다.)</p>
           </div>
-          <p>(작성하지 않고 나가시면 쫑알로그에서 작성하실 수 있습니다.)</p>
         </div>
         <Footer />
       </div>
