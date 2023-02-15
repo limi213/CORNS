@@ -175,6 +175,8 @@ function joinSession() {
           appendUserData(event.element, myUserName, "");
           // alert(document.getElementById("startSttttt"))
           // appendCaptionsButton(event.element, publisher.stream);
+          setSttButton(publisher.stream);
+          // this.session.subscribeToSpeechToText(publisher.myStream, 'en-US');
           myStream = publisher.stream;
           myPublisher = publisher;
         });
@@ -199,7 +201,9 @@ function joinSession() {
     //시작
     if (event.type === "signal:start") {
       // this.session.subscribeToSpeechToText(myStream, "en-US");
-      callstt();
+      // callstt();
+      console.log("start 받음")
+      $("#startSttttt").trigger('onclick');
 
       setNoOneBlack();
       isStart = true;
@@ -234,6 +238,21 @@ function joinSession() {
 
 async function callstt(){
 	await this.session.subscribeToSpeechToText(myStream, 'en-US');
+}
+
+function setSttButton(stream) {
+
+	document.getElementById("startSttttt").onclick = async (ev) => {
+    console.log("stream 정보입니다.");
+    console.log(stream)
+    await this.session.subscribeToSpeechToText(stream, 'en-US');
+	};
+
+  // $("#startSttttt").onclick=async ()=>{
+  //   // await promiseExample();
+  //   alert("sttttttttttttttttttt");
+  //   await this.session.subscribeToSpeechToText(stream, 'en-US');
+  // };
 }
 
 function goToEvolution() {
@@ -722,7 +741,7 @@ function initRoomInfo() {
         );
         $("#roomViewTimer").text(data.room.room.time + "분");
         $("#roomViewLastTimer").text(data.room.room.time + ":00");
-        totalTime = data.room.room.time * 3;
+        totalTime = data.room.room.time * 1;
         maxMemberCount = data.room.room.maxMember;
         console.log("현재 인원 : " + data.room.room.currentMember);
         setMemberCount(data.room.room.currentMember);
