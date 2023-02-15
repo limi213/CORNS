@@ -41,16 +41,6 @@ public class EvaluationServiceImpl implements EvaluationService {
     //따봉멤버 투표
     @Override
     public void voteThumbMember(ThumbLogDto thumbLogDto) {
-        //유저 누적 따봉수 증가
-        User user = userRepo.findById(thumbLogDto.getToUserId()).get();
-        user.setThumbTotal(user.getThumbTotal()+1);
-        userRepo.save(user);
-
-        //해당 방-해당 유저 따봉수 증가
-        RoomUser roomUser = roomUserRepo.findByUserIdAndRoomNo(thumbLogDto.getToUserId(), thumbLogDto.getRoomNo());
-        roomUser.setThumbCnt(roomUser.getThumbCnt()+1);
-        roomUserRepo.save(roomUser);
-
         //따봉로그 추가
         thumbLogRepo.save(thumbLogDto.toEntity());
         
