@@ -12,7 +12,7 @@ const initialLogFilterState = {
   selfScore: "0 1 2 3 4 5 ",
   getThumb: "2",
   page: 0,
-  size: 10,
+  size: 100,
   sort: "startTm,DESC",
 };
 
