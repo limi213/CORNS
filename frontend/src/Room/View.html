@@ -36,7 +36,8 @@
           <span id="roomViewMike" onclick="MikeToggle()"><i class="fa-solid fa-microphone"></i></span>
           <span id="roomViewVideo" onclick="VideoToggle()"><i class="fa-solid fa-video"></i></span>
           <span id="roomViewPlay" onclick="startConversation()" hidden><i class="fa-solid fa-play"></i></span>
-          <span id="roomViewChattingDisplay" onclick="toogleChatting()"><i class="fa-solid fa-message"></i> </span>
+          <span id="roomViewChattingDisplay" onclick="toogleChatting()"> <i class="fa-solid fa-pen-to-square"></i></span>
+          <!-- <span id="roomViewChattingDisplay" onclick="toogleChatting()"><i class="fa-solid fa-message"></i> </span> -->
           <span id="roomViewOut" onclick="outRoomBtn()"><i class="fa-solid fa-right-from-bracket"></i></span>
           <span id="roomViewLastTimer">10:00</span>
           <span id="roomViewAddMember" onclick="openInvite()"><i class="fa-solid fa-user-plus"></i></span>
@@ -59,7 +60,7 @@
               </div>
               <div class="roomViewAppMemberBtnContainer">
                 <label for="selectBestMember1">투표하기</label>
-                <input type="radio" name="selectBestMember" id="selectBestMember1"/>
+                <input type="radio" name="selectBestMember" id="selectBestMember1" onchange="setBestDisable();"/>
               </div>
             </div>
             <div class="roomViewAppMember">
@@ -69,7 +70,7 @@
               </div>
               <div class="roomViewAppMemberBtnContainer">
                 <label for="selectBestMember2">투표하기</label>
-                <input type="radio" name="selectBestMember" id="selectBestMember2"/>
+                <input type="radio" name="selectBestMember" id="selectBestMember2" onchange="setBestDisable();"/>
               </div>
             
             </div>
@@ -80,7 +81,7 @@
               </div>
               <div class="roomViewAppMemberBtnContainer">
                 <label for="selectBestMember3">투표하기</label>
-                <input type="radio" name="selectBestMember" id="selectBestMember3"/>
+                <input type="radio" name="selectBestMember" id="selectBestMember3" onchange="setBestDisable();"/>
               </div>
             </div>
             <div class="roomViewAppMember">
@@ -90,22 +91,13 @@
               </div>
               <div class="roomViewAppMemberBtnContainer">
                 <label for="selectBestMember4">투표하기</label>
-                <input type="radio" name="selectBestMember" id="selectBestMember4"/>
+                <input type="radio" name="selectBestMember" id="selectBestMember4" onchange="setBestDisable();"/>
               </div>
             </div>
           </div>
         </div>
-        <!-- 채팅창 -->
-        <div id="roomViewChatting" >
-          <div id="roomViewChattingReceive">
-          </div>
-          <div id="roomViewChattingSend">
-            <textarea id="roomViewChattingSendMessage" onkeyup="onKeyUpChatting()"></textarea>
-            <div id="roomViewChattingSendButton" onclick="sendChatting()"><i class="fa-regular fa-paper-plane"></i></div>
-          </div>
-          </label>
-        </div>
-        <div id="roomViewTranslation"  style="display:none">
+        <!-- 번역 -->
+        <div id="roomViewTranslation">
           <div id="roomViewTranslationDo">
             <div id="roomViewTranslationHeader">
               <span id="roomViewTranslationSource" class="roomViewTranslationLang" >영어</span>
@@ -131,6 +123,16 @@
             </div>
             <button id="saveWord" onclick="saveWord();">저장</button>
           </div>
+        </div>
+        <!-- 채팅창 -->
+        <div id="roomViewChatting" style="display:none">
+          <div id="roomViewChattingReceive">
+          </div>
+          <div id="roomViewChattingSend">
+            <textarea id="roomViewChattingSendMessage" onkeyup="onKeyUpChatting()"></textarea>
+            <div id="roomViewChattingSendButton" onclick="sendChatting()"><i class="fa-regular fa-paper-plane"></i></div>
+          </div>
+          </label>
         </div>
         <div id="roomViewUserList">
           <!-- 유저1 -->
