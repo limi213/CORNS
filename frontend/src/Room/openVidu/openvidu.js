@@ -771,33 +771,41 @@ function saveWord() {
   var q_word = $("#q_word").val();
   var a_word = $("#a_word").val();
 
-  var saveData = {
-    userId: userId,
-    wordEng: q_word,
-    wordKor: a_word,
-  };
+  if(q_word.length <= 0){
+    alert("영어단어를 입력해주세요!");
+    $("#q_word").focus();
+  }
+  else{
+    var saveData = {
+      userId: userId,
+      wordEng: q_word,
+      wordKor: a_word,
+    };
+  
+    $.ajax({
+      type: "POST",
+      url: serverUrl + "/word",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Basic " + accessToken,
+        "Access-Control-Allow-Credentials": "true",
+      },
+      contentType: "application/json",
+      data: JSON.stringify(saveData),
+      success: function (data, textStatus, xhr) {
+        console.log("단어저장");
+        $("#q_word").val("");
+        $("#a_word").val("");
+      },
+      error: function (request, status, error) {
+        console.log(request);
+        console.log(status);
+        console.log(error);
+      },
+    });
 
-  $.ajax({
-    type: "POST",
-    url: serverUrl + "/word",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Basic " + accessToken,
-      "Access-Control-Allow-Credentials": "true",
-    },
-    contentType: "application/json",
-    data: JSON.stringify(saveData),
-    success: function (data, textStatus, xhr) {
-      console.log("단어저장");
-      $("#q_word").val("");
-      $("#a_word").val("");
-    },
-    error: function (request, status, error) {
-      console.log(request);
-      console.log(status);
-      console.log(error);
-    },
-  });
+  }
+
 }
 
 var audioEnabled = true;
