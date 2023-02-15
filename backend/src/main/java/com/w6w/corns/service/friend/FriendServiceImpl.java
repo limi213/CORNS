@@ -72,7 +72,7 @@ public class FriendServiceImpl implements FriendService {
     //친구 수락
     @Override
     @Transactional
-    public void acceptFriend(FriendRequestDto friendRequestDto) {
+    public FriendListResponseDto acceptFriend(FriendRequestDto friendRequestDto) {
         //friend 테이블에서 코드 수정
         Friend relation1 = friendRepo.findById(FriendPK.builder()
                                                 .userIdA(friendRequestDto.getFromId())
@@ -96,6 +96,15 @@ public class FriendServiceImpl implements FriendService {
         User toUser = userRepo.findById(friendRequestDto.getToId()).get();
         toUser.setFriendTotal(toUser.getFriendTotal()+1);
         userRepo.save(toUser);
+
+        FriendListResponseDto acceptFriend = FriendListResponseDto.builder()
+                                                    .userId(toUser.getUserId())
+                                                    .nickname(toUser.getNickname())
+                                                    .imgUrl(toUser.getImgUrl())
+                                                    .levelNo(toUser.getLevel().getLevelNo())
+                                                    .build();
+
+        return acceptFriend;
     }
 
     //친구 거절

@@ -13,7 +13,7 @@ public interface FriendService {
     //친구 신청
     void sendFriend(FriendRequestDto friendRequestDto);
     //친구 수락
-    void acceptFriend(FriendRequestDto friendRequestDto);
+    FriendListResponseDto acceptFriend(FriendRequestDto friendRequestDto);
     //친구 거절
     void rejectFriend(FriendRequestDto friendRequestDto);
     //친구 삭제

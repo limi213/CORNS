@@ -54,7 +54,7 @@ public class FriendController {
 
         try {
             friendService.addFriendLog(friendRequestDto, FriendLogCode.FRIEND_LOG_ACCEPT.getCode());
-            friendService.acceptFriend(friendRequestDto);
+            resultmap.put("acceptFriend", friendService.acceptFriend(friendRequestDto));
             status = HttpStatus.OK;
 
         } catch (Exception e) {
