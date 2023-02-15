@@ -18,14 +18,14 @@ export default function RankingCard({ rankInfo, customWidth }) {
     transKorean = "성실";
     bgColor = "#FFD704";
     unit = "exp";
-  } else if (rankType === 3) {
-    transKorean = "따봉";
-    bgColor = "#3C90F2";
-    unit = "개";
   } else if (rankType === 2) {
     transKorean = "수다";
     bgColor = "#67C73A";
     unit = "분";
+  } else if (rankType === 3) {
+    transKorean = "따봉";
+    bgColor = "#3C90F2";
+    unit = "개";
   } else {
     transKorean = "인기";
     bgColor = "#dddddd";
@@ -62,7 +62,7 @@ export default function RankingCard({ rankInfo, customWidth }) {
               margin-top: 32px;
             `}
           >
-            <ProfileImg imgSrc={imgUrl} nickname={nickname} width={width} />
+            <ProfileImg imgSrc={imgUrl} nickname={nickname} width={width} border={"3px solid #111"}/>
           </div>
           <img
             src={leaf_right}
@@ -102,7 +102,7 @@ export default function RankingCard({ rankInfo, customWidth }) {
                 margin-left: 8px;
               `}
             >
-              {rankType === 3 ? Math.round(value / 60) : value} {unit}
+              {rankType === 2 ? Math.round(value / 60) : value} {unit}
             </span>
           </Box>
         </Box>

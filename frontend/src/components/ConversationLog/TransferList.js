@@ -14,6 +14,9 @@ import AddWordButton from "./AddWordButton";
 import getRefreshToken from "auth/getRefreshToken";
 import Logout from "auth/Logout";
 
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);
 }
@@ -207,7 +210,8 @@ export default function TransferList() {
             disabled={leftChecked.length === 0}
             aria-label="move selected right"
           >
-            &gt;
+            {/* &gt; */}
+            <p css={css`margin: 0; font-weight: bold; font-size: 20px;`}> {`>`} </p>
           </Button>
           <Button
             sx={{
@@ -229,7 +233,8 @@ export default function TransferList() {
             disabled={rightChecked.length === 0}
             aria-label="move selected left"
           >
-            &lt;
+            {/* &lt; */}
+            <p css={css`margin: 0; font-weight: bold; font-size: 20px;`}> {`<`} </p>
           </Button>
         </Grid>
       </Grid>

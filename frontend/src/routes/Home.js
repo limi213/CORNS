@@ -183,25 +183,20 @@ function Home() {
                 display: "flex",
                 justifyContent: "center",
                 flexDirection: "column",
+                fontSize: "34px",
+                fontWeight: "bold",
+                textShadow: "4px 4px 4px white"
               }}
             >
-              <p css={{ fontSize: "32px", fontWeight: "bold" }}>
-                외국어로 대화를 하는 것에 어려움을 느끼고 계신가요?
-              </p>
-              <p css={{ fontSize: "32px", fontWeight: "bold" }}>
-                독해는 잘 되는데 말이 잘 안나오시나요?
-              </p>
-              <p css={{ fontSize: "32px", fontWeight: "bold" }}>
-                그런 당신을 위한 서비스가 있습니다.
-              </p>
-              <p css={{ fontSize: "32px", fontWeight: "bold" }}>
-                외국어 연습에 최적화된 CORNS를 만나보세요!
-              </p>
+              <p>외국어로 대화를 하는 것에 어려움을 느끼고 계신가요?</p>
+              <p>독해는 잘 되는데 말이 잘 안나오시나요?</p>
+              <p>그런 당신을 위한 서비스가 있습니다.</p>
+              <p>외국어 연습에 최적화된 CORNS를 만나보세요!</p>
             </Box>
             <Box
               sx={{
                 backgroundColor: "#fff",
-                width: "60%",
+                width: "50%",
                 height: "100%",
                 border: "3px solid #111",
                 padding: "32px",
@@ -331,7 +326,8 @@ function Home() {
                 </p>
               </Grid>
             </Grid>
-            <Box sx={{ display: "flex", justifyContent: "center", mb: "64px" }}>
+
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
               {!IsLogin() && (
                 <Button
                   variant="contained"

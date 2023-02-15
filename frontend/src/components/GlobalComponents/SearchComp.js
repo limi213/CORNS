@@ -61,10 +61,10 @@ function SearchComp({ type, setType, text, setText, setSearch, isIcon }) {
         <Select
           value={type}
           onChange={handleChange}
-          sx={{ height: "51px", border: "3px solid #111" }}
+          sx={{ height: "51px", border: "3px solid #111", fontFamily: "Noto Sans KR", fontSize: "18px"}}
         >
-          <MenuItem value={"nickname"}>닉네임</MenuItem>
-          <MenuItem value={"id"}>아이디</MenuItem>
+          <MenuItem value={"nickname"} sx={{fontFamily: "Noto Sans KR", fontSize: "16px"}}>닉네임</MenuItem>
+          <MenuItem value={"id"} sx={{fontFamily: "Noto Sans KR", fontSize: "16px"}}>아이디</MenuItem>
         </Select>
         <Box sx={{ width: "100%", height: "100%" }}>
           <input
@@ -78,7 +78,8 @@ function SearchComp({ type, setType, text, setText, setSearch, isIcon }) {
               border-radius: 5px;
               width: ${isIcon ? "90%" : "95%"};
               height: 45px;
-              font-size: 17px;
+              font-size: 18px;
+              font-family: "Noto Sans KR";
               padding: 0 0 0 2%;
               margin: 0 2%;
             `}
@@ -99,8 +100,8 @@ function SearchComp({ type, setType, text, setText, setSearch, isIcon }) {
 
       <p
         css={css`
-          font-size: 12px;
-          margin-left: 14%;
+          font-size: 14px;
+          margin-left: 12%;
         `}
       >
         {textInfo}

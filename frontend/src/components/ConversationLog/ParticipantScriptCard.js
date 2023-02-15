@@ -8,9 +8,9 @@ import { HandThumbsUp } from "react-bootstrap-icons";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-
 function ParticipantScriptCard({ roomNo, participant }) {
-  const { userId, nickname, imgUrl, thumbCnt, speaking, scriptUrl } = participant;
+  const { userId, nickname, imgUrl, thumbCnt, speaking, scriptUrl } =
+    participant;
 
   return (
     <>
@@ -29,7 +29,9 @@ function ParticipantScriptCard({ roomNo, participant }) {
       >
         <ProfileImg imgSrc={imgUrl} nickname={nickname} width={"197px"} />
 
-        <UserNameTag nickname={nickname} userId={userId} />
+        <p css={css`font-size: 20px; margin: 10px;`}>
+          <UserNameTag nickname={nickname} userId={userId} />
+        </p>
 
         <Box
           sx={{

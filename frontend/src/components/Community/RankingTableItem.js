@@ -10,17 +10,17 @@ function RankingTableItem({ item, unit }) {
   return (
     <>
       <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-        <TableCell>{ranking}등</TableCell>
+        <TableCell sx={{fontSize: "16px", fontFamily: "Noto Sans KR"}}>{ranking}등</TableCell>
         <TableCell>
           <ProfileImg imgSrc={imgUrl} alt={nickname} width={"40px"} />
         </TableCell>
 
-        <TableCell>
+        <TableCell sx={{fontSize: "16px", fontFamily: "Noto Sans KR"}}>
           <UserNameTag nickname={nickname} userId={userId} />
         </TableCell>
 
-        <TableCell>Lv.{levelNo}</TableCell>
-        <TableCell>{(unit === "분") ? Math.round(value/60) : value } {unit}</TableCell>
+        <TableCell sx={{fontSize: "16px", fontFamily: "Noto Sans KR"}}>Lv.{levelNo}</TableCell>
+        <TableCell sx={{fontSize: "16px", fontFamily: "Noto Sans KR"}}>{(unit === "분") ? Math.round(value/60) : value } {unit}</TableCell>
       </TableRow>
     </>
   );

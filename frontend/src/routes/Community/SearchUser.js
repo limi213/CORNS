@@ -33,7 +33,7 @@ function SearchUser() {
 
   return (
     <>
-      <h2 css={css`margin-bottom: 60px`}>유저 검색</h2>
+      <h2 css={css`margin-bottom: 60px`}>알맹이 검색</h2>
       <SearchComp
         type={type}
         setType={setType}

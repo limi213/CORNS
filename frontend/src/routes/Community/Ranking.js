@@ -8,8 +8,8 @@ import Box from "@mui/material/Box";
 function Ranking({ location, history }) {
   const TabMenus = [
     { name: "성실", route: "/community/ranking/sincerity", color: "#FFD704" },
-    { name: "따봉", route: "/community/ranking/thumbs", color: "#3C90F2" },
     { name: "수다", route: "/community/ranking/chat", color: "#67C73A" },
+    { name: "따봉", route: "/community/ranking/thumbs", color: "#3C90F2" },
     { name: "인기", route: "/community/ranking/popularity", color: "#DDDDDD" },
   ];
   const [type, setType] = useState(1);
@@ -21,12 +21,12 @@ function Ranking({ location, history }) {
     if (location.pathname === "/community/ranking/sincerity") {
       setType(1);
       setUnit("exp");
-    } else if (location.pathname === "/community/ranking/thumbs") {
-      setType(2);
-      setUnit("개");
     } else if (location.pathname === "/community/ranking/chat") {
-      setType(3);
+      setType(2);
       setUnit("분");
+    } else if (location.pathname === "/community/ranking/thumbs") {
+      setType(3);
+      setUnit("개");
     } else if (location.pathname === "/community/ranking/popularity") {
       setType(4);
       setUnit("명");

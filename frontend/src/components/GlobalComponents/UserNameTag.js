@@ -18,7 +18,7 @@ function UserNameTag({ nickname, userId }) {
           cursor: "pointer",
         }}
       >
-        <span css={css`font-weight: bold;`}>{nickname}</span> #{userId}
+        <span css={css`font-weight: bold; font-family: Noto Sans KR`}>{nickname}</span> #{userId}
       </Box>
 
       <Modal open={openModal} onClose={handleCloseModal}>

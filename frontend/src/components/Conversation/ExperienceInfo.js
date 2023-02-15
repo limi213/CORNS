@@ -19,9 +19,7 @@ function ExperienceInfo({}) {
       url: `${process.env.REACT_APP_HOST}/growth/exp/bar/${userId}`,
     });
   }, []);
-  // useEffect(() => {
-  //   dispatch(getExpProgressBar());
-  // }, [dispatch]);
+
 
   if (!isLoading && status === 200) {
     const { expTotal } = data;
@@ -43,7 +41,8 @@ function ExperienceInfo({}) {
             display: "flex",
             justifyContent: "space-around",
             alignItems: "center",
-            my: "1.5rem",
+            mt: "1rem",
+            mb: "1.8rem",
           }}
         >
           <ExpInfo level={levelNo} exp={startExp} />

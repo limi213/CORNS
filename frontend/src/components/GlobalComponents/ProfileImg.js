@@ -5,7 +5,7 @@ import almeng from "assets/almeng.png";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-function ProfileImg({ imgSrc, nickname, width }) {
+function ProfileImg({ imgSrc, nickname, width, border="2px solid #111" }) {
   const image = () => {
     if (imgSrc) {
       // 프로필 img 있는 경우
@@ -45,7 +45,7 @@ function ProfileImg({ imgSrc, nickname, width }) {
         height: width,
         width: width,
         borderRadius: "200px",
-        border: "2px solid #111",
+        border: border,
         backgroundColor: "white",
       }}
     >

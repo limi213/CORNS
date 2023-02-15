@@ -21,6 +21,7 @@ export default function Footer() {
         height: "30vh",
         position: "absolute",
         transform: "translateY(-100%)",
+        mt: '150px'
       }}
     >
       <Box

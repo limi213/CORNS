@@ -28,7 +28,7 @@ function AttendanceInfo({}) {
         <p
           css={css`
             margin: 0;
-            font-size: 20px;
+            font-size: 24px;
             font-weight: bold;
           `}
         >

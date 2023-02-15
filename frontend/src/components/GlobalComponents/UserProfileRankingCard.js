@@ -30,7 +30,7 @@ function UserProfileRankingCard({ rank }) {
     transKorean = "수다";
   } else {
     crown = ingi_crown;
-    unit = "개";
+    unit = "명";
     transKorean = "인기";
   }
 

@@ -34,7 +34,7 @@ function Community() {
           <Grid item xs={2}>
             <Sidebar Items={SidebarItems} />
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={10} sx={{minHeight: "500px"}}>
             <div
               css={css`
                 box-sizing: border-box;

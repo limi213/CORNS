@@ -7,7 +7,7 @@ import { friendActions } from "store/reducers/friendListReducer";
 import { Box, Button } from "@mui/material";
 
 // 친구신청 받은 상태
-function FriendBtnTwo({ fromId, toId, setRelation }) {
+function FriendBtnTwo({ fromId, toId, setRelation, height="50px", fontSize="18px" }) {
   const dispatch = useDispatch();
 
   const { status: acceptStatus, sendRequest: acceptRequest } = useAxios();
@@ -79,13 +79,13 @@ function FriendBtnTwo({ fromId, toId, setRelation }) {
       <Button
         sx={{
           backgroundColor: "#FFC804",
-          color: "white",
+          color: "black",
           border: "2px solid #111",
           width: "20%",
-          height: "50px",
+          height: height,
           borderRadius: "0",
           fontWeight: "bold",
-          fontSize: "18px",
+          fontSize: fontSize,
           fontFamily: "Noto Sans KR",
           "&:hover": {
             backgroundColor: "#FFD704",
@@ -102,10 +102,10 @@ function FriendBtnTwo({ fromId, toId, setRelation }) {
           color: "white",
           border: "2px solid #111",
           width: "20%",
-          height: "50px",
+          height: height,
           borderRadius: "0",
           fontWeight: "bold",
-          fontSize: "18px",
+          fontSize: fontSize,
           fontFamily: "Noto Sans KR",
           "&:hover": {
             backgroundColor: "#1766C3",

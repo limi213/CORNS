@@ -33,7 +33,7 @@ function GrowthRecord() {
           <Grid item xs={2}>
             <Sidebar Items={SidebarItems} />
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={10} sx={{minHeight: "500px"}}>
             <Switch>
               <Route
                 exact
