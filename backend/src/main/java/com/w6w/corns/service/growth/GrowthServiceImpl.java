@@ -1,5 +1,7 @@
 package com.w6w.corns.service.growth;
 
+import com.w6w.corns.domain.cal.CalLog;
+import com.w6w.corns.domain.cal.CalLogRepository;
 import com.w6w.corns.domain.explog.ExpLog;
 import com.w6w.corns.domain.explog.ExpLogRepository;
 import com.w6w.corns.domain.loginlog.LoginLogRepository;
@@ -25,6 +27,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 import com.w6w.corns.util.PageableResponseDto;
+import com.w6w.corns.util.code.RankCode;
 import com.w6w.corns.util.code.RoomUserCode;
 import com.w6w.corns.util.code.UserCode;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +46,7 @@ public class GrowthServiceImpl implements GrowthService {
     private final RoomUserRepository roomUserRepository;
     private final RoomRepository roomRepository;
     private final SubjectService subjectService;
+    private final CalLogRepository calLogRepository;
 
     public int calExpPercentile(int userId) throws Exception{
 
@@ -110,10 +114,11 @@ public class GrowthServiceImpl implements GrowthService {
         //roomuser에 있는 speaking_sec를 일별로 받아오기 -> 나중에 계산테이블 이용
         for(int i=6; i>=0; i--){
             LocalDate date = LocalDate.now().minusDays(i);
-            Long sum = roomUserRepository.sumByUserIdAndRegTm(userId, date.getYear(), date.getMonthValue(), date.getDayOfMonth());
+
+            CalLog calLog = calLogRepository.findByUserIdAndRankCdAndStartDtAndEndDt(userId, RankCode.RANK_SPEAKING.getCode(), date, date);
             responseDtos.add(IndicatorResponseDto.builder()
                     .x(date.toString())
-                    .y(sum==null?"0":sum.toString())
+                    .y(calLog==null?"0": String.valueOf(calLog.getValue()))
                     .build());
         }
 
@@ -124,7 +129,6 @@ public class GrowthServiceImpl implements GrowthService {
     @Override
     public List<SubjectRatioResponseDto> countBySubject(int userId) throws Exception {
 
-        //이것도 컬럼으로 갖고있는건..??(아니면 페이지 들어갈때마다 select해옴) -> 하지만 굳이긴하지..
         List<SubjectRatioResponseDto> subjectRatio = new ArrayList<>();
 
         //roomuser에서 userid로 모든 대화 기록 가져오기
@@ -164,13 +168,12 @@ public class GrowthServiceImpl implements GrowthService {
         for(int i=13; i>=0; i--){
             LocalDate date = LocalDate.now().minusDays(i);
 
-            Long sum = expLogRepository.sumByUserIdAndRegTm(userId, date.getYear(), date.getMonthValue(), date.getDayOfMonth());
-
+            CalLog calLog = calLogRepository.findByUserIdAndRankCdAndStartDtAndEndDt(userId, RankCode.RANK_EXP.getCode(), date, date);
             DayOfWeek dayOfWeek = date.getDayOfWeek();
 
             IndicatorResponseDto temp = IndicatorResponseDto.builder()
                     .x(dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN))
-                    .y(sum==null?"0":String.valueOf(sum)).build();
+                    .y(calLog==null?"0": String.valueOf(calLog.getValue())).build();
             if(i / 7 > 0) lastWeek.add(temp);
             else thisWeek.add(temp);
         }

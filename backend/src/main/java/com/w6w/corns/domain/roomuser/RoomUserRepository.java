@@ -25,8 +25,4 @@ public interface RoomUserRepository extends JpaRepository<RoomUser, Integer>, Cu
     List<RoomUser> findStartRoomUserInRoom(int roomNo, int roomUserCd);
     // 사용자가 참여 완료한 대화 목록 조회
     List<RoomUser> findByUserIdAndRoomUserCd(int userId, int roomUserCd);
-    //날짜를 기준으로 사용자가 참여 완료한 대화에서의 speaking_sec 합 조회
-    @Query(value = "select sum(ru.speakingSec) from RoomUser ru " +
-            "where ru.userId=:userId and year(ru.regTm)=:year and month(ru.regTm)=:month and day(ru.regTm)=:day")
-    Long sumByUserIdAndRegTm(int userId, int year, int month, int day);
 }

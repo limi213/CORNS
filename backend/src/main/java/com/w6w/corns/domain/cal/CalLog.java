@@ -9,7 +9,7 @@ import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @DynamicInsert
 @Getter
@@ -27,7 +27,7 @@ public class CalLog extends BaseTime {
 
     private int value;
 
-    private LocalDateTime startDt;
+    private LocalDate startDt;
 
-    private LocalDateTime endDt;
+    private LocalDate endDt;
 }
