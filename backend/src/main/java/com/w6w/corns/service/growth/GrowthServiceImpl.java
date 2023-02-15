@@ -118,7 +118,7 @@ public class GrowthServiceImpl implements GrowthService {
             CalLog calLog = calLogRepository.findByUserIdAndRankCdAndStartDtAndEndDt(userId, RankCode.RANK_SPEAKING.getCode(), date, date);
             responseDtos.add(IndicatorResponseDto.builder()
                     .x(date.toString())
-                    .y(calLog==null?"0": String.valueOf(calLog.getValue()))
+                    .y(calLog==null?"0": String.valueOf(calLog.getValue()/60))
                     .build());
         }
 
