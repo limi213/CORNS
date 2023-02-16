@@ -40,14 +40,14 @@ function Tutorial() {
             src={tutorial1}
             alt="tutorial1"
             css={css`
-              width: 80%;
+              width: 90%;
             `}
           />
           <img
             src={tutorial2}
             alt="tutorial2"
             css={css`
-              width: 80%;
+              width: 90%;
             `}
           />
 
@@ -55,7 +55,7 @@ function Tutorial() {
             src={tutorial3}
             alt="tutorial3"
             css={css`
-              width: 80%;
+              width: 90%;
             `}
           />
 
@@ -63,7 +63,7 @@ function Tutorial() {
             src={tutorial4}
             alt="tutorial4"
             css={css`
-              width: 80%;
+              width: 90%;
             `}
           />
         </Box>
