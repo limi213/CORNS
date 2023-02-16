@@ -6,6 +6,7 @@ import tutorial1 from "assets/tutorial1.png";
 import tutorial2 from "assets/tutorial2.png";
 import tutorial3 from "assets/tutorial3.png";
 import tutorial4 from "assets/tutorial4.png";
+import tutorial5 from "assets/tutorial5.png";
 
 import { Box } from "@mui/material";
 
@@ -62,6 +63,13 @@ function Tutorial() {
           <img
             src={tutorial4}
             alt="tutorial4"
+            css={css`
+              width: 90%;
+            `}
+          />
+          <img
+            src={tutorial5}
+            alt="tutorial5"
             css={css`
               width: 90%;
             `}
