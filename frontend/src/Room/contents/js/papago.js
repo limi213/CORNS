@@ -11,8 +11,6 @@ function changeTranslationLang(){
 }
 
 function papago(){
-// function papago(source, targer, text){
-
     if($("#roomViewTranslationText").val().length == 0){
         alert("번역할 말을 입력하세요");
         return;
