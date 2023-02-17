@@ -153,8 +153,8 @@
         - **`CERTIFICATE_TYPE`** : 암호화방식
         - **`KMS_URIS` : 미디어 노드 public ip:8888/kurento**
             
-            ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/efa24e2d-fb54-43b9-b20a-d8b518bd259f/Untitled.png)
-            
+            ![media](./exec/img/media.jpg)
+         
     - 마스터 서버 실행
     
     ```kotlin
@@ -163,4 +163,4 @@
     ./openvidu start
     ```
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a3e71707-dec3-404f-a9a2-dc3b39a2b385/Untitled.png)
+    ![master](./exec/img/master.jpg)
