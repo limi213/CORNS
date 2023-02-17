@@ -25,9 +25,6 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class GoogleOauth {
 
-    @Value("${OAuth2.google.url}")
-    private String GOOGLE_SNS_LOGIN_URL;
-
     @Value("${OAuth2.google.client-id}")
     private String GOOGLE_SNS_CLIENT_ID;
 
@@ -36,9 +33,6 @@ public class GoogleOauth {
 
     @Value("${OAuth2.google.callback-url}")
     private String GOOGLE_SNS_CALLBACK_URL;
-
-    @Value("${OAuth2.google.scope}")
-    private String GOOGLE_DATA_ACCESS_SCOPE;
 
     private final ObjectMapper objectMapper;
 

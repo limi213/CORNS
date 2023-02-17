@@ -73,6 +73,7 @@ CORNS는 그러한 니즈를 충족하기 위해 탄생한 화상 영어 회화 
 ### Backend
 
 - IntelliJ IDE
+- JVM 11
 - Spring boot v2.7.7
 - Spring Data JPA
 - Spring Web

@@ -7,7 +7,6 @@ import { css } from "@emotion/react";
 
 function SearchComp({ type, setType, text, setText, setSearch, isIcon }) {
   const [textInfo, setTextInfo] = useState("");
-  const [textState, setTextState] = useState(true);
 
   // id or nickname 확인
   useEffect(() => {
@@ -23,16 +22,10 @@ function SearchComp({ type, setType, text, setText, setSearch, isIcon }) {
     if (type === "id") {
       if (e.target.value.toLowerCase().match(/^[0-9]*$/)) {
         setText(e.target.value);
-        setTextState(true);
-      } else {
-        setTextState(false);
       }
     } else {
       if (e.target.value.match(/^[a-zA-Z]*$/)) {
         setText(e.target.value);
-        setTextState(true);
-      } else {
-        setTextState(false);
       }
     }
   };
@@ -109,7 +102,6 @@ function SearchComp({ type, setType, text, setText, setSearch, isIcon }) {
         css={css`
           font-size: 14px;
           margin-left: 12%;
-          color: ${textState? "#111" : "#FF0000"};
         `}
       >
         {textInfo}
