@@ -28,11 +28,14 @@ import com.google.gson.JsonParser;
 @RestController
 @RequestMapping("/util")
 public class UtilController {
+    @Value("${papago.clientId}")
+    private String clientId;
+    @Value("${papago.clientSecret}")
+    private String clientSecret;
+
     @ApiOperation(value = "번역 api 호출", notes = "en->ko, ko->en 으로 번역 기능")
     @PostMapping("/translation")
     public ResponseEntity<?> translation(@RequestBody TranslationDto requestDto){
-        String clientId = "Vd906NVULAoCUQOwpQQM";//애플리케이션 클라이언트 아이디값";
-        String clientSecret = "cM0898GJhV";//애플리케이션 클라이언트 시크릿값";
 
         String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
         String text;
